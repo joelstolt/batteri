@@ -1,9 +1,9 @@
 "use client"
 
-import { useEffect } from "react"
+import { useEffect, useState } from "react"
 import Image from "next/image"
 import Link from "next/link"
-import { X, Minus, Plus, Trash2, ShoppingCart } from "lucide-react"
+import { X, Minus, Plus, Trash2, ShoppingCart, Loader2 } from "lucide-react"
 import { motion, AnimatePresence } from "framer-motion"
 import { useCart } from "@/lib/cart-context"
 
@@ -14,6 +14,28 @@ function formatPrice(n) {
 export default function CartDrawer() {
   const { items, isOpen, setIsOpen, updateQty, removeItem, totalItems, totalPrice } =
     useCart()
+  const [loading, setLoading] = useState(false)
+
+  const handleCheckout = async () => {
+    setLoading(true)
+    try {
+      const res = await fetch("/api/checkout", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ items }),
+      })
+      const data = await res.json()
+      if (data.url) {
+        window.location.href = data.url
+      } else {
+        alert(data.error || "Något gick fel. Försök igen.")
+        setLoading(false)
+      }
+    } catch {
+      alert("Kunde inte nå kassan. Försök igen.")
+      setLoading(false)
+    }
+  }
 
   // Lock body scroll when open
   useEffect(() => {
@@ -208,16 +230,25 @@ export default function CartDrawer() {
                   </span>
                 </div>
 
-                <a
-                  href="/kassa"
-                  onClick={() => setIsOpen(false)}
-                  className="flex w-full items-center justify-center gap-2 rounded-xl bg-gradient-to-br from-[#16a34a] to-[#15803d] py-4 font-heading text-base font-bold text-white shadow-lg transition-transform hover:-translate-y-px"
+                <button
+                  onClick={handleCheckout}
+                  disabled={loading}
+                  className="flex w-full items-center justify-center gap-2 rounded-xl bg-gradient-to-br from-[#16a34a] to-[#15803d] py-4 font-heading text-base font-bold text-white shadow-lg transition-transform hover:-translate-y-px disabled:opacity-70 disabled:hover:translate-y-0"
                 >
-                  Till kassan
-                  <svg width="18" height="18" fill="none" stroke="#fff" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round">
-                    <path d="M4 9h10M10 5l4 4-4 4" />
-                  </svg>
-                </a>
+                  {loading ? (
+                    <>
+                      <Loader2 size={18} className="animate-spin" />
+                      Laddar...
+                    </>
+                  ) : (
+                    <>
+                      Till kassan
+                      <svg width="18" height="18" fill="none" stroke="#fff" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round">
+                        <path d="M4 9h10M10 5l4 4-4 4" />
+                      </svg>
+                    </>
+                  )}
+                </button>
                 <div className="mt-3 flex items-center justify-center gap-3">
                   {["Swish", "Visa", "Mastercard", "PostNord"].map((m) => (
                     <span key={m} className="text-[10px] font-semibold uppercase tracking-wider text-text-mid/60">
