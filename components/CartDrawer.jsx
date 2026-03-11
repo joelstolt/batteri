@@ -165,23 +165,59 @@ export default function CartDrawer() {
               )}
             </div>
 
-            {/* Footer — total + checkout */}
+            {/* Footer — shipping + total + checkout */}
             {items.length > 0 && (
               <div className="border-t border-border px-6 py-5">
-                <div className="mb-4 flex items-center justify-between">
-                  <span className="font-heading text-lg font-extrabold text-text-dark">
-                    Summa:
-                  </span>
-                  <span className="font-heading text-xl font-extrabold text-text-dark">
-                    {formatPrice(totalPrice)} kr
+                {/* Shipping info */}
+                {totalPrice < 2000 ? (
+                  <div className="mb-3 rounded-lg bg-amber-bg/8 px-3.5 py-2.5">
+                    <div className="flex items-center justify-between text-xs">
+                      <span className="font-medium text-text-mid">Frakt</span>
+                      <span className="font-semibold text-text-dark">149 kr</span>
+                    </div>
+                    <div className="mt-1 h-1.5 overflow-hidden rounded-full bg-border">
+                      <div
+                        className="h-full rounded-full bg-amber-bg transition-all"
+                        style={{ width: `${Math.min(100, (totalPrice / 2000) * 100)}%` }}
+                      />
+                    </div>
+                    <div className="mt-1 text-[11px] text-text-light">
+                      {formatPrice(2000 - totalPrice)} kr kvar till fri frakt
+                    </div>
+                  </div>
+                ) : (
+                  <div className="mb-3 flex items-center gap-2 rounded-lg bg-green/5 px-3.5 py-2.5 text-xs font-semibold text-green">
+                    <svg width="14" height="14" viewBox="0 0 14 14" fill="none">
+                      <circle cx="7" cy="7" r="7" fill="#16a34a" opacity="0.15" />
+                      <path d="M4 7l2 2 4-4" stroke="#16a34a" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round" />
+                    </svg>
+                    Fri frakt!
+                  </div>
+                )}
+
+                <div className="mb-1 flex items-center justify-between">
+                  <span className="text-sm text-text-mid">Exkl. moms</span>
+                  <span className="text-sm font-medium text-text-dark">
+                    {formatPrice(totalPrice + (totalPrice < 2000 ? 149 : 0))} kr
                   </span>
                 </div>
-                <button className="flex w-full items-center justify-center gap-2 rounded-xl bg-gradient-to-br from-[#16a34a] to-[#15803d] py-4 font-heading text-base font-bold text-white shadow-lg transition-transform hover:-translate-y-px">
-                  Kassan
+                <div className="mb-4 flex items-center justify-between">
+                  <span className="font-heading text-base font-bold text-text-dark">Totalt inkl. moms</span>
+                  <span className="font-heading text-xl font-extrabold text-text-dark">
+                    {formatPrice(Math.round((totalPrice + (totalPrice < 2000 ? 149 : 0)) * 1.25))} kr
+                  </span>
+                </div>
+
+                <a
+                  href="/kassa"
+                  onClick={() => setIsOpen(false)}
+                  className="flex w-full items-center justify-center gap-2 rounded-xl bg-gradient-to-br from-[#16a34a] to-[#15803d] py-4 font-heading text-base font-bold text-white shadow-lg transition-transform hover:-translate-y-px"
+                >
+                  Till kassan
                   <svg width="18" height="18" fill="none" stroke="#fff" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round">
                     <path d="M4 9h10M10 5l4 4-4 4" />
                   </svg>
-                </button>
+                </a>
                 <div className="mt-3 flex items-center justify-center gap-3">
                   {["Swish", "Visa", "Mastercard", "PostNord"].map((m) => (
                     <span key={m} className="text-[10px] font-semibold uppercase tracking-wider text-text-mid/60">
