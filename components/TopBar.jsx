@@ -1,10 +1,11 @@
+import Link from "next/link"
 import { USPS } from "@/lib/constants"
 
 export default function TopBar() {
   return (
     <div className="bg-gradient-to-r from-amber-bg to-amber-light text-text-dark">
       <div className="mx-auto flex max-w-[1200px] items-center justify-between px-4 py-2 sm:px-6 sm:py-2.5">
-        {/* USPs — scroll on mobile */}
+        {/* USPs */}
         <div className="flex items-center gap-4 overflow-x-auto text-xs font-semibold sm:gap-6 sm:text-sm">
           {USPS.map((text, i) => (
             <span key={i} className="flex shrink-0 items-center gap-1.5">
@@ -17,15 +18,15 @@ export default function TopBar() {
           ))}
         </div>
 
-        {/* Right links — hidden on mobile */}
+        {/* Right links */}
         <div className="hidden items-center gap-4 text-[13px] font-semibold sm:flex">
-          <a href="#" className="flex items-center gap-1.5 transition-opacity hover:opacity-70">
+          <Link href="/kontakt" className="flex items-center gap-1.5 transition-opacity hover:opacity-70">
             Kundservice
-          </a>
+          </Link>
           <span className="h-3.5 w-px bg-black/15" />
-          <a href="#" className="flex items-center gap-1.5 transition-opacity hover:opacity-70">
-            Företag (exkl. moms)
-          </a>
+          <span className="flex items-center gap-1.5 opacity-70">
+            Inkl. moms / <strong>Exkl. moms (företag)</strong>
+          </span>
         </div>
       </div>
     </div>

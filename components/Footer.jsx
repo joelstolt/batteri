@@ -9,7 +9,6 @@ const COLUMNS = [
       { label: "Städmaskiner", href: "/kategori/stadmaskiner" },
       { label: "Stationära", href: "/kategori/stationara" },
       { label: "Fritid & Sol", href: "/kategori/fritid-solenergi" },
-      { label: "Tillbehör", href: "/kategori/tillbehor" },
     ],
   },
   {
@@ -17,8 +16,8 @@ const COLUMNS = [
     links: [
       { label: "Om oss", href: "/om-oss" },
       { label: "Kontakta oss", href: "/kontakt" },
-      { label: "Leveransvillkor", href: "/leveransvillkor" },
-      { label: "Köpvillkor", href: "/kopvillkor" },
+      { label: "Köp- & leveransvillkor", href: "/villkor" },
+      { label: "Integritetspolicy", href: "/integritet" },
     ],
   },
   {
@@ -86,15 +85,12 @@ export default function Footer() {
             © 2026 Batteriproffs.se · Alla rättigheter förbehållna
           </div>
           <div className="flex gap-4">
-            {["Integritetspolicy", "Cookies", "Villkor"].map((t) => (
-              <Link
-                key={t}
-                href="#"
-                className="text-[13px] text-white/25 transition-colors hover:text-white/50"
-              >
-                {t}
-              </Link>
-            ))}
+            <Link href="/integritet" className="text-[13px] text-white/25 transition-colors hover:text-white/50">
+              Integritetspolicy
+            </Link>
+            <Link href="/villkor" className="text-[13px] text-white/25 transition-colors hover:text-white/50">
+              Villkor
+            </Link>
           </div>
         </div>
       </div>

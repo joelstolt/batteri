@@ -1,14 +1,15 @@
 "use client"
 
 import { useState } from "react"
+import { useRouter } from "next/navigation"
 import { motion, AnimatePresence } from "framer-motion"
-import { PHONE } from "@/lib/constants"
+import { PHONE, PHONE_LINK } from "@/lib/constants"
 
 const AREAS = [
-  { id: "traktion", label: "Traktion & Industri", icon: "🏗️", sub: "Truckar · Golfbilar · Bygg" },
-  { id: "stad", label: "Städmaskiner", icon: "🧹", sub: "Skurmaskiner · Poleringsmaskiner" },
-  { id: "stationart", label: "Stationära", icon: "🔋", sub: "Permobiler · Hissar · Larm" },
-  { id: "fritid", label: "Fritid & Solenergi", icon: "☀️", sub: "Husbil · Båt · Solceller" },
+  { id: "traktion", slug: "traktion-industri", label: "Traktion & Industri", icon: "🏗️", sub: "Truckar · Golfbilar · Bygg" },
+  { id: "stad", slug: "stadmaskiner", label: "Städmaskiner", icon: "🧹", sub: "Skurmaskiner · Poleringsmaskiner" },
+  { id: "stationart", slug: "stationara", label: "Stationära", icon: "🔋", sub: "Permobiler · Hissar · Larm" },
+  { id: "fritid", slug: "fritid-solenergi", label: "Fritid & Solenergi", icon: "☀️", sub: "Husbil · Båt · Solceller" },
 ]
 
 const VOLTAGES = [
@@ -24,6 +25,7 @@ export default function BatteryFinder() {
   const [step, setStep] = useState(0)
   const [area, setArea] = useState(null)
   const [voltage, setVoltage] = useState(null)
+  const router = useRouter()
 
   const handleArea = (a) => { setArea(a); setTimeout(() => setStep(1), 150) }
   const handleVoltage = (v) => { setVoltage(v); setTimeout(() => setStep(2), 150) }
@@ -31,6 +33,12 @@ export default function BatteryFinder() {
 
   const selectedArea = AREAS.find((a) => a.id === area)
   const resultCount = RESULT_COUNTS[area] || 2
+
+  const handleShowProducts = () => {
+    if (selectedArea) {
+      router.push(`/kategori/${selectedArea.slug}`)
+    }
+  }
 
   return (
     <motion.div
@@ -134,9 +142,15 @@ export default function BatteryFinder() {
                 </p>
               </div>
               <div className="flex gap-2.5">
-                <button className="flex-1 rounded-[10px] bg-amber-bg px-5 py-3.5 text-sm font-bold text-navy transition-transform hover:-translate-y-px">
-                  {voltage === "vet-ej" ? `Ring ${PHONE}` : "Visa produkter"}
-                </button>
+                {voltage === "vet-ej" ? (
+                  <a href={`tel:${PHONE_LINK}`} className="flex flex-1 items-center justify-center rounded-[10px] bg-amber-bg px-5 py-3.5 text-sm font-bold text-navy transition-transform hover:-translate-y-px">
+                    Ring {PHONE}
+                  </a>
+                ) : (
+                  <button onClick={handleShowProducts} className="flex-1 rounded-[10px] bg-amber-bg px-5 py-3.5 text-sm font-bold text-navy transition-transform hover:-translate-y-px">
+                    Visa produkter
+                  </button>
+                )}
                 <button onClick={handleReset} className="rounded-[10px] border border-border bg-surface px-4 py-3.5 text-sm font-semibold text-text-dark hover:bg-border/50">
                   Sök igen
                 </button>

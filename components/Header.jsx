@@ -142,11 +142,11 @@ export default function Header() {
         {/* Desktop nav row */}
         <div className="hidden border-t border-white/6 md:block">
           <div className="mx-auto flex h-[46px] max-w-[1200px] items-center px-6">
-            <button className="flex h-[46px] items-center gap-2 border-b-2 border-amber-bg bg-white/6 px-5 text-sm font-semibold text-white transition-colors hover:bg-white/10">
+            <Link href="/kategori/traktion-industri" className="flex h-[46px] items-center gap-2 border-b-2 border-amber-bg bg-white/6 px-5 text-sm font-semibold text-white transition-colors hover:bg-white/10">
               <Menu size={16} />
               Alla batterier
               <ChevronRight size={12} className="rotate-90" />
-            </button>
+            </Link>
 
             {NAV_CATEGORIES.map((item) => (
               <Link
@@ -210,13 +210,13 @@ export default function Header() {
 
             {/* Links */}
             <div className="border-b border-white/6 px-5 py-4">
-              <Link
-                href="#"
-                className="flex items-center gap-3 rounded-lg px-3 py-3 text-sm font-medium text-white/70 transition-colors hover:bg-white/6 hover:text-white"
+              <button
+                onClick={() => { setMobileMenuOpen(false); setSearchOpen(true) }}
+                className="flex w-full items-center gap-3 rounded-lg px-3 py-3 text-sm font-medium text-white/70 transition-colors hover:bg-white/6 hover:text-white"
               >
                 <Search size={16} />
                 Sök produkter
-              </Link>
+              </button>
               <a
                 href={`tel:${PHONE_LINK}`}
                 className="flex items-center gap-3 rounded-lg px-3 py-3 text-sm font-medium text-white/70 transition-colors hover:bg-white/6 hover:text-white"

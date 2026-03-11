@@ -1,6 +1,7 @@
 "use client"
 
 import { motion } from "framer-motion"
+import Link from "next/link"
 import BatteryFinder from "./BatteryFinder"
 
 export default function Hero() {
@@ -39,11 +40,27 @@ export default function Hero() {
             <span className="text-amber">för de som vet skillnaden</span>
           </h1>
 
-          <p className="mb-10 max-w-[480px] text-[17px] leading-relaxed text-text-mid">
+          <p className="mb-8 max-w-[480px] text-[17px] leading-relaxed text-text-mid">
             Traktionsbatterier för industrin. Gel-batterier för städmaskiner.
             Stationära lösningar för hissar och larm. Vi säljer inte allt till
             alla — vi säljer rätt batteri till dig.
           </p>
+
+          {/* CTA Buttons */}
+          <div className="mb-10 flex flex-wrap gap-3">
+            <Link
+              href="/kategori/traktion-industri"
+              className="rounded-xl bg-amber-bg px-7 py-3.5 font-heading text-sm font-bold text-navy shadow-sm transition-all hover:-translate-y-px hover:shadow-md sm:text-base"
+            >
+              Utforska sortimentet
+            </Link>
+            <Link
+              href="/kontakt"
+              className="rounded-xl border border-border bg-white px-7 py-3.5 font-heading text-sm font-bold text-text-dark transition-all hover:-translate-y-px hover:border-border-dark hover:shadow-sm sm:text-base"
+            >
+              Kontakta oss
+            </Link>
+          </div>
 
           {/* Stats */}
           <div className="flex flex-wrap gap-8">
