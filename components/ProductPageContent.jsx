@@ -88,7 +88,7 @@ export default function ProductPageContent() {
   const category = CATEGORIES.find((c) => c.slug === product.category)
   const related = getProductsByCategory(product.category)
     .filter((p) => p.slug !== product.slug)
-    .slice(0, 3)
+    .slice(0, 4)
 
   return (
     <div className="bg-white">
@@ -268,7 +268,7 @@ export default function ProductPageContent() {
             <h2 className="mb-6 font-heading text-2xl font-extrabold text-text-dark">
               Relaterade produkter
             </h2>
-            <div className="grid grid-cols-1 gap-5 sm:grid-cols-2 lg:grid-cols-3">
+            <div className="grid grid-cols-2 gap-4 lg:grid-cols-4">
               {related.map((p) => (
                 <ProductCard key={p.slug} product={p} />
               ))}

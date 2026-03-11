@@ -4,9 +4,11 @@ import { useState, useEffect } from "react"
 import Link from "next/link"
 import { NAV_CATEGORIES, PHONE, PHONE_LINK } from "@/lib/constants"
 import { useCart } from "@/lib/cart-context"
+import SearchModal from "./SearchModal"
 
 export default function Header() {
   const [scrolled, setScrolled] = useState(false)
+  const [searchOpen, setSearchOpen] = useState(false)
   const { totalItems, setIsOpen } = useCart()
 
   useEffect(() => {
@@ -16,6 +18,7 @@ export default function Header() {
   }, [])
 
   return (
+    <>
     <header
       className="sticky top-0 z-50 transition-all duration-300"
       style={{
@@ -46,12 +49,17 @@ export default function Header() {
 
         {/* Search bar */}
         <div className="hidden flex-[0_1_420px] md:flex">
-          <input
-            type="text"
-            placeholder="Sök batteri, modellnr eller användningsområde..."
-            className="h-11 w-full rounded-l-xl border-2 border-r-0 border-white/12 bg-white/6 px-4 text-sm text-white outline-none transition-colors placeholder:text-white/35 focus:border-amber-bg/50 focus:bg-white/10"
-          />
-          <button className="flex h-11 w-12 items-center justify-center rounded-r-xl bg-gradient-to-br from-amber-bg to-amber transition-opacity hover:opacity-85">
+          <button
+            onClick={() => setSearchOpen(true)}
+            className="flex h-11 w-full items-center gap-2 rounded-l-xl border-2 border-r-0 border-white/12 bg-white/6 px-4 text-left text-sm text-white/35 transition-colors hover:border-white/20 hover:bg-white/10"
+          >
+            <svg width="15" height="15" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round"><circle cx="6.5" cy="6.5" r="5"/><path d="M10 10l3.5 3.5"/></svg>
+            Sök batteri, modellnr eller användningsområde...
+          </button>
+          <button
+            onClick={() => setSearchOpen(true)}
+            className="flex h-11 w-12 items-center justify-center rounded-r-xl bg-gradient-to-br from-amber-bg to-amber transition-opacity hover:opacity-85"
+          >
             <svg
               width="18"
               height="18"
@@ -162,5 +170,8 @@ export default function Header() {
         </div>
       </div>
     </header>
+
+    <SearchModal isOpen={searchOpen} onClose={() => setSearchOpen(false)} />
+    </>
   )
 }
