@@ -5,14 +5,16 @@ import Link from "next/link"
 import Image from "next/image"
 import { ShoppingCart } from "lucide-react"
 import { useCart } from "@/lib/cart-context"
+import { useVat } from "@/lib/vat-context"
 
 export default function ProductCard({ product }) {
   const [qty, setQty] = useState(1)
   const { addItem } = useCart()
+  const { displayPrice, vatLabel } = useVat()
   const { slug, shortName, voltage, capacity, price, images, badge } = product
   const image = images?.[0] || "/produkter/placeholder.jpg"
 
-  const formattedPrice = new Intl.NumberFormat("sv-SE").format(price)
+  const formattedPrice = new Intl.NumberFormat("sv-SE").format(displayPrice(price))
 
   return (
     <div className="group flex h-full flex-col overflow-hidden rounded-xl border border-border bg-white transition-all duration-200 hover:-translate-y-1 hover:border-border-dark hover:shadow-[0_8px_30px_rgba(0,0,0,0.06)] sm:rounded-2xl">
@@ -56,11 +58,14 @@ export default function ProductCard({ product }) {
 
         {/* Price + actions */}
         <div className="mt-auto">
-          <div className="mb-2 flex items-baseline gap-1 sm:mb-3 sm:gap-1.5">
+          <div className="mb-1 flex items-baseline gap-1 sm:mb-2 sm:gap-1.5">
             <span className="font-heading text-base font-extrabold text-text-dark sm:text-xl">
               {formattedPrice}
             </span>
             <span className="text-xs font-medium text-text-mid sm:text-sm">kr</span>
+          </div>
+          <div className="mb-2 text-[11px] text-text-light sm:mb-3">
+            {vatLabel}
           </div>
 
           {/* In stock badge */}

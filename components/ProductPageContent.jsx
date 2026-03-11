@@ -8,6 +8,7 @@ import { ShoppingCart, Truck, Shield, Phone, ChevronRight, RotateCcw } from "luc
 import { getProductBySlug, getProductsByCategory } from "@/lib/products"
 import { CATEGORIES, PHONE, PHONE_LINK } from "@/lib/constants"
 import { useCart } from "@/lib/cart-context"
+import { useVat } from "@/lib/vat-context"
 import ProductCard from "@/components/ProductCard"
 import FadeIn from "@/components/FadeIn"
 
@@ -69,6 +70,7 @@ export default function ProductPageContent() {
   const product = getProductBySlug(params.slug)
   const [qty, setQty] = useState(1)
   const { addItem } = useCart()
+  const { displayPrice, vatLabel, inclVat } = useVat()
 
   if (!product) {
     return (
@@ -141,12 +143,16 @@ export default function ProductPageContent() {
               <div className="mb-5">
                 <div className="flex items-baseline gap-2">
                   <span className="font-heading text-3xl font-extrabold text-text-dark">
-                    {formatPrice(product.price)}
+                    {formatPrice(displayPrice(product.price))}
                   </span>
                   <span className="text-base font-medium text-text-mid">kr</span>
                 </div>
                 <div className="mt-0.5 text-sm text-text-light">
-                  {formatPrice(Math.round(product.price * 1.25))} kr inkl. moms
+                  {vatLabel}
+                  {inclVat
+                    ? ` · ${formatPrice(product.price)} kr exkl. moms`
+                    : ` · ${formatPrice(Math.round(product.price * 1.25))} kr inkl. moms`
+                  }
                 </div>
               </div>
 

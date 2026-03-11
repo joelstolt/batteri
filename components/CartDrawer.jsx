@@ -6,6 +6,7 @@ import Link from "next/link"
 import { X, Minus, Plus, Trash2, ShoppingCart, Loader2 } from "lucide-react"
 import { motion, AnimatePresence } from "framer-motion"
 import { useCart } from "@/lib/cart-context"
+import { useVat } from "@/lib/vat-context"
 
 function formatPrice(n) {
   return new Intl.NumberFormat("sv-SE").format(n)
@@ -14,6 +15,7 @@ function formatPrice(n) {
 export default function CartDrawer() {
   const { items, isOpen, setIsOpen, updateQty, removeItem, totalItems, totalPrice } =
     useCart()
+  const { displayPrice, vatLabel, inclVat } = useVat()
   const [loading, setLoading] = useState(false)
 
   const handleCheckout = async () => {
@@ -135,7 +137,7 @@ export default function CartDrawer() {
                             {item.capacity}
                           </div>
                           <div className="mt-1.5 font-heading text-base font-extrabold text-text-dark">
-                            {formatPrice(item.price * item.qty)} kr
+                            {formatPrice(displayPrice(item.price) * item.qty)} kr
                           </div>
                         </div>
                       </div>
@@ -195,7 +197,9 @@ export default function CartDrawer() {
                   <div className="mb-3 rounded-lg bg-amber-bg/8 px-3.5 py-2.5">
                     <div className="flex items-center justify-between text-xs">
                       <span className="font-medium text-text-mid">Frakt</span>
-                      <span className="font-semibold text-text-dark">149 kr</span>
+                      <span className="font-semibold text-text-dark">
+                        {formatPrice(inclVat ? Math.round(149 * 1.25) : 149)} kr
+                      </span>
                     </div>
                     <div className="mt-1 h-1.5 overflow-hidden rounded-full bg-border">
                       <div
@@ -204,7 +208,7 @@ export default function CartDrawer() {
                       />
                     </div>
                     <div className="mt-1 text-[11px] text-text-light">
-                      {formatPrice(2000 - totalPrice)} kr kvar till fri frakt
+                      {formatPrice(inclVat ? Math.round((2000 - totalPrice) * 1.25) : 2000 - totalPrice)} kr kvar till fri frakt
                     </div>
                   </div>
                 ) : (
@@ -218,15 +222,27 @@ export default function CartDrawer() {
                 )}
 
                 <div className="mb-1 flex items-center justify-between">
-                  <span className="text-sm text-text-mid">Exkl. moms</span>
+                  <span className="text-sm text-text-mid">Produkter {vatLabel.toLowerCase()}</span>
                   <span className="text-sm font-medium text-text-dark">
-                    {formatPrice(totalPrice + (totalPrice < 2000 ? 149 : 0))} kr
+                    {formatPrice(inclVat ? Math.round(totalPrice * 1.25) : totalPrice)} kr
                   </span>
                 </div>
-                <div className="mb-4 flex items-center justify-between">
-                  <span className="font-heading text-base font-bold text-text-dark">Totalt inkl. moms</span>
+                {totalPrice < 2000 && (
+                  <div className="mb-1 flex items-center justify-between">
+                    <span className="text-sm text-text-mid">Frakt</span>
+                    <span className="text-sm font-medium text-text-dark">
+                      {formatPrice(inclVat ? Math.round(149 * 1.25) : 149)} kr
+                    </span>
+                  </div>
+                )}
+                <div className="mb-4 flex items-center justify-between border-t border-border pt-3 mt-2">
+                  <span className="font-heading text-base font-bold text-text-dark">Totalt {vatLabel.toLowerCase()}</span>
                   <span className="font-heading text-xl font-extrabold text-text-dark">
-                    {formatPrice(Math.round((totalPrice + (totalPrice < 2000 ? 149 : 0)) * 1.25))} kr
+                    {formatPrice(
+                      inclVat
+                        ? Math.round((totalPrice + (totalPrice < 2000 ? 149 : 0)) * 1.25)
+                        : totalPrice + (totalPrice < 2000 ? 149 : 0)
+                    )} kr
                   </span>
                 </div>
 
