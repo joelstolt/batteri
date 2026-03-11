@@ -172,10 +172,10 @@ export default function FaqContent() {
 
       {/* FAQ sections */}
       <div className="mx-auto max-w-[1200px] px-4 py-16 sm:px-6">
-        <div className="mx-auto max-w-[800px]">
+        <div className="mx-auto max-w-[800px] space-y-14">
           {FAQ_SECTIONS.map((section, i) => (
             <FadeIn key={section.title} delay={i * 0.08}>
-              <div className="mb-12 last:mb-0">
+              <div>
                 <div className="mb-5 flex items-center gap-3">
                   <div className="flex h-9 w-9 items-center justify-center rounded-lg bg-navy/5">
                     <section.icon className="h-4.5 w-4.5 text-navy" strokeWidth={2} />
