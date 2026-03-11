@@ -32,10 +32,10 @@ export default function Categories() {
             <FadeIn key={cat.slug} delay={i * 0.08}>
               <Link
                 href={`/kategori/${cat.slug}`}
-                className="group block h-full overflow-hidden rounded-2xl border border-border bg-white transition-all duration-200 hover:-translate-y-1 hover:border-border-dark hover:shadow-lg"
+                className="group flex h-full flex-col overflow-hidden rounded-2xl border border-border bg-white transition-all duration-200 hover:-translate-y-1 hover:border-border-dark hover:shadow-lg"
               >
                 {/* Image */}
-                <div className="relative h-40 overflow-hidden sm:h-44">
+                <div className="relative h-40 shrink-0 overflow-hidden sm:h-44">
                   <Image
                     src={CATEGORY_IMAGES[cat.slug]}
                     alt={cat.title}
@@ -58,11 +58,11 @@ export default function Categories() {
                 </div>
 
                 {/* Description */}
-                <div className="px-4 py-4">
+                <div className="flex flex-1 flex-col px-4 py-4">
                   <p className="mb-3 text-sm leading-snug text-text-mid">
                     {cat.desc}
                   </p>
-                  <span className="flex items-center gap-1.5 text-sm font-semibold text-navy transition-colors group-hover:text-accent">
+                  <span className="mt-auto flex items-center gap-1.5 text-sm font-semibold text-navy transition-colors group-hover:text-accent">
                     Visa produkter
                     <svg width="14" height="14" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" className="transition-transform group-hover:translate-x-1">
                       <path d="M5 3l5 5-5 5" />
