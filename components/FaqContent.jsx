@@ -161,7 +161,7 @@ export default function FaqContent() {
             <p className="max-w-xl text-base leading-relaxed text-text-mid">
               Här hittar du svar på de vanligaste frågorna om beställning, frakt, 
               betalning och våra produkter. Hittar du inte svaret?{" "}
-              <Link href="/kontakt" className="font-semibold text-navy underline decoration-navy/30 underline-offset-2 transition-colors hover:text-accent">
+              <Link href="/kontakt" className="font-semibold text-navy underline decoration-navy/30 underline-offset-2 transition-colors hover:text-amber">
                 Kontakta oss
               </Link>
               .

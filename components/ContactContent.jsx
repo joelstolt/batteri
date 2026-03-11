@@ -148,7 +148,7 @@ export default function ContactContent() {
                   Direktkontakt
                 </h3>
                 <div className="flex flex-col gap-4">
-                  <a href={`tel:${PHONE_LINK}`} className="flex items-center gap-3 text-sm font-medium text-text-dark transition-colors hover:text-accent">
+                  <a href={`tel:${PHONE_LINK}`} className="flex items-center gap-3 text-sm font-medium text-text-dark transition-colors hover:text-amber">
                     <div className="flex h-10 w-10 items-center justify-center rounded-xl bg-white shadow-sm">
                       <Phone size={16} className="text-navy" />
                     </div>
@@ -157,7 +157,7 @@ export default function ContactContent() {
                       <div className="text-xs text-text-light">Ring oss direkt</div>
                     </div>
                   </a>
-                  <a href={`mailto:${EMAIL}`} className="flex items-center gap-3 text-sm font-medium text-text-dark transition-colors hover:text-accent">
+                  <a href={`mailto:${EMAIL}`} className="flex items-center gap-3 text-sm font-medium text-text-dark transition-colors hover:text-amber">
                     <div className="flex h-10 w-10 items-center justify-center rounded-xl bg-white shadow-sm">
                       <Mail size={16} className="text-navy" />
                     </div>

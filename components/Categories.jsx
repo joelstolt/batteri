@@ -62,7 +62,7 @@ export default function Categories() {
                   <p className="mb-3 text-sm leading-snug text-text-mid">
                     {cat.desc}
                   </p>
-                  <span className="mt-auto flex items-center gap-1.5 text-sm font-semibold text-navy transition-colors group-hover:text-accent">
+                  <span className="mt-auto flex items-center gap-1.5 text-sm font-semibold text-navy transition-colors group-hover:text-amber">
                     Visa produkter
                     <svg width="14" height="14" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" className="transition-transform group-hover:translate-x-1">
                       <path d="M5 3l5 5-5 5" />

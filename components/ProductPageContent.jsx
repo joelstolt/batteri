@@ -79,7 +79,7 @@ export default function ProductPageContent() {
           <h1 className="mb-2 font-heading text-2xl font-bold text-text-dark">
             Produkten hittades inte
           </h1>
-          <Link href="/" className="text-accent underline">
+          <Link href="/" className="text-amber underline">
             Tillbaka till startsidan
           </Link>
         </div>
@@ -202,7 +202,7 @@ export default function ProductPageContent() {
 
               {/* Volume order */}
               <div className="mb-6">
-                <a href={`tel:${PHONE_LINK}`} className="text-sm font-semibold text-navy underline underline-offset-2 hover:text-accent">
+                <a href={`tel:${PHONE_LINK}`} className="text-sm font-semibold text-navy underline underline-offset-2 hover:text-amber">
                   Beställa större mängd? Vi erbjuder offert på volymköp av högre värde.
                 </a>
               </div>

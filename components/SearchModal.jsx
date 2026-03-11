@@ -155,7 +155,7 @@ export default function SearchModal({ isOpen, onClose }) {
                   </p>
                   <p className="text-sm text-text-mid">
                     Prova ett annat sökord eller{" "}
-                    <button onClick={() => setQuery("")} className="font-semibold text-accent underline">
+                    <button onClick={() => setQuery("")} className="font-semibold text-amber underline">
                       visa alla kategorier
                     </button>
                   </p>

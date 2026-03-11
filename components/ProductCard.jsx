@@ -50,7 +50,7 @@ export default function ProductCard({ product }) {
           <div className="mb-0.5 hidden text-xs font-medium text-text-mid sm:block">
             Sonnenschein · Gel · {voltage}
           </div>
-          <h3 className="mb-0.5 font-heading text-sm font-bold text-text-dark transition-colors group-hover:text-accent sm:mb-1 sm:text-[17px]">
+          <h3 className="mb-0.5 font-heading text-sm font-bold text-text-dark transition-colors group-hover:text-amber sm:mb-1 sm:text-[17px]">
             {shortName}
           </h3>
           <div className="mb-2 text-xs text-text-mid sm:mb-4 sm:text-sm">{capacity}</div>
