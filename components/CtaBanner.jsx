@@ -12,7 +12,7 @@ export default function CtaBanner() {
         }}
       />
 
-      <div className="relative z-10 mx-auto flex max-w-[1200px] flex-wrap items-center justify-between gap-6 px-6">
+      <div className="relative z-10 mx-auto flex max-w-[1200px] flex-wrap items-center justify-between gap-6 px-4 sm:px-6">
         <div>
           <h3 className="mb-1.5 font-heading text-[26px] font-extrabold text-white">
             Osäker på vilket batteri du behöver?

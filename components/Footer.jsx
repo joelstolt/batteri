@@ -16,7 +16,7 @@ const COLUMNS = [
     title: "Information",
     links: [
       { label: "Om oss", href: "/om-oss" },
-      { label: "Kundservice", href: "/kundservice" },
+      { label: "Kontakta oss", href: "/kontakt" },
       { label: "Leveransvillkor", href: "/leveransvillkor" },
       { label: "Köpvillkor", href: "/kopvillkor" },
     ],
@@ -34,7 +34,7 @@ const COLUMNS = [
 export default function Footer() {
   return (
     <footer className="bg-navy-deep pb-8 pt-14">
-      <div className="mx-auto max-w-[1200px] px-6">
+      <div className="mx-auto max-w-[1200px] px-4 sm:px-6">
         <div className="grid gap-10 border-b border-white/6 pb-10 sm:grid-cols-2 lg:grid-cols-[2fr_1fr_1fr_1fr]">
           {/* Brand */}
           <div>

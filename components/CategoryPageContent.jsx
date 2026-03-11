@@ -80,7 +80,7 @@ export default function CategoryPage() {
     <section className="bg-white pb-20">
       {/* Category header */}
       <div className="border-b border-border bg-surface">
-        <div className="mx-auto max-w-[1200px] px-6 pb-8 pt-10">
+        <div className="mx-auto max-w-[1200px] px-4 pb-8 pt-8 sm:px-6 sm:pt-10">
           {/* Breadcrumb */}
           <nav className="mb-4 flex items-center gap-2 text-sm text-text-mid">
             <Link href="/" className="transition-colors hover:text-text-dark">
@@ -112,7 +112,7 @@ export default function CategoryPage() {
 
       {/* Toolbar: filters + sort */}
       <div className="border-b border-border">
-        <div className="mx-auto flex max-w-[1200px] flex-wrap items-center justify-between gap-4 px-6 py-3">
+        <div className="mx-auto flex max-w-[1200px] flex-wrap items-center justify-between gap-3 px-4 py-3 sm:px-6">
           {/* Voltage filter pills */}
           <div className="flex items-center gap-2">
             <SlidersHorizontal size={16} className="text-text-mid" />
@@ -171,7 +171,7 @@ export default function CategoryPage() {
       </div>
 
       {/* Product grid */}
-      <div className="mx-auto max-w-[1200px] px-6 pt-8">
+      <div className="mx-auto max-w-[1200px] px-4 pt-6 sm:px-6 sm:pt-8">
         {filtered.length === 0 ? (
           <div className="py-20 text-center">
             <p className="mb-2 text-lg font-semibold text-text-dark">
@@ -185,7 +185,7 @@ export default function CategoryPage() {
             </button>
           </div>
         ) : (
-          <div className="grid grid-cols-1 gap-5 sm:grid-cols-2 lg:grid-cols-3">
+          <div className="grid grid-cols-2 gap-3 sm:gap-5 lg:grid-cols-3">
             {filtered.map((product, i) => (
               <FadeIn key={product.slug} delay={i * 0.05}>
                 <ProductCard product={product} />

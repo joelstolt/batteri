@@ -19,10 +19,10 @@ function ImageGallery({ images, alt }) {
   const [active, setActive] = useState(0)
 
   return (
-    <div className="flex gap-4">
+    <div className="flex flex-col-reverse gap-3 sm:flex-row sm:gap-4">
       {/* Thumbnails */}
       {images.length > 1 && (
-        <div className="flex w-20 flex-shrink-0 flex-col gap-2">
+        <div className="flex gap-2 overflow-x-auto sm:w-20 sm:flex-shrink-0 sm:flex-col sm:overflow-visible">
           {images.map((img, i) => (
             <button
               key={i}
@@ -94,7 +94,7 @@ export default function ProductPageContent() {
     <div className="bg-white">
       {/* Breadcrumb */}
       <div className="border-b border-border">
-        <div className="mx-auto max-w-[1200px] px-6 py-3">
+        <div className="mx-auto max-w-[1200px] px-4 py-3 sm:px-6">
           <nav className="flex items-center gap-2 text-sm text-text-mid">
             <Link href="/" className="transition-colors hover:text-text-dark">Hem</Link>
             <ChevronRight size={12} className="text-border-dark" />
@@ -112,7 +112,7 @@ export default function ProductPageContent() {
       </div>
 
       {/* Main product section */}
-      <div className="mx-auto max-w-[1200px] px-6 py-10">
+      <div className="mx-auto max-w-[1200px] px-4 py-6 sm:px-6 sm:py-10">
         <div className="grid gap-10 lg:grid-cols-2">
           {/* Left — Image Gallery */}
           <FadeIn>
@@ -264,7 +264,7 @@ export default function ProductPageContent() {
       {/* Related products */}
       {related.length > 0 && (
         <div className="border-t border-border bg-surface py-14">
-          <div className="mx-auto max-w-[1200px] px-6">
+          <div className="mx-auto max-w-[1200px] px-4 sm:px-6">
             <h2 className="mb-6 font-heading text-2xl font-extrabold text-text-dark">
               Relaterade produkter
             </h2>

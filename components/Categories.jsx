@@ -7,7 +7,7 @@ import FadeIn from "./FadeIn"
 export default function Categories() {
   return (
     <section className="bg-surface py-[72px]">
-      <div className="mx-auto max-w-[1200px] px-6">
+      <div className="mx-auto max-w-[1200px] px-4 sm:px-6">
         <FadeIn>
           <div className="mb-10">
             <div className="mb-2 text-xs font-bold uppercase tracking-widest text-amber">

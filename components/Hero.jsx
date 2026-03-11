@@ -19,7 +19,7 @@ export default function Hero() {
       {/* Soft gradient */}
       <div className="pointer-events-none absolute -right-[10%] -top-[20%] h-[500px] w-[500px] rounded-full bg-[radial-gradient(circle,rgba(253,184,19,0.06),transparent_70%)]" />
 
-      <div className="relative z-10 mx-auto flex max-w-[1200px] flex-wrap items-center gap-12 px-6 pb-16 pt-12">
+      <div className="relative z-10 mx-auto flex max-w-[1200px] flex-wrap items-center gap-8 px-4 pb-10 pt-8 sm:gap-12 sm:px-6 sm:pb-16 sm:pt-12">
         {/* Left */}
         <motion.div
           className="flex-[1_1_480px]"
