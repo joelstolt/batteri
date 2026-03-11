@@ -184,7 +184,7 @@ export default function FaqContent() {
                     {section.title}
                   </h2>
                 </div>
-                <div className="rounded-xl border border-border bg-white">
+                <div className="rounded-xl border border-border bg-white px-5 sm:px-6">
                   {section.items.map((item) => (
                     <FaqItem key={item.q} question={item.q} answer={item.a} />
                   ))}
