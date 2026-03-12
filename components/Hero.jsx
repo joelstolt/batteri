@@ -28,22 +28,22 @@ export default function Hero() {
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.8, ease: [0.22, 1, 0.36, 1] }}
         >
-          {/* Partner badge */}
+          {/* Trust badge */}
           <div className="mb-6 inline-flex items-center gap-2 rounded-md border border-border bg-surface px-3.5 py-1.5 text-xs font-semibold uppercase tracking-wider text-amber">
             <span className="h-1.5 w-1.5 animate-pulse rounded-full bg-amber-bg" />
-            Auktoriserad Sonnenschein-partner i Sverige
+            Tysktillverkade gel-batterier · Fraktfritt över 2 000 kr
           </div>
 
           <h1 className="mb-5 font-heading text-[clamp(32px,4.5vw,52px)] font-extrabold leading-[1.1] tracking-tight text-text-dark">
-            Professionella batterier
+            Rätt batteri till din maskin
             <br />
-            <span className="text-amber">för de som vet skillnaden</span>
+            <span className="text-amber">till Sveriges bästa pris</span>
           </h1>
 
           <p className="mb-8 max-w-[480px] text-[17px] leading-relaxed text-text-mid">
-            Traktionsbatterier för industrin. Gel-batterier för städmaskiner.
-            Stationära lösningar för hissar och larm. Vi säljer inte allt till
-            alla — vi säljer rätt batteri till dig.
+            Truckar, städmaskiner, hissar eller solceller — vi har batteriet 
+            du behöver. Snabb leverans, vassa priser och riktig experthjälp 
+            om du har frågor. Inga mellanhänder, inga krångel.
           </p>
 
           {/* CTA Buttons */}
@@ -52,22 +52,22 @@ export default function Hero() {
               href="/kategori/traktion-industri"
               className="rounded-xl bg-amber-bg px-7 py-3.5 font-heading text-sm font-bold text-navy shadow-sm transition-all hover:-translate-y-px hover:shadow-md sm:text-base"
             >
-              Utforska sortimentet
+              Se alla batterier
             </Link>
             <Link
               href="/kontakt"
               className="rounded-xl border border-border bg-white px-7 py-3.5 font-heading text-sm font-bold text-text-dark transition-all hover:-translate-y-px hover:border-border-dark hover:shadow-sm sm:text-base"
             >
-              Kontakta oss
+              Behöver du hjälp? Ring oss
             </Link>
           </div>
 
           {/* Stats */}
           <div className="flex flex-wrap gap-8">
             {[
-              { val: "500+", sub: "Levererade ordrar" },
-              { val: "100%", sub: "Nischad expertis" },
-              { val: "1–3 dgr", sub: "Leveranstid" },
+              { val: "1–3 dgr", sub: "Leverans i hela Sverige" },
+              { val: "0 kr", sub: "Frakt över 2 000 kr" },
+              { val: "30 dgr", sub: "Öppet köp" },
             ].map((s, i) => (
               <div
                 key={i}
