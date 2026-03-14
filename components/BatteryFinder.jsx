@@ -14,8 +14,8 @@ const AREAS = [
 
 const VOLTAGES = [
   { id: "6v", label: "6V", sub: "Djupcykel" },
+  { id: "8v", label: "8V", sub: "Golfbil / Elfordon" },
   { id: "12v", label: "12V", sub: "Vanligast" },
-  { id: "24v", label: "24V", sub: "Industriellt" },
   { id: "vet-ej", label: "Vet ej", sub: "Vi hjälper dig" },
 ]
 
