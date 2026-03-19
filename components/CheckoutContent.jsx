@@ -235,8 +235,22 @@ function CheckoutForm({ form, setForm, errors, setErrors, totalPrice, shippingCo
       {/* Stripe Payment Element */}
       <div>
         <h2 className="mb-5 font-heading text-xl font-bold text-text-dark">Betalning</h2>
-        <div className="rounded-xl border border-border bg-white p-5">
-          <PaymentElement options={{ layout: "tabs" }} />
+        <div className="rounded-xl border border-border bg-white p-5" style={{ minHeight: 200 }}>
+          <PaymentElement
+            options={{
+              layout: "tabs",
+              defaultValues: {
+                billingDetails: {
+                  name: `${form.firstName} ${form.lastName}`.trim(),
+                  email: form.email,
+                  phone: form.phone,
+                  address: {
+                    country: "SE",
+                  },
+                },
+              },
+            }}
+          />
         </div>
         {paymentError && (
           <div className="mt-3 rounded-lg bg-red-50 px-4 py-3 text-sm text-red-600">
