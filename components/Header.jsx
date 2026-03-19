@@ -102,15 +102,6 @@ export default function Header() {
               <Search size={20} />
             </button>
 
-            {/* Phone — desktop only */}
-            <a
-              href={`tel:${PHONE_LINK}`}
-              className="hidden items-center gap-2 rounded-[10px] px-3 py-2 text-sm font-medium text-white/70 transition-colors hover:bg-white/6 hover:text-white lg:flex"
-            >
-              <Phone size={15} />
-              {PHONE}
-            </a>
-
             {/* Cart button */}
             <button
               onClick={() => setIsOpen(true)}
@@ -217,13 +208,6 @@ export default function Header() {
                 <Search size={16} />
                 Sök produkter
               </button>
-              <a
-                href={`tel:${PHONE_LINK}`}
-                className="flex items-center gap-3 rounded-lg px-3 py-3 text-sm font-medium text-white/70 transition-colors hover:bg-white/6 hover:text-white"
-              >
-                <Phone size={16} />
-                {PHONE}
-              </a>
             </div>
 
             {/* Partner badge */}

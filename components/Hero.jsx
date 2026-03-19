@@ -58,7 +58,7 @@ export default function Hero() {
               href="/kontakt"
               className="rounded-xl border border-border bg-white px-7 py-3.5 font-heading text-sm font-bold text-text-dark transition-all hover:-translate-y-px hover:border-border-dark hover:shadow-sm sm:text-base"
             >
-              Behöver du hjälp? Ring oss
+              Kontakta oss
             </Link>
           </div>
 
