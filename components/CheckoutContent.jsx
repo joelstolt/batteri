@@ -11,7 +11,7 @@ import { useCart } from "@/lib/cart-context"
 import { useVat } from "@/lib/vat-context"
 import FadeIn from "@/components/FadeIn"
 
-const stripePromise = loadStripe(process.env.NEXT_PUBLIC_STRIPE_PUBLISHABLE_KEY)
+const stripePromise = loadStripe(process.env.NEXT_PUBLIC_STRIPE)
 
 const SHIPPING_THRESHOLD = 2000
 const SHIPPING_COST = 149
