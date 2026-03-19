@@ -34,7 +34,7 @@ export async function POST(request) {
     const paymentIntent = await stripe.paymentIntents.create({
       amount: amountInOre,
       currency: "sek",
-      automatic_payment_methods: { enabled: true },
+      payment_method_types: ["card"],
       metadata: {
         order_source: "batteriproffs.se",
         items: JSON.stringify(itemSummary),
