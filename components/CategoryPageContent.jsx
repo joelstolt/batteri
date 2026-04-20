@@ -4,7 +4,7 @@ import { useState, useMemo } from "react"
 import { useParams } from "next/navigation"
 import Link from "next/link"
 import { SlidersHorizontal, ChevronDown, Grid3X3, LayoutList } from "lucide-react"
-import { getProductsByCategory } from "@/lib/products"
+import { getProductsByCategory, products as allProductsList } from "@/lib/products"
 import { CATEGORIES } from "@/lib/constants"
 import ProductCard from "@/components/ProductCard"
 import FadeIn from "@/components/FadeIn"
@@ -21,7 +21,7 @@ export default function CategoryPage() {
   const slug = params.slug
 
   const category = CATEGORIES.find((c) => c.slug === slug)
-  const allProducts = getProductsByCategory(slug)
+  const allProducts = slug === "alla" ? allProductsList : getProductsByCategory(slug)
 
   const [sort, setSort] = useState("popular")
   const [voltageFilter, setVoltageFilter] = useState("all")
@@ -92,8 +92,7 @@ export default function CategoryPage() {
 
           <div className="flex flex-wrap items-end justify-between gap-4">
             <div>
-              <div className="mb-2 flex items-center gap-3">
-                <span className="text-3xl">{category.icon}</span>
+              <div className="mb-2">
                 <h1 className="font-heading text-[clamp(28px,4vw,40px)] font-extrabold tracking-tight text-text-dark">
                   {category.title}
                 </h1>

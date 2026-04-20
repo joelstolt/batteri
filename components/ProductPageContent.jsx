@@ -65,6 +65,59 @@ function ImageGallery({ images, alt }) {
   )
 }
 
+function ProductExtraInfo({ product, className = "" }) {
+  if (!product.fitsTo && !product.recommendedCharger) return null
+
+  return (
+    <div className={`space-y-5 ${className}`}>
+      {product.fitsTo && (
+        <div className="rounded-xl border border-border bg-surface p-5">
+          <h3 className="mb-2 font-heading text-sm font-bold uppercase tracking-wider text-text-dark">
+            Passar till
+          </h3>
+          <p className="text-sm leading-relaxed text-text-mid">{product.fitsTo}</p>
+        </div>
+      )}
+      {product.recommendedCharger && (
+        <div className="rounded-xl border border-border bg-surface p-5">
+          <h3 className="mb-2 font-heading text-sm font-bold uppercase tracking-wider text-text-dark">
+            Rekommenderad laddare
+          </h3>
+          <p className="text-sm leading-relaxed text-text-mid">{product.recommendedCharger}</p>
+        </div>
+      )}
+    </div>
+  )
+}
+
+function ExpandableDescription({ description }) {
+  const [expanded, setExpanded] = useState(false)
+
+  return (
+    <div className="mb-6">
+      <h3 className="mb-2 font-heading text-sm font-bold uppercase tracking-wider text-text-mid">
+        Beskrivning
+      </h3>
+      <div className="relative">
+        <div
+          className={`text-sm leading-relaxed text-text-mid whitespace-pre-line overflow-hidden transition-[max-height] duration-300 ease-in-out ${expanded ? "max-h-[2000px]" : "max-h-[3.75em]"}`}
+        >
+          {description}
+        </div>
+        {!expanded && (
+          <div className="pointer-events-none absolute bottom-0 left-0 right-0 h-8 bg-gradient-to-t from-white to-transparent" />
+        )}
+      </div>
+      <button
+        onClick={() => setExpanded(!expanded)}
+        className="mt-1 text-sm font-semibold text-navy hover:underline"
+      >
+        {expanded ? "Visa mindre" : "Läs mer"}
+      </button>
+    </div>
+  )
+}
+
 export default function ProductPageContent() {
   const params = useParams()
   const product = getProductBySlug(params.slug)
@@ -126,6 +179,9 @@ export default function ProductPageContent() {
               )}
               <ImageGallery images={product.images} alt={product.name} />
             </div>
+
+            {/* Passar till & Rekommenderad laddare — desktop only */}
+            <ProductExtraInfo product={product} className="mt-8 hidden lg:block" />
           </FadeIn>
 
           {/* Right — Info */}
@@ -224,14 +280,7 @@ export default function ProductPageContent() {
               </div>
 
               {/* Description */}
-              <div className="mb-6">
-                <h3 className="mb-2 font-heading text-sm font-bold uppercase tracking-wider text-text-mid">
-                  Beskrivning
-                </h3>
-                <p className="text-sm leading-relaxed text-text-mid">
-                  {product.description}
-                </p>
-              </div>
+              <ExpandableDescription description={product.description} />
 
               {/* Specs table */}
               <div className="overflow-hidden rounded-xl border border-border">
@@ -250,18 +299,9 @@ export default function ProductPageContent() {
                 </div>
               </div>
 
-              {/* Need help */}
-              <div className="mt-6 flex items-center gap-3 rounded-xl border border-amber-bg/20 bg-amber-bg/5 px-5 py-4">
-                <div className="flex h-10 w-10 flex-shrink-0 items-center justify-center rounded-xl bg-amber-bg/15">
-                  <Phone size={18} className="text-amber" />
-                </div>
-                <div>
-                  <div className="text-sm font-bold text-text-dark">Osäker på om detta batteri passar?</div>
-                  <div className="text-sm text-text-mid">
-                    Ring <a href={`tel:${PHONE_LINK}`} className="font-semibold text-navy underline">{PHONE}</a> så hjälper vi dig.
-                  </div>
-                </div>
-              </div>
+              {/* Passar till & Rekommenderad laddare — mobile only */}
+              <ProductExtraInfo product={product} className="mt-6 lg:hidden" />
+
             </div>
           </FadeIn>
         </div>

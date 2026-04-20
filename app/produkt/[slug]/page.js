@@ -17,13 +17,16 @@ export async function generateMetadata({ params }) {
     return { title: "Produkt hittades inte — Batteriproffs" }
   }
 
+  const metaDesc = product.metaDescription || product.description?.slice(0, 160)
+
   return {
     title: `${product.name} — Köp hos Batteriproffs`,
-    description: product.description,
+    description: metaDesc,
+    keywords: product.seoKeywords || "",
     openGraph: {
       title: `${product.name} — Batteriproffs`,
-      description: product.description,
-      images: [{ url: product.image }],
+      description: metaDesc,
+      images: [{ url: product.images?.[0] }],
     },
   }
 }

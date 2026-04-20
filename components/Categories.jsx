@@ -28,7 +28,7 @@ export default function Categories() {
         </FadeIn>
 
         <div className="grid grid-cols-1 gap-4 sm:grid-cols-2 lg:grid-cols-4">
-          {CATEGORIES.map((cat, i) => (
+          {CATEGORIES.filter((cat) => cat.slug !== "alla").map((cat, i) => (
             <FadeIn key={cat.slug} delay={i * 0.08}>
               <Link
                 href={`/kategori/${cat.slug}`}

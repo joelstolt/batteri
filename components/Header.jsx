@@ -133,7 +133,7 @@ export default function Header() {
         {/* Desktop nav row */}
         <div className="hidden border-t border-white/6 md:block">
           <div className="mx-auto flex h-[46px] max-w-[1200px] items-center px-6">
-            <Link href="/kategori/traktion-industri" className="flex h-[46px] items-center gap-2 border-b-2 border-amber-bg bg-white/6 px-5 text-sm font-semibold text-white transition-colors hover:bg-white/10">
+            <Link href="/kategori/alla" className="flex h-[46px] items-center gap-2 border-b-2 border-amber-bg bg-white/6 px-5 text-sm font-semibold text-white transition-colors hover:bg-white/10">
               <Menu size={16} />
               Alla batterier
               <ChevronRight size={12} className="rotate-90" />
