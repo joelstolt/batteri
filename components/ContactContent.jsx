@@ -7,11 +7,28 @@ import FadeIn from "@/components/FadeIn"
 
 export default function ContactContent() {
   const [sent, setSent] = useState(false)
+  const [submitting, setSubmitting] = useState(false)
+  const [error, setError] = useState("")
   const [form, setForm] = useState({ name: "", email: "", phone: "", message: "", type: "foretag" })
 
-  const handleSubmit = (e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault()
-    setSent(true)
+    setError("")
+    setSubmitting(true)
+    try {
+      const res = await fetch("/api/contact", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify(form),
+      })
+      const data = await res.json().catch(() => ({}))
+      if (!res.ok) throw new Error(data.error || "Något gick fel")
+      setSent(true)
+    } catch (err) {
+      setError(err.message || "Något gick fel — prova igen eller ring oss")
+    } finally {
+      setSubmitting(false)
+    }
   }
 
   return (
@@ -127,12 +144,19 @@ export default function ContactContent() {
                     />
                   </div>
 
+                  {error && (
+                    <div className="rounded-xl border border-red-200 bg-red-50 px-4 py-3 text-sm text-red-700">
+                      {error}
+                    </div>
+                  )}
+
                   <button
                     type="submit"
-                    className="flex items-center justify-center gap-2 rounded-xl bg-amber-bg px-8 py-4 font-heading text-base font-bold text-navy shadow-sm transition-all hover:-translate-y-px hover:shadow-md"
+                    disabled={submitting}
+                    className="flex items-center justify-center gap-2 rounded-xl bg-amber-bg px-8 py-4 font-heading text-base font-bold text-navy shadow-sm transition-all hover:-translate-y-px hover:shadow-md disabled:cursor-not-allowed disabled:opacity-60 disabled:hover:translate-y-0 disabled:hover:shadow-sm"
                   >
                     <Send size={16} />
-                    Skicka meddelande
+                    {submitting ? "Skickar…" : "Skicka meddelande"}
                   </button>
                 </form>
               </div>

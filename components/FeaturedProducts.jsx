@@ -31,7 +31,7 @@ export default function FeaturedProducts() {
               </h2>
             </div>
             <Link
-              href="/kategori/traktion-industri"
+              href="/kategori/alla"
               className="flex items-center gap-1.5 rounded-lg border border-border px-4 py-2 text-sm font-semibold text-text-dark transition-all hover:border-border-dark hover:bg-surface"
             >
               Visa alla produkter

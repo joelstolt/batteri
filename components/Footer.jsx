@@ -17,8 +17,8 @@ const COLUMNS = [
     links: [
       { label: "Kontakta oss", href: "/kontakt" },
       { label: "Vanliga frågor", href: "/faq" },
+      { label: "Skötsel av batterier", href: "/skotsel" },
       { label: "Frakt & leverans", href: "/villkor" },
-      { label: "Retur & reklamation", href: "/villkor" },
     ],
   },
   {

@@ -2,89 +2,78 @@
 
 import { motion } from "framer-motion"
 import Link from "next/link"
-import BatteryFinder from "./BatteryFinder"
 
 export default function Hero() {
   return (
-    <section className="relative overflow-hidden border-b border-border bg-white">
-      {/* Subtle background pattern */}
-      <div
-        className="pointer-events-none absolute inset-0 opacity-[0.03]"
-        style={{
-          backgroundImage: `
-            repeating-linear-gradient(0deg, transparent, transparent 39px, rgba(0,0,0,0.3) 39px, rgba(0,0,0,0.3) 40px),
-            repeating-linear-gradient(90deg, transparent, transparent 39px, rgba(0,0,0,0.3) 39px, rgba(0,0,0,0.3) 40px)
-          `,
-        }}
-      />
-      {/* Soft gradient */}
-      <div className="pointer-events-none absolute -right-[10%] -top-[20%] h-[500px] w-[500px] rounded-full bg-[radial-gradient(circle,rgba(253,184,19,0.06),transparent_70%)]" />
-
-      <div className="relative z-10 mx-auto flex max-w-[1200px] flex-wrap items-center gap-8 px-4 pb-10 pt-8 sm:gap-12 sm:px-6 sm:pb-16 sm:pt-12">
-        {/* Left */}
-        <motion.div
-          className="flex-[1_1_480px]"
-          initial={{ opacity: 0, y: 20 }}
-          animate={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.8, ease: [0.22, 1, 0.36, 1] }}
+    <section className="border-b border-border bg-white">
+      <div className="mx-auto max-w-[1200px] px-4 py-8 sm:px-6 sm:py-12">
+        <div
+          className="relative overflow-hidden rounded-2xl border border-border bg-navy bg-cover bg-center px-6 py-12 sm:px-12 sm:py-20"
+          style={{ backgroundImage: "url('/hero-bg.jpg')" }}
         >
-          <h1 className="mb-5 font-heading text-[clamp(32px,4.5vw,52px)] font-extrabold leading-[1.1] tracking-tight text-text-dark">
-            Rätt batteri till din maskin
-            <br />
-            <span className="text-amber">till Sveriges bästa pris</span>
-          </h1>
+          {/* Dark overlay for readability */}
+          <div className="pointer-events-none absolute inset-0 bg-gradient-to-r from-navy/95 via-navy/85 to-navy/55" />
 
-          <p className="mb-6 max-w-[480px] text-[17px] leading-relaxed text-text-mid">
-            Truckar, städmaskiner, hissar eller solceller — vi har batteriet
-            du behöver. Snabb leverans, vassa priser och riktig experthjälp
-            om du har frågor. Inga mellanhänder, inga krångel.
-          </p>
+          <motion.div
+            className="relative z-10 max-w-[640px]"
+            initial={{ opacity: 0, y: 20 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.8, ease: [0.22, 1, 0.36, 1] }}
+          >
+            <div className="mb-5 inline-flex items-center gap-2 rounded-full border border-amber/30 bg-amber/10 px-3.5 py-1.5 font-heading text-xs font-bold uppercase tracking-wider text-amber backdrop-blur-sm">
+              <span className="text-sm">🏆</span>
+              Billigast & bäst på traktion
+            </div>
 
-          <div className="mb-8 inline-block rounded-lg bg-navy px-5 py-2.5 font-heading text-[clamp(15px,2vw,18px)] font-extrabold uppercase tracking-wide text-white shadow-lg">
-            🏆 Billigast & bäst på traktion
-          </div>
+            <h1 className="mb-5 font-heading text-[clamp(32px,4.5vw,52px)] font-extrabold leading-[1.1] tracking-tight text-white">
+              Rätt batteri till din maskin
+              <br />
+              <span className="text-amber">till Sveriges bästa pris</span>
+            </h1>
 
-          {/* CTA Buttons */}
-          <div className="mb-10 flex flex-wrap gap-3">
-            <Link
-              href="/kategori/traktion-industri"
-              className="rounded-xl bg-amber-bg px-7 py-3.5 font-heading text-sm font-bold text-navy shadow-sm transition-all hover:-translate-y-px hover:shadow-md sm:text-base"
-            >
-              Se alla batterier
-            </Link>
-            <Link
-              href="/kontakt"
-              className="rounded-xl border border-border bg-white px-7 py-3.5 font-heading text-sm font-bold text-text-dark transition-all hover:-translate-y-px hover:border-border-dark hover:shadow-sm sm:text-base"
-            >
-              Kontakta oss
-            </Link>
-          </div>
+            <p className="mb-8 max-w-[480px] text-[17px] leading-relaxed text-white/80">
+              Truckar, städmaskiner, hissar eller solceller — vi har batteriet
+              du behöver. Snabb leverans, vassa priser och riktig experthjälp
+              om du har frågor. Inga mellanhänder, inga krångel.
+            </p>
 
-          {/* Stats */}
-          <div className="flex flex-wrap gap-8">
-            {[
-              { val: "1–3 dgr", sub: "Leverans i hela Sverige" },
-              { val: "0 kr", sub: "Frakt över 2 000 kr" },
-              { val: "30 dgr", sub: "Öppet köp" },
-            ].map((s, i) => (
-              <div
-                key={i}
-                className={i > 0 ? "border-l border-border pl-8" : ""}
+            {/* CTA Buttons */}
+            <div className="mb-10 flex flex-col gap-3 sm:flex-row sm:flex-wrap">
+              <Link
+                href="/kategori/traktion-industri"
+                className="rounded-xl bg-amber-bg px-7 py-3.5 text-center font-heading text-sm font-bold text-navy shadow-sm transition-all hover:-translate-y-px hover:shadow-md sm:text-base"
               >
-                <div className="font-heading text-2xl font-extrabold text-text-dark">
-                  {s.val}
-                </div>
-                <div className="mt-0.5 text-[13px] font-medium text-text-light">
-                  {s.sub}
-                </div>
-              </div>
-            ))}
-          </div>
-        </motion.div>
+                Se alla batterier
+              </Link>
+              <Link
+                href="/kontakt"
+                className="rounded-xl border border-white/20 bg-white/10 px-7 py-3.5 text-center font-heading text-sm font-bold text-white backdrop-blur-sm transition-all hover:-translate-y-px hover:bg-white/20 sm:text-base"
+              >
+                Kontakta oss
+              </Link>
+            </div>
 
-        {/* Right — Battery Finder */}
-        <div className="flex flex-[1_1_380px] justify-center">
-          <BatteryFinder />
+            {/* Stats */}
+            <div className="flex flex-wrap gap-8">
+              {[
+                { val: "1–3 dgr", sub: "Leverans i hela Sverige" },
+                { val: "Original", sub: "Sonnenschein-partner" },
+                { val: "30 dgr", sub: "Öppet köp" },
+              ].map((s, i) => (
+                <div
+                  key={i}
+                  className={i > 0 ? "border-l border-white/20 pl-8" : ""}
+                >
+                  <div className="font-heading text-2xl font-extrabold text-white">
+                    {s.val}
+                  </div>
+                  <div className="mt-0.5 text-[13px] font-medium text-white/60">
+                    {s.sub}
+                  </div>
+                </div>
+              ))}
+            </div>
+          </motion.div>
         </div>
       </div>
     </section>
