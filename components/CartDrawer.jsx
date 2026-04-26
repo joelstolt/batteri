@@ -178,33 +178,12 @@ export default function CartDrawer() {
             {items.length > 0 && (
               <div className="border-t border-border px-6 py-5">
                 {/* Shipping info */}
-                {totalPrice < 2000 ? (
-                  <div className="mb-3 rounded-lg bg-amber-bg/8 px-3.5 py-2.5">
-                    <div className="flex items-center justify-between text-xs">
-                      <span className="font-medium text-text-mid">Frakt</span>
-                      <span className="font-semibold text-text-dark">
-                        {formatPrice(inclVat ? Math.round(149 * 1.25) : 149)} kr
-                      </span>
-                    </div>
-                    <div className="mt-1 h-1.5 overflow-hidden rounded-full bg-border">
-                      <div
-                        className="h-full rounded-full bg-amber-bg transition-all"
-                        style={{ width: `${Math.min(100, (totalPrice / 2000) * 100)}%` }}
-                      />
-                    </div>
-                    <div className="mt-1 text-[11px] text-text-light">
-                      {formatPrice(inclVat ? Math.round((2000 - totalPrice) * 1.25) : 2000 - totalPrice)} kr kvar till fri frakt
-                    </div>
-                  </div>
-                ) : (
-                  <div className="mb-3 flex items-center gap-2 rounded-lg bg-green/5 px-3.5 py-2.5 text-xs font-semibold text-green">
-                    <svg width="14" height="14" viewBox="0 0 14 14" fill="none">
-                      <circle cx="7" cy="7" r="7" fill="#16a34a" opacity="0.15" />
-                      <path d="M4 7l2 2 4-4" stroke="#16a34a" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round" />
-                    </svg>
-                    Fri frakt!
-                  </div>
-                )}
+                <div className="mb-3 flex items-center justify-between rounded-lg bg-surface px-3.5 py-2.5 text-xs">
+                  <span className="font-medium text-text-mid">Frakt</span>
+                  <span className="font-semibold text-text-dark">
+                    {formatPrice(inclVat ? Math.round(149 * 1.25) : 149)} kr
+                  </span>
+                </div>
 
                 <div className="mb-1 flex items-center justify-between">
                   <span className="text-sm text-text-mid">Produkter {vatLabel.toLowerCase()}</span>

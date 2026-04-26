@@ -35,10 +35,10 @@ const COLUMNS = [
 /* ─── Trust bar icons ─── */
 
 const TRUST_FEATURES = [
-  { icon: Truck, label: "Fri frakt över 2 000 kr" },
+  { icon: Truck, label: "Snabb leverans 1–3 dgr" },
   { icon: RotateCcw, label: "30 dagars öppet köp" },
   { icon: Shield, label: "Säker betalning" },
-  { icon: Award, label: "Sonnenschein-partner" },
+  { icon: Award, label: "20+ år i branschen" },
 ]
 
 export default function Footer() {
@@ -74,8 +74,8 @@ export default function Footer() {
               </div>
             </div>
             <p className="mb-5 max-w-[280px] text-sm leading-relaxed text-white/40">
-              Auktoriserad Sonnenschein-partner. Professionella batterilösningar
-              för företag och privatpersoner i hela Sverige.
+              Professionella batterilösningar för företag och privatpersoner
+              i hela Sverige — Sonnenschein, Nordmax och fler kvalitetsmärken.
             </p>
             <div className="space-y-2.5">
               <a
@@ -128,8 +128,6 @@ export default function Footer() {
               {[
                 { name: "Visa", bg: "#1a1f71", text: "#fff" },
                 { name: "Mastercard", bg: "#252525", text: "#fff" },
-                { name: "Klarna", bg: "#FFB3C7", text: "#0A0B09" },
-                { name: "Swish", bg: "#fff", text: "#333" },
               ].map((m) => (
                 <div
                   key={m.name}

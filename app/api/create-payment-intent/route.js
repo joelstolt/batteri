@@ -3,7 +3,6 @@ import { NextResponse } from "next/server"
 
 const stripe = new Stripe(process.env.STRIPE_SECRET_KEY)
 
-const SHIPPING_THRESHOLD = 2000
 const SHIPPING_COST = 149
 const VAT_RATE = 1.25
 
@@ -17,7 +16,7 @@ export async function POST(request) {
 
     // Calculate subtotal (excl. VAT)
     const subtotal = items.reduce((sum, item) => sum + item.price * item.qty, 0)
-    const shippingCost = subtotal >= SHIPPING_THRESHOLD ? 0 : SHIPPING_COST
+    const shippingCost = SHIPPING_COST
 
     // Total including 25% VAT — this is what Stripe charges
     const totalInclVat = Math.round((subtotal + shippingCost) * VAT_RATE)

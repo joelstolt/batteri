@@ -147,7 +147,7 @@ export default function ThankYouContent() {
                 <div className="flex justify-between">
                   <span className="text-text-mid">Frakt</span>
                   <span className={order.shipping === 0 ? "font-medium text-green" : "text-text-dark"}>
-                    {order.shipping === 0 ? "Fri frakt" : `${formatPrice(order.shipping)} kr`}
+                    {formatPrice(order.shipping)} kr
                   </span>
                 </div>
                 <div className="flex justify-between">

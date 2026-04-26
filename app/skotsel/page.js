@@ -6,7 +6,7 @@ import Footer from "@/components/Footer"
 export const metadata = {
   title: "Skötsel av batterier — guide för längre livslängd | Batteriproffs",
   description:
-    "Komplett guide till skötsel och underhåll av gel-batterier, AGM och blybatterier. Laddning, förvaring, vanliga misstag och tips från Sveriges Sonnenschein-partner.",
+    "Komplett guide till skötsel och underhåll av gel-batterier, AGM och blybatterier. Laddning, förvaring, vanliga misstag och tips från Batteriproffs.",
   alternates: { canonical: "/skotsel" },
   openGraph: {
     title: "Skötsel av batterier — guide för längre livslängd",

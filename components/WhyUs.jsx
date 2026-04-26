@@ -9,7 +9,7 @@ const CHECKPOINTS = [
   },
   {
     title: "Leverans inom 1–3 dagar",
-    desc: "Beställ före 14:00 så skickas din order samma dag. Fri frakt på allt över 2 000 kr.",
+    desc: "Beställ före 14:00 så skickas din order samma dag. Leverans i hela Sverige inom 1–3 arbetsdagar.",
   },
   {
     title: "Ring och prata med en expert",

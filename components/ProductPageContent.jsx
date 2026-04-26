@@ -172,11 +172,6 @@ export default function ProductPageContent() {
           {/* Left — Image Gallery */}
           <FadeIn>
             <div className="relative">
-              {product.badge && (
-                <div className="absolute left-4 top-4 z-10 rounded-lg bg-amber-bg px-3 py-1.5 text-xs font-bold text-navy">
-                  {product.badge}
-                </div>
-              )}
               <ImageGallery images={product.images} alt={product.name} />
             </div>
 
@@ -267,7 +262,7 @@ export default function ProductPageContent() {
               <div className="mb-6 flex flex-col gap-3 rounded-xl border border-border p-5">
                 {[
                   { icon: <RotateCcw size={16} />, text: "30 dagars öppet köp!" },
-                  { icon: <Truck size={16} />, text: "Fri frakt vid order över 2 000 kr" },
+                  { icon: <Truck size={16} />, text: "Snabb leverans 1–3 arbetsdagar" },
                   { icon: <Shield size={16} />, text: "Garanti enligt tillverkare" },
                 ].map((item, i) => (
                   <div key={i} className="flex items-center gap-3 text-sm">

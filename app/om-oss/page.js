@@ -6,7 +6,7 @@ import Footer from "@/components/Footer"
 
 export const metadata = {
   title: "Om oss — Batteriproffs",
-  description: "Batteriproffs är Sveriges auktoriserade Sonnenschein-partner. Lär känna oss och vår expertis inom professionella batterilösningar.",
+  description: "Batteriproffs är ett svenskt företag med över 20 års erfarenhet av professionella batterilösningar för företag och privatpersoner.",
 }
 
 export default function AboutPage() {

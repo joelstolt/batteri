@@ -62,7 +62,7 @@ export default function AboutContent() {
                 {[
                   { num: "21+", label: "Batterimodeller i lager" },
                   { num: "3", label: "Premiumvarumärken" },
-                  { num: "07–20", label: "Chatt öppen, alla dagar" },
+                  { num: "08–17", label: "Mån–Fre öppet" },
                   { num: "1–3", label: "Dagars leverans" },
                 ].map((s, i) => (
                   <div key={i}>
@@ -156,8 +156,8 @@ export default function AboutContent() {
               { icon: <HeartHandshake size={22} />, title: "Ärlighet", desc: "Vi säljer aldrig ett dyrare batteri än du behöver. Vårt mål är att du ska komma tillbaka." },
               { icon: <Shield size={22} />, title: "Kvalitet", desc: "Vi säljer enbart batterier från tillverkare vi litar på: Nordmax, Discover och Sonnenschein." },
               { icon: <Zap size={22} />, title: "Snabbhet", desc: "Batterier skickas direkt från leverantör. De flesta leveranser når dig inom 1–3 arbetsdagar." },
-              { icon: <Users size={22} />, title: "Personligt", desc: "Chatta med oss varje dag mellan 07–20. Vi tar oss tid att förstå ditt behov innan vi rekommenderar." },
-              { icon: <Truck size={22} />, title: "Service", desc: "Fri frakt över 2 000 kr, 30 dagars öppet köp och support som faktiskt hjälper dig." },
+              { icon: <Users size={22} />, title: "Personligt", desc: "Ring eller mejla oss på vardagar 08–17. Vi tar oss tid att förstå ditt behov innan vi rekommenderar." },
+              { icon: <Truck size={22} />, title: "Service", desc: "Snabb leverans 1–3 dagar, 30 dagars öppet köp och support som faktiskt hjälper dig." },
             ].map((val, i) => (
               <FadeIn key={i} delay={i * 0.06}>
                 <div className="h-full rounded-2xl border border-border bg-surface p-6 transition-all duration-200 hover:-translate-y-1 hover:shadow-md">
@@ -272,7 +272,7 @@ export default function AboutContent() {
             <div className="rounded-2xl bg-navy p-8 text-center sm:p-12">
               <div className="mb-3 flex items-center justify-center gap-2">
                 <Clock size={20} className="text-amber-bg" />
-                <span className="text-sm font-semibold text-amber-bg">Chatt öppen 07–20, alla dagar</span>
+                <span className="text-sm font-semibold text-amber-bg">Mån–Fre 08:00–17:00</span>
               </div>
               <h2 className="mb-3 font-heading text-2xl font-extrabold text-white">
                 Osäker på vilket batteri du behöver?
@@ -281,12 +281,12 @@ export default function AboutContent() {
                 Berätta vilken maskin du har så hjälper vi dig hitta rätt batteri
                 och laddare — snabbt, enkelt och utan kostnad.
               </p>
-              <button
-                onClick={() => window.$crisp?.push(["do", "chat:open"]) ?? window.Intercom?.("show") ?? window.LiveChatWidget?.call("maximize")}
+              <a
+                href="/kontakt"
                 className="inline-flex items-center gap-2 rounded-xl bg-amber-bg px-8 py-3.5 font-heading text-base font-bold text-navy transition-transform hover:-translate-y-px"
               >
-                Chatta med oss
-              </button>
+                Kontakta oss
+              </a>
             </div>
           </FadeIn>
         </div>

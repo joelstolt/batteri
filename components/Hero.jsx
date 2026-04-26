@@ -12,7 +12,7 @@ export default function Hero() {
           style={{ backgroundImage: "url('/hero-bg.jpg')" }}
         >
           {/* Dark overlay for readability */}
-          <div className="pointer-events-none absolute inset-0 bg-gradient-to-r from-navy/95 via-navy/85 to-navy/55" />
+          <div className="pointer-events-none absolute inset-0 bg-navy/92 sm:bg-gradient-to-r sm:from-navy/95 sm:via-navy/85 sm:to-navy/55" />
 
           <motion.div
             className="relative z-10 max-w-[640px]"
@@ -25,10 +25,10 @@ export default function Hero() {
               Billigast & bäst på traktion
             </div>
 
-            <h1 className="mb-5 font-heading text-[clamp(32px,4.5vw,52px)] font-extrabold leading-[1.1] tracking-tight text-white">
+            <h1 className="mb-5 font-heading text-[clamp(32px,4.5vw,52px)] font-extrabold leading-[1.05] tracking-tight text-white">
               Rätt batteri till din maskin
               <br />
-              <span className="text-amber">till Sveriges bästa pris</span>
+              <span className="text-amber">till bästa pris i Sverige</span>
             </h1>
 
             <p className="mb-8 max-w-[480px] text-[17px] leading-relaxed text-white/80">
@@ -54,20 +54,20 @@ export default function Hero() {
             </div>
 
             {/* Stats */}
-            <div className="flex flex-wrap gap-8">
+            <div className="grid grid-cols-3 gap-2 sm:gap-3">
               {[
-                { val: "1–3 dgr", sub: "Leverans i hela Sverige" },
-                { val: "Original", sub: "Sonnenschein-partner" },
+                { val: "1–3 dgr", sub: "Snabb leverans" },
+                { val: "20+ år", sub: "I branschen" },
                 { val: "30 dgr", sub: "Öppet köp" },
               ].map((s, i) => (
                 <div
                   key={i}
-                  className={i > 0 ? "border-l border-white/20 pl-8" : ""}
+                  className="rounded-xl border border-white/10 bg-white/5 px-3 py-3 text-center backdrop-blur-sm sm:px-4 sm:py-4 sm:text-left"
                 >
-                  <div className="font-heading text-2xl font-extrabold text-white">
+                  <div className="font-heading text-base font-extrabold leading-none text-white sm:text-xl">
                     {s.val}
                   </div>
-                  <div className="mt-0.5 text-[13px] font-medium text-white/60">
+                  <div className="mt-1.5 text-[11px] font-medium leading-tight text-white/60 sm:text-[13px]">
                     {s.sub}
                   </div>
                 </div>

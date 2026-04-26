@@ -13,7 +13,6 @@ import FadeIn from "@/components/FadeIn"
 
 const stripePromise = loadStripe(process.env.NEXT_PUBLIC_STRIPE)
 
-const SHIPPING_THRESHOLD = 2000
 const SHIPPING_COST = 149
 
 function formatPrice(n) {
@@ -216,18 +215,16 @@ function CheckoutForm({ form, setForm, errors, setErrors, totalPrice, shippingCo
       {/* Shipping info */}
       <div>
         <h2 className="mb-5 font-heading text-xl font-bold text-text-dark">Leveranssätt</h2>
-        <div className={`flex items-center gap-3 rounded-xl border p-4 ${
-          shippingCost === 0 ? "border-green/20 bg-green/5" : "border-border bg-surface"
-        }`}>
-          <Truck size={20} className={shippingCost === 0 ? "text-green" : "text-text-mid"} />
+        <div className="flex items-center gap-3 rounded-xl border border-border bg-surface p-4">
+          <Truck size={20} className="text-text-mid" />
           <div className="flex-1">
             <div className="text-sm font-semibold text-text-dark">
               PostNord — Hemleverans (1–3 dagar)
             </div>
             <div className="text-xs text-text-mid">Spårningsnummer skickas via e-post</div>
           </div>
-          <span className={`font-heading text-sm font-bold ${shippingCost === 0 ? "text-green" : "text-text-dark"}`}>
-            {shippingCost === 0 ? "Fri frakt" : `${formatPrice(inclVat ? Math.round(SHIPPING_COST * 1.25) : SHIPPING_COST)} kr`}
+          <span className="font-heading text-sm font-bold text-text-dark">
+            {formatPrice(inclVat ? Math.round(SHIPPING_COST * 1.25) : SHIPPING_COST)} kr
           </span>
         </div>
       </div>
@@ -347,27 +344,10 @@ function OrderSummary({ items, totalPrice, shippingCost }) {
 
           <div className="mb-2 flex items-center justify-between text-sm">
             <span className="text-text-mid">Frakt</span>
-            <span className={`font-medium ${shippingCost === 0 ? "text-green" : "text-text-dark"}`}>
-              {shippingCost === 0
-                ? "Fri frakt"
-                : `${formatPrice(inclVat ? Math.round(SHIPPING_COST * 1.25) : SHIPPING_COST)} kr`}
+            <span className="font-medium text-text-dark">
+              {formatPrice(inclVat ? Math.round(SHIPPING_COST * 1.25) : SHIPPING_COST)} kr
             </span>
           </div>
-
-          {/* Free shipping progress */}
-          {shippingCost > 0 && (
-            <div className="mb-3 rounded-lg bg-amber-bg/8 px-3 py-2">
-              <div className="h-1.5 overflow-hidden rounded-full bg-border">
-                <div
-                  className="h-full rounded-full bg-amber-bg transition-all"
-                  style={{ width: `${Math.min(100, (totalPrice / SHIPPING_THRESHOLD) * 100)}%` }}
-                />
-              </div>
-              <div className="mt-1 text-[11px] text-text-light">
-                {formatPrice(inclVat ? Math.round((SHIPPING_THRESHOLD - totalPrice) * 1.25) : SHIPPING_THRESHOLD - totalPrice)} kr kvar till fri frakt
-              </div>
-            </div>
-          )}
 
           {!inclVat && (
             <div className="mb-2 flex items-center justify-between text-sm">
@@ -410,7 +390,7 @@ export default function CheckoutContent() {
   })
   const [formErrors, setFormErrors] = useState({})
 
-  const shippingCost = totalPrice >= SHIPPING_THRESHOLD ? 0 : SHIPPING_COST
+  const shippingCost = SHIPPING_COST
 
   // Create PaymentIntent on mount
   useEffect(() => {

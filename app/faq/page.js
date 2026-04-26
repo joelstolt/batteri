@@ -6,7 +6,7 @@ import Footer from "@/components/Footer"
 export const metadata = {
   title: "Vanliga frågor — Batteriproffs",
   description:
-    "Svar på vanliga frågor om beställning, frakt, betalning, retur och batterival hos Batteriproffs. Auktoriserad Sonnenschein-partner.",
+    "Svar på vanliga frågor om beställning, frakt, betalning, retur och batterival hos Batteriproffs.",
 }
 
 export default function FaqPage() {

@@ -6,10 +6,10 @@ import { CATEGORIES } from "@/lib/constants"
 import FadeIn from "./FadeIn"
 
 const CATEGORY_IMAGES = {
-  "traktion-industri": "https://images.unsplash.com/photo-1504307651254-35680f356dfd?w=600&h=400&fit=crop",
-  "stadmaskiner": "https://images.unsplash.com/photo-1628177142898-93e36e4e3a50?w=600&h=400&fit=crop",
-  "stationara": "https://images.unsplash.com/photo-1586920740099-f3ceb65bc51e?w=600&h=400&fit=crop",
-  "fritid-solenergi": "https://images.unsplash.com/photo-1509391366360-2e959784a276?w=600&h=400&fit=crop",
+  "traktion-industri": "/kategorier/traktion.jpg",
+  "stadmaskiner": "/kategorier/stadmaskiner.jpg",
+  "stationara": "/kategorier/stationara.jpg",
+  "fritid-solenergi": "/kategorier/fritid.jpg",
 }
 
 export default function Categories() {

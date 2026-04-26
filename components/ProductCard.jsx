@@ -23,11 +23,6 @@ export default function ProductCard({ product }) {
         href={`/produkt/${slug}`}
         className="relative block aspect-square overflow-hidden bg-surface"
       >
-        {badge && (
-          <div className="absolute left-2 top-2 z-10 rounded-md bg-amber-bg px-2 py-0.5 text-[10px] font-bold text-navy sm:left-3 sm:top-3 sm:px-2.5 sm:py-1 sm:text-[11px]">
-            {badge}
-          </div>
-        )}
         <div className="absolute right-2 top-2 z-10 rounded-md bg-navy/80 px-1.5 py-0.5 text-[10px] font-bold text-white backdrop-blur-sm sm:right-3 sm:top-3 sm:px-2 sm:text-[11px]">
           {voltage}
         </div>

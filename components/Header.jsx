@@ -154,11 +154,6 @@ export default function Header() {
             ))}
 
             <div className="flex-1" />
-
-            <div className="hidden items-center gap-1.5 text-xs font-semibold text-amber-bg lg:flex">
-              <Star size={12} fill="#FDB813" className="text-amber-bg" />
-              Auktoriserad Sonnenschein-partner
-            </div>
           </div>
         </div>
       </header>
@@ -208,14 +203,6 @@ export default function Header() {
                 <Search size={16} />
                 Sök produkter
               </button>
-            </div>
-
-            {/* Partner badge */}
-            <div className="px-5 py-5">
-              <div className="flex items-center gap-2 rounded-lg bg-white/4 px-4 py-3 text-xs font-semibold text-amber-bg">
-                <Star size={14} fill="#FDB813" className="text-amber-bg" />
-                Auktoriserad Sonnenschein-partner
-              </div>
             </div>
           </div>
         </div>

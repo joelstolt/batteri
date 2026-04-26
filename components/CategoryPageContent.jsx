@@ -98,8 +98,8 @@ export default function CategoryPage() {
                 </h1>
               </div>
               <p className="max-w-lg text-base text-text-mid">
-                {category.desc} — Underhållsfria Sonnenschein gel-batterier
-                tillverkade i Tyskland. Fri frakt över 2 000 kr.
+                {category.desc} — Kvalitetsbatterier till proffspriser. Snabb
+                leverans i hela Sverige.
               </p>
             </div>
             <div className="text-sm font-medium text-text-mid">

@@ -3,7 +3,6 @@ import { NextResponse } from "next/server"
 
 const stripe = new Stripe(process.env.STRIPE_SECRET_KEY)
 
-const SHIPPING_THRESHOLD = 2000
 const SHIPPING_COST = 149
 
 export async function POST(request) {
@@ -13,10 +12,6 @@ export async function POST(request) {
     if (!items || items.length === 0) {
       return NextResponse.json({ error: "Varukorgen är tom" }, { status: 400 })
     }
-
-    // Calculate subtotal to determine shipping
-    const subtotal = items.reduce((sum, item) => sum + item.price * item.qty, 0)
-    const shippingFree = subtotal >= SHIPPING_THRESHOLD
 
     // Build line items for Stripe
     const line_items = items.map((item) => ({
@@ -43,12 +38,10 @@ export async function POST(request) {
           shipping_rate_data: {
             type: "fixed_amount",
             fixed_amount: {
-              amount: shippingFree ? 0 : SHIPPING_COST * 100,
+              amount: SHIPPING_COST * 100,
               currency: "sek",
             },
-            display_name: shippingFree
-              ? "Fri frakt"
-              : "PostNord — Hemleverans (1–3 dagar)",
+            display_name: "PostNord — Hemleverans (1–3 dagar)",
           },
         },
       ],

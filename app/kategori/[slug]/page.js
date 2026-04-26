@@ -19,10 +19,10 @@ export async function generateMetadata({ params }) {
 
   return {
     title: `${category.title} — Batterier | Batteriproffs`,
-    description: `Köp ${category.title.toLowerCase()}-batterier hos Batteriproffs. ${category.desc}. Sonnenschein gel-batterier — fri frakt över 2 000 kr.`,
+    description: `Köp ${category.title.toLowerCase()}-batterier hos Batteriproffs. ${category.desc}. Kvalitetsbatterier — snabb leverans i hela Sverige.`,
     openGraph: {
       title: `${category.title} — Batteriproffs`,
-      description: `${category.desc}. Underhållsfria Sonnenschein gel-batterier.`,
+      description: `${category.desc}. Professionella batterilösningar med snabb leverans.`,
     },
   }
 }

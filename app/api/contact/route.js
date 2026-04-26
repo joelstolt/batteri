@@ -1,17 +1,5 @@
 import { NextResponse } from "next/server"
-import { Resend } from "resend"
-
-const resend = new Resend(process.env.RESEND_API_KEY)
-
-const TO = process.env.CONTACT_TO_EMAIL
-const FROM = process.env.CONTACT_FROM_EMAIL || "Batteriproffs <noreply@batteriproffs.se>"
-
-function escape(s = "") {
-  return String(s)
-    .replace(/&/g, "&amp;")
-    .replace(/</g, "&lt;")
-    .replace(/>/g, "&gt;")
-}
+import { resend, FROM, ADMIN_EMAIL, escape, emailLayout } from "@/lib/emails"
 
 export async function POST(request) {
   try {
@@ -25,7 +13,7 @@ export async function POST(request) {
       )
     }
 
-    if (!process.env.RESEND_API_KEY || !TO) {
+    if (!process.env.RESEND_API_KEY || !ADMIN_EMAIL) {
       console.error("Missing RESEND_API_KEY or CONTACT_TO_EMAIL")
       return NextResponse.json(
         { error: "Server är inte konfigurerad" },
@@ -35,29 +23,59 @@ export async function POST(request) {
 
     const customerType = type === "privat" ? "Privatperson" : "Företag"
 
-    const html = `
-      <div style="font-family:system-ui,-apple-system,sans-serif;max-width:560px;margin:0 auto;padding:24px;color:#0A1628;">
-        <h2 style="margin:0 0 16px;font-size:18px;">Nytt meddelande från batteriproffs.se</h2>
-        <table style="width:100%;border-collapse:collapse;font-size:14px;">
-          <tr><td style="padding:6px 0;color:#666;width:120px;">Kundtyp</td><td>${escape(customerType)}</td></tr>
-          <tr><td style="padding:6px 0;color:#666;">Namn</td><td>${escape(name)}</td></tr>
-          <tr><td style="padding:6px 0;color:#666;">E-post</td><td><a href="mailto:${escape(email)}">${escape(email)}</a></td></tr>
-          ${phone ? `<tr><td style="padding:6px 0;color:#666;">Telefon</td><td><a href="tel:${escape(phone)}">${escape(phone)}</a></td></tr>` : ""}
-        </table>
-        <div style="margin-top:20px;padding:16px;background:#F7F8FA;border-radius:8px;white-space:pre-wrap;font-size:14px;line-height:1.5;">${escape(message)}</div>
+    const adminBody = `
+      <h1 style="margin:0 0 16px;font-size:18px;font-weight:800;">Nytt meddelande från batteriproffs.se</h1>
+      <table role="presentation" width="100%" cellpadding="0" cellspacing="0" style="font-size:14px;">
+        <tr><td style="padding:6px 0;color:#6B7280;width:120px;">Kundtyp</td><td>${escape(customerType)}</td></tr>
+        <tr><td style="padding:6px 0;color:#6B7280;">Namn</td><td>${escape(name)}</td></tr>
+        <tr><td style="padding:6px 0;color:#6B7280;">E-post</td><td><a href="mailto:${escape(email)}" style="color:#0B1D3A;">${escape(email)}</a></td></tr>
+        ${phone ? `<tr><td style="padding:6px 0;color:#6B7280;">Telefon</td><td><a href="tel:${escape(phone)}" style="color:#0B1D3A;">${escape(phone)}</a></td></tr>` : ""}
+      </table>
+      <div style="margin-top:18px;padding:16px;background:#F7F8FA;border-radius:10px;white-space:pre-wrap;font-size:14px;line-height:1.6;">${escape(message)}</div>
+    `
+
+    const customerBody = `
+      <h1 style="margin:0 0 12px;font-size:20px;font-weight:800;">Tack ${escape(name.split(" ")[0])}!</h1>
+      <p style="margin:0 0 16px;font-size:14px;line-height:1.6;color:#374151;">
+        Vi har tagit emot ditt meddelande och återkommer normalt inom
+        24 timmar på vardagar. Behöver du svar snabbare? Ring oss på
+        <a href="tel:+46735546968" style="color:#0B1D3A;font-weight:600;">073-554 69 68</a>.
+      </p>
+      <div style="margin-top:8px;padding:14px 16px;background:#F7F8FA;border-radius:10px;font-size:13px;line-height:1.6;color:#6B7280;">
+        <div style="font-weight:600;color:#0A1628;margin-bottom:4px;">Ditt meddelande</div>
+        <div style="white-space:pre-wrap;">${escape(message)}</div>
       </div>
     `
 
-    const { error } = await resend.emails.send({
-      from: FROM,
-      to: TO,
-      replyTo: email,
-      subject: `Kontakt (${customerType}): ${name}`,
-      html,
-    })
+    const [adminRes] = await Promise.all([
+      resend.emails.send({
+        from: FROM,
+        to: ADMIN_EMAIL,
+        replyTo: email,
+        subject: `Kontakt (${customerType}): ${name}`,
+        html: emailLayout({
+          title: `Nytt meddelande — ${name}`,
+          preheader: `${customerType} · ${email}`,
+          body: adminBody,
+        }),
+      }),
+      resend.emails.send({
+        from: FROM,
+        to: email,
+        replyTo: ADMIN_EMAIL,
+        subject: "Tack för ditt meddelande — Batteriproffs",
+        html: emailLayout({
+          title: "Vi har tagit emot ditt meddelande",
+          preheader: "Vi återkommer inom 24 timmar.",
+          body: customerBody,
+        }),
+      }).catch((err) => {
+        console.warn("Customer auto-reply failed (non-blocking):", err)
+      }),
+    ])
 
-    if (error) {
-      console.error("Resend error:", error)
+    if (adminRes?.error) {
+      console.error("Resend admin error:", adminRes.error)
       return NextResponse.json(
         { error: "Kunde inte skicka meddelandet" },
         { status: 502 }

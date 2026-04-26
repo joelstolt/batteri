@@ -15,13 +15,13 @@ const dmSans = DM_Sans({
 })
 
 export const metadata = {
-  title: "Batteriproffs — Professionella batterilösningar | Sonnenschein-partner",
+  title: "Batteriproffs — Professionella batterilösningar för företag",
   description:
-    "Sveriges auktoriserade Sonnenschein-partner. Traktionsbatterier, gel-batterier för städmaskiner, stationära batterier och fritidsbatterier. Fri frakt över 2 000 kr.",
+    "Traktionsbatterier, gel-batterier för städmaskiner, stationära batterier och fritidsbatterier. Snabb leverans i hela Sverige och 30 dagars öppet köp.",
   openGraph: {
     title: "Batteriproffs — Professionella batterilösningar",
     description:
-      "Sveriges auktoriserade Sonnenschein-partner. Experter på traktion, städmaskin och stationära batterier.",
+      "Experter på traktion, städmaskin och stationära batterier. 20+ år i branschen.",
     url: "https://www.batteriproffs.se",
     siteName: "Batteriproffs",
     locale: "sv_SE",
