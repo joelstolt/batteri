@@ -181,7 +181,7 @@ export default function CartDrawer() {
                 <div className="mb-3 flex items-center justify-between rounded-lg bg-surface px-3.5 py-2.5 text-xs">
                   <span className="font-medium text-text-mid">Frakt</span>
                   <span className="font-semibold text-text-dark">
-                    {formatPrice(inclVat ? Math.round(149 * 1.25) : 149)} kr
+                    {formatPrice(inclVat ? Math.round(556 * 1.25) : 556)} kr
                   </span>
                 </div>
 
@@ -191,21 +191,19 @@ export default function CartDrawer() {
                     {formatPrice(inclVat ? Math.round(totalPrice * 1.25) : totalPrice)} kr
                   </span>
                 </div>
-                {totalPrice < 2000 && (
-                  <div className="mb-1 flex items-center justify-between">
-                    <span className="text-sm text-text-mid">Frakt</span>
-                    <span className="text-sm font-medium text-text-dark">
-                      {formatPrice(inclVat ? Math.round(149 * 1.25) : 149)} kr
-                    </span>
-                  </div>
-                )}
+                <div className="mb-1 flex items-center justify-between">
+                  <span className="text-sm text-text-mid">Frakt</span>
+                  <span className="text-sm font-medium text-text-dark">
+                    {formatPrice(inclVat ? Math.round(556 * 1.25) : 556)} kr
+                  </span>
+                </div>
                 <div className="mb-4 flex items-center justify-between border-t border-border pt-3 mt-2">
                   <span className="font-heading text-base font-bold text-text-dark">Totalt {vatLabel.toLowerCase()}</span>
                   <span className="font-heading text-xl font-extrabold text-text-dark">
                     {formatPrice(
                       inclVat
-                        ? Math.round((totalPrice + (totalPrice < 2000 ? 149 : 0)) * 1.25)
-                        : totalPrice + (totalPrice < 2000 ? 149 : 0)
+                        ? Math.round((totalPrice + 556) * 1.25)
+                        : totalPrice + 556
                     )} kr
                   </span>
                 </div>

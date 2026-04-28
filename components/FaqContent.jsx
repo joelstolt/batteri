@@ -35,7 +35,7 @@ const FAQ_SECTIONS = [
     items: [
       {
         q: "Vad kostar frakten?",
-        a: "Vi har en fast fraktkostnad på 149 kr (exkl. moms) per beställning, oavsett vikt och destination i Sverige. Vid större volymer eller pallgods — kontakta oss för offert.",
+        a: "Vi har en fast fraktkostnad på 695 kr (inkl. moms) per beställning, oavsett vikt och destination i Sverige. Vid större volymer eller pallgods — kontakta oss för offert.",
       },
       {
         q: "Hur lång är leveranstiden?",

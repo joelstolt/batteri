@@ -13,7 +13,7 @@ import FadeIn from "@/components/FadeIn"
 
 const stripePromise = loadStripe(process.env.NEXT_PUBLIC_STRIPE)
 
-const SHIPPING_COST = 0
+const SHIPPING_COST = 556
 
 function formatPrice(n) {
   return new Intl.NumberFormat("sv-SE").format(n)

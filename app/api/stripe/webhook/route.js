@@ -62,8 +62,8 @@ function buildOrderBody({ orderId, items, subtotal, shipping, total, customer, i
     }
 
     <p style="margin-top:24px;font-size:14px;line-height:1.6;color:#374151;">
-      Vi packar din order inom 1–3 arbetsdagar och mejlar spårningsnummer
-      när den lämnar lagret.
+      Vi packar din order inom 1–3 arbetsdagar och skickar den till dig
+      så snart som möjligt.
     </p>
   `
 }

@@ -108,14 +108,13 @@ export default function VillkorPage() {
                 produktsidan.
               </p>
               <p>
-                <strong>Fraktkostnad:</strong> 149 kr inkl. moms per försändelse i
+                <strong>Fraktkostnad:</strong> 695 kr inkl. moms per försändelse i
                 hela Sverige. För särskilt tunga eller skrymmande artiklar (t.ex.
                 produkter klassade som farligt gods eller som inte kan hanteras
                 manuellt) kan en högre frakt tillämpas — det framgår alltid innan du
                 slutför köpet.
               </p>
               <p>
-                Spårningsnummer skickas till din e-post när paketet lämnar lagret.
                 Stämmer inte innehållet i leveransen med orderbekräftelsen, eller är
                 paketet synbart skadat vid mottagandet, kontaktar du oss på{" "}
                 <a className="text-navy underline" href="mailto:info@batteriproffs.se">info@batteriproffs.se</a>{" "}

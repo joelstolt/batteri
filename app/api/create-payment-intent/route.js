@@ -4,7 +4,7 @@ import { fetchProductBySlug } from "@/lib/queries"
 
 const stripe = new Stripe(process.env.STRIPE_SECRET_KEY)
 
-const SHIPPING_COST = 0
+const SHIPPING_COST = 556
 const VAT_RATE = 1.25
 const SLUG_RE = /^[a-z0-9-]{1,80}$/i
 const MAX_QTY = 99
