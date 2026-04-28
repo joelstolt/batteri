@@ -8,6 +8,7 @@ import {
   formatPriceKr,
   emailLayout,
 } from "@/lib/emails"
+import { scheduleReviewEmail } from "@/lib/review-email"
 
 const stripe = new Stripe(process.env.STRIPE_SECRET_KEY)
 
@@ -158,6 +159,18 @@ export async function POST(request) {
               intro: `Ny order: ${customer.name || "kund"}`,
             }),
           }),
+        })
+      )
+    }
+
+    // Schedule review request (no-op if GOOGLE_REVIEW_URL inte är satt)
+    if (customer.email) {
+      sends.push(
+        scheduleReviewEmail({
+          to: customer.email,
+          fullName: customer.name,
+          orderId,
+          replyTo: ADMIN_EMAIL,
         })
       )
     }
