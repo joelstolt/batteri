@@ -171,7 +171,7 @@ function CheckoutForm({ form, setForm, errors, setErrors, totalPrice, shippingCo
           <FormInput
             label="Telefon"
             type="tel"
-            placeholder="070-123 45 67"
+            placeholder="073-554 69 68"
             value={form.phone}
             onChange={handleChange("phone")}
             error={errors.phone}

@@ -37,7 +37,7 @@ export default function IntegritetPage() {
             </div>
             <div>
               <h2 className="mb-3 font-heading text-xl font-bold text-text-dark">Kontakt</h2>
-              <p>Personuppgiftsansvarig: Batteriproffs.se · E-post: info@batteriproffs.se · Telefon: 070-123 45 67</p>
+              <p>Personuppgiftsansvarig: Batteriproffs · E-post: <a className="text-navy underline" href="mailto:info@batteriproffs.se">info@batteriproffs.se</a> · Telefon: <a className="text-navy underline" href="tel:+46735546968">073-554 69 68</a></p>
             </div>
           </div>
         </div>

@@ -1,6 +1,6 @@
 "use client"
 
-import { Shield, Zap, Users, Award, Truck, HeartHandshake, Leaf, Clock, Wrench } from "lucide-react"
+import { Shield, Zap, Users, Award, Truck, HeartHandshake, Clock, Wrench } from "lucide-react"
 import FadeIn from "@/components/FadeIn"
 
 export default function AboutContent() {
@@ -179,9 +179,6 @@ export default function AboutContent() {
           <div className="grid gap-12 lg:grid-cols-2 lg:items-center">
             <FadeIn>
               <div>
-                <div className="mb-3 flex h-12 w-12 items-center justify-center rounded-xl bg-green/10 text-green">
-                  <Leaf size={24} />
-                </div>
                 <h2 className="mb-4 font-heading text-2xl font-extrabold text-text-dark">
                   Hållbarhet i fokus
                 </h2>
