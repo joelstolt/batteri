@@ -13,7 +13,7 @@ import FadeIn from "@/components/FadeIn"
 
 const stripePromise = loadStripe(process.env.NEXT_PUBLIC_STRIPE)
 
-const SHIPPING_COST = 149
+const SHIPPING_COST = 0
 
 function formatPrice(n) {
   return new Intl.NumberFormat("sv-SE").format(n)
@@ -224,7 +224,9 @@ function CheckoutForm({ form, setForm, errors, setErrors, totalPrice, shippingCo
             <div className="text-xs text-text-mid">Spårningsnummer skickas via e-post</div>
           </div>
           <span className="font-heading text-sm font-bold text-text-dark">
-            {formatPrice(inclVat ? Math.round(SHIPPING_COST * 1.25) : SHIPPING_COST)} kr
+            {SHIPPING_COST === 0
+              ? "Fri"
+              : `${formatPrice(inclVat ? Math.round(SHIPPING_COST * 1.25) : SHIPPING_COST)} kr`}
           </span>
         </div>
       </div>
@@ -345,7 +347,9 @@ function OrderSummary({ items, totalPrice, shippingCost }) {
           <div className="mb-2 flex items-center justify-between text-sm">
             <span className="text-text-mid">Frakt</span>
             <span className="font-medium text-text-dark">
-              {formatPrice(inclVat ? Math.round(SHIPPING_COST * 1.25) : SHIPPING_COST)} kr
+              {SHIPPING_COST === 0
+                ? "Fri"
+                : `${formatPrice(inclVat ? Math.round(SHIPPING_COST * 1.25) : SHIPPING_COST)} kr`}
             </span>
           </div>
 
