@@ -399,7 +399,9 @@ export default function CheckoutContent() {
     fetch("/api/create-payment-intent", {
       method: "POST",
       headers: { "Content-Type": "application/json" },
-      body: JSON.stringify({ items }),
+      body: JSON.stringify({
+        items: items.map((i) => ({ slug: i.slug, qty: i.qty })),
+      }),
     })
       .then((res) => res.json())
       .then((data) => {

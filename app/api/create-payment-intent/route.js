@@ -1,34 +1,74 @@
 import Stripe from "stripe"
 import { NextResponse } from "next/server"
+import { fetchProductBySlug } from "@/lib/queries"
 
 const stripe = new Stripe(process.env.STRIPE_SECRET_KEY)
 
 const SHIPPING_COST = 149
 const VAT_RATE = 1.25
+const SLUG_RE = /^[a-z0-9-]{1,80}$/i
+const MAX_QTY = 99
+const MAX_LINE_ITEMS = 50
+
+export const runtime = "nodejs"
 
 export async function POST(request) {
   try {
-    const { items } = await request.json()
+    const body = await request.json().catch(() => null)
+    if (!body || !Array.isArray(body.items)) {
+      return NextResponse.json({ error: "Ogiltigt anrop" }, { status: 400 })
+    }
 
-    if (!items || items.length === 0) {
+    const incoming = body.items
+    if (incoming.length === 0 || incoming.length > MAX_LINE_ITEMS) {
       return NextResponse.json({ error: "Varukorgen är tom" }, { status: 400 })
     }
 
-    // Calculate subtotal (excl. VAT)
-    const subtotal = items.reduce((sum, item) => sum + item.price * item.qty, 0)
-    const shippingCost = SHIPPING_COST
+    // Validate input shape — slug + qty only, never trust client price
+    for (const i of incoming) {
+      if (!i || typeof i.slug !== "string" || !SLUG_RE.test(i.slug)) {
+        return NextResponse.json({ error: "Ogiltig produkt" }, { status: 400 })
+      }
+      const qty = Number(i.qty)
+      if (!Number.isInteger(qty) || qty < 1 || qty > MAX_QTY) {
+        return NextResponse.json({ error: "Ogiltigt antal" }, { status: 400 })
+      }
+    }
 
-    // Total including 25% VAT — this is what Stripe charges
-    const totalInclVat = Math.round((subtotal + shippingCost) * VAT_RATE)
+    // Resolve products server-side (Sanity → hardcoded fallback)
+    const resolved = await Promise.all(
+      incoming.map(async (i) => {
+        const p = await fetchProductBySlug(i.slug)
+        return p ? { product: p, qty: Number(i.qty) } : null
+      })
+    )
 
-    // Amount in öre (smallest currency unit)
+    if (resolved.some((r) => !r)) {
+      return NextResponse.json({ error: "Produkt hittades inte" }, { status: 400 })
+    }
+    if (resolved.some((r) => r.product.inStock === false)) {
+      return NextResponse.json({ error: "Produkten är slut i lager" }, { status: 400 })
+    }
+
+    // Authoritative line items — server-side prices only
+    const itemSummary = resolved.map(({ product, qty }) => ({
+      name: product.name || product.shortName,
+      qty,
+      price: product.price,
+    }))
+
+    const subtotal = itemSummary.reduce((s, i) => s + i.price * i.qty, 0)
+    const shipping = SHIPPING_COST
+    const totalInclVat = Math.round((subtotal + shipping) * VAT_RATE)
     const amountInOre = totalInclVat * 100
 
-    const itemSummary = items.map((item) => ({
-      name: item.name || item.shortName,
-      qty: item.qty,
-      price: item.price,
-    }))
+    // Stripe metadata caps each value at 500 chars — truncate names if needed
+    let itemsMeta = JSON.stringify(itemSummary)
+    if (itemsMeta.length > 500) {
+      itemsMeta = JSON.stringify(
+        itemSummary.map((i) => ({ name: i.name.slice(0, 40), qty: i.qty, price: i.price }))
+      ).slice(0, 500)
+    }
 
     const paymentIntent = await stripe.paymentIntents.create({
       amount: amountInOre,
@@ -36,9 +76,9 @@ export async function POST(request) {
       payment_method_types: ["card"],
       metadata: {
         order_source: "batteriproffs.se",
-        items: JSON.stringify(itemSummary),
+        items: itemsMeta,
         subtotal: String(subtotal),
-        shipping: String(shippingCost),
+        shipping: String(shipping),
         total_incl_vat: String(totalInclVat),
       },
     })
@@ -46,9 +86,6 @@ export async function POST(request) {
     return NextResponse.json({ clientSecret: paymentIntent.client_secret })
   } catch (error) {
     console.error("Stripe PaymentIntent error:", error)
-    return NextResponse.json(
-      { error: error.message || "Något gick fel" },
-      { status: 500 }
-    )
+    return NextResponse.json({ error: "Något gick fel" }, { status: 500 })
   }
 }
