@@ -29,7 +29,7 @@ const NUMBERS = [
 
 export default function WhyUs() {
   return (
-    <section className="bg-white py-20">
+    <section className="border-t border-border bg-surface py-20">
       <div className="mx-auto grid max-w-[1200px] items-center gap-10 px-4 sm:gap-16 sm:px-6 lg:grid-cols-2">
         {/* Left — Text */}
         <FadeIn>
