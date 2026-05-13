@@ -15,13 +15,13 @@ const dmSans = DM_Sans({
 })
 
 export const metadata = {
-  title: "Batteriproffs — Professionella batterilösningar för företag",
+  title: "Batteriproffs — Fritidsbatteri, traktionsbatteri & truckbatteri",
   description:
-    "Traktionsbatterier, gel-batterier för städmaskiner, stationära batterier och fritidsbatterier. Snabb leverans i hela Sverige och 30 dagars öppet köp.",
+    "Köp fritidsbatteri, traktionsbatteri, truckbatteri och gelbatteri. 20+ års erfarenhet, snabb leverans i hela Sverige och 30 dagars öppet köp.",
   openGraph: {
-    title: "Batteriproffs — Professionella batterilösningar",
+    title: "Batteriproffs — Fritidsbatteri, traktionsbatteri & truckbatteri",
     description:
-      "Experter på traktion, städmaskin och stationära batterier. 20+ år i branschen.",
+      "Fritidsbatteri, traktionsbatteri, truckbatteri och gelbatteri för städmaskiner. Snabb leverans i hela Sverige.",
     url: "https://www.batteriproffs.se",
     siteName: "Batteriproffs",
     locale: "sv_SE",
