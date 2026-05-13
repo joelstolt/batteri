@@ -12,7 +12,7 @@ export default function Hero() {
           style={{ backgroundImage: "url('/hero-bg.jpg')" }}
         >
           {/* Dark overlay for readability */}
-          <div className="pointer-events-none absolute inset-0 bg-navy/92 sm:bg-gradient-to-r sm:from-navy/95 sm:via-navy/85 sm:to-navy/55" />
+          <div className="pointer-events-none absolute inset-0 bg-navy/70 sm:bg-gradient-to-r sm:from-navy/85 sm:via-navy/55 sm:to-navy/15" />
 
           <motion.div
             className="relative z-10 max-w-[640px]"
