@@ -2,79 +2,78 @@
 
 import { motion } from "framer-motion"
 import Link from "next/link"
+import { products } from "@/lib/products"
+import ProductCard from "@/components/ProductCard"
+
+function getFeatured() {
+  const featured = products.filter((p) => p.badge).slice(0, 4)
+  if (featured.length < 4) {
+    const remaining = products
+      .filter((p) => !p.badge)
+      .sort((a, b) => b.price - a.price)
+      .slice(0, 4 - featured.length)
+    featured.push(...remaining)
+  }
+  return featured
+}
 
 export default function Hero() {
+  const featured = getFeatured()
+
   return (
     <section className="border-b border-border bg-white">
-      <div className="mx-auto max-w-[1200px] px-4 py-8 sm:px-6 sm:py-12">
-        <div
-          className="relative overflow-hidden rounded-2xl border border-border bg-navy bg-cover bg-center px-6 py-12 sm:px-12 sm:py-20"
-          style={{ backgroundImage: "url('/hero-bg.jpg')" }}
+      <div className="mx-auto max-w-[1200px] px-4 py-10 sm:px-6 sm:py-14">
+        {/* Top: copy */}
+        <motion.div
+          className="max-w-[720px]"
+          initial={{ opacity: 0, y: 20 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ duration: 0.8, ease: [0.22, 1, 0.36, 1] }}
         >
-          {/* Dark overlay for readability */}
-          <div className="pointer-events-none absolute inset-0 bg-navy/70 sm:bg-gradient-to-r sm:from-navy/85 sm:via-navy/55 sm:to-navy/15" />
+          <div className="mb-5 inline-flex items-center gap-2 rounded-full border border-amber/40 bg-amber/10 px-3.5 py-1.5 font-heading text-xs font-bold uppercase tracking-wider text-amber">
+            <span className="text-sm">🏆</span>
+            Marknadens vassaste priser
+          </div>
 
-          <motion.div
-            className="relative z-10 max-w-[640px]"
-            initial={{ opacity: 0, y: 20 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.8, ease: [0.22, 1, 0.36, 1] }}
+          <h1 className="mb-5 font-heading text-[clamp(32px,4.5vw,52px)] font-extrabold leading-[1.05] tracking-tight text-text-dark">
+            Rätt batteri till din maskin
+            <br />
+            <span className="text-amber">till bästa pris i Sverige</span>
+          </h1>
+
+          <p className="max-w-[640px] text-[17px] leading-relaxed text-text-mid">
+            Truckar, städmaskiner, hissar eller solceller — vi har batteriet
+            du behöver. Snabb leverans, vassa priser och riktig experthjälp
+            om du har frågor. Inga mellanhänder, inga krångel.
+          </p>
+        </motion.div>
+
+        {/* 4 featured products */}
+        <motion.div
+          className="mt-10 grid grid-cols-2 gap-3 sm:gap-5 lg:grid-cols-4"
+          initial={{ opacity: 0, y: 20 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ duration: 0.8, delay: 0.15, ease: [0.22, 1, 0.36, 1] }}
+        >
+          {featured.map((p) => (
+            <ProductCard key={p.slug} product={p} />
+          ))}
+        </motion.div>
+
+        {/* CTA below products */}
+        <motion.div
+          className="mt-8 flex justify-center sm:mt-10"
+          initial={{ opacity: 0, y: 20 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ duration: 0.8, delay: 0.3, ease: [0.22, 1, 0.36, 1] }}
+        >
+          <Link
+            href="/kategori/alla"
+            className="rounded-xl bg-amber-bg px-8 py-3.5 text-center font-heading text-sm font-bold text-navy shadow-sm transition-all hover:-translate-y-px hover:shadow-md sm:text-base"
           >
-            <div className="mb-5 inline-flex items-center gap-2 rounded-full border border-amber/30 bg-amber/10 px-3.5 py-1.5 font-heading text-xs font-bold uppercase tracking-wider text-amber backdrop-blur-sm">
-              <span className="text-sm">🏆</span>
-              Billigast & bäst på traktion
-            </div>
-
-            <h1 className="mb-5 font-heading text-[clamp(32px,4.5vw,52px)] font-extrabold leading-[1.05] tracking-tight text-white">
-              Rätt batteri till din maskin
-              <br />
-              <span className="text-amber">till bästa pris i Sverige</span>
-            </h1>
-
-            <p className="mb-8 max-w-[480px] text-[17px] leading-relaxed text-white/80">
-              Truckar, städmaskiner, hissar eller solceller — vi har batteriet
-              du behöver. Snabb leverans, vassa priser och riktig experthjälp
-              om du har frågor. Inga mellanhänder, inga krångel.
-            </p>
-
-            {/* CTA Buttons */}
-            <div className="mb-10 flex flex-col gap-3 sm:flex-row sm:flex-wrap">
-              <Link
-                href="/kategori/traktion-industri"
-                className="rounded-xl bg-amber-bg px-7 py-3.5 text-center font-heading text-sm font-bold text-navy shadow-sm transition-all hover:-translate-y-px hover:shadow-md sm:text-base"
-              >
-                Se alla batterier
-              </Link>
-              <Link
-                href="/kontakt"
-                className="rounded-xl border border-white/20 bg-white/10 px-7 py-3.5 text-center font-heading text-sm font-bold text-white backdrop-blur-sm transition-all hover:-translate-y-px hover:bg-white/20 sm:text-base"
-              >
-                Kontakta oss
-              </Link>
-            </div>
-
-            {/* Stats */}
-            <div className="grid grid-cols-3 gap-2 sm:gap-3">
-              {[
-                { val: "1–3 dgr", sub: "Snabb leverans" },
-                { val: "20+ år", sub: "I branschen" },
-                { val: "30 dgr", sub: "Öppet köp" },
-              ].map((s, i) => (
-                <div
-                  key={i}
-                  className="rounded-xl border border-white/10 bg-white/5 px-3 py-3 text-center backdrop-blur-sm sm:px-4 sm:py-4 sm:text-left"
-                >
-                  <div className="font-heading text-base font-extrabold leading-none text-white sm:text-xl">
-                    {s.val}
-                  </div>
-                  <div className="mt-1.5 text-[11px] font-medium leading-tight text-white/60 sm:text-[13px]">
-                    {s.sub}
-                  </div>
-                </div>
-              ))}
-            </div>
-          </motion.div>
-        </div>
+            Se alla batterier
+          </Link>
+        </motion.div>
       </div>
     </section>
   )
