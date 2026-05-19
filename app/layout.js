@@ -1,4 +1,5 @@
 import { Outfit, DM_Sans } from "next/font/google"
+import Script from "next/script"
 import Providers from "@/components/Providers"
 import "./globals.css"
 
@@ -37,6 +38,11 @@ export default function RootLayout({ children }) {
     <html lang="sv" className={`${outfit.variable} ${dmSans.variable}`}>
       <body>
         <Providers>{children}</Providers>
+        <Script
+          src="https://umami-analytics-tau-two.vercel.app/script.js"
+          data-website-id="99e7d795-e675-49e9-bdea-6499c9e29558"
+          strategy="afterInteractive"
+        />
       </body>
     </html>
   )
