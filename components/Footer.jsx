@@ -177,6 +177,14 @@ export default function Footer() {
             >
               Villkor
             </Link>
+            <a
+              href="https://stoltmarketing.se"
+              target="_blank"
+              rel="noopener"
+              className="text-[13px] text-white/25 transition-colors hover:text-white/50"
+            >
+              Hemsida av Stolt Marketing
+            </a>
           </div>
         </div>
       </div>
