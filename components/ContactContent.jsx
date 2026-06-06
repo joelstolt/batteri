@@ -24,6 +24,7 @@ export default function ContactContent() {
       const data = await res.json().catch(() => ({}))
       if (!res.ok) throw new Error(data.error || "Något gick fel")
       setSent(true)
+      if (typeof window !== "undefined" && window.umami) { window.umami.track("lead-kontaktformular") }
     } catch (err) {
       setError(err.message || "Något gick fel — prova igen eller ring oss")
     } finally {
