@@ -1,0 +1,13 @@
+{
+  "version": "0.0.1",
+  "configurations": [
+    {
+      "name": "batteriproffs",
+      "runtimeExecutable": "npm",
+      "runtimeArgs": ["run", "dev"],
+      "cwd": "/Users/joelstolt/Desktop/Dev/clients/batteriproffs",
+      "port": 3000,
+      "autoPort": true
+    }
+  ]
+}
