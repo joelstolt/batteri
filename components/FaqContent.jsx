@@ -57,11 +57,11 @@ const FAQ_SECTIONS = [
     items: [
       {
         q: "Vilka betalningsalternativ finns?",
-        a: "Vi erbjuder betalning via Visa, Mastercard, Klarna (faktura och delbetalning) och Swish. Alla betalningar hanteras säkert via Stripe.",
+        a: "Du betalar säkert med kort — Visa eller Mastercard. Alla betalningar hanteras krypterat via Stripe.",
       },
       {
         q: "Kan jag betala med faktura?",
-        a: "Ja, via Klarna kan du välja att betala med faktura (30 dagar). För företagskunder kan vi i vissa fall erbjuda direktfaktura — kontakta oss för att diskutera villkoren.",
+        a: "Är du företagskund och vill beställa mot faktura eller större volym? Kontakta oss på info@batteriproffs.se eller 073-554 69 68 så tar vi fram en offert och löser betalningen.",
       },
       {
         q: "Är det säkert att handla hos er?",

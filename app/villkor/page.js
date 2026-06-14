@@ -46,8 +46,8 @@ export default function VillkorPage() {
                 fyllt 18 år och företag, om inte annat har avtalats skriftligt.
               </p>
               <p>
-                Webbplatsen drivs av Batteriproffs. Vid frågor om en order, retur eller
-                reklamation når du oss enklast via:
+                Webbplatsen drivs av Joel Stolt (enskild firma), org.nr 901108-0851.
+                Vid frågor om en order, retur eller reklamation når du oss enklast via:
               </p>
               <ul className="ml-5 list-disc space-y-1">
                 <li>E-post: <a className="text-navy underline" href="mailto:info@batteriproffs.se">info@batteriproffs.se</a></li>

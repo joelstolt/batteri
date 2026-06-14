@@ -96,6 +96,9 @@ export default function Footer() {
                 <Clock className="h-3.5 w-3.5" />
                 Mån–Fre 08:00–17:00
               </div>
+              <div className="pt-1 text-xs leading-relaxed text-white/30">
+                Joel Stolt · Org.nr 901108-0851
+              </div>
             </div>
           </div>
 

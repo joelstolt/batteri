@@ -218,7 +218,7 @@ export default function CartDrawer() {
                   </svg>
                 </button>
                 <div className="mt-3 flex items-center justify-center gap-3">
-                  {["Swish", "Visa", "Mastercard", "PostNord"].map((m) => (
+                  {["Visa", "Mastercard", "PostNord"].map((m) => (
                     <span key={m} className="text-[10px] font-semibold uppercase tracking-wider text-text-mid/60">
                       {m}
                     </span>

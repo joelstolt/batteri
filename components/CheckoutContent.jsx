@@ -264,7 +264,7 @@ function CheckoutForm({ form, setForm, errors, setErrors, totalPrice, shippingCo
       </button>
 
       <div className="flex items-center justify-center gap-3">
-        {["Swish", "Visa", "Mastercard", "PostNord"].map((m) => (
+        {["Visa", "Mastercard", "PostNord"].map((m) => (
           <span key={m} className="text-[10px] font-semibold uppercase tracking-wider text-text-mid/60">
             {m}
           </span>

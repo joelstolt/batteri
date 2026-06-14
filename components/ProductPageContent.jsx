@@ -5,7 +5,7 @@ import { useParams } from "next/navigation"
 import Link from "next/link"
 import Image from "next/image"
 import { ShoppingCart, Truck, Shield, Phone, ChevronRight, RotateCcw } from "lucide-react"
-import { getProductBySlug, getProductsByCategory } from "@/lib/products"
+import { getProductBySlug, getProductsByCategory, getProductBrand, getProductChemistry } from "@/lib/products"
 import { CATEGORIES, PHONE, PHONE_LINK } from "@/lib/constants"
 import { useCart } from "@/lib/cart-context"
 import { useVat } from "@/lib/vat-context"
@@ -183,7 +183,7 @@ export default function ProductPageContent() {
           <FadeIn delay={0.1}>
             <div>
               <div className="mb-3 text-sm font-medium text-text-mid">
-                Sonnenschein · Gel-batteri · {product.voltage}
+                {getProductBrand(product)} · {getProductChemistry(product)} · {product.voltage}
               </div>
 
               <h1 className="mb-2 font-heading text-[clamp(24px,3.5vw,32px)] font-extrabold tracking-tight text-text-dark">

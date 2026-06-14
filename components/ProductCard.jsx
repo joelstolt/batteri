@@ -6,6 +6,7 @@ import Image from "next/image"
 import { ShoppingCart } from "lucide-react"
 import { useCart } from "@/lib/cart-context"
 import { useVat } from "@/lib/vat-context"
+import { getProductBrand, getProductChemistry } from "@/lib/products"
 
 export default function ProductCard({ product }) {
   const [qty, setQty] = useState(1)
@@ -43,7 +44,7 @@ export default function ProductCard({ product }) {
       <div className="flex flex-1 flex-col p-3 sm:p-5">
         <Link href={`/produkt/${slug}`}>
           <div className="mb-0.5 hidden text-xs font-medium text-text-mid sm:block">
-            Sonnenschein · Gel · {voltage}
+            {getProductBrand(product)} · {getProductChemistry(product)} · {voltage}
           </div>
           <h3 className="mb-0.5 font-heading text-sm font-bold text-text-dark transition-colors group-hover:text-amber sm:mb-1 sm:text-[17px]">
             {shortName}
