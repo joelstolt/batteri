@@ -57,9 +57,10 @@ export async function POST(request) {
       price: product.price,
     }))
 
-    const subtotal = itemSummary.reduce((s, i) => s + i.price * i.qty, 0)
+    // Product prices are stored INCL. moms; shipping is stored excl. moms.
+    const subtotalInclVat = itemSummary.reduce((s, i) => s + i.price * i.qty, 0)
     const shipping = SHIPPING_COST
-    const totalInclVat = Math.round((subtotal + shipping) * VAT_RATE)
+    const totalInclVat = subtotalInclVat + Math.round(shipping * VAT_RATE)
     const amountInOre = totalInclVat * 100
 
     // Stripe metadata caps each value at 500 chars — truncate names if needed
@@ -73,11 +74,13 @@ export async function POST(request) {
     const paymentIntent = await stripe.paymentIntents.create({
       amount: amountInOre,
       currency: "sek",
-      payment_method_types: ["card"],
+      // Let Stripe render every method enabled on the account (card always,
+      // plus Klarna/Swish/Apple Pay/Google Pay once activated in the Dashboard).
+      automatic_payment_methods: { enabled: true },
       metadata: {
         order_source: "batteriproffs.se",
         items: itemsMeta,
-        subtotal: String(subtotal),
+        subtotal: String(Math.round(subtotalInclVat / VAT_RATE)),
         shipping: String(shipping),
         total_incl_vat: String(totalInclVat),
       },

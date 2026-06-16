@@ -7,6 +7,7 @@ import { X, Search, ArrowRight } from "lucide-react"
 import { motion, AnimatePresence } from "framer-motion"
 import { products } from "@/lib/products"
 import { CATEGORIES } from "@/lib/constants"
+import { useVat } from "@/lib/vat-context"
 
 function formatPrice(n) {
   return new Intl.NumberFormat("sv-SE").format(n)
@@ -16,6 +17,7 @@ export default function SearchModal({ isOpen, onClose }) {
   const [query, setQuery] = useState("")
   const inputRef = useRef(null)
   const router = useRouter()
+  const { displayPrice, vatLabel } = useVat()
 
   useEffect(() => {
     if (isOpen) {
@@ -217,9 +219,9 @@ export default function SearchModal({ isOpen, onClose }) {
                           </div>
                           <div className="flex-shrink-0 text-right">
                             <div className="font-heading text-sm font-bold text-text-dark">
-                              {formatPrice(p.price)} kr
+                              {formatPrice(displayPrice(p.price))} kr
                             </div>
-                            <div className="text-[10px] text-text-light">exkl. moms</div>
+                            <div className="text-[10px] text-text-light">{vatLabel.toLowerCase()}</div>
                           </div>
                         </button>
                       ))}

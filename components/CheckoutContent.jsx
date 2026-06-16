@@ -134,7 +134,7 @@ function CheckoutForm({ form, setForm, errors, setErrors, totalPrice, shippingCo
   }
 
   const { displayPrice, vatLabel, inclVat } = useVat()
-  const totalInclVat = Math.round((totalPrice + shippingCost) * 1.25)
+  const totalInclVat = totalPrice + Math.round(shippingCost * 1.25)
 
   return (
     <form onSubmit={handleSubmit} className="flex flex-col gap-8">
@@ -235,7 +235,7 @@ function CheckoutForm({ form, setForm, errors, setErrors, totalPrice, shippingCo
       <div>
         <h2 className="mb-5 font-heading text-xl font-bold text-text-dark">Betalning</h2>
         <div className="rounded-xl border border-border bg-white p-5">
-          <PaymentElement />
+          <PaymentElement options={{ layout: "tabs", fields: { billingDetails: "never" } }} />
         </div>
         {paymentError && (
           <div className="mt-3 rounded-lg bg-red-50 px-4 py-3 text-sm text-red-600">
@@ -279,7 +279,7 @@ function OrderSummary({ items, totalPrice, shippingCost }) {
   const { displayPrice, vatLabel, inclVat } = useVat()
   const [expanded, setExpanded] = useState(true)
 
-  const totalInclVat = Math.round((totalPrice + shippingCost) * 1.25)
+  const totalInclVat = totalPrice + Math.round(shippingCost * 1.25)
 
   return (
     <div className="rounded-2xl border border-border bg-surface">
@@ -340,7 +340,7 @@ function OrderSummary({ items, totalPrice, shippingCost }) {
           <div className="mb-2 flex items-center justify-between text-sm">
             <span className="text-text-mid">Produkter {vatLabel.toLowerCase()}</span>
             <span className="font-medium text-text-dark">
-              {formatPrice(inclVat ? Math.round(totalPrice * 1.25) : totalPrice)} kr
+              {formatPrice(inclVat ? totalPrice : Math.round(totalPrice / 1.25))} kr
             </span>
           </div>
 
@@ -357,7 +357,7 @@ function OrderSummary({ items, totalPrice, shippingCost }) {
             <div className="mb-2 flex items-center justify-between text-sm">
               <span className="text-text-mid">Moms (25%)</span>
               <span className="font-medium text-text-dark">
-                {formatPrice(Math.round((totalPrice + shippingCost) * 0.25))} kr
+                {formatPrice(totalInclVat - Math.round(totalPrice / 1.25) - shippingCost)} kr
               </span>
             </div>
           )}

@@ -188,7 +188,7 @@ export default function CartDrawer() {
                 <div className="mb-1 flex items-center justify-between">
                   <span className="text-sm text-text-mid">Produkter {vatLabel.toLowerCase()}</span>
                   <span className="text-sm font-medium text-text-dark">
-                    {formatPrice(inclVat ? Math.round(totalPrice * 1.25) : totalPrice)} kr
+                    {formatPrice(inclVat ? totalPrice : Math.round(totalPrice / 1.25))} kr
                   </span>
                 </div>
                 <div className="mb-1 flex items-center justify-between">
@@ -202,8 +202,8 @@ export default function CartDrawer() {
                   <span className="font-heading text-xl font-extrabold text-text-dark">
                     {formatPrice(
                       inclVat
-                        ? Math.round((totalPrice + 556) * 1.25)
-                        : totalPrice + 556
+                        ? totalPrice + Math.round(556 * 1.25)
+                        : Math.round(totalPrice / 1.25) + 556
                     )} kr
                   </span>
                 </div>

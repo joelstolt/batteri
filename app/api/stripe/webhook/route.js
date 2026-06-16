@@ -96,7 +96,7 @@ export async function POST(request) {
   try {
     const items = pi.metadata.items ? JSON.parse(pi.metadata.items) : []
     const subtotal = Number(pi.metadata.subtotal) || 0
-    const shipping = Number(pi.metadata.shipping) || 0
+    const shipping = Math.round((Number(pi.metadata.shipping) || 0) * 1.25) // visa frakt inkl. moms i kvittot
     const total = pi.amount / 100
 
     // Pull customer from charge billing_details (set by Stripe Elements)

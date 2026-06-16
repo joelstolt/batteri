@@ -130,7 +130,7 @@ export default function ThankYouContent() {
                       <span className="ml-2 text-text-mid">× {item.qty}</span>
                     </div>
                     <span className="font-semibold text-text-dark">
-                      {formatPrice(Math.round(item.price * item.qty * 1.25))} kr
+                      {formatPrice(item.price * item.qty)} kr
                     </span>
                   </div>
                 ))}

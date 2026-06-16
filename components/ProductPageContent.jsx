@@ -201,8 +201,8 @@ export default function ProductPageContent() {
                 <div className="mt-0.5 text-sm text-text-light">
                   {vatLabel}
                   {inclVat
-                    ? ` · ${formatPrice(product.price)} kr exkl. moms`
-                    : ` · ${formatPrice(Math.round(product.price * 1.25))} kr inkl. moms`
+                    ? ` · ${formatPrice(Math.round(product.price / 1.25))} kr exkl. moms`
+                    : ` · ${formatPrice(product.price)} kr inkl. moms`
                   }
                 </div>
               </div>
