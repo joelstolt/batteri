@@ -1,4 +1,4 @@
-import { products } from "@/lib/products"
+import { products, getProductImage, getProductBrand } from "@/lib/products"
 import TopBar from "@/components/TopBar"
 import Header from "@/components/Header"
 import ProductPageContent from "@/components/ProductPageContent"
@@ -48,9 +48,71 @@ export async function generateMetadata({ params }) {
   }
 }
 
-export default function ProductRoute() {
+const SITE = "https://www.batteriproffs.se"
+
+function buildProductJsonLd(product) {
+  return {
+    "@context": "https://schema.org",
+    "@type": "Product",
+    name: product.name,
+    image: `${SITE}${getProductImage(product)}`,
+    description: (product.description || product.metaDescription || "").replace(/\n+/g, " "),
+    sku: product.slug,
+    mpn: product.specs?.["Artikelnummer"] || product.slug.toUpperCase(),
+    brand: {
+      "@type": "Brand",
+      name: getProductBrand(product),
+    },
+    offers: {
+      "@type": "Offer",
+      url: `${SITE}/produkt/${product.slug}`,
+      priceCurrency: "SEK",
+      price: product.price,
+      itemCondition: "https://schema.org/NewCondition",
+      availability: product.inStock
+        ? "https://schema.org/InStock"
+        : "https://schema.org/OutOfStock",
+      shippingDetails: {
+        "@type": "OfferShippingDetails",
+        shippingRate: {
+          "@type": "MonetaryAmount",
+          value: 695,
+          currency: "SEK",
+        },
+        shippingDestination: {
+          "@type": "DefinedRegion",
+          addressCountry: "SE",
+        },
+        deliveryTime: {
+          "@type": "ShippingDeliveryTime",
+          handlingTime: { "@type": "QuantitativeValue", minValue: 0, maxValue: 2, unitCode: "DAY" },
+          transitTime: { "@type": "QuantitativeValue", minValue: 1, maxValue: 5, unitCode: "DAY" },
+        },
+      },
+      hasMerchantReturnPolicy: {
+        "@type": "MerchantReturnPolicy",
+        applicableCountry: "SE",
+        returnPolicyCategory: "https://schema.org/MerchantReturnFiniteReturnWindow",
+        merchantReturnDays: 30,
+        returnMethod: "https://schema.org/ReturnByMail",
+        returnFees: "https://schema.org/ReturnFeesCustomerResponsibility",
+      },
+    },
+  }
+}
+
+export default async function ProductRoute({ params }) {
+  const { slug } = await params
+  const product = products.find((p) => p.slug === slug)
+
   return (
     <>
+      {product && (
+        <script
+          type="application/ld+json"
+          dangerouslySetInnerHTML={{ __html: JSON.stringify(buildProductJsonLd(product)) }}
+        />
+      )}
       <TopBar />
       <Header />
       <ProductPageContent />
