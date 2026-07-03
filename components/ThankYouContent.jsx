@@ -25,6 +25,20 @@ function cardBrandName(brand) {
   return brands[brand] || brand || "Kort"
 }
 
+// Google Ads köp-konvertering — firas en gång per order (transaction_id dedupar hos Google)
+const reportedOrders = new Set()
+function reportPurchaseConversion(order) {
+  if (!order?.id || reportedOrders.has(order.id)) return
+  if (typeof window === "undefined" || typeof window.gtag !== "function") return
+  reportedOrders.add(order.id)
+  window.gtag("event", "conversion", {
+    send_to: "AW-17955953885/J7C0CJ2do8ocEN25iPJC",
+    value: order.totalInclVat,
+    currency: "SEK",
+    transaction_id: order.id,
+  })
+}
+
 export default function ThankYouContent() {
   const { clearCart } = useCart()
   const searchParams = useSearchParams()
@@ -47,7 +61,10 @@ export default function ThankYouContent() {
     fetch(`/api/order?payment_intent=${paymentIntent}`)
       .then((res) => res.json())
       .then((data) => {
-        if (!data.error) setOrder(data)
+        if (!data.error) {
+          setOrder(data)
+          reportPurchaseConversion(data)
+        }
       })
       .catch(() => {})
       .finally(() => setLoading(false))

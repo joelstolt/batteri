@@ -43,6 +43,18 @@ export default function RootLayout({ children }) {
           data-website-id="99e7d795-e675-49e9-bdea-6499c9e29558"
           strategy="afterInteractive"
         />
+        <Script
+          src="https://www.googletagmanager.com/gtag/js?id=AW-17955953885"
+          strategy="afterInteractive"
+        />
+        <Script id="google-ads-gtag" strategy="afterInteractive">
+          {`
+            window.dataLayer = window.dataLayer || [];
+            function gtag(){dataLayer.push(arguments);}
+            gtag('js', new Date());
+            gtag('config', 'AW-17955953885');
+          `}
+        </Script>
       </body>
     </html>
   )
