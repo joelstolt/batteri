@@ -39,6 +39,10 @@ export default function IntegritetPage() {
               <h2 className="mb-3 font-heading text-xl font-bold text-text-dark">Kontakt</h2>
               <p>Personuppgiftsansvarig: Joel Stolt (enskild firma, org.nr 901108-0851) · E-post: <a className="text-navy underline" href="mailto:info@batteriproffs.se">info@batteriproffs.se</a> · Telefon: <a className="text-navy underline" href="tel:+46735546968">073-554 69 68</a></p>
             </div>
+            <div>
+              <h2 className="mb-3 font-heading text-xl font-bold text-text-dark">Om webbplatsen</h2>
+              <p>Webbplatsen är utvecklad och underhålls av <a className="text-navy underline" href="https://www.stoltmarketing.se">Stolt Marketing</a>.</p>
+            </div>
           </div>
         </div>
       </div>
