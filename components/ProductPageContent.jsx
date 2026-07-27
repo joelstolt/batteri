@@ -77,9 +77,9 @@ function ProductExtraInfo({ product, className = "" }) {
     <div className={`space-y-5 ${className}`}>
       {product.fitsTo && (
         <div className="rounded-xl border border-border bg-surface p-5">
-          <h3 className="mb-2 font-heading text-sm font-bold uppercase tracking-wider text-text-dark">
+          <h2 className="mb-2 font-heading text-sm font-bold uppercase tracking-wider text-text-dark">
             Passar till
-          </h3>
+          </h2>
           <p className="text-sm leading-relaxed text-text-mid">{product.fitsTo}</p>
 
           {/* Länkar till maskinsidorna — gör klustret dubbelriktat i stället för
@@ -106,9 +106,9 @@ function ProductExtraInfo({ product, className = "" }) {
       )}
       {product.specs?.["Ersätter"] && (
         <div className="rounded-xl border border-border bg-surface p-5">
-          <h3 className="mb-2 font-heading text-sm font-bold uppercase tracking-wider text-text-dark">
+          <h2 className="mb-2 font-heading text-sm font-bold uppercase tracking-wider text-text-dark">
             Ersätter
-          </h3>
+          </h2>
           <p className="text-sm leading-relaxed text-text-mid">
             Batteriet är en direkt ersättare för{" "}
             <Link
@@ -123,9 +123,9 @@ function ProductExtraInfo({ product, className = "" }) {
       )}
       {product.recommendedCharger && (
         <div className="rounded-xl border border-border bg-surface p-5">
-          <h3 className="mb-2 font-heading text-sm font-bold uppercase tracking-wider text-text-dark">
+          <h2 className="mb-2 font-heading text-sm font-bold uppercase tracking-wider text-text-dark">
             Rekommenderad laddare
-          </h3>
+          </h2>
           <p className="text-sm leading-relaxed text-text-mid">{product.recommendedCharger}</p>
         </div>
       )}
@@ -138,9 +138,9 @@ function ExpandableDescription({ description }) {
 
   return (
     <div className="mb-6">
-      <h3 className="mb-2 font-heading text-sm font-bold uppercase tracking-wider text-text-mid">
-        Beskrivning
-      </h3>
+      <h2 className="mb-2 font-heading text-sm font-bold uppercase tracking-wider text-text-mid">
+            Beskrivning
+          </h2>
       <div className="relative">
         <div
           className={`text-sm leading-relaxed text-text-mid whitespace-pre-line overflow-hidden transition-[max-height] duration-300 ease-in-out ${expanded ? "max-h-[2000px]" : "max-h-[3.75em]"}`}
@@ -323,9 +323,9 @@ export default function ProductPageContent() {
               {/* Specs table */}
               <div className="overflow-hidden rounded-xl border border-border">
                 <div className="border-b border-border bg-surface px-5 py-3">
-                  <h3 className="font-heading text-sm font-bold text-text-dark">
-                    Specifikationer
-                  </h3>
+                  <h2 className="font-heading text-sm font-bold text-text-dark">
+            Specifikationer
+          </h2>
                 </div>
                 <div className="divide-y divide-border">
                   {Object.entries(product.specs).map(([key, val]) => (
