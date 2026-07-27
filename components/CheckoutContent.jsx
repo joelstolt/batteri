@@ -26,10 +26,10 @@ function formatPrice(n) {
 }
 
 /** Kassan räknar alltid i B2B-form: netto, moms för sig, brutto att betala. */
-function priceBreakdown(totalPriceInclVat) {
+function priceBreakdown(totalPriceInclVat, freeShipping = false) {
   const productsExcl = Math.round(totalPriceInclVat / VAT_RATE)
-  const shippingExcl = SHIPPING_COST
-  const totalInclVat = totalPriceInclVat + Math.round(SHIPPING_COST * VAT_RATE)
+  const shippingExcl = freeShipping ? 0 : SHIPPING_COST
+  const totalInclVat = totalPriceInclVat + Math.round(shippingExcl * VAT_RATE)
   return {
     productsExcl,
     shippingExcl,
@@ -117,7 +117,7 @@ function SectionHeading({ children, note }) {
 }
 
 /* ───────────── Checkout form (inside Elements provider) ───────────── */
-function CheckoutForm({ form, setForm, errors, setErrors, totalPrice, clientSecret }) {
+function CheckoutForm({ form, setForm, errors, setErrors, totalPrice, clientSecret, freeShipping }) {
   const stripe = useStripe()
   const elements = useElements()
   const [loading, setLoading] = useState(false)
@@ -125,7 +125,7 @@ function CheckoutForm({ form, setForm, errors, setErrors, totalPrice, clientSecr
   // Så länge kunden inte själv rört momsnumret följer det organisationsnumret
   const [vatTouched, setVatTouched] = useState(false)
 
-  const { totalInclVat } = priceBreakdown(totalPrice)
+  const { totalInclVat } = priceBreakdown(totalPrice, freeShipping)
 
   const handleChange = (field) => (e) => {
     const value = e.target.value
@@ -526,10 +526,12 @@ function CheckoutForm({ form, setForm, errors, setErrors, totalPrice, clientSecr
             <div className="text-xs text-text-mid">Spårningsnummer skickas via e-post</div>
           </div>
           <span className="font-heading text-sm font-bold text-text-dark">
-            {SHIPPING_COST === 0 ? "Fri" : `${formatPrice(SHIPPING_COST)} kr`}
+            {freeShipping ? "Fri frakt" : `${formatPrice(SHIPPING_COST)} kr`}
           </span>
         </div>
-        <p className="mt-2 text-xs text-text-light">Fraktpris angivet exkl. moms.</p>
+        {!freeShipping && (
+          <p className="mt-2 text-xs text-text-light">Fraktpris angivet exkl. moms.</p>
+        )}
       </div>
 
       {/* Stripe Payment Element */}
@@ -578,9 +580,9 @@ function CheckoutForm({ form, setForm, errors, setErrors, totalPrice, clientSecr
 }
 
 /* ───────────── Order summary sidebar ───────────── */
-function OrderSummary({ items, totalPrice }) {
+function OrderSummary({ items, totalPrice, freeShipping }) {
   const [expanded, setExpanded] = useState(true)
-  const { productsExcl, shippingExcl, vat, totalInclVat } = priceBreakdown(totalPrice)
+  const { productsExcl, shippingExcl, vat, totalInclVat } = priceBreakdown(totalPrice, freeShipping)
 
   return (
     <div className="rounded-2xl border border-border bg-surface">
@@ -664,6 +666,8 @@ function OrderSummary({ items, totalPrice }) {
 /* ───────────── Main CheckoutContent ───────────── */
 export default function CheckoutContent() {
   const { items, totalPrice } = useCart()
+  // Serverns beräkning är den som gäller — det här styr bara vad kassan visar
+  const freeShipping = items.length > 0 && items.every((i) => i.freeShipping)
   const [clientSecret, setClientSecret] = useState(null)
   const [error, setError] = useState(null)
   const [form, setForm] = useState(EMPTY_FORM)
@@ -778,6 +782,7 @@ export default function CheckoutContent() {
                 setErrors={setFormErrors}
                 totalPrice={totalPrice}
                 clientSecret={clientSecret}
+                freeShipping={freeShipping}
               />
             </Elements>
           </FadeIn>
@@ -785,7 +790,7 @@ export default function CheckoutContent() {
           {/* Right: Order summary */}
           <FadeIn delay={0.1}>
             <div className="lg:sticky lg:top-6 lg:self-start">
-              <OrderSummary items={items} totalPrice={totalPrice} />
+              <OrderSummary items={items} totalPrice={totalPrice} freeShipping={freeShipping} />
             </div>
           </FadeIn>
         </div>

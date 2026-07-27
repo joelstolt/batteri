@@ -1,5 +1,5 @@
 import { SITE_URL, CATEGORIES } from "@/lib/constants"
-import { products } from "@/lib/products"
+import { publicProducts } from "@/lib/products"
 
 export default function sitemap() {
   const now = new Date()
@@ -20,7 +20,7 @@ export default function sitemap() {
     changeFrequency: "weekly",
   }))
 
-  const productPages = products.map((p) => ({
+  const productPages = publicProducts.map((p) => ({
     url: `${SITE_URL}/produkt/${p.slug}`,
     priority: 0.7,
     changeFrequency: "weekly",

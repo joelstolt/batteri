@@ -33,6 +33,14 @@ export async function generateMetadata({ params }) {
     return { title: "Produkt hittades inte — Batteriproffs" }
   }
 
+  // Interna testartiklar ska aldrig indexeras
+  if (product.hidden) {
+    return {
+      title: `${product.name} — Batteriproffs`,
+      robots: { index: false, follow: false },
+    }
+  }
+
   const metaDesc = product.metaDescription || product.description?.slice(0, 160)
   const seoTitle = buildSeoTitle(product)
 
@@ -107,7 +115,9 @@ export default async function ProductRoute({ params }) {
 
   return (
     <>
-      {product && (
+      {/* Ingen Product-schema på interna testartiklar — 5 kr-priset skulle
+          annars kunna plockas upp av Google och Merchant Center */}
+      {product && !product.hidden && (
         <script
           type="application/ld+json"
           dangerouslySetInnerHTML={{ __html: JSON.stringify(buildProductJsonLd(product)) }}

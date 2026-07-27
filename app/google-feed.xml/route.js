@@ -1,4 +1,4 @@
-import { products, getProductImage, getProductBrand } from "@/lib/products"
+import { publicProducts, getProductImage, getProductBrand } from "@/lib/products"
 
 export const dynamic = "force-static"
 
@@ -47,7 +47,7 @@ export async function GET() {
   <title>Batteriproffs</title>
   <link>${SITE}</link>
   <description>Traktions-, gel- och fritidsbatterier från Batteriproffs</description>
-${products.map(feedItem).join("\n")}
+${publicProducts.map(feedItem).join("\n")}
 </channel>
 </rss>`
 

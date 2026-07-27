@@ -59,7 +59,9 @@ export async function POST(request) {
 
     // Product prices are stored INCL. moms; shipping is stored excl. moms.
     const subtotalInclVat = itemSummary.reduce((s, i) => s + i.price * i.qty, 0)
-    const shipping = SHIPPING_COST
+    // Fraktfritt bara när varenda rad är fraktfri — annars full frakt.
+    // Avgörs på servern, aldrig av det klienten skickar in.
+    const shipping = resolved.every(({ product }) => product.freeShipping) ? 0 : SHIPPING_COST
     const totalInclVat = subtotalInclVat + Math.round(shipping * VAT_RATE)
     const amountInOre = totalInclVat * 100
 
