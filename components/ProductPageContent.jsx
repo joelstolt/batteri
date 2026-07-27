@@ -7,6 +7,7 @@ import Image from "next/image"
 import { ShoppingCart, Truck, Shield, Phone, ChevronRight, RotateCcw } from "lucide-react"
 import { getProductBySlug, getProductsByCategory, getProductBrand, getProductChemistry } from "@/lib/products"
 import { CATEGORIES, PHONE, PHONE_LINK } from "@/lib/constants"
+import { machinesForProduct } from "@/lib/machines"
 import { useCart } from "@/lib/cart-context"
 import { useVat } from "@/lib/vat-context"
 import ProductCard from "@/components/ProductCard"
@@ -76,6 +77,27 @@ function ProductExtraInfo({ product, className = "" }) {
             Passar till
           </h3>
           <p className="text-sm leading-relaxed text-text-mid">{product.fitsTo}</p>
+
+          {/* Länkar till maskinsidorna — gör klustret dubbelriktat i stället för
+              att bara peka nedåt från navet */}
+          {machinesForProduct(product.slug).length > 0 && (
+            <div className="mt-4 border-t border-border pt-4">
+              <div className="mb-2 text-xs font-semibold text-text-mid">
+                Se batteriet till en specifik maskin
+              </div>
+              <div className="flex flex-wrap gap-2">
+                {machinesForProduct(product.slug).map((m) => (
+                  <Link
+                    key={m.slug}
+                    href={`/batteri-till/${m.slug}`}
+                    className="rounded-lg border border-border bg-white px-3 py-1.5 text-xs font-medium text-text-dark transition-colors hover:border-navy/40"
+                  >
+                    {m.name}
+                  </Link>
+                ))}
+              </div>
+            </div>
+          )}
         </div>
       )}
       {product.recommendedCharger && (

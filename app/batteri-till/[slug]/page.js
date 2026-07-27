@@ -1,0 +1,105 @@
+import { notFound } from "next/navigation"
+import { machines, machineBySlug } from "@/lib/machines"
+import { publicProducts, getProductImage } from "@/lib/products"
+import { SITE_URL } from "@/lib/constants"
+import TopBar from "@/components/TopBar"
+import Header from "@/components/Header"
+import MachinePageContent from "@/components/MachinePageContent"
+import CtaBanner from "@/components/CtaBanner"
+import Footer from "@/components/Footer"
+
+export async function generateStaticParams() {
+  return machines.map((m) => ({ slug: m.slug }))
+}
+
+/** Batterierna som är kopplade till maskinen, i den ordning registret anger. */
+function productsFor(machine) {
+  return machine.products
+    .map((slug) => publicProducts.find((p) => p.slug === slug))
+    .filter(Boolean)
+}
+
+export async function generateMetadata({ params }) {
+  const { slug } = await params
+  const machine = machineBySlug(slug)
+  if (!machine) return { title: "Sidan hittades inte — Batteriproffs" }
+
+  const products = productsFor(machine)
+  const priceFrom = products.length ? Math.min(...products.map((p) => p.price)) : null
+
+  const title = `Batteri till ${machine.name} — ${machine.type} | Batteriproffs`
+  const description = priceFrom
+    ? `Batterier som passar ${machine.name}. ${products.length} alternativ från ${priceFrom} kr inkl. moms. Snabb leverans i hela Sverige och hjälp att välja rätt.`
+    : `Batterier som passar ${machine.name}. Snabb leverans i hela Sverige och hjälp att välja rätt.`
+
+  return {
+    title,
+    description,
+    alternates: { canonical: `${SITE_URL}/batteri-till/${slug}` },
+    openGraph: {
+      title,
+      description,
+      url: `${SITE_URL}/batteri-till/${slug}`,
+      siteName: "Batteriproffs",
+      locale: "sv_SE",
+      type: "website",
+      images: products[0] ? [{ url: `${SITE_URL}${getProductImage(products[0])}` }] : undefined,
+    },
+  }
+}
+
+/**
+ * ItemList-schema med de batterier som passar. Ger Google en maskinläsbar
+ * koppling mellan maskinmodellen och produkterna, vilket är hela poängen
+ * med sidan.
+ */
+function buildJsonLd(machine, products) {
+  return {
+    "@context": "https://schema.org",
+    "@type": "ItemList",
+    name: `Batteri till ${machine.name}`,
+    description: machine.intro,
+    numberOfItems: products.length,
+    itemListElement: products.map((p, i) => ({
+      "@type": "ListItem",
+      position: i + 1,
+      item: {
+        "@type": "Product",
+        name: p.name,
+        url: `${SITE_URL}/produkt/${p.slug}`,
+        image: `${SITE_URL}${getProductImage(p)}`,
+        sku: p.slug,
+        offers: {
+          "@type": "Offer",
+          priceCurrency: "SEK",
+          price: p.price,
+          availability: p.inStock
+            ? "https://schema.org/InStock"
+            : "https://schema.org/OutOfStock",
+        },
+      },
+    })),
+  }
+}
+
+export default async function MachineRoute({ params }) {
+  const { slug } = await params
+  const machine = machineBySlug(slug)
+  if (!machine) notFound()
+
+  const products = productsFor(machine)
+
+  return (
+    <>
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{ __html: JSON.stringify(buildJsonLd(machine, products)) }}
+      />
+      <TopBar />
+      <Header />
+      <MachinePageContent machine={machine} products={products} />
+      <CtaBanner />
+      <Footer />
+    </>
+  )
+}

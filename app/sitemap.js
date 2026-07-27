@@ -1,11 +1,13 @@
 import { SITE_URL, CATEGORIES } from "@/lib/constants"
 import { publicProducts } from "@/lib/products"
+import { machines } from "@/lib/machines"
 
 export default function sitemap() {
   const now = new Date()
 
   const staticPages = [
     { url: SITE_URL, priority: 1.0, changeFrequency: "weekly" },
+    { url: `${SITE_URL}/batteri-till`, priority: 0.9, changeFrequency: "weekly" },
     { url: `${SITE_URL}/faq`, priority: 0.6, changeFrequency: "monthly" },
     { url: `${SITE_URL}/skotsel`, priority: 0.6, changeFrequency: "monthly" },
     { url: `${SITE_URL}/kontakt`, priority: 0.5, changeFrequency: "yearly" },
@@ -26,7 +28,14 @@ export default function sitemap() {
     changeFrequency: "weekly",
   }))
 
-  return [...staticPages, ...categoryPages, ...productPages].map((p) => ({
+  // Maskinsidorna är hela poängen med långsvans-strategin — de ska in i sitemap
+  const machinePages = machines.map((m) => ({
+    url: `${SITE_URL}/batteri-till/${m.slug}`,
+    priority: 0.8,
+    changeFrequency: "monthly",
+  }))
+
+  return [...staticPages, ...categoryPages, ...productPages, ...machinePages].map((p) => ({
     ...p,
     lastModified: now,
   }))

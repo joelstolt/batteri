@@ -1,0 +1,123 @@
+"use client"
+
+import Link from "next/link"
+import { Phone, ChevronRight, Wrench, PackageCheck, HelpCircle } from "lucide-react"
+import { PHONE, PHONE_LINK } from "@/lib/constants"
+import ProductCard from "@/components/ProductCard"
+import FadeIn from "@/components/FadeIn"
+
+export default function MachinePageContent({ machine, products }) {
+  return (
+    <div className="bg-white">
+      {/* Sidhuvud */}
+      <div className="border-b border-border bg-surface">
+        <div className="mx-auto max-w-[1200px] px-4 pb-10 pt-8 sm:px-6">
+          <nav className="mb-5 flex flex-wrap items-center gap-1.5 text-xs text-text-mid">
+            <Link href="/" className="hover:text-text-dark">Hem</Link>
+            <ChevronRight size={13} className="text-text-light" />
+            <Link href="/batteri-till" className="hover:text-text-dark">Batteri till maskin</Link>
+            <ChevronRight size={13} className="text-text-light" />
+            <span className="text-text-dark">{machine.name}</span>
+          </nav>
+
+          <div className="mb-2 text-xs font-bold uppercase tracking-widest text-amber">
+            {machine.type}
+          </div>
+          <h1 className="mb-4 max-w-3xl font-heading text-[clamp(26px,4vw,38px)] font-extrabold leading-tight tracking-tight text-text-dark">
+            Batteri till {machine.name}
+          </h1>
+          <p className="max-w-2xl text-base leading-relaxed text-text-mid">{machine.intro}</p>
+
+          <div className="mt-6 flex flex-wrap gap-3">
+            <a
+              href={`tel:${PHONE_LINK}`}
+              className="inline-flex items-center gap-2 rounded-xl bg-navy px-5 py-3 font-heading text-sm font-bold text-white transition-colors hover:bg-navy-light"
+            >
+              <Phone size={15} />
+              Osäker på modellen? Ring {PHONE}
+            </a>
+          </div>
+        </div>
+      </div>
+
+      <div className="mx-auto max-w-[1200px] px-4 py-12 sm:px-6">
+        {/* Passande batterier */}
+        <FadeIn>
+          <div className="mb-6 flex items-center gap-2">
+            <PackageCheck size={19} className="text-navy" />
+            <h2 className="font-heading text-xl font-bold text-text-dark">
+              {products.length === 1
+                ? "Batteriet som passar"
+                : `${products.length} batterier som passar`}
+            </h2>
+          </div>
+
+          <div className="grid grid-cols-2 gap-3 sm:gap-5 lg:grid-cols-4">
+            {products.map((p) => (
+              <ProductCard key={p.slug} product={p} />
+            ))}
+          </div>
+        </FadeIn>
+
+        {/* Innan du beställer */}
+        <FadeIn delay={0.05}>
+          <div className="mt-14 grid gap-6 lg:grid-cols-2">
+            <div className="rounded-2xl border border-border bg-surface p-6">
+              <div className="mb-3 flex items-center gap-2">
+                <Wrench size={17} className="text-navy" />
+                <h2 className="font-heading text-lg font-bold text-text-dark">
+                  Kontrollera detta innan du beställer
+                </h2>
+              </div>
+              <ul className="flex flex-col gap-2.5 text-sm leading-relaxed text-text-mid">
+                <li>
+                  <strong className="text-text-dark">Systemspänningen.</strong> Räkna antalet
+                  batterier som sitter i maskinen i dag och multiplicera med deras märkspänning.
+                  Sex 8V-batterier betyder ett 48V-system.
+                </li>
+                <li>
+                  <strong className="text-text-dark">Batterifackets mått.</strong> Kapaciteten
+                  hjälper inte om batteriet inte får plats. Mät längd, bredd och höjd inklusive poler.
+                </li>
+                <li>
+                  <strong className="text-text-dark">Polernas placering.</strong> Plus och minus
+                  måste sitta åt rätt håll för att kablaget ska räcka.
+                </li>
+                <li>
+                  <strong className="text-text-dark">Byt hela uppsättningen.</strong> Ett nytt
+                  batteri i serie med gamla åldras i takt med de gamla. Halva besparingen försvinner.
+                </li>
+              </ul>
+            </div>
+
+            <div className="rounded-2xl border border-border bg-surface p-6">
+              <div className="mb-3 flex items-center gap-2">
+                <HelpCircle size={17} className="text-navy" />
+                <h2 className="font-heading text-lg font-bold text-text-dark">
+                  Hittar du inte din modell?
+                </h2>
+              </div>
+              <p className="mb-4 text-sm leading-relaxed text-text-mid">
+                Vi har fler batterier i lager än vad som listas här, och sitter det en annan
+                variant i din maskin hittar vi oftast en direkt ersättare. Ring med
+                maskinens modellbeteckning och märkspänningen, eller fotografera etiketten på
+                det batteri som sitter i nu och mejla bilden.
+              </p>
+              <div className="flex flex-col gap-2 text-sm">
+                <a
+                  href={`tel:${PHONE_LINK}`}
+                  className="font-semibold text-navy hover:underline"
+                >
+                  {PHONE}
+                </a>
+                <Link href="/kontakt" className="font-semibold text-navy hover:underline">
+                  Skicka ett meddelande
+                </Link>
+              </div>
+            </div>
+          </div>
+        </FadeIn>
+      </div>
+    </div>
+  )
+}

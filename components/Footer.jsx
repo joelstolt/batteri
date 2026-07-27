@@ -10,6 +10,8 @@ const COLUMNS = [
       { label: "Städmaskiner", href: "/kategori/stadmaskiner" },
       { label: "Stationära", href: "/kategori/stationara" },
       { label: "Fritid & Sol", href: "/kategori/fritid-solenergi" },
+      // Navet för maskinsidorna — utan den här länken blir de föräldralösa
+      { label: "Batteri till din maskin", href: "/batteri-till" },
     ],
   },
   {

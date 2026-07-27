@@ -1,3 +1,4 @@
+import Link from "next/link"
 import BatteryFinder from "@/components/BatteryFinder"
 
 export default function FinderSection() {
@@ -16,6 +17,12 @@ export default function FinderSection() {
             visar vi vad vi har som passar. Vet du inte spänningen ringer du oss,
             då reder vi ut det på en minut.
           </p>
+          <Link
+            href="/batteri-till"
+            className="mt-5 inline-flex items-center gap-1.5 font-heading text-sm font-bold text-navy hover:underline"
+          >
+            Eller sök direkt på din maskin →
+          </Link>
         </div>
 
         <div className="flex justify-center lg:justify-end">
