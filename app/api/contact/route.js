@@ -1,10 +1,37 @@
 import { NextResponse } from "next/server"
 import { resend, FROM, ADMIN_EMAIL, escape, emailLayout } from "@/lib/emails"
+import { rateLimit, clientIp, isOwnOrigin, ALLOWED_ORIGINS } from "@/lib/rate-limit"
+
+export const runtime = "nodejs"
+
+const EMAIL_RE = /^[^\s@]+@[^\s@]+\.[^\s@]+$/
+const MAX_MESSAGE = 5000
+
+// Skräppost svarar 200 utan att skicka något — en bot ska inte få veta att
+// den fastnade, då justerar den bara och försöker igen.
+const SILENT_OK = NextResponse.json({ ok: true })
 
 export async function POST(request) {
   try {
+    // Bot-trafik postar rakt mot API:et och saknar oftast korrekt Origin
+    if (!isOwnOrigin(request, ALLOWED_ORIGINS)) return SILENT_OK
+
+    const ip = clientIp(request)
+    const limit = rateLimit(`contact:${ip}`, 3, 10 * 60 * 1000)
+    if (!limit.ok) {
+      return NextResponse.json(
+        { error: "För många meddelanden. Vänta en stund eller ring oss på 073-554 69 68." },
+        { status: 429, headers: { "Retry-After": String(limit.retryAfter) } }
+      )
+    }
+
     const body = await request.json()
-    const { name, email, phone, message, type } = body || {}
+    const { name, email, phone, message, type, hp_field } = body || {}
+
+    // Honeypot. Fältet är dolt för människor — är det ifyllt är det en bot.
+    // Namnet får ALDRIG vara company/website/url/email: webbläsarnas autofyll
+    // fyller i dem åt riktiga kunder och då tappas leadet tyst.
+    if (hp_field) return SILENT_OK
 
     if (!name || !email || !message) {
       return NextResponse.json(
@@ -12,6 +39,14 @@ export async function POST(request) {
         { status: 400 }
       )
     }
+
+    if (!EMAIL_RE.test(String(email)) || String(message).length > MAX_MESSAGE) {
+      return NextResponse.json({ error: "Ogiltiga uppgifter" }, { status: 400 })
+    }
+
+    // Nästan all formulärspam klistrar in länkar. Riktiga batterifrågor gör det inte.
+    const linkCount = (String(message).match(/https?:\/\//gi) || []).length
+    if (linkCount >= 2) return SILENT_OK
 
     if (!process.env.RESEND_API_KEY || !ADMIN_EMAIL) {
       console.error("Missing RESEND_API_KEY or CONTACT_TO_EMAIL")

@@ -70,6 +70,7 @@ export async function generateMetadata({ params }) {
   return {
     title: seo.title,
     description: seo.description,
+    alternates: { canonical: `https://www.batteriproffs.se/kategori/${slug}` },
     openGraph: {
       title: seo.ogTitle,
       description: seo.ogDescription,

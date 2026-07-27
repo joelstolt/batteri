@@ -3,6 +3,7 @@ import Header from "@/components/Header"
 import Footer from "@/components/Footer"
 
 export const metadata = {
+  alternates: { canonical: "https://www.batteriproffs.se/villkor" },
   title: "Köpvillkor & Leveransvillkor — Batteriproffs",
   description:
     "Villkor för beställning, leverans, betalning, ångerrätt och reklamation hos Batteriproffs.",

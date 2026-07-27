@@ -5,6 +5,7 @@ import CtaBanner from "@/components/CtaBanner"
 import Footer from "@/components/Footer"
 
 export const metadata = {
+  alternates: { canonical: "https://www.batteriproffs.se/om-oss" },
   title: "Om oss — Batteriproffs",
   description: "Batteriproffs är ett svenskt företag med över 20 års erfarenhet av professionella batterilösningar för företag och privatpersoner.",
 }

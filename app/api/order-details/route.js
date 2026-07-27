@@ -5,6 +5,7 @@ import {
   buildOrderMetadata,
   normalizePostalCode,
 } from "@/lib/checkout"
+import { rateLimit, clientIp, isOwnOrigin, ALLOWED_ORIGINS } from "@/lib/rate-limit"
 
 const stripe = new Stripe(process.env.STRIPE_SECRET_KEY)
 
@@ -17,6 +18,17 @@ export const runtime = "nodejs"
  */
 export async function POST(request) {
   try {
+    if (!isOwnOrigin(request, ALLOWED_ORIGINS)) {
+      return NextResponse.json({ error: "Ogiltigt anrop" }, { status: 403 })
+    }
+    const limit = rateLimit(`details:${clientIp(request)}`, 30, 10 * 60 * 1000)
+    if (!limit.ok) {
+      return NextResponse.json(
+        { error: "För många försök. Vänta en stund." },
+        { status: 429, headers: { "Retry-After": String(limit.retryAfter) } }
+      )
+    }
+
     const body = await request.json().catch(() => null)
     const paymentIntentId = body?.paymentIntentId
     const clientSecret = body?.clientSecret

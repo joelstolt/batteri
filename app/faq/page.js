@@ -4,6 +4,7 @@ import FaqContent from "@/components/FaqContent"
 import Footer from "@/components/Footer"
 
 export const metadata = {
+  alternates: { canonical: "https://www.batteriproffs.se/faq" },
   title: "Vanliga frågor — Batteriproffs",
   description:
     "Svar på vanliga frågor om beställning, frakt, betalning, retur och batterival hos Batteriproffs.",

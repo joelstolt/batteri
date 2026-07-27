@@ -3,6 +3,7 @@ import Header from "@/components/Header"
 import Footer from "@/components/Footer"
 
 export const metadata = {
+  alternates: { canonical: "https://www.batteriproffs.se/integritet" },
   title: "Integritetspolicy — Batteriproffs",
 }
 

@@ -48,6 +48,7 @@ export async function generateMetadata({ params }) {
     title: seoTitle,
     description: metaDesc,
     keywords: product.seoKeywords || "",
+    alternates: { canonical: `https://www.batteriproffs.se/produkt/${slug}` },
     openGraph: {
       title: seoTitle,
       description: metaDesc,

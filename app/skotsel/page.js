@@ -7,7 +7,7 @@ export const metadata = {
   title: "Skötsel av batterier — guide för längre livslängd | Batteriproffs",
   description:
     "Komplett guide till skötsel och underhåll av gel-batterier, AGM och blybatterier. Laddning, förvaring, vanliga misstag och tips från Batteriproffs.",
-  alternates: { canonical: "/skotsel" },
+  alternates: { canonical: "https://www.batteriproffs.se/skotsel" },
   openGraph: {
     title: "Skötsel av batterier — guide för längre livslängd",
     description:

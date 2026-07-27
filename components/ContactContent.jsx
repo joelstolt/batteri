@@ -9,7 +9,7 @@ export default function ContactContent() {
   const [sent, setSent] = useState(false)
   const [submitting, setSubmitting] = useState(false)
   const [error, setError] = useState("")
-  const [form, setForm] = useState({ name: "", email: "", phone: "", message: "", type: "foretag" })
+  const [form, setForm] = useState({ name: "", email: "", phone: "", message: "", type: "foretag", hp_field: "" })
 
   const handleSubmit = async (e) => {
     e.preventDefault()
@@ -144,6 +144,28 @@ export default function ContactContent() {
                       placeholder="Beskriv vad du behöver hjälp med..."
                     />
                   </div>
+
+                  {/* Honeypot. Måste heta hp_field — hade fältet hetat company,
+                      website, url eller email hade webbläsarens autofyll fyllt i
+                      det åt riktiga kunder och deras meddelanden tappats tyst.
+                      Göms med clip-path, inte display:none, så att bottar ser det. */}
+                  <input
+                    type="text"
+                    name="hp_field"
+                    tabIndex={-1}
+                    autoComplete="off"
+                    aria-hidden="true"
+                    value={form.hp_field}
+                    onChange={(e) => setForm({ ...form, hp_field: e.target.value })}
+                    style={{
+                      position: "absolute",
+                      clipPath: "inset(50%)",
+                      width: 1,
+                      height: 1,
+                      overflow: "hidden",
+                      whiteSpace: "nowrap",
+                    }}
+                  />
 
                   {error && (
                     <div className="rounded-xl border border-red-200 bg-red-50 px-4 py-3 text-sm text-red-700">

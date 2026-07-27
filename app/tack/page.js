@@ -5,6 +5,7 @@ import ThankYouContent from "@/components/ThankYouContent"
 import Footer from "@/components/Footer"
 
 export const metadata = {
+  robots: { index: false, follow: false },
   title: "Tack för din beställning — Batteriproffs",
 }
 

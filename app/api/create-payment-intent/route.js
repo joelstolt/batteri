@@ -1,6 +1,7 @@
 import Stripe from "stripe"
 import { NextResponse } from "next/server"
 import { fetchProductBySlug } from "@/lib/queries"
+import { rateLimit, clientIp, isOwnOrigin, ALLOWED_ORIGINS } from "@/lib/rate-limit"
 
 const stripe = new Stripe(process.env.STRIPE_SECRET_KEY)
 
@@ -14,6 +15,17 @@ export const runtime = "nodejs"
 
 export async function POST(request) {
   try {
+    if (!isOwnOrigin(request, ALLOWED_ORIGINS)) {
+      return NextResponse.json({ error: "Ogiltigt anrop" }, { status: 403 })
+    }
+    const limit = rateLimit(`pi:${clientIp(request)}`, 20, 10 * 60 * 1000)
+    if (!limit.ok) {
+      return NextResponse.json(
+        { error: "För många försök. Vänta en stund och ladda om sidan." },
+        { status: 429, headers: { "Retry-After": String(limit.retryAfter) } }
+      )
+    }
+
     const body = await request.json().catch(() => null)
     if (!body || !Array.isArray(body.items)) {
       return NextResponse.json({ error: "Ogiltigt anrop" }, { status: 400 })
