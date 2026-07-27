@@ -1,7 +1,7 @@
 "use client"
 
 import { useState, useMemo } from "react"
-import { useParams } from "next/navigation"
+import { useParams, useSearchParams } from "next/navigation"
 import Link from "next/link"
 import { SlidersHorizontal, ChevronDown, Grid3X3, LayoutList } from "lucide-react"
 import { getProductsByCategory, publicProducts as allProductsList } from "@/lib/products"
@@ -23,8 +23,10 @@ export default function CategoryPage() {
   const category = CATEGORIES.find((c) => c.slug === slug)
   const allProducts = slug === "alla" ? allProductsList : getProductsByCategory(slug)
 
+  // Batterifinnaren skickar hit ?volt=6V så listan öppnar förfiltrerad
+  const searchParams = useSearchParams()
   const [sort, setSort] = useState("popular")
-  const [voltageFilter, setVoltageFilter] = useState("all")
+  const [voltageFilter, setVoltageFilter] = useState(searchParams.get("volt") || "all")
   const [showSort, setShowSort] = useState(false)
 
   const voltages = useMemo(() => {

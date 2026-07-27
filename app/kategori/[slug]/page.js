@@ -1,3 +1,5 @@
+import { Suspense } from "react"
+import { notFound } from "next/navigation"
 import { CATEGORIES } from "@/lib/constants"
 import TopBar from "@/components/TopBar"
 import Header from "@/components/Header"
@@ -78,12 +80,20 @@ export async function generateMetadata({ params }) {
   }
 }
 
-export default function CategoryRoute() {
+export default async function CategoryRoute({ params }) {
+  const { slug } = await params
+
+  // Utan den här svarade okända slugs 200 med en tom kategorivy
+  if (!CATEGORIES.some((c) => c.slug === slug)) notFound()
+
   return (
     <>
       <TopBar />
       <Header />
-      <CategoryPageContent />
+      {/* Suspense krävs för att kategorivyn läser ?volt= från URL:en */}
+      <Suspense>
+        <CategoryPageContent />
+      </Suspense>
       <CtaBanner />
       <Footer />
     </>

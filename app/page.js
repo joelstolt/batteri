@@ -1,6 +1,7 @@
 import TopBar from "@/components/TopBar"
 import Header from "@/components/Header"
 import Hero from "@/components/Hero"
+import FinderSection from "@/components/FinderSection"
 import Categories from "@/components/Categories"
 import AllProducts from "@/components/AllProducts"
 import WhyUs from "@/components/WhyUs"
@@ -19,6 +20,7 @@ export default function Home() {
       <TopBar />
       <Header />
       <Hero />
+      <FinderSection />
       <Categories />
       <AllProducts />
       <WhyUs />

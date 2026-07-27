@@ -4,6 +4,7 @@ import { useState } from "react"
 import { useRouter } from "next/navigation"
 import { motion, AnimatePresence } from "framer-motion"
 import { PHONE, PHONE_LINK } from "@/lib/constants"
+import { publicProducts } from "@/lib/products"
 
 const AREAS = [
   { id: "traktion", slug: "traktion-industri", label: "Traktion & Industri", icon: "🏗️", sub: "Truckar · Golfbilar · Bygg" },
@@ -19,7 +20,12 @@ const VOLTAGES = [
   { id: "vet-ej", label: "Vet ej", sub: "Vi hjälper dig" },
 ]
 
-const RESULT_COUNTS = { stad: 6, traktion: 6, stationart: 6, fritid: 6 }
+/** Riktigt antal produkter som matchar valen — siffran visas för kunden. */
+function countMatches(areaSlug, voltageId) {
+  const inArea = publicProducts.filter((p) => p.category === areaSlug)
+  if (!voltageId || voltageId === "vet-ej") return inArea.length
+  return inArea.filter((p) => (p.voltage || "").toLowerCase() === voltageId).length
+}
 
 export default function BatteryFinder() {
   const [step, setStep] = useState(0)
@@ -32,12 +38,14 @@ export default function BatteryFinder() {
   const handleReset = () => { setStep(0); setArea(null); setVoltage(null) }
 
   const selectedArea = AREAS.find((a) => a.id === area)
-  const resultCount = RESULT_COUNTS[area] || 2
+  const resultCount = selectedArea ? countMatches(selectedArea.slug, voltage) : 0
 
   const handleShowProducts = () => {
-    if (selectedArea) {
-      router.push(`/kategori/${selectedArea.slug}`)
-    }
+    if (!selectedArea) return
+    // Spänningen följer med som ?volt= så kategorisidan öppnar förfiltrerad
+    const volt = VOLTAGES.find((v) => v.id === voltage)
+    const q = volt && voltage !== "vet-ej" ? `?volt=${encodeURIComponent(volt.label)}` : ""
+    router.push(`/kategori/${selectedArea.slug}${q}`)
   }
 
   return (
@@ -132,17 +140,21 @@ export default function BatteryFinder() {
                     <path d="M9 1l2 4.1 4.6.7-3.3 3.2.8 4.5L9 11.3l-4.1 2.2.8-4.5L2.4 5.8 7 5.1 9 1z"/>
                   </svg>
                   <span className="font-heading text-[15px] font-bold text-text-dark">
-                    {voltage === "vet-ej" ? "Vi rekommenderar:" : `${resultCount} träffar`}
+                    {voltage === "vet-ej" || resultCount === 0
+                      ? "Vi rekommenderar:"
+                      : `${resultCount} ${resultCount === 1 ? "träff" : "träffar"}`}
                   </span>
                 </div>
                 <p className="text-[13px] leading-relaxed text-text-mid">
                   {voltage === "vet-ej"
                     ? "Ring oss så hjälper vi dig avgöra vilken spänning och kapacitet som passar bäst."
-                    : `Vi har ${resultCount} batterier som matchar ditt val.`}
+                    : resultCount === 0
+                      ? "Vi har inget lagerfört batteri med exakt den kombinationen — ring oss så tar vi fram ett alternativ."
+                      : `Vi har ${resultCount} ${resultCount === 1 ? "batteri" : "batterier"} som matchar ditt val.`}
                 </p>
               </div>
               <div className="flex gap-2.5">
-                {voltage === "vet-ej" ? (
+                {voltage === "vet-ej" || resultCount === 0 ? (
                   <a href={`tel:${PHONE_LINK}`} className="flex flex-1 items-center justify-center rounded-[10px] bg-amber-bg px-5 py-3.5 text-sm font-bold text-navy transition-transform hover:-translate-y-px">
                     Ring {PHONE}
                   </a>

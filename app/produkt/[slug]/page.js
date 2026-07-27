@@ -1,3 +1,4 @@
+import { notFound } from "next/navigation"
 import { products, getProductImage, getProductBrand } from "@/lib/products"
 import TopBar from "@/components/TopBar"
 import Header from "@/components/Header"
@@ -113,6 +114,10 @@ function buildProductJsonLd(product) {
 export default async function ProductRoute({ params }) {
   const { slug } = await params
   const product = products.find((p) => p.slug === slug)
+
+  // Utan den här svarade okända slugs 200 med en "hittades inte"-vy, vilket
+  // låter Google indexera hur många skräp-URL:er som helst.
+  if (!product) notFound()
 
   return (
     <>
