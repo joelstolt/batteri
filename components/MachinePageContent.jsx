@@ -20,7 +20,7 @@ export default function MachinePageContent({ machine, products }) {
             <span className="text-text-dark">{machine.name}</span>
           </nav>
 
-          <div className="mb-2 text-xs font-bold uppercase tracking-widest text-amber">
+          <div className="mb-2 text-xs font-bold uppercase tracking-widest text-amber-text">
             {machine.type}
           </div>
           <h1 className="mb-4 max-w-3xl font-heading text-[clamp(26px,4vw,38px)] font-extrabold leading-tight tracking-tight text-text-dark">

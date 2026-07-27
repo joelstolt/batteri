@@ -6,7 +6,7 @@ export default function FinderSection() {
     <section className="border-y border-border bg-surface">
       <div className="mx-auto grid max-w-[1200px] items-center gap-10 px-4 py-14 sm:px-6 lg:grid-cols-[1fr_380px] lg:gap-16 lg:py-20">
         <div>
-          <div className="mb-3 text-xs font-bold uppercase tracking-widest text-amber">
+          <div className="mb-3 text-xs font-bold uppercase tracking-widest text-amber-text">
             Osäker på vilket batteri?
           </div>
           <h2 className="mb-4 font-heading text-[clamp(24px,3.5vw,34px)] font-extrabold leading-tight tracking-tight text-text-dark">

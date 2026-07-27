@@ -14,9 +14,10 @@ export default function ThankYouPage() {
     <>
       <TopBar />
       <Header />
-      <Suspense>
-        <ThankYouContent />
-      </Suspense>
+      <main id="innehall">        <Suspense>
+          <ThankYouContent />
+        </Suspense>
+      </main>
       <Footer />
     </>
   )

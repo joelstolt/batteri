@@ -1,6 +1,7 @@
 import { Suspense } from "react"
 import { notFound } from "next/navigation"
 import { CATEGORIES } from "@/lib/constants"
+import { breadcrumbJsonLd, jsonLdProps } from "@/lib/schema"
 import TopBar from "@/components/TopBar"
 import Header from "@/components/Header"
 import CategoryPageContent from "@/components/CategoryPageContent"
@@ -88,13 +89,21 @@ export default async function CategoryRoute({ params }) {
 
   return (
     <>
+      <script {...jsonLdProps(breadcrumbJsonLd([
+        { name: "Hem", path: "/" },
+        {
+          name: CATEGORIES.find((c) => c.slug === slug)?.title || "Batterier",
+          path: `/kategori/${slug}`,
+        },
+      ]))} />
       <TopBar />
       <Header />
-      {/* Suspense krävs för att kategorivyn läser ?volt= från URL:en */}
-      <Suspense>
-        <CategoryPageContent />
-      </Suspense>
-      <CtaBanner />
+      <main id="innehall">        {/* Suspense krävs för att kategorivyn läser ?volt= från URL:en */}
+        <Suspense>
+          <CategoryPageContent />
+        </Suspense>
+        <CtaBanner />
+      </main>
       <Footer />
     </>
   )

@@ -25,7 +25,10 @@ function ImageGallery({ images, alt }) {
     <div className="flex flex-col-reverse gap-3 sm:flex-row sm:gap-4">
       {/* Thumbnails */}
       {images.length > 1 && (
-        <div className="flex gap-2 overflow-x-auto sm:w-20 sm:flex-shrink-0 sm:flex-col sm:overflow-visible">
+        <div className="flex gap-2 overflow-x-auto sm:w-20 sm:flex-shrink-0 sm:flex-col sm:overflow-visible"
+          tabIndex={0}
+          role="group"
+          aria-label="Produktbilder">
           {images.map((img, i) => (
             <button
               key={i}
@@ -172,7 +175,7 @@ export default function ProductPageContent() {
           <h1 className="mb-2 font-heading text-2xl font-bold text-text-dark">
             Produkten hittades inte
           </h1>
-          <Link href="/" className="text-amber underline">
+          <Link href="/" className="text-amber-text underline">
             Tillbaka till startsidan
           </Link>
         </div>

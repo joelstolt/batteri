@@ -1,5 +1,7 @@
 import { notFound } from "next/navigation"
 import { products, getProductImage, getProductBrand } from "@/lib/products"
+import { breadcrumbJsonLd, jsonLdProps } from "@/lib/schema"
+import { CATEGORIES } from "@/lib/constants"
 import TopBar from "@/components/TopBar"
 import Header from "@/components/Header"
 import ProductPageContent from "@/components/ProductPageContent"
@@ -129,10 +131,21 @@ export default async function ProductRoute({ params }) {
           dangerouslySetInnerHTML={{ __html: JSON.stringify(buildProductJsonLd(product)) }}
         />
       )}
+      {product && (
+        <script {...jsonLdProps(breadcrumbJsonLd([
+          { name: "Hem", path: "/" },
+          {
+            name: CATEGORIES.find((c) => c.slug === product.category)?.title || "Batterier",
+            path: `/kategori/${product.category}`,
+          },
+          { name: product.shortName, path: `/produkt/${product.slug}` },
+        ]))} />
+      )}
       <TopBar />
       <Header />
-      <ProductPageContent />
-      <CtaBanner />
+      <main id="innehall">        <ProductPageContent />
+        <CtaBanner />
+      </main>
       <Footer />
     </>
   )

@@ -69,6 +69,13 @@ export default function RootLayout({ children }) {
           `}
         </Script>
 
+        <a
+          href="#innehall"
+          className="sr-only focus:not-sr-only focus:absolute focus:left-4 focus:top-4 focus:z-[200] focus:rounded-lg focus:bg-navy focus:px-4 focus:py-2.5 focus:font-heading focus:text-sm focus:font-bold focus:text-white"
+        >
+          Hoppa till innehåll
+        </a>
+
         <Providers>{children}</Providers>
         <CookieBanner />
 

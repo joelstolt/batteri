@@ -38,7 +38,7 @@ export default function ContactContent() {
       <div className="border-b border-border bg-surface">
         <div className="mx-auto max-w-[1200px] px-4 pb-8 pt-10 sm:px-6">
           <FadeIn>
-            <div className="mb-2 text-xs font-bold uppercase tracking-widest text-amber">Kontakt</div>
+            <div className="mb-2 text-xs font-bold uppercase tracking-widest text-amber-text">Kontakt</div>
             <h1 className="mb-3 font-heading text-[clamp(28px,4vw,40px)] font-extrabold tracking-tight text-text-dark">
               Hur kan vi hjälpa dig?
             </h1>

@@ -11,7 +11,10 @@ export default function TopBar() {
     <div className="bg-gradient-to-r from-amber-bg to-amber-light text-text-dark">
       <div className="mx-auto flex max-w-[1200px] items-center justify-between px-4 py-2 sm:px-6 sm:py-2.5">
         {/* USPs */}
-        <div className="flex min-w-0 flex-1 items-center gap-4 overflow-x-auto text-xs font-semibold sm:gap-6 sm:text-sm [scrollbar-width:none] [-ms-overflow-style:none] [&::-webkit-scrollbar]:hidden">
+        <div className="flex min-w-0 flex-1 items-center gap-4 overflow-x-auto text-xs font-semibold sm:gap-6 sm:text-sm [scrollbar-width:none] [-ms-overflow-style:none] [&::-webkit-scrollbar]:hidden"
+          tabIndex={0}
+          role="group"
+          aria-label="Våra löften">
           {USPS.map((text, i) => (
             <span key={i} className="flex shrink-0 items-center gap-1.5">
               <svg width="14" height="14" viewBox="0 0 15 15" fill="none" className="shrink-0">

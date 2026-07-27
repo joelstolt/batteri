@@ -86,6 +86,7 @@ export default function Header() {
             <button
               onClick={() => setSearchOpen(true)}
               className="flex h-11 w-12 items-center justify-center rounded-r-xl bg-gradient-to-br from-amber-bg to-amber transition-opacity hover:opacity-85"
+              aria-label="Sök"
             >
               <Search size={18} strokeWidth={2.5} className="text-navy" />
             </button>

@@ -70,7 +70,7 @@ export default function CategoryPage() {
           <h1 className="mb-2 font-heading text-2xl font-bold text-text-dark">
             Kategori hittades inte
           </h1>
-          <Link href="/" className="text-amber underline">
+          <Link href="/" className="text-amber-text underline">
             Tillbaka till startsidan
           </Link>
         </div>
@@ -180,7 +180,7 @@ export default function CategoryPage() {
             </p>
             <button
               onClick={() => setVoltageFilter("all")}
-              className="text-amber underline"
+              className="text-amber-text underline"
             >
               Visa alla produkter
             </button>

@@ -34,7 +34,7 @@ export default function WhyUs() {
         {/* Left — Text */}
         <FadeIn>
           <div>
-            <div className="mb-2 text-xs font-bold uppercase tracking-widest text-amber">
+            <div className="mb-2 text-xs font-bold uppercase tracking-widest text-amber-text">
               Varför Batteriproffs?
             </div>
             <h2 className="mb-5 font-heading text-[clamp(26px,3.5vw,36px)] font-extrabold tracking-tight text-text-dark">
@@ -86,7 +86,7 @@ export default function WhyUs() {
             {/* Glow */}
             <div className="pointer-events-none absolute -right-10 -top-10 h-[200px] w-[200px] rounded-full bg-[radial-gradient(circle,rgba(253,184,19,0.06),transparent)]" />
 
-            <div className="mb-6 text-xs font-bold uppercase tracking-widest text-amber-bg">
+            <div className="mb-6 text-xs font-bold uppercase tracking-widest text-amber-text">
               Tre löften
             </div>
 

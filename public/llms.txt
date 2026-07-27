@@ -1,0 +1,32 @@
+# Batteriproffs
+
+> Professionella batterilösningar för företag i hela Sverige. Traktionsbatterier,
+> gelbatterier och batterier till städmaskiner, liftar, truckar och golfbilar.
+> Vi säljer till företag, med priser publicerade öppet på sajten.
+
+Kontakt: info@batteriproffs.se, 073-554 69 68, vardagar 08:00-17:00.
+Leverans: 1-3 arbetsdagar i hela Sverige. Frakt 695 kr inkl. moms per försändelse.
+Betalning: kortbetalning i kassan. Öppet köp 30 dagar.
+
+## Sortiment
+- [Alla batterier](https://www.batteriproffs.se/kategori/alla)
+- [Traktion och industri](https://www.batteriproffs.se/kategori/traktion-industri): truckar, liftar, pallyftare
+- [Städmaskiner](https://www.batteriproffs.se/kategori/stadmaskiner): Nilfisk, Hako, Kärcher, Gansow
+- [Stationära](https://www.batteriproffs.se/kategori/stationara): UPS, larm, nödbelysning
+- [Fritid och solenergi](https://www.batteriproffs.se/kategori/fritid-solenergi)
+
+## Hitta batteri till en specifik maskin
+- [Alla maskiner](https://www.batteriproffs.se/batteri-till)
+
+## Ersättningar
+- [Trojan T-125](https://www.batteriproffs.se/ersatter/trojan-t-125)
+- [Trojan T-105](https://www.batteriproffs.se/ersatter/trojan-t-105)
+- [Trojan T-875](https://www.batteriproffs.se/ersatter/trojan-t-875)
+
+## Kunskap
+- [Skötsel av batterier](https://www.batteriproffs.se/skotsel)
+- [Vanliga frågor](https://www.batteriproffs.se/faq)
+- [Köpvillkor](https://www.batteriproffs.se/villkor)
+
+## Produktdata
+- [Produktfeed, XML](https://www.batteriproffs.se/google-feed.xml)

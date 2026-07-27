@@ -69,6 +69,15 @@ export default function ThankYouContent() {
         if (!data.error) {
           setOrder(data)
           reportPurchaseConversion(data)
+          // Köpet rapporterades tidigare bara till Google Ads. Utan det här
+          // steget i Umami går tratten inte att räkna hem.
+          if (typeof window !== "undefined" && window.umami) {
+            window.umami.track("kop", {
+              order: data.id,
+              varde: data.totalInclVat,
+              foretag: data.company?.name || null,
+            })
+          }
         }
       })
       .catch(() => {})

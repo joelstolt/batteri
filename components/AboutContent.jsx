@@ -10,7 +10,7 @@ export default function AboutContent() {
       <div className="border-b border-border bg-surface">
         <div className="mx-auto max-w-[1200px] px-4 pb-8 pt-10 sm:px-6">
           <FadeIn>
-            <div className="mb-2 text-xs font-bold uppercase tracking-widest text-amber">Om oss</div>
+            <div className="mb-2 text-xs font-bold uppercase tracking-widest text-amber-text">Om oss</div>
             <h1 className="mb-3 font-heading text-[clamp(28px,4vw,40px)] font-extrabold tracking-tight text-text-dark">
               Batteriproffs — din specialist inom traktionsbatterier
             </h1>
@@ -55,7 +55,7 @@ export default function AboutContent() {
 
           <FadeIn delay={0.15}>
             <div className="rounded-2xl bg-navy p-8 sm:p-10">
-              <div className="mb-6 text-xs font-bold uppercase tracking-widest text-amber-bg">
+              <div className="mb-6 text-xs font-bold uppercase tracking-widest text-amber-text">
                 Batteriproffs i siffror
               </div>
               <div className="grid grid-cols-2 gap-6">
@@ -81,7 +81,7 @@ export default function AboutContent() {
         <div className="mx-auto max-w-[1200px] px-4 sm:px-6">
           <FadeIn>
             <div className="mb-10">
-              <div className="mb-2 text-xs font-bold uppercase tracking-widest text-amber">
+              <div className="mb-2 text-xs font-bold uppercase tracking-widest text-amber-text">
                 Vår expertis
               </div>
               <h2 className="font-heading text-[clamp(24px,3.5vw,34px)] font-extrabold text-text-dark">
@@ -141,7 +141,7 @@ export default function AboutContent() {
         <div className="mx-auto max-w-[1200px] px-4 sm:px-6">
           <FadeIn>
             <div className="mb-10 text-center">
-              <div className="mb-2 text-xs font-bold uppercase tracking-widest text-amber">
+              <div className="mb-2 text-xs font-bold uppercase tracking-widest text-amber-text">
                 Våra värderingar
               </div>
               <h2 className="font-heading text-[clamp(24px,3.5vw,34px)] font-extrabold text-text-dark">
@@ -223,7 +223,7 @@ export default function AboutContent() {
         <div className="mx-auto max-w-[1200px] px-4 sm:px-6">
           <FadeIn>
             <div className="mb-10 text-center">
-              <div className="mb-2 text-xs font-bold uppercase tracking-widest text-amber">
+              <div className="mb-2 text-xs font-bold uppercase tracking-widest text-amber-text">
                 Våra varumärken
               </div>
               <h2 className="font-heading text-[clamp(24px,3.5vw,34px)] font-extrabold text-text-dark">
@@ -253,7 +253,7 @@ export default function AboutContent() {
               <FadeIn key={i} delay={i * 0.08}>
                 <div className="h-full rounded-2xl border border-border bg-surface p-6">
                   <h3 className="mb-1 font-heading text-lg font-bold text-text-dark">{brand.name}</h3>
-                  <div className="mb-3 text-xs font-semibold uppercase tracking-wider text-amber">{brand.type}</div>
+                  <div className="mb-3 text-xs font-semibold uppercase tracking-wider text-amber-text">{brand.type}</div>
                   <p className="text-sm leading-relaxed text-text-mid">{brand.desc}</p>
                 </div>
               </FadeIn>

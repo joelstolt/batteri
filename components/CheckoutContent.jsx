@@ -697,6 +697,16 @@ export default function CheckoutContent() {
   const [form, setForm] = useState(EMPTY_FORM)
   const [formErrors, setFormErrors] = useState({})
 
+  // Påbörjad kassa — mäts en gång när kassan öppnas med varor i korgen
+  useEffect(() => {
+    if (items.length === 0) return
+    if (typeof window !== "undefined" && window.umami) {
+      window.umami.track("paborjad-kassa", { rader: items.length, varde: totalPrice })
+    }
+    // Avsiktligt bara vid montering; korgändringar ska inte räknas som ny kassa
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [])
+
   // Create PaymentIntent on mount
   useEffect(() => {
     if (items.length === 0) return
@@ -769,7 +779,7 @@ export default function CheckoutContent() {
       <div className="border-b border-border bg-surface">
         <div className="mx-auto max-w-[1200px] px-4 pb-8 pt-10 sm:px-6">
           <FadeIn>
-            <div className="mb-2 text-xs font-bold uppercase tracking-widest text-amber">Kassa</div>
+            <div className="mb-2 text-xs font-bold uppercase tracking-widest text-amber-text">Kassa</div>
             <h1 className="font-heading text-[clamp(28px,4vw,40px)] font-extrabold tracking-tight text-text-dark">
               Slutför din beställning
             </h1>

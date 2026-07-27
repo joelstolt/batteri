@@ -1,3 +1,4 @@
+import { organizationJsonLd, websiteJsonLd, jsonLdProps } from "@/lib/schema"
 import TopBar from "@/components/TopBar"
 import Header from "@/components/Header"
 import Hero from "@/components/Hero"
@@ -17,14 +18,19 @@ export const metadata = {
 export default function Home() {
   return (
     <>
+      {/* Organization knyter företaget till en entitet hos Google. Renderas
+          inline i server-HTML — via next/script hade den varit osynlig. */}
+      <script {...jsonLdProps(organizationJsonLd())} />
+      <script {...jsonLdProps(websiteJsonLd())} />
       <TopBar />
       <Header />
-      <Hero />
-      <FinderSection />
-      <Categories />
-      <AllProducts />
-      <WhyUs />
-      <CtaBanner />
+      <main id="innehall">        <Hero />
+        <FinderSection />
+        <Categories />
+        <AllProducts />
+        <WhyUs />
+        <CtaBanner />
+      </main>
       <Footer />
     </>
   )

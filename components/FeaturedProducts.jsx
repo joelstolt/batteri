@@ -23,7 +23,7 @@ export default function FeaturedProducts() {
         <FadeIn>
           <div className="mb-8 flex flex-wrap items-end justify-between gap-4">
             <div>
-              <div className="mb-2 text-xs font-bold uppercase tracking-widest text-amber">
+              <div className="mb-2 text-xs font-bold uppercase tracking-widest text-amber-text">
                 Populära produkter
               </div>
               <h2 className="font-heading text-[clamp(24px,3.5vw,34px)] font-extrabold tracking-tight text-text-dark">

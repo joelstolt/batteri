@@ -6,6 +6,11 @@
   --color-navy-mid: #0F2847;
   --color-navy-deep: #060F1D;
   --color-amber: #F5A623;
+  /* Amber som TEXT på ljus bakgrund. #F5A623 ger bara 2,03:1 mot vitt och
+     underkänns av WCAG AA, som kräver 4,5:1 för brödtext. Den här ger 4,91:1
+     och läser fortfarande som guld. Använd --color-amber till ytor och ikoner,
+     amber-text till text. */
+  --color-amber-text: #9A6608;
   --color-amber-bg: #FDB813;
   --color-amber-light: #FFCA28;
   --color-accent: #2E86DE;
@@ -83,4 +88,14 @@
 @keyframes pulse {
   0%, 100% { opacity: 0.4; }
   50% { opacity: 0.8; }
+}
+
+@layer base {
+  /* Synlig fokusmarkering för tangentbordsnavigering. Bara :focus-visible, så
+     musanvändare slipper ringen vid klick. */
+  :focus-visible {
+    outline: 3px solid var(--color-navy);
+    outline-offset: 2px;
+    border-radius: 4px;
+  }
 }

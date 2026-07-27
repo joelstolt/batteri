@@ -15,8 +15,9 @@ export default function AboutPage() {
     <>
       <TopBar />
       <Header />
-      <AboutContent />
-      <CtaBanner />
+      <main id="innehall">        <AboutContent />
+        <CtaBanner />
+      </main>
       <Footer />
     </>
   )

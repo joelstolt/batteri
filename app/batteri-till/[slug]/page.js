@@ -2,6 +2,7 @@ import { notFound } from "next/navigation"
 import { machines, machineBySlug } from "@/lib/machines"
 import { publicProducts, getProductImage } from "@/lib/products"
 import { SITE_URL } from "@/lib/constants"
+import { breadcrumbJsonLd, jsonLdProps } from "@/lib/schema"
 import TopBar from "@/components/TopBar"
 import Header from "@/components/Header"
 import MachinePageContent from "@/components/MachinePageContent"
@@ -95,10 +96,16 @@ export default async function MachineRoute({ params }) {
         type="application/ld+json"
         dangerouslySetInnerHTML={{ __html: JSON.stringify(buildJsonLd(machine, products)) }}
       />
+      <script {...jsonLdProps(breadcrumbJsonLd([
+        { name: "Hem", path: "/" },
+        { name: "Batteri till maskin", path: "/batteri-till" },
+        { name: machine.name, path: `/batteri-till/${machine.slug}` },
+      ]))} />
       <TopBar />
       <Header />
-      <MachinePageContent machine={machine} products={products} />
-      <CtaBanner />
+      <main id="innehall">        <MachinePageContent machine={machine} products={products} />
+        <CtaBanner />
+      </main>
       <Footer />
     </>
   )

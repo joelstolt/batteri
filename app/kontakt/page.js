@@ -14,7 +14,8 @@ export default function ContactPage() {
     <>
       <TopBar />
       <Header />
-      <ContactContent />
+      <main id="innehall">        <ContactContent />
+      </main>
       <Footer />
     </>
   )

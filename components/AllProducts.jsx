@@ -71,7 +71,7 @@ export default function AllProducts() {
         <FadeIn>
           <div className="mb-8 flex flex-wrap items-end justify-between gap-4">
             <div>
-              <div className="mb-2 text-xs font-bold uppercase tracking-widest text-amber">
+              <div className="mb-2 text-xs font-bold uppercase tracking-widest text-amber-text">
                 Hela sortimentet
               </div>
               <h2 className="font-heading text-[clamp(24px,3.5vw,34px)] font-extrabold tracking-tight text-text-dark">
@@ -176,7 +176,7 @@ export default function AllProducts() {
                 setCategory("all")
                 setVoltage("all")
               }}
-              className="text-amber underline"
+              className="text-amber-text underline"
             >
               Återställ filter
             </button>

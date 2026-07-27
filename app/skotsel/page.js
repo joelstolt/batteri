@@ -21,7 +21,8 @@ export default function SkotselPage() {
     <>
       <TopBar />
       <Header />
-      <SkotselContent />
+      <main id="innehall">        <SkotselContent />
+      </main>
       <Footer />
     </>
   )

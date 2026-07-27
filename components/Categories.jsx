@@ -18,7 +18,7 @@ export default function Categories() {
       <div className="mx-auto max-w-[1200px] px-4 sm:px-6">
         <FadeIn>
           <div className="mb-8 sm:mb-10">
-            <div className="mb-2 text-xs font-bold uppercase tracking-widest text-amber">
+            <div className="mb-2 text-xs font-bold uppercase tracking-widest text-amber-text">
               Våra kategorier
             </div>
             <h2 className="font-heading text-[clamp(26px,3.5vw,38px)] font-extrabold tracking-tight text-text-dark">

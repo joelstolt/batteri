@@ -96,7 +96,7 @@ export default function SkotselContent() {
       <div className="border-b border-border bg-surface">
         <div className="mx-auto max-w-[1200px] px-4 pb-10 pt-10 sm:px-6">
           <FadeIn>
-            <div className="mb-2 text-xs font-bold uppercase tracking-widest text-amber">
+            <div className="mb-2 text-xs font-bold uppercase tracking-widest text-amber-text">
               Guide
             </div>
             <h1 className="mb-3 max-w-3xl font-heading text-[clamp(28px,4vw,40px)] font-extrabold leading-[1.15] tracking-tight text-text-dark">

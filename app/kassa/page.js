@@ -14,7 +14,8 @@ export default function KassaPage() {
     <>
       <TopBar />
       <Header />
-      <CheckoutContent />
+      <main id="innehall">        <CheckoutContent />
+      </main>
       <Footer />
     </>
   )
