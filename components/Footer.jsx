@@ -75,7 +75,7 @@ export default function Footer() {
                 Batteri<span className="text-amber-bg">proffs</span>
               </div>
             </div>
-            <p className="mb-5 max-w-[280px] text-sm leading-relaxed text-white/40">
+            <p className="mb-5 max-w-[280px] text-sm leading-relaxed text-white/60">
               Professionella batterilösningar för företag och privatpersoner
               i hela Sverige — Sonnenschein, Nordmax och fler kvalitetsmärken.
             </p>
@@ -94,11 +94,11 @@ export default function Footer() {
                 <Mail className="h-3.5 w-3.5" />
                 {EMAIL}
               </a>
-              <div className="flex items-center gap-2 text-sm text-white/40">
+              <div className="flex items-center gap-2 text-sm text-white/60">
                 <Clock className="h-3.5 w-3.5" />
                 Mån–Fre 08:00–17:00
               </div>
-              <div className="pt-1 text-xs leading-relaxed text-white/30">
+              <div className="pt-1 text-xs leading-relaxed text-white/60">
                 Joel Stolt · Org.nr 901108-0851
               </div>
             </div>
@@ -114,7 +114,7 @@ export default function Footer() {
                 <Link
                   key={link.label + link.href}
                   href={link.href}
-                  className="mb-2.5 block text-sm text-white/40 transition-colors hover:text-white/70"
+                  className="mb-2.5 block text-sm text-white/60 transition-colors hover:text-white"
                 >
                   {link.label}
                 </Link>
@@ -126,7 +126,7 @@ export default function Footer() {
         {/* ── Payment & Shipping ── */}
         <div className="grid gap-8 border-b border-white/6 py-8 sm:grid-cols-2">
           <div>
-            <div className="mb-3 text-xs font-semibold uppercase tracking-wider text-white/30">
+            <div className="mb-3 text-xs font-semibold uppercase tracking-wider text-white/60">
               Betalningsalternativ
             </div>
             <div className="flex flex-wrap items-center gap-2">
@@ -148,7 +148,7 @@ export default function Footer() {
           </div>
 
           <div>
-            <div className="mb-3 text-xs font-semibold uppercase tracking-wider text-white/30">
+            <div className="mb-3 text-xs font-semibold uppercase tracking-wider text-white/60">
               Leverans
             </div>
             <div className="flex flex-wrap items-center gap-2">
@@ -166,19 +166,19 @@ export default function Footer() {
 
         {/* ── Bottom bar ── */}
         <div className="flex flex-wrap items-center justify-between gap-3 py-6">
-          <div className="text-[13px] text-white/25">
+          <div className="text-[13px] text-white/60">
             © {new Date().getFullYear()} Batteriproffs.se · Alla rättigheter förbehållna
           </div>
           <div className="flex gap-4">
             <Link
               href="/integritet"
-              className="text-[13px] text-white/25 transition-colors hover:text-white/50"
+              className="text-[13px] text-white/60 transition-colors hover:text-white"
             >
               Integritetspolicy
             </Link>
             <Link
               href="/villkor"
-              className="text-[13px] text-white/25 transition-colors hover:text-white/50"
+              className="text-[13px] text-white/60 transition-colors hover:text-white"
             >
               Villkor
             </Link>
@@ -186,7 +186,7 @@ export default function Footer() {
               href="https://stoltmarketing.se"
               target="_blank"
               rel="noopener"
-              className="text-[13px] text-white/25 transition-colors hover:text-white/50"
+              className="text-[13px] text-white/60 transition-colors hover:text-white"
             >
               Hemsida av Stolt Marketing
             </a>
