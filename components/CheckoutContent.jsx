@@ -183,32 +183,56 @@ function CheckoutForm({ form, setForm, errors, setErrors, totalPrice, clientSecr
 
     const invoiceSame = form.invoiceSameAsDelivery !== false
 
-    const { error } = await stripe.confirmPayment({
-      elements,
-      confirmParams: {
-        return_url: `${window.location.origin}/tack`,
-        payment_method_data: {
-          billing_details: {
-            name: form.companyName,
-            email: form.email,
-            phone: form.phone,
-            // Faktureringsadress — inte nödvändigtvis dit godset går
-            address: {
-              line1: invoiceSame ? form.address : form.invoiceAddress,
-              postal_code: (invoiceSame ? form.postalCode : form.invoicePostalCode).replace(/\s/g, ""),
-              city: invoiceSame ? form.city : form.invoiceCity,
-              country: "SE",
+    // Vakthund: confirmPayment kan bli hängande om Stripe öppnar ett steg som
+    // aldrig blir klart (Link-verifiering, blockerad 3D Secure-ruta). Utan den
+    // här snurrar knappen för alltid och kunden får aldrig veta varför.
+    const watchdog = setTimeout(() => {
+      setLoading(false)
+      setPaymentError(
+        "Betalningen tar ovanligt lång tid. Ladda om sidan och försök igen — " +
+          "blir det samma sak, ring oss på 073-554 69 68 så tar vi ordern manuellt."
+      )
+    }, 45000)
+
+    try {
+      const { error } = await stripe.confirmPayment({
+        elements,
+        confirmParams: {
+          return_url: `${window.location.origin}/tack`,
+          payment_method_data: {
+            billing_details: {
+              name: form.companyName,
+              email: form.email,
+              phone: form.phone,
+              // Faktureringsadress — inte nödvändigtvis dit godset går
+              address: {
+                line1: invoiceSame ? form.address : form.invoiceAddress,
+                line2: "",
+                postal_code: (invoiceSame ? form.postalCode : form.invoicePostalCode).replace(/\s/g, ""),
+                city: invoiceSame ? form.city : form.invoiceCity,
+                state: "",
+                country: "SE",
+              },
             },
           },
         },
-      },
-    })
+      })
 
-    // Kommer vi hit gick något fel — lyckad betalning omdirigerar av sig själv
-    if (error) {
-      setPaymentError(error.message)
+      // Kommer vi hit gick något fel — lyckad betalning omdirigerar av sig själv
+      if (error) {
+        setPaymentError(error.message)
+      }
+    } catch (err) {
+      // Integrationsfel från Stripe.js kastas i stället för att returneras.
+      // Utan den här grenen dog knappen tyst i "Bearbetar betalning...".
+      console.error("Stripe confirmPayment kastade:", err)
+      setPaymentError(
+        err?.message || "Betalningen kunde inte genomföras. Försök igen eller ring 073-554 69 68."
+      )
+    } finally {
+      clearTimeout(watchdog)
+      setLoading(false)
     }
-    setLoading(false)
   }
 
   const invoiceSame = form.invoiceSameAsDelivery !== false
