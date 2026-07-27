@@ -74,9 +74,10 @@ export async function POST(request) {
     const paymentIntent = await stripe.paymentIntents.create({
       amount: amountInOre,
       currency: "sek",
-      // Let Stripe render every method enabled on the account (card always,
-      // plus Klarna/Swish/Apple Pay/Google Pay once activated in the Dashboard).
-      automatic_payment_methods: { enabled: true },
+      // Endast kortbetalning. Explicit lista slår Dashboard-inställningarna,
+      // så Klarna/Link/Amazon Pay kan inte dyka upp i kassan även om de är
+      // påslagna på Stripe-kontot.
+      payment_method_types: ["card"],
       metadata: {
         order_source: "batteriproffs.se",
         items: itemsMeta,

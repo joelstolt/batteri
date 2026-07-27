@@ -482,7 +482,11 @@ export default function CheckoutContent() {
         <div className="grid grid-cols-1 gap-10 lg:grid-cols-[1fr_400px]">
           {/* Left: Form */}
           <FadeIn>
+            {/* key={clientSecret} tvingar omstart av Elements när varukorgen
+                ändras i kassan — annars sitter betalfältet kvar på den gamla
+                betalningen och kunden hade debiterats fel belopp. */}
             <Elements
+              key={clientSecret}
               stripe={stripePromise}
               options={{
                 clientSecret,

@@ -7,20 +7,23 @@ export async function GET(request) {
   try {
     const { searchParams } = new URL(request.url)
     const paymentIntentId = searchParams.get("payment_intent")
+    const clientSecret = searchParams.get("payment_intent_client_secret")
 
-    if (!paymentIntentId) {
+    if (!paymentIntentId || !clientSecret) {
       return NextResponse.json({ error: "Ingen betalning hittades" }, { status: 400 })
     }
 
     const paymentIntent = await stripe.paymentIntents.retrieve(paymentIntentId)
 
+    // Bara den som faktiskt genomförde köpet har client_secret — utan den här
+    // kontrollen kan vem som helst med ett pi-id läsa kundens namn och adress.
+    if (paymentIntent.client_secret !== clientSecret) {
+      return NextResponse.json({ error: "Ingen betalning hittades" }, { status: 403 })
+    }
+
     if (paymentIntent.status !== "succeeded") {
       return NextResponse.json({ error: "Betalningen har inte genomförts" }, { status: 400 })
     }
-
-    const billing = paymentIntent.payment_method_details?.card
-      ? paymentIntent.payment_method_details
-      : null
 
     // Parse metadata
     const items = paymentIntent.metadata.items

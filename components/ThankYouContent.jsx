@@ -53,12 +53,16 @@ export default function ThankYouContent() {
   // Fetch order details
   useEffect(() => {
     const paymentIntent = searchParams.get("payment_intent")
-    if (!paymentIntent) {
+    const clientSecret = searchParams.get("payment_intent_client_secret")
+    if (!paymentIntent || !clientSecret) {
       setLoading(false)
       return
     }
 
-    fetch(`/api/order?payment_intent=${paymentIntent}`)
+    fetch(
+      `/api/order?payment_intent=${encodeURIComponent(paymentIntent)}` +
+        `&payment_intent_client_secret=${encodeURIComponent(clientSecret)}`
+    )
       .then((res) => res.json())
       .then((data) => {
         if (!data.error) {
