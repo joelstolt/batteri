@@ -5,7 +5,7 @@ import { useRouter } from "next/navigation"
 import Image from "next/image"
 import { X, Search, ArrowRight } from "lucide-react"
 import { motion, AnimatePresence } from "framer-motion"
-import { products } from "@/lib/products"
+import { publicProducts as products } from "@/lib/products"
 import { CATEGORIES } from "@/lib/constants"
 import { useVat } from "@/lib/vat-context"
 

@@ -1,6 +1,6 @@
 "use client"
 
-import { products } from "@/lib/products"
+import { publicProducts as products } from "@/lib/products"
 import ProductCard from "@/components/ProductCard"
 import FadeIn from "@/components/FadeIn"
 import Link from "next/link"

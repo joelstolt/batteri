@@ -2,7 +2,7 @@
 
 import { motion } from "framer-motion"
 import Link from "next/link"
-import { products } from "@/lib/products"
+import { publicProducts as products } from "@/lib/products"
 import ProductCard from "@/components/ProductCard"
 
 function getFeatured() {

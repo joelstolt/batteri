@@ -2,7 +2,7 @@
 
 import { useMemo, useState } from "react"
 import { ChevronDown, SlidersHorizontal } from "lucide-react"
-import { products as allProductsList } from "@/lib/products"
+import { publicProducts as allProductsList } from "@/lib/products"
 import { CATEGORIES } from "@/lib/constants"
 import ProductCard from "@/components/ProductCard"
 import FadeIn from "@/components/FadeIn"
