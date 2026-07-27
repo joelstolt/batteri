@@ -9,12 +9,15 @@ const MAX_MESSAGE = 5000
 
 // Skräppost svarar 200 utan att skicka något — en bot ska inte få veta att
 // den fastnade, då justerar den bara och försöker igen.
-const SILENT_OK = NextResponse.json({ ok: true })
+//
+// Måste vara en funktion. Ett återanvänt NextResponse-objekt har en body som
+// bara kan läsas en gång, så andra anropet och framåt fick tom kropp.
+const silentOk = () => NextResponse.json({ ok: true })
 
 export async function POST(request) {
   try {
     // Bot-trafik postar rakt mot API:et och saknar oftast korrekt Origin
-    if (!isOwnOrigin(request, ALLOWED_ORIGINS)) return SILENT_OK
+    if (!isOwnOrigin(request, ALLOWED_ORIGINS)) return silentOk()
 
     const ip = clientIp(request)
     const limit = rateLimit(`contact:${ip}`, 3, 10 * 60 * 1000)
@@ -31,7 +34,7 @@ export async function POST(request) {
     // Honeypot. Fältet är dolt för människor — är det ifyllt är det en bot.
     // Namnet får ALDRIG vara company/website/url/email: webbläsarnas autofyll
     // fyller i dem åt riktiga kunder och då tappas leadet tyst.
-    if (hp_field) return SILENT_OK
+    if (hp_field) return silentOk()
 
     if (!name || !email || !message) {
       return NextResponse.json(
@@ -46,7 +49,7 @@ export async function POST(request) {
 
     // Nästan all formulärspam klistrar in länkar. Riktiga batterifrågor gör det inte.
     const linkCount = (String(message).match(/https?:\/\//gi) || []).length
-    if (linkCount >= 2) return SILENT_OK
+    if (linkCount >= 2) return silentOk()
 
     if (!process.env.RESEND_API_KEY || !ADMIN_EMAIL) {
       console.error("Missing RESEND_API_KEY or CONTACT_TO_EMAIL")
