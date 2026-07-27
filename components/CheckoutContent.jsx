@@ -430,8 +430,8 @@ function CheckoutForm({ form, setForm, errors, setErrors, totalPrice, clientSecr
 
       {/* Lossning — batterierna går som pallgods */}
       <div data-field="unloading">
-        <SectionHeading note="Batterierna skickas på pall. Vi behöver veta hur de kan lossas hos er.">
-          Lossning vid leverans
+        <SectionHeading note="Batterierna skickas på pall. Vet du hur de kan lossas hos er går leveransen snabbare — annars ringer vi och stämmer av.">
+          Lossning vid leverans <span className="text-base font-normal text-text-light">(valfritt)</span>
         </SectionHeading>
         <div className="grid gap-3 sm:grid-cols-3">
           {UNLOADING_OPTIONS.map((opt) => {
