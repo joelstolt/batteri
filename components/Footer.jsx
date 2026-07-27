@@ -71,7 +71,7 @@ export default function Footer() {
               <div className="flex h-9 w-9 items-center justify-center rounded-lg bg-gradient-to-br from-amber-bg to-amber text-lg text-navy">
                 ⚡
               </div>
-              <div className="font-heading text-lg font-extrabold text-white">
+              <div className="bg-navy-deep font-heading text-lg font-extrabold text-white">
                 Batteri<span className="text-amber-bg">proffs</span>
               </div>
             </div>

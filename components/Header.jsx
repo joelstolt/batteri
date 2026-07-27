@@ -64,7 +64,7 @@ export default function Header() {
                 ⚡
               </div>
               <div>
-                <div className="font-heading text-lg font-extrabold leading-tight tracking-tight text-white sm:text-[22px]">
+                <div className="bg-navy font-heading text-lg font-extrabold leading-tight tracking-tight text-white sm:text-[22px]">
                   Batteri<span className="text-amber-bg">proffs</span>
                 </div>
                 <div className="hidden text-[10px] font-medium tracking-wider text-white/50 sm:block">
