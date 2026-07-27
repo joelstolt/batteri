@@ -107,6 +107,7 @@ export default function Header() {
             <button
               onClick={() => setIsOpen(true)}
               className="relative flex h-10 items-center gap-2 rounded-xl bg-gradient-to-br from-amber-bg to-amber px-3.5 text-sm font-bold text-navy shadow-[0_2px_12px_rgba(253,184,19,0.2)] transition-transform hover:-translate-y-px sm:h-11 sm:px-5 sm:text-[15px]"
+              aria-label="Varukorg"
             >
               <svg
                 width="20"
