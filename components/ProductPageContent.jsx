@@ -8,6 +8,7 @@ import { ShoppingCart, Truck, Shield, Phone, ChevronRight, RotateCcw } from "luc
 import { getProductBySlug, getProductsByCategory, getProductBrand, getProductChemistry } from "@/lib/products"
 import { CATEGORIES, PHONE, PHONE_LINK } from "@/lib/constants"
 import { machinesForProduct } from "@/lib/machines"
+import { slugifyModel } from "@/lib/replacements"
 import { useCart } from "@/lib/cart-context"
 import { useVat } from "@/lib/vat-context"
 import ProductCard from "@/components/ProductCard"
@@ -98,6 +99,23 @@ function ProductExtraInfo({ product, className = "" }) {
               </div>
             </div>
           )}
+        </div>
+      )}
+      {product.specs?.["Ersätter"] && (
+        <div className="rounded-xl border border-border bg-surface p-5">
+          <h3 className="mb-2 font-heading text-sm font-bold uppercase tracking-wider text-text-dark">
+            Ersätter
+          </h3>
+          <p className="text-sm leading-relaxed text-text-mid">
+            Batteriet är en direkt ersättare för{" "}
+            <Link
+              href={`/ersatter/${slugifyModel(product.specs["Ersätter"])}`}
+              className="font-semibold text-navy hover:underline"
+            >
+              {product.specs["Ersätter"]}
+            </Link>
+            .
+          </p>
         </div>
       )}
       {product.recommendedCharger && (

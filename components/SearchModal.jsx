@@ -39,6 +39,7 @@ export default function SearchModal({ isOpen, onClose }) {
 
   const q = query.toLowerCase().trim()
 
+
   const matchedProducts = q.length >= 2
     ? products.filter((p) =>
         p.name.toLowerCase().includes(q) ||
@@ -56,6 +57,20 @@ export default function SearchModal({ isOpen, onClose }) {
         c.desc.toLowerCase().includes(q)
       )
     : []
+
+  // Logga vad besökarna faktiskt söker efter. Det är den billigaste källan vi
+  // har till vilka maskinmodeller och artikelnummer som ska bli egna sidor
+  // härnäst — annars gissar vi. Skickas först när kunden slutat skriva, och
+  // bara termen, aldrig något som identifierar besökaren.
+  useEffect(() => {
+    if (q.length < 3) return
+    const t = setTimeout(() => {
+      if (typeof window !== "undefined" && window.umami) {
+        window.umami.track("sok", { term: q, traffar: matchedProducts.length })
+      }
+    }, 1200)
+    return () => clearTimeout(t)
+  }, [q, matchedProducts.length])
 
   const hasResults = matchedProducts.length > 0 || matchedCategories.length > 0
 

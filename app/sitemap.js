@@ -1,6 +1,7 @@
 import { SITE_URL, CATEGORIES } from "@/lib/constants"
 import { publicProducts } from "@/lib/products"
 import { machines } from "@/lib/machines"
+import { replacements } from "@/lib/replacements"
 
 export default function sitemap() {
   const now = new Date()
@@ -35,7 +36,19 @@ export default function sitemap() {
     changeFrequency: "monthly",
   }))
 
-  return [...staticPages, ...categoryPages, ...productPages, ...machinePages].map((p) => ({
+  const replacementPages = replacements.map((r) => ({
+    url: `${SITE_URL}/ersatter/${r.slug}`,
+    priority: 0.8,
+    changeFrequency: "monthly",
+  }))
+
+  return [
+    ...staticPages,
+    ...categoryPages,
+    ...productPages,
+    ...machinePages,
+    ...replacementPages,
+  ].map((p) => ({
     ...p,
     lastModified: now,
   }))
