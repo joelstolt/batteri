@@ -3,20 +3,39 @@
 import { useState, useEffect } from "react"
 import Image from "next/image"
 import Link from "next/link"
-import { useRouter } from "next/navigation"
 import { loadStripe } from "@stripe/stripe-js"
 import { Elements, PaymentElement, useStripe, useElements } from "@stripe/react-stripe-js"
-import { ShoppingCart, Loader2, Lock, Truck, ChevronDown, ChevronUp } from "lucide-react"
+import { ShoppingCart, Loader2, Lock, Truck, ChevronDown, ChevronUp, Building2 } from "lucide-react"
 import { useCart } from "@/lib/cart-context"
-import { useVat } from "@/lib/vat-context"
 import FadeIn from "@/components/FadeIn"
+import {
+  EMPTY_FORM,
+  UNLOADING_OPTIONS,
+  validateCheckout,
+  vatNrFromOrgNr,
+  isValidOrgNr,
+} from "@/lib/checkout"
 
 const stripePromise = loadStripe(process.env.NEXT_PUBLIC_STRIPE)
 
-const SHIPPING_COST = 556
+const SHIPPING_COST = 556 // exkl. moms
+const VAT_RATE = 1.25
 
 function formatPrice(n) {
   return new Intl.NumberFormat("sv-SE").format(n)
+}
+
+/** Kassan räknar alltid i B2B-form: netto, moms för sig, brutto att betala. */
+function priceBreakdown(totalPriceInclVat) {
+  const productsExcl = Math.round(totalPriceInclVat / VAT_RATE)
+  const shippingExcl = SHIPPING_COST
+  const totalInclVat = totalPriceInclVat + Math.round(SHIPPING_COST * VAT_RATE)
+  return {
+    productsExcl,
+    shippingExcl,
+    vat: totalInclVat - productsExcl - shippingExcl,
+    totalInclVat,
+  }
 }
 
 /* ───────────── Stripe appearance to match site design ───────────── */
@@ -50,44 +69,74 @@ const stripeAppearance = {
   },
 }
 
-/* ───────────── Validation helpers ───────────── */
-function validateForm(form) {
-  const errors = {}
-  if (!form.firstName || form.firstName.length < 2) errors.firstName = "Ange förnamn"
-  if (!form.lastName || form.lastName.length < 2) errors.lastName = "Ange efternamn"
-  if (!form.email || !/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(form.email)) errors.email = "Ange en giltig e-postadress"
-  if (!form.phone || !/^[\d\s\-+]{7,15}$/.test(form.phone)) errors.phone = "Ange ett giltigt telefonnummer"
-  if (!form.address || form.address.length < 2) errors.address = "Ange gatuadress"
-  if (!form.postalCode || !/^\d{3}\s?\d{2}$/.test(form.postalCode)) errors.postalCode = "Ange postnummer (XXX XX)"
-  if (!form.city || form.city.length < 2) errors.city = "Ange ort"
-  return errors
-}
-
-/* ───────────── Input component ───────────── */
-function FormInput({ label, error, ...props }) {
+/* ───────────── Fältkomponenter ───────────── */
+function FormInput({ label, error, hint, optional = false, ...props }) {
   return (
     <div>
-      <label className="mb-1.5 block text-sm font-medium text-text-dark">{label} *</label>
+      <label className="mb-1.5 block text-sm font-medium text-text-dark">
+        {label} {optional ? <span className="text-text-light">(valfritt)</span> : "*"}
+      </label>
       <input
         {...props}
         className={`w-full rounded-xl border bg-white px-4 py-3 text-sm text-text-dark outline-none transition-colors placeholder:text-text-light focus:border-navy ${
           error ? "border-red-400" : "border-border"
         }`}
       />
+      {hint && !error && <p className="mt-1 text-xs text-text-light">{hint}</p>}
       {error && <p className="mt-1 text-xs text-red-500">{error}</p>}
     </div>
   )
 }
 
+function FormTextarea({ label, error, hint, optional = false, ...props }) {
+  return (
+    <div>
+      <label className="mb-1.5 block text-sm font-medium text-text-dark">
+        {label} {optional ? <span className="text-text-light">(valfritt)</span> : "*"}
+      </label>
+      <textarea
+        rows={3}
+        {...props}
+        className={`w-full resize-y rounded-xl border bg-white px-4 py-3 text-sm text-text-dark outline-none transition-colors placeholder:text-text-light focus:border-navy ${
+          error ? "border-red-400" : "border-border"
+        }`}
+      />
+      {hint && !error && <p className="mt-1 text-xs text-text-light">{hint}</p>}
+      {error && <p className="mt-1 text-xs text-red-500">{error}</p>}
+    </div>
+  )
+}
+
+function SectionHeading({ children, note }) {
+  return (
+    <div className="mb-5">
+      <h2 className="font-heading text-xl font-bold text-text-dark">{children}</h2>
+      {note && <p className="mt-1 text-sm text-text-mid">{note}</p>}
+    </div>
+  )
+}
+
 /* ───────────── Checkout form (inside Elements provider) ───────────── */
-function CheckoutForm({ form, setForm, errors, setErrors, totalPrice, shippingCost }) {
+function CheckoutForm({ form, setForm, errors, setErrors, totalPrice, clientSecret }) {
   const stripe = useStripe()
   const elements = useElements()
   const [loading, setLoading] = useState(false)
   const [paymentError, setPaymentError] = useState(null)
+  // Så länge kunden inte själv rört momsnumret följer det organisationsnumret
+  const [vatTouched, setVatTouched] = useState(false)
+
+  const { totalInclVat } = priceBreakdown(totalPrice)
 
   const handleChange = (field) => (e) => {
-    setForm((prev) => ({ ...prev, [field]: e.target.value }))
+    const value = e.target.value
+    setForm((prev) => {
+      const next = { ...prev, [field]: value }
+      if (field === "orgNr" && !vatTouched) {
+        next.vatNr = isValidOrgNr(value) ? vatNrFromOrgNr(value) : ""
+      }
+      if (field === "vatNr") setVatTouched(true)
+      return next
+    })
     if (errors[field]) setErrors((prev) => ({ ...prev, [field]: null }))
   }
 
@@ -95,10 +144,11 @@ function CheckoutForm({ form, setForm, errors, setErrors, totalPrice, shippingCo
     e.preventDefault()
     setPaymentError(null)
 
-    // Validate form
-    const formErrors = validateForm(form)
+    const formErrors = validateCheckout(form)
     if (Object.keys(formErrors).length > 0) {
       setErrors(formErrors)
+      const first = document.querySelector(`[data-field="${Object.keys(formErrors)[0]}"]`)
+      first?.scrollIntoView({ block: "center" })
       return
     }
 
@@ -106,19 +156,47 @@ function CheckoutForm({ form, setForm, errors, setErrors, totalPrice, shippingCo
 
     setLoading(true)
 
+    // Spara företags- och leveransuppgifterna på betalningen innan den bekräftas,
+    // annars saknas de i orderbekräftelsen och i Stripe.
+    try {
+      const res = await fetch("/api/order-details", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({
+          paymentIntentId: clientSecret.split("_secret_")[0],
+          clientSecret,
+          form,
+        }),
+      })
+      const data = await res.json()
+      if (!res.ok) {
+        if (data.errors) setErrors(data.errors)
+        setPaymentError(data.error || "Kunde inte spara uppgifterna. Försök igen.")
+        setLoading(false)
+        return
+      }
+    } catch {
+      setPaymentError("Kunde inte nå servern. Försök igen.")
+      setLoading(false)
+      return
+    }
+
+    const invoiceSame = form.invoiceSameAsDelivery !== false
+
     const { error } = await stripe.confirmPayment({
       elements,
       confirmParams: {
         return_url: `${window.location.origin}/tack`,
         payment_method_data: {
           billing_details: {
-            name: `${form.firstName} ${form.lastName}`,
+            name: form.companyName,
             email: form.email,
             phone: form.phone,
+            // Faktureringsadress — inte nödvändigtvis dit godset går
             address: {
-              line1: form.address,
-              postal_code: form.postalCode.replace(/\s/g, ""),
-              city: form.city,
+              line1: invoiceSame ? form.address : form.invoiceAddress,
+              postal_code: (invoiceSame ? form.postalCode : form.invoicePostalCode).replace(/\s/g, ""),
+              city: invoiceSame ? form.city : form.invoiceCity,
               country: "SE",
             },
           },
@@ -126,114 +204,339 @@ function CheckoutForm({ form, setForm, errors, setErrors, totalPrice, shippingCo
       },
     })
 
-    // If we get here, something went wrong (success redirects automatically)
+    // Kommer vi hit gick något fel — lyckad betalning omdirigerar av sig själv
     if (error) {
       setPaymentError(error.message)
     }
     setLoading(false)
   }
 
-  const { displayPrice, vatLabel, inclVat } = useVat()
-  const totalInclVat = totalPrice + Math.round(shippingCost * 1.25)
+  const invoiceSame = form.invoiceSameAsDelivery !== false
 
   return (
-    <form onSubmit={handleSubmit} className="flex flex-col gap-8">
-      {/* Customer info */}
-      <div>
-        <h2 className="mb-5 font-heading text-xl font-bold text-text-dark">Dina uppgifter</h2>
+    <form onSubmit={handleSubmit} className="flex flex-col gap-10">
+      {/* Företagsuppgifter */}
+      <div data-field="companyName">
+        <SectionHeading note="Vi säljer till företag. Uppgifterna här hamnar på fakturan.">
+          Företagsuppgifter
+        </SectionHeading>
+        <div className="flex flex-col gap-4">
+          <FormInput
+            label="Företagsnamn"
+            type="text"
+            placeholder="Exempel Industri AB"
+            autoComplete="organization"
+            value={form.companyName}
+            onChange={handleChange("companyName")}
+            error={errors.companyName}
+          />
+          <div className="grid gap-4 sm:grid-cols-2">
+            <div data-field="orgNr">
+              <FormInput
+                label="Organisationsnummer"
+                type="text"
+                inputMode="numeric"
+                placeholder="556677-8899"
+                value={form.orgNr}
+                onChange={handleChange("orgNr")}
+                error={errors.orgNr}
+              />
+            </div>
+            <div data-field="vatNr">
+              <FormInput
+                label="Momsregistreringsnummer"
+                type="text"
+                optional
+                placeholder="SE556677889901"
+                hint="Fylls i automatiskt från organisationsnumret"
+                value={form.vatNr}
+                onChange={handleChange("vatNr")}
+                error={errors.vatNr}
+              />
+            </div>
+          </div>
+          <div className="grid gap-4 sm:grid-cols-2">
+            <div data-field="reference">
+              <FormInput
+                label="Er referens"
+                type="text"
+                placeholder="Anna Andersson"
+                hint="Namnet på beställaren, trycks på fakturan"
+                value={form.reference}
+                onChange={handleChange("reference")}
+                error={errors.reference}
+              />
+            </div>
+            <div data-field="poNumber">
+              <FormInput
+                label="Inköpsordernr / kostnadsställe"
+                type="text"
+                optional
+                placeholder="PO-12345"
+                value={form.poNumber}
+                onChange={handleChange("poNumber")}
+                error={errors.poNumber}
+              />
+            </div>
+          </div>
+          <div data-field="invoiceEmail">
+            <FormInput
+              label="Fakturaadress e-post"
+              type="email"
+              placeholder="faktura@exempelindustri.se"
+              hint="Dit skickar vi fakturan — ofta en annan adress än beställarens"
+              value={form.invoiceEmail}
+              onChange={handleChange("invoiceEmail")}
+              error={errors.invoiceEmail}
+            />
+          </div>
+        </div>
+      </div>
+
+      {/* Beställare */}
+      <div data-field="firstName">
+        <SectionHeading note="Vem vi kontaktar om något behöver stämmas av.">
+          Beställare
+        </SectionHeading>
         <div className="flex flex-col gap-4">
           <div className="grid gap-4 sm:grid-cols-2">
             <FormInput
               label="Förnamn"
               type="text"
               placeholder="Anna"
+              autoComplete="given-name"
               value={form.firstName}
               onChange={handleChange("firstName")}
               error={errors.firstName}
             />
-            <FormInput
-              label="Efternamn"
-              type="text"
-              placeholder="Andersson"
-              value={form.lastName}
-              onChange={handleChange("lastName")}
-              error={errors.lastName}
-            />
+            <div data-field="lastName">
+              <FormInput
+                label="Efternamn"
+                type="text"
+                placeholder="Andersson"
+                autoComplete="family-name"
+                value={form.lastName}
+                onChange={handleChange("lastName")}
+                error={errors.lastName}
+              />
+            </div>
           </div>
-          <FormInput
-            label="E-post"
-            type="email"
-            placeholder="anna@exempel.se"
-            value={form.email}
-            onChange={handleChange("email")}
-            error={errors.email}
-          />
-          <FormInput
-            label="Telefon"
-            type="tel"
-            placeholder="073-554 69 68"
-            value={form.phone}
-            onChange={handleChange("phone")}
-            error={errors.phone}
-          />
+          <div className="grid gap-4 sm:grid-cols-2">
+            <div data-field="email">
+              <FormInput
+                label="E-post"
+                type="email"
+                placeholder="anna@exempelindustri.se"
+                autoComplete="email"
+                value={form.email}
+                onChange={handleChange("email")}
+                error={errors.email}
+              />
+            </div>
+            <div data-field="phone">
+              <FormInput
+                label="Telefon"
+                type="tel"
+                placeholder="073-554 69 68"
+                autoComplete="tel"
+                value={form.phone}
+                onChange={handleChange("phone")}
+                error={errors.phone}
+              />
+            </div>
+          </div>
         </div>
       </div>
 
-      {/* Delivery address */}
-      <div>
-        <h2 className="mb-5 font-heading text-xl font-bold text-text-dark">Leveransadress</h2>
+      {/* Leveransadress */}
+      <div data-field="address">
+        <SectionHeading>Leveransadress</SectionHeading>
         <div className="flex flex-col gap-4">
           <FormInput
             label="Gatuadress"
             type="text"
-            placeholder="Storgatan 1"
+            placeholder="Industrivägen 12"
             value={form.address}
             onChange={handleChange("address")}
             error={errors.address}
           />
           <div className="grid gap-4 sm:grid-cols-2">
+            <div data-field="postalCode">
+              <FormInput
+                label="Postnummer"
+                type="text"
+                inputMode="numeric"
+                placeholder="123 45"
+                value={form.postalCode}
+                onChange={handleChange("postalCode")}
+                error={errors.postalCode}
+              />
+            </div>
+            <div data-field="city">
+              <FormInput
+                label="Ort"
+                type="text"
+                placeholder="Stockholm"
+                value={form.city}
+                onChange={handleChange("city")}
+                error={errors.city}
+              />
+            </div>
+          </div>
+          <div className="grid gap-4 sm:grid-cols-2">
             <FormInput
-              label="Postnummer"
+              label="Godsmottagare / att"
               type="text"
-              placeholder="123 45"
-              value={form.postalCode}
-              onChange={handleChange("postalCode")}
-              error={errors.postalCode}
+              optional
+              placeholder="Lagret, Erik Svensson"
+              value={form.goodsRecipient}
+              onChange={handleChange("goodsRecipient")}
+              error={errors.goodsRecipient}
             />
             <FormInput
-              label="Ort"
+              label="Portkod"
               type="text"
-              placeholder="Stockholm"
-              value={form.city}
-              onChange={handleChange("city")}
-              error={errors.city}
+              optional
+              placeholder="1234"
+              value={form.doorCode}
+              onChange={handleChange("doorCode")}
+              error={errors.doorCode}
+            />
+          </div>
+          <div data-field="deliveryPhone">
+            <FormInput
+              label="Telefon till godsmottagningen"
+              type="tel"
+              optional
+              placeholder="Om annat än beställarens nummer"
+              hint="Chauffören ringer hit före leverans"
+              value={form.deliveryPhone}
+              onChange={handleChange("deliveryPhone")}
+              error={errors.deliveryPhone}
+            />
+          </div>
+          <div data-field="deliveryNote">
+            <FormTextarea
+              label="Leveransinstruktioner"
+              optional
+              placeholder="Infart från baksidan, ring vid grinden."
+              value={form.deliveryNote}
+              onChange={handleChange("deliveryNote")}
+              error={errors.deliveryNote}
             />
           </div>
         </div>
       </div>
 
-      {/* Shipping info */}
+      {/* Lossning — batterierna går som pallgods */}
+      <div data-field="unloading">
+        <SectionHeading note="Batterierna skickas på pall. Vi behöver veta hur de kan lossas hos er.">
+          Lossning vid leverans
+        </SectionHeading>
+        <div className="grid gap-3 sm:grid-cols-3">
+          {UNLOADING_OPTIONS.map((opt) => {
+            const active = form.unloading === opt.value
+            return (
+              <label
+                key={opt.value}
+                className={`cursor-pointer rounded-xl border p-4 transition-colors ${
+                  active ? "border-navy bg-surface" : "border-border bg-white hover:border-navy/40"
+                }`}
+              >
+                <input
+                  type="radio"
+                  name="unloading"
+                  value={opt.value}
+                  checked={active}
+                  onChange={handleChange("unloading")}
+                  className="sr-only"
+                />
+                <span className="block text-sm font-semibold text-text-dark">{opt.label}</span>
+                <span className="mt-1 block text-xs text-text-mid">{opt.hint}</span>
+              </label>
+            )
+          })}
+        </div>
+        {errors.unloading && <p className="mt-2 text-xs text-red-500">{errors.unloading}</p>}
+      </div>
+
+      {/* Fakturaadress */}
+      <div data-field="invoiceAddress">
+        <SectionHeading>Fakturaadress</SectionHeading>
+        <label className="flex cursor-pointer items-center gap-3 rounded-xl border border-border bg-surface p-4">
+          <input
+            type="checkbox"
+            checked={invoiceSame}
+            onChange={(e) =>
+              setForm((prev) => ({ ...prev, invoiceSameAsDelivery: e.target.checked }))
+            }
+            className="h-4 w-4 accent-navy"
+          />
+          <span className="text-sm font-medium text-text-dark">
+            Fakturaadressen är samma som leveransadressen
+          </span>
+        </label>
+
+        {!invoiceSame && (
+          <div className="mt-4 flex flex-col gap-4">
+            <FormInput
+              label="Fakturaadress"
+              type="text"
+              placeholder="Box 123"
+              value={form.invoiceAddress}
+              onChange={handleChange("invoiceAddress")}
+              error={errors.invoiceAddress}
+            />
+            <div className="grid gap-4 sm:grid-cols-2">
+              <div data-field="invoicePostalCode">
+                <FormInput
+                  label="Postnummer"
+                  type="text"
+                  inputMode="numeric"
+                  placeholder="123 45"
+                  value={form.invoicePostalCode}
+                  onChange={handleChange("invoicePostalCode")}
+                  error={errors.invoicePostalCode}
+                />
+              </div>
+              <div data-field="invoiceCity">
+                <FormInput
+                  label="Ort"
+                  type="text"
+                  placeholder="Stockholm"
+                  value={form.invoiceCity}
+                  onChange={handleChange("invoiceCity")}
+                  error={errors.invoiceCity}
+                />
+              </div>
+            </div>
+          </div>
+        )}
+      </div>
+
+      {/* Leveranssätt */}
       <div>
-        <h2 className="mb-5 font-heading text-xl font-bold text-text-dark">Leveranssätt</h2>
+        <SectionHeading>Leveranssätt</SectionHeading>
         <div className="flex items-center gap-3 rounded-xl border border-border bg-surface p-4">
           <Truck size={20} className="text-text-mid" />
           <div className="flex-1">
             <div className="text-sm font-semibold text-text-dark">
-              PostNord — Hemleverans (1–3 dagar)
+              PostNord — Företagsleverans (1–3 dagar)
             </div>
             <div className="text-xs text-text-mid">Spårningsnummer skickas via e-post</div>
           </div>
           <span className="font-heading text-sm font-bold text-text-dark">
-            {SHIPPING_COST === 0
-              ? "Fri"
-              : `${formatPrice(inclVat ? Math.round(SHIPPING_COST * 1.25) : SHIPPING_COST)} kr`}
+            {SHIPPING_COST === 0 ? "Fri" : `${formatPrice(SHIPPING_COST)} kr`}
           </span>
         </div>
+        <p className="mt-2 text-xs text-text-light">Fraktpris angivet exkl. moms.</p>
       </div>
 
       {/* Stripe Payment Element */}
       <div>
-        <h2 className="mb-5 font-heading text-xl font-bold text-text-dark">Betalning</h2>
+        <SectionHeading note="Vi tar emot kortbetalning. Kvitto och faktura skickas till fakturaadressen ovan.">
+          Betalning
+        </SectionHeading>
         <div className="rounded-xl border border-border bg-white p-5">
           <PaymentElement options={{ layout: "tabs", fields: { billingDetails: "never" } }} />
         </div>
@@ -275,16 +578,15 @@ function CheckoutForm({ form, setForm, errors, setErrors, totalPrice, shippingCo
 }
 
 /* ───────────── Order summary sidebar ───────────── */
-function OrderSummary({ items, totalPrice, shippingCost }) {
-  const { displayPrice, vatLabel, inclVat } = useVat()
+function OrderSummary({ items, totalPrice }) {
   const [expanded, setExpanded] = useState(true)
-
-  const totalInclVat = totalPrice + Math.round(shippingCost * 1.25)
+  const { productsExcl, shippingExcl, vat, totalInclVat } = priceBreakdown(totalPrice)
 
   return (
     <div className="rounded-2xl border border-border bg-surface">
       {/* Mobile toggle */}
       <button
+        type="button"
         onClick={() => setExpanded(!expanded)}
         className="flex w-full items-center justify-between p-5 lg:hidden"
       >
@@ -301,9 +603,7 @@ function OrderSummary({ items, totalPrice, shippingCost }) {
 
       {/* Desktop heading */}
       <div className="hidden border-b border-border p-5 lg:block">
-        <h2 className="font-heading text-lg font-bold text-text-dark">
-          Din beställning
-        </h2>
+        <h2 className="font-heading text-lg font-bold text-text-dark">Din beställning</h2>
       </div>
 
       {/* Collapsible content */}
@@ -313,54 +613,39 @@ function OrderSummary({ items, totalPrice, shippingCost }) {
           {items.map((item) => (
             <div key={item.slug} className="flex gap-3">
               <div className="relative h-14 w-14 flex-shrink-0 overflow-hidden rounded-lg bg-white">
-                <Image
-                  src={item.images[0]}
-                  alt={item.shortName}
-                  fill
-                  className="object-contain p-1"
-                />
+                <Image src={item.images[0]} alt={item.shortName} fill className="object-contain p-1" />
               </div>
               <div className="flex-1 min-w-0">
-                <div className="truncate text-sm font-semibold text-text-dark">
-                  {item.shortName}
-                </div>
+                <div className="truncate text-sm font-semibold text-text-dark">{item.shortName}</div>
                 <div className="text-xs text-text-mid">
                   {item.capacity} · Antal: {item.qty}
                 </div>
               </div>
               <div className="text-sm font-bold text-text-dark whitespace-nowrap">
-                {formatPrice(displayPrice(item.price) * item.qty)} kr
+                {formatPrice(Math.round((item.price / VAT_RATE) * item.qty))} kr
               </div>
             </div>
           ))}
         </div>
 
-        {/* Totals */}
+        {/* Totals — B2B: netto, moms, brutto */}
         <div className="border-t border-border p-5">
           <div className="mb-2 flex items-center justify-between text-sm">
-            <span className="text-text-mid">Produkter {vatLabel.toLowerCase()}</span>
+            <span className="text-text-mid">Produkter exkl. moms</span>
+            <span className="font-medium text-text-dark">{formatPrice(productsExcl)} kr</span>
+          </div>
+
+          <div className="mb-2 flex items-center justify-between text-sm">
+            <span className="text-text-mid">Frakt exkl. moms</span>
             <span className="font-medium text-text-dark">
-              {formatPrice(inclVat ? totalPrice : Math.round(totalPrice / 1.25))} kr
+              {shippingExcl === 0 ? "Fri" : `${formatPrice(shippingExcl)} kr`}
             </span>
           </div>
 
           <div className="mb-2 flex items-center justify-between text-sm">
-            <span className="text-text-mid">Frakt</span>
-            <span className="font-medium text-text-dark">
-              {SHIPPING_COST === 0
-                ? "Fri"
-                : `${formatPrice(inclVat ? Math.round(SHIPPING_COST * 1.25) : SHIPPING_COST)} kr`}
-            </span>
+            <span className="text-text-mid">Moms (25%)</span>
+            <span className="font-medium text-text-dark">{formatPrice(vat)} kr</span>
           </div>
-
-          {!inclVat && (
-            <div className="mb-2 flex items-center justify-between text-sm">
-              <span className="text-text-mid">Moms (25%)</span>
-              <span className="font-medium text-text-dark">
-                {formatPrice(totalInclVat - Math.round(totalPrice / 1.25) - shippingCost)} kr
-              </span>
-            </div>
-          )}
 
           <div className="mt-3 flex items-center justify-between border-t border-border pt-3">
             <span className="font-heading text-base font-bold text-text-dark">Att betala</span>
@@ -369,9 +654,7 @@ function OrderSummary({ items, totalPrice, shippingCost }) {
             </span>
           </div>
 
-          <div className="mt-1 text-right text-[11px] text-text-light">
-            Inkl. moms
-          </div>
+          <div className="mt-1 text-right text-[11px] text-text-light">Inkl. moms</div>
         </div>
       </div>
     </div>
@@ -380,21 +663,11 @@ function OrderSummary({ items, totalPrice, shippingCost }) {
 
 /* ───────────── Main CheckoutContent ───────────── */
 export default function CheckoutContent() {
-  const { items, totalPrice, totalItems } = useCart()
+  const { items, totalPrice } = useCart()
   const [clientSecret, setClientSecret] = useState(null)
   const [error, setError] = useState(null)
-  const [form, setForm] = useState({
-    firstName: "",
-    lastName: "",
-    email: "",
-    phone: "",
-    address: "",
-    postalCode: "",
-    city: "",
-  })
+  const [form, setForm] = useState(EMPTY_FORM)
   const [formErrors, setFormErrors] = useState({})
-
-  const shippingCost = SHIPPING_COST
 
   // Create PaymentIntent on mount
   useEffect(() => {
@@ -441,9 +714,7 @@ export default function CheckoutContent() {
   if (error) {
     return (
       <div className="flex min-h-[50vh] flex-col items-center justify-center px-4 py-16 text-center">
-        <h1 className="mb-2 font-heading text-2xl font-extrabold text-text-dark">
-          Något gick fel
-        </h1>
+        <h1 className="mb-2 font-heading text-2xl font-extrabold text-text-dark">Något gick fel</h1>
         <p className="mb-6 text-text-mid">{error}</p>
         <button
           onClick={() => window.location.reload()}
@@ -474,6 +745,12 @@ export default function CheckoutContent() {
             <h1 className="font-heading text-[clamp(28px,4vw,40px)] font-extrabold tracking-tight text-text-dark">
               Slutför din beställning
             </h1>
+            <div className="mt-4 inline-flex items-center gap-2 rounded-full border border-border bg-white px-4 py-2">
+              <Building2 size={15} className="text-navy" />
+              <span className="text-sm font-medium text-text-dark">
+                Företagsbeställning — alla priser visas exkl. moms
+              </span>
+            </div>
           </FadeIn>
         </div>
       </div>
@@ -500,7 +777,7 @@ export default function CheckoutContent() {
                 errors={formErrors}
                 setErrors={setFormErrors}
                 totalPrice={totalPrice}
-                shippingCost={shippingCost}
+                clientSecret={clientSecret}
               />
             </Elements>
           </FadeIn>
@@ -508,11 +785,7 @@ export default function CheckoutContent() {
           {/* Right: Order summary */}
           <FadeIn delay={0.1}>
             <div className="lg:sticky lg:top-6 lg:self-start">
-              <OrderSummary
-                items={items}
-                totalPrice={totalPrice}
-                shippingCost={shippingCost}
-              />
+              <OrderSummary items={items} totalPrice={totalPrice} />
             </div>
           </FadeIn>
         </div>

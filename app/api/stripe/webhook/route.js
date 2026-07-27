@@ -9,12 +9,29 @@ import {
   emailLayout,
 } from "@/lib/emails"
 import { scheduleReviewEmail } from "@/lib/review-email"
+import { unloadingLabel } from "@/lib/checkout"
 
 const stripe = new Stripe(process.env.STRIPE_SECRET_KEY)
 
 export const runtime = "nodejs"
 
-function buildOrderBody({ orderId, items, subtotal, shipping, total, customer, intro }) {
+/** Liten definitionslista — används för företags- och leveransblocken. */
+function infoBlock(title, rows) {
+  const visible = rows.filter(([, v]) => v)
+  if (visible.length === 0) return ""
+  return `
+    <div style="margin-top:20px;padding:16px 18px;background:#F7F8FA;border-radius:10px;font-size:13px;line-height:1.7;">
+      <div style="font-weight:700;margin-bottom:6px;color:#0A1628;">${escape(title)}</div>
+      ${visible
+        .map(
+          ([k, v]) =>
+            `<div><span style="color:#6B7280;">${escape(k)}:</span> ${escape(v)}</div>`
+        )
+        .join("")}
+    </div>`
+}
+
+function buildOrderBody({ orderId, items, subtotal, shipping, total, customer, meta, intro }) {
   const rows = items
     .map(
       (i) => `
@@ -50,21 +67,39 @@ function buildOrderBody({ orderId, items, subtotal, shipping, total, customer, i
       </tr>
     </table>
 
+    ${infoBlock("Företagsuppgifter", [
+      ["Företag", meta.company_name],
+      ["Organisationsnummer", meta.org_nr],
+      ["Momsreg.nr", meta.vat_nr],
+      ["Er referens", meta.reference],
+      ["Inköpsordernr", meta.po_number],
+      ["Faktura skickas till", meta.invoice_email],
+      ["Fakturaadress", meta.invoice_address === "samma som leverans" ? "" : meta.invoice_address],
+    ])}
+
     ${
       customer?.address
-        ? `<div style="margin-top:24px;padding:16px 18px;background:#F7F8FA;border-radius:10px;font-size:13px;line-height:1.6;">
-            <div style="font-weight:700;margin-bottom:4px;color:#0A1628;">Leveransadress</div>
+        ? `<div style="margin-top:20px;padding:16px 18px;background:#F7F8FA;border-radius:10px;font-size:13px;line-height:1.7;">
+            <div style="font-weight:700;margin-bottom:6px;color:#0A1628;">Leveransadress</div>
             ${escape(customer.name || "")}<br>
             ${escape(customer.address || "")}<br>
-            ${escape(customer.postalCode || "")} ${escape(customer.city || "")}<br>
-            ${customer.email ? `<span style="color:#6B7280;">${escape(customer.email)}</span>` : ""}
+            ${escape(customer.postalCode || "")} ${escape(customer.city || "")}
+            ${meta.door_code ? `<br><span style="color:#6B7280;">Portkod ${escape(meta.door_code)}</span>` : ""}
+            ${meta.delivery_phone ? `<br><span style="color:#6B7280;">Godsmottagning ${escape(meta.delivery_phone)}</span>` : ""}
           </div>`
         : ""
     }
 
+    ${infoBlock("Leverans", [
+      ["Lossning", unloadingLabel(meta.unloading)],
+      ["Instruktioner", meta.delivery_note],
+      ["Beställare", meta.buyer_name],
+      ["Beställarens telefon", meta.buyer_phone],
+    ])}
+
     <p style="margin-top:24px;font-size:14px;line-height:1.6;color:#374151;">
-      Vi packar din order inom 1–3 arbetsdagar och skickar den till dig
-      så snart som möjligt.
+      Vi packar ordern inom 1–3 arbetsdagar och skickar den så snart som möjligt.
+      Fakturan skickas separat till ${meta.invoice_email ? escape(meta.invoice_email) : "er fakturaadress"}.
     </p>
   `
 }
@@ -98,17 +133,20 @@ export async function POST(request) {
     const subtotal = Number(pi.metadata.subtotal) || 0
     const shipping = Math.round((Number(pi.metadata.shipping) || 0) * 1.25) // visa frakt inkl. moms i kvittot
     const total = pi.amount / 100
+    const meta = pi.metadata || {}
 
-    // Pull customer from charge billing_details (set by Stripe Elements)
+    // Leveransadressen ligger på Stripes shipping-fält (satt av /api/order-details).
+    // Faller tillbaka på kortets billing_details för ordrar lagda före B2B-kassan.
     const charges = await stripe.charges.list({ payment_intent: pi.id, limit: 1 })
     const billing = charges.data[0]?.billing_details || {}
+    const ship = pi.shipping || {}
     const customer = {
-      name: billing.name,
-      email: billing.email || pi.receipt_email,
-      phone: billing.phone,
-      address: billing.address?.line1,
-      postalCode: billing.address?.postal_code,
-      city: billing.address?.city,
+      name: ship.name || meta.company_name || billing.name,
+      email: meta.buyer_email || billing.email || pi.receipt_email,
+      phone: meta.buyer_phone || ship.phone || billing.phone,
+      address: ship.address?.line1 || billing.address?.line1,
+      postalCode: ship.address?.postal_code || billing.address?.postal_code,
+      city: ship.address?.city || billing.address?.city,
     }
 
     const orderId = pi.id.replace("pi_", "BP-").slice(0, 14).toUpperCase()
@@ -132,6 +170,7 @@ export async function POST(request) {
               shipping,
               total,
               customer,
+              meta,
             }),
           }),
         })
@@ -139,16 +178,17 @@ export async function POST(request) {
     }
 
     // Admin notification
+    const companyLabel = meta.company_name || customer.name || "kund"
     if (ADMIN_EMAIL) {
       sends.push(
         resend.emails.send({
           from: FROM,
           to: ADMIN_EMAIL,
           replyTo: customer.email,
-          subject: `Ny order ${formatPriceKr(total)} kr — ${customer.name || "kund"}`,
+          subject: `Ny order ${formatPriceKr(total)} kr — ${companyLabel}`,
           html: emailLayout({
             title: `Ny order ${orderId}`,
-            preheader: `${customer.name || "kund"} · ${formatPriceKr(total)} kr`,
+            preheader: `${companyLabel} · ${formatPriceKr(total)} kr`,
             body: buildOrderBody({
               orderId,
               items,
@@ -156,7 +196,8 @@ export async function POST(request) {
               shipping,
               total,
               customer,
-              intro: `Ny order: ${customer.name || "kund"}`,
+              meta,
+              intro: `Ny order: ${companyLabel}`,
             }),
           }),
         })
@@ -168,7 +209,8 @@ export async function POST(request) {
       sends.push(
         scheduleReviewEmail({
           to: customer.email,
-          fullName: customer.name,
+          // Beställarens namn, inte företagsnamnet — mejlet inleds med "Hej X"
+          fullName: meta.buyer_name || billing.name,
           orderId,
           replyTo: ADMIN_EMAIL,
         })

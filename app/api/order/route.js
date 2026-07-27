@@ -37,6 +37,8 @@ export async function GET(request) {
     const charges = await stripe.charges.list({ payment_intent: paymentIntentId, limit: 1 })
     const charge = charges.data[0]
     const billingDetails = charge?.billing_details || {}
+    const meta = paymentIntent.metadata || {}
+    const ship = paymentIntent.shipping || {}
 
     return NextResponse.json({
       id: paymentIntent.id,
@@ -45,10 +47,26 @@ export async function GET(request) {
       subtotal,
       shipping,
       totalInclVat,
+      company: {
+        name: meta.company_name || "",
+        orgNr: meta.org_nr || "",
+        vatNr: meta.vat_nr || "",
+        reference: meta.reference || "",
+        poNumber: meta.po_number || "",
+        invoiceEmail: meta.invoice_email || "",
+      },
+      delivery: {
+        name: ship.name || "",
+        line1: ship.address?.line1 || billingDetails.address?.line1 || "",
+        postalCode: ship.address?.postal_code || billingDetails.address?.postal_code || "",
+        city: ship.address?.city || billingDetails.address?.city || "",
+        phone: meta.delivery_phone || ship.phone || "",
+        unloading: meta.unloading || "",
+      },
       customer: {
-        name: billingDetails.name || "",
-        email: billingDetails.email || "",
-        phone: billingDetails.phone || "",
+        name: meta.buyer_name || billingDetails.name || "",
+        email: meta.buyer_email || billingDetails.email || "",
+        phone: meta.buyer_phone || billingDetails.phone || "",
         address: billingDetails.address || {},
       },
       cardBrand: charge?.payment_method_details?.card?.brand || null,

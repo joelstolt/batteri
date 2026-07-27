@@ -3,8 +3,9 @@
 import { useEffect, useState } from "react"
 import { useSearchParams } from "next/navigation"
 import Link from "next/link"
-import { CheckCircle, Truck, Mail, CreditCard, MapPin, Package, Loader2 } from "lucide-react"
+import { CheckCircle, Truck, Mail, CreditCard, MapPin, Package, Loader2, Building2 } from "lucide-react"
 import { useCart } from "@/lib/cart-context"
+import { unloadingLabel } from "@/lib/checkout"
 
 function formatPrice(n) {
   return new Intl.NumberFormat("sv-SE").format(n)
@@ -166,7 +167,7 @@ export default function ThankYouContent() {
                   <span className="text-text-dark">{formatPrice(order.subtotal)} kr</span>
                 </div>
                 <div className="flex justify-between">
-                  <span className="text-text-mid">Frakt</span>
+                  <span className="text-text-mid">Frakt exkl. moms</span>
                   <span className={order.shipping === 0 ? "font-medium text-green" : "text-text-dark"}>
                     {formatPrice(order.shipping)} kr
                   </span>
@@ -186,24 +187,48 @@ export default function ThankYouContent() {
               </div>
             </div>
 
+            {/* Företagsuppgifter */}
+            {order.company?.name && (
+              <div className="border-b border-border px-6 py-5">
+                <div className="mb-2 flex items-center gap-2 text-sm font-bold text-text-dark">
+                  <Building2 size={16} className="text-navy" />
+                  Företagsuppgifter
+                </div>
+                <div className="grid gap-x-6 gap-y-1 text-sm text-text-mid sm:grid-cols-2">
+                  <div>{order.company.name}</div>
+                  {order.company.orgNr && <div>Orgnr {order.company.orgNr}</div>}
+                  {order.company.reference && <div>Er referens: {order.company.reference}</div>}
+                  {order.company.poNumber && <div>Inköpsordernr: {order.company.poNumber}</div>}
+                  {order.company.invoiceEmail && (
+                    <div className="sm:col-span-2">
+                      Faktura skickas till {order.company.invoiceEmail}
+                    </div>
+                  )}
+                </div>
+              </div>
+            )}
+
             {/* Customer & payment info */}
             <div className="grid gap-6 px-6 py-5 sm:grid-cols-2">
               {/* Delivery address */}
-              {order.customer?.name && (
+              {(order.delivery?.line1 || order.customer?.name) && (
                 <div>
                   <div className="mb-2 flex items-center gap-2 text-sm font-bold text-text-dark">
                     <MapPin size={16} className="text-navy" />
                     Leveransadress
                   </div>
                   <div className="text-sm leading-relaxed text-text-mid">
-                    <div>{order.customer.name}</div>
-                    {order.customer.address?.line1 && <div>{order.customer.address.line1}</div>}
-                    {(order.customer.address?.postal_code || order.customer.address?.city) && (
+                    <div>{order.delivery?.name || order.company?.name || order.customer.name}</div>
+                    {order.delivery?.line1 && <div>{order.delivery.line1}</div>}
+                    {(order.delivery?.postalCode || order.delivery?.city) && (
                       <div>
-                        {order.customer.address.postal_code} {order.customer.address.city}
+                        {order.delivery.postalCode} {order.delivery.city}
                       </div>
                     )}
-                    {order.customer.phone && <div className="mt-1">{order.customer.phone}</div>}
+                    {order.delivery?.unloading && (
+                      <div className="mt-1">Lossning: {unloadingLabel(order.delivery.unloading)}</div>
+                    )}
+                    {order.delivery?.phone && <div className="mt-1">{order.delivery.phone}</div>}
                   </div>
                 </div>
               )}
