@@ -7,6 +7,7 @@ import { X, Search, ArrowRight } from "lucide-react"
 import { motion, AnimatePresence } from "framer-motion"
 import { publicProducts as products } from "@/lib/products"
 import { CATEGORIES } from "@/lib/constants"
+import { machines } from "@/lib/machines"
 import { useVat } from "@/lib/vat-context"
 
 function formatPrice(n) {
@@ -51,6 +52,17 @@ export default function SearchModal({ isOpen, onClose }) {
       ).slice(0, 6)
     : []
 
+  // Besökare söker på maskinen, inte på batteriet. Utan det här gav
+  // "nilfisk sc401" noll träffar trots att vi har en sida för exakt det.
+  const matchedMachines = q.length >= 2
+    ? machines.filter((m) =>
+        m.name.toLowerCase().includes(q) ||
+        m.type.toLowerCase().includes(q) ||
+        (m.brand || "").toLowerCase().includes(q) ||
+        m.slug.includes(q.replace(/\s+/g, "-"))
+      ).slice(0, 5)
+    : []
+
   const matchedCategories = q.length >= 2
     ? CATEGORIES.filter((c) =>
         c.title.toLowerCase().includes(q) ||
@@ -66,13 +78,17 @@ export default function SearchModal({ isOpen, onClose }) {
     if (q.length < 3) return
     const t = setTimeout(() => {
       if (typeof window !== "undefined" && window.umami) {
-        window.umami.track("sok", { term: q, traffar: matchedProducts.length })
+        window.umami.track("sok", {
+          term: q,
+          traffar: matchedProducts.length + matchedMachines.length,
+        })
       }
     }, 1200)
     return () => clearTimeout(t)
-  }, [q, matchedProducts.length])
+  }, [q, matchedProducts.length, matchedMachines.length])
 
-  const hasResults = matchedProducts.length > 0 || matchedCategories.length > 0
+  const hasResults =
+    matchedProducts.length > 0 || matchedCategories.length > 0 || matchedMachines.length > 0
 
   const goTo = (href) => {
     onClose()
@@ -181,6 +197,30 @@ export default function SearchModal({ isOpen, onClose }) {
                 /* Results */
                 <div>
                   {/* Category matches */}
+                  {matchedMachines.length > 0 && (
+                    <div className="border-b border-border px-5 py-4">
+                      <div className="mb-2 text-xs font-bold uppercase tracking-wider text-text-light">
+                        Din maskin
+                      </div>
+                      {matchedMachines.map((m) => (
+                        <button
+                          key={m.slug}
+                          onClick={() => goTo(`/batteri-till/${m.slug}`)}
+                          className="flex w-full items-center gap-3 rounded-lg px-3 py-2.5 text-left transition-colors hover:bg-surface"
+                        >
+                          <span className="text-xl">🔧</span>
+                          <div className="flex-1">
+                            <div className="text-sm font-semibold text-text-dark">
+                              Batteri till {m.name}
+                            </div>
+                            <div className="text-xs text-text-light">{m.type}</div>
+                          </div>
+                          <ArrowRight size={14} className="text-text-light" />
+                        </button>
+                      ))}
+                    </div>
+                  )}
+
                   {matchedCategories.length > 0 && (
                     <div className="border-b border-border px-5 py-4">
                       <div className="mb-2 text-xs font-bold uppercase tracking-wider text-text-light">
