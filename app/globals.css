@@ -22,7 +22,9 @@
   --color-border-dark: #D4D4D4;
   --color-text-dark: #1A1A1A;
   --color-text-mid: #6B6B6B;
-  --color-text-light: #767676; /* 4,54:1 mot vitt. #999999 gav 2,84 och underkändes. */
+  --color-text-light: #6E6E6E; /* 5,10:1 mot vitt och 4,93 mot tonade ytor.
+                                 #999999 gav 2,84, #767676 klarade vitt men föll
+                                 till 4,38 mot bg-surface/50 i batterifinnaren. */
   --color-white: #FFFFFF;
 
   --font-heading: "Outfit", sans-serif;
