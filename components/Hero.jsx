@@ -26,8 +26,8 @@ export default function Hero() {
         {/* Top: copy */}
         <motion.div
           className="max-w-[720px]"
-          initial={{ opacity: 0, y: 20 }}
-          animate={{ opacity: 1, y: 0 }}
+          initial={{ y: 20 }}
+          animate={{ y: 0 }}
           transition={{ duration: 0.8, ease: [0.22, 1, 0.36, 1] }}
         >
           <div className="mb-5 inline-flex items-center gap-2 rounded-full border border-amber/40 bg-amber/10 px-3.5 py-1.5 font-heading text-xs font-bold uppercase tracking-wider text-amber-text">
@@ -51,8 +51,8 @@ export default function Hero() {
         {/* 4 featured products */}
         <motion.div
           className="mt-10 grid grid-cols-2 gap-3 sm:gap-5 lg:grid-cols-4"
-          initial={{ opacity: 0, y: 20 }}
-          animate={{ opacity: 1, y: 0 }}
+          initial={{ y: 20 }}
+          animate={{ y: 0 }}
           transition={{ duration: 0.8, delay: 0.15, ease: [0.22, 1, 0.36, 1] }}
         >
           {featured.map((p) => (
@@ -63,8 +63,8 @@ export default function Hero() {
         {/* CTA below products */}
         <motion.div
           className="mt-8 flex justify-center sm:mt-10"
-          initial={{ opacity: 0, y: 20 }}
-          animate={{ opacity: 1, y: 0 }}
+          initial={{ y: 20 }}
+          animate={{ y: 0 }}
           transition={{ duration: 0.8, delay: 0.3, ease: [0.22, 1, 0.36, 1] }}
         >
           <Link
