@@ -78,7 +78,7 @@ export default function Header() {
           <div className="hidden flex-[0_1_420px] md:flex">
             <button
               onClick={() => setSearchOpen(true)}
-              className="flex h-11 w-full items-center gap-2 rounded-l-xl border-2 border-r-0 border-white/12 bg-white/6 px-4 text-left text-sm text-white/35 transition-colors hover:border-white/20 hover:bg-white/10"
+              className="flex h-11 w-full items-center gap-2 rounded-l-xl border-2 border-r-0 border-white/12 bg-white/6 px-4 text-left text-sm text-white/60 transition-colors hover:border-white/20 hover:bg-white/10"
             >
               <Search size={15} strokeWidth={2} />
               Sök batteri, modellnr eller användningsområde...
