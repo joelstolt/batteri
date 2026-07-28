@@ -44,7 +44,10 @@ export default function Hero() {
             <h1 className="mb-5 font-heading text-[clamp(32px,4.5vw,52px)] font-extrabold leading-[1.05] tracking-tight text-white">
               Batteri till truck, lift och städmaskin
               <br />
-              <span className="text-amber">med priset direkt på sajten</span>
+              {/* Löftet fanns redan i WhyUs långt ned på sidan. En stillastående
+                  truck kostar pengar per timme — det slår "priset syns på sajten",
+                  som dessutom är metakommentar om hemsidan snarare än om varan. */}
+              <span className="text-amber">beställ före 14, skickas samma dag</span>
             </h1>
 
             <p className="max-w-[640px] text-[17px] leading-relaxed text-white/75">
