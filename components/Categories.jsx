@@ -22,7 +22,7 @@ export default function Categories() {
               Våra kategorier
             </div>
             <h2 className="font-heading text-[clamp(26px,3.5vw,38px)] font-extrabold tracking-tight text-text-dark">
-              Välj efter användningsområde
+              Batterier till truck, städmaskin och UPS
             </h2>
           </div>
         </FadeIn>

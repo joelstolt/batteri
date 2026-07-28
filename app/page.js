@@ -6,7 +6,10 @@ import FinderSection from "@/components/FinderSection"
 import Categories from "@/components/Categories"
 import References from "@/components/References"
 import HelpAndQuote from "@/components/HelpAndQuote"
-import AllProducts from "@/components/AllProducts"
+// AllProducts låg tidigare här och dumpade hela katalogen, 20 produkter och 48
+// länkar, på startsidan. Det är kategorisidans jobb — /kategori/alla listar
+// exakt samma sortiment. FeaturedProducts visar 8 i stället.
+import FeaturedProducts from "@/components/FeaturedProducts"
 import WhyUs from "@/components/WhyUs"
 import CtaBanner from "@/components/CtaBanner"
 import Footer from "@/components/Footer"
@@ -31,16 +34,20 @@ export default function Home() {
       <script {...jsonLdProps(websiteJsonLd())} />
       <TopBar />
       <Header />
+      {/*
+        Ordningen följer hur en företagsköpare faktiskt tänker:
+        vad säljer ni → hittar jag mitt → vad kostar det → varför just er →
+        hur beställer jag → vem mer har köpt.
+      */}
       <main id="innehall">
         <Hero />
+        {/* Sök på maskinen först — vårt unika grepp och det B2B-köpare gör */}
         <FinderSection />
         <Categories />
-        <AllProducts />
-        {/* Referenser direkt efter produkterna, medan intresset är som störst */}
-        <References />
-        {/* Telefon och offert — bägge saknades helt i innehållet tidigare */}
-        <HelpAndQuote />
+        <FeaturedProducts />
         <WhyUs />
+        <HelpAndQuote />
+        <References />
         <CtaBanner />
       </main>
       <Footer />

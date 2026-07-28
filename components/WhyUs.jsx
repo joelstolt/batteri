@@ -3,13 +3,13 @@
 import FadeIn from "./FadeIn"
 
 const CHECKPOINTS = [
-  {
-    title: "Sveriges vassaste priser",
-    desc: "Vi köper direkt från tillverkaren — inga mellanhänder, inga onödiga påslag. Du får proffs-kvalitet till rätt pris.",
-  },
-  {
+    {
     title: "Leverans inom 1–3 dagar",
     desc: "Beställ före 14:00 så skickas din order samma dag. Leverans i hela Sverige inom 1–3 arbetsdagar.",
+  },
+{
+    title: "Sveriges vassaste priser",
+    desc: "Vi köper direkt från tillverkaren — inga mellanhänder, inga onödiga påslag. Du får proffs-kvalitet till rätt pris.",
   },
   {
     title: "Ring och prata med en expert",
