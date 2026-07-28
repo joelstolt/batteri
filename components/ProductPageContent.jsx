@@ -296,7 +296,7 @@ export default function ProductPageContent() {
 
               {/* Volume order */}
               <div className="mb-6">
-                <a href={`tel:${PHONE_LINK}`} className="text-sm font-semibold text-navy underline underline-offset-2 hover:text-amber">
+                <a href={`tel:${PHONE_LINK}`} className="text-sm font-semibold text-navy underline underline-offset-2 hover:text-amber-text">
                   Beställa större mängd? Vi erbjuder offert på volymköp av högre värde.
                 </a>
               </div>
