@@ -1,8 +1,8 @@
 "use client"
 
 import { motion } from "framer-motion"
-import Link from "next/link"
-import { Wrench, Phone } from "lucide-react"
+import { Phone } from "lucide-react"
+import HeroSearch from "@/components/HeroSearch"
 import { PHONE, PHONE_LINK } from "@/lib/constants"
 
 /**
@@ -45,22 +45,21 @@ export default function Hero() {
             behöver hjälp att välja rätt.
           </p>
 
-          {/* Två vägar vidare vid den punkt där uppmärksamheten är som störst.
-              Sök på maskinen först — det är så B2B-köpare faktiskt letar. */}
-          <div className="flex flex-col gap-3 sm:flex-row">
-            <Link
-              href="/batteri-till"
-              className="inline-flex items-center justify-center gap-2 rounded-xl bg-amber-bg px-7 py-4 font-heading text-base font-bold text-navy shadow-sm transition-transform hover:-translate-y-px"
-            >
-              <Wrench size={18} aria-hidden="true" />
-              Sök på din maskin
-            </Link>
+          {/* Sökfältet i stället för knappar. Besökaren skriver sin maskin och
+              får batteriet med pris direkt — hela långsvans-strategin gjord
+              användbar, i stället för ännu ett påstående. */}
+          <HeroSearch />
+
+          <div className="mt-5 flex flex-wrap items-center gap-x-6 gap-y-2 text-sm">
+            <span className="text-white/70">
+              Priset står på varje produkt. Inga offertformulär.
+            </span>
             <a
               href={`tel:${PHONE_LINK}`}
-              className="inline-flex items-center justify-center gap-2 rounded-xl border border-white/25 px-7 py-4 font-heading text-base font-bold text-white transition-colors hover:bg-white/10"
+              className="inline-flex items-center gap-2 font-heading font-bold text-amber hover:underline"
             >
-              <Phone size={17} aria-hidden="true" />
-              Ring {PHONE}
+              <Phone size={15} aria-hidden="true" />
+              Hellre ringa? {PHONE}
             </a>
           </div>
         </motion.div>
