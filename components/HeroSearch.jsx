@@ -29,7 +29,7 @@ function formatPris(n) {
  * Enter väljer, Escape stänger. Utan det mönstret blir den oanvändbar med
  * skärmläsare, och sajten ligger på 100 i tillgänglighet.
  */
-export default function HeroSearch() {
+export default function HeroSearch({ onForhandsvisning }) {
   const [query, setQuery] = useState("")
   const [oppen, setOppen] = useState(false)
   const [aktiv, setAktiv] = useState(-1)
@@ -42,6 +42,13 @@ export default function HeroSearch() {
   // på en fråga som aldrig söktes.
   const kanSoka = sokbar(query)
   const traffar = kanSoka ? sok(query) : []
+
+  // Rapportera upp den träff som är i fokus, så heron kan visa den. Utan det
+  // står samma stillastående batteribild kvar oavsett vad besökaren skriver.
+  const forhandsvisad = traffar.length ? traffar[aktiv >= 0 ? aktiv : 0] : null
+  useEffect(() => {
+    onForhandsvisning?.(forhandsvisad || null)
+  }, [forhandsvisad?.href, onForhandsvisning])
 
   // Stäng när man klickar utanför
   useEffect(() => {
