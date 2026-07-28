@@ -42,15 +42,16 @@ export default function Hero() {
             </div>
 
             <h1 className="mb-5 font-heading text-[clamp(32px,4.5vw,52px)] font-extrabold leading-[1.05] tracking-tight text-white">
-              Rätt batteri till din maskin
+              Batteri till truck, lift och städmaskin
               <br />
-              <span className="text-amber">till bästa pris i Sverige</span>
+              <span className="text-amber">med priset direkt på sajten</span>
             </h1>
 
             <p className="max-w-[640px] text-[17px] leading-relaxed text-white/75">
-              Truckar, städmaskiner, hissar eller solceller — vi har batteriet
-              du behöver. Snabb leverans, vassa priser och riktig experthjälp
-              om du har frågor. Inga mellanhänder, inga krångel.
+              Traktionsbatterier och gelbatterier till truckar, saxliftar,
+              pallyftare, städmaskiner och UPS. Vi publicerar priserna öppet,
+              levererar på 1–3 arbetsdagar och svarar själva i telefon när du
+              behöver hjälp att välja rätt.
             </p>
           </motion.div>
         </div>
