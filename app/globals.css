@@ -11,6 +11,11 @@
      och läser fortfarande som guld. Använd --color-amber till ytor och ikoner,
      amber-text till text. */
   --color-amber-text: #9A6608;
+  /* Amber för STOR text (rubriker från 24px, eller 18,6px fet). WCAG kräver
+     bara 3:1 där, inte 4,5:1 som för brödtext. Ger 3,40:1 — alltså godkänt med
+     marginal, men betydligt närmare varumärkets guld än amber-text som blir
+     brun i stora storlekar. Använd ALDRIG den här på liten text. */
+  --color-amber-heading: #C27C00;
   --color-amber-bg: #FDB813;
   --color-amber-light: #FFCA28;
   --color-accent: #2E86DE;

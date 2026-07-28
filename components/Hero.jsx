@@ -38,7 +38,7 @@ export default function Hero() {
           <h1 className="mb-5 font-heading text-[clamp(32px,4.5vw,52px)] font-extrabold leading-[1.05] tracking-tight text-text-dark">
             Rätt batteri till din maskin
             <br />
-            <span className="text-amber-text">till bästa pris i Sverige</span>
+            <span className="text-amber-heading">till bästa pris i Sverige</span>
           </h1>
 
           <p className="max-w-[640px] text-[17px] leading-relaxed text-text-mid">
