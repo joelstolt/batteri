@@ -3,7 +3,7 @@
 import { useState, useRef, useEffect, useId } from "react"
 import { useRouter } from "next/navigation"
 import { Search, Wrench, Package, RefreshCw, CornerDownLeft } from "lucide-react"
-import { sok } from "@/lib/search-index"
+import { sok, sokbar } from "@/lib/search-index"
 
 const IKON = {
   maskin: Wrench,
@@ -38,7 +38,10 @@ export default function HeroSearch() {
   const inputRef = useRef(null)
   const listId = useId()
 
-  const traffar = sok(query)
+  // Samma villkor som sökningen använder — annars påstår rutan "ingen träff"
+  // på en fråga som aldrig söktes.
+  const kanSoka = sokbar(query)
+  const traffar = kanSoka ? sok(query) : []
 
   // Stäng när man klickar utanför
   useEffect(() => {
@@ -123,13 +126,13 @@ export default function HeroSearch() {
 
       {/* Skärmläsare behöver få veta att listan ändrats */}
       <div aria-live="polite" className="sr-only">
-        {query.trim().length >= 2 &&
+        {kanSoka &&
           (traffar.length > 0
             ? `${traffar.length} träffar`
             : "Inga träffar — ring oss så hjälper vi dig")}
       </div>
 
-      {oppen && query.trim().length >= 2 && (
+      {oppen && kanSoka && (
         <div className="absolute left-0 right-0 top-full z-40 mt-2 overflow-hidden rounded-xl border border-border bg-white shadow-[0_12px_40px_rgba(0,0,0,0.18)]">
           {traffar.length > 0 ? (
             <ul id={listId} role="listbox" aria-label="Sökträffar" className="max-h-[340px] overflow-y-auto">
