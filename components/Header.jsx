@@ -3,7 +3,7 @@
 import { useState, useEffect } from "react"
 import Link from "next/link"
 import { usePathname } from "next/navigation"
-import { Menu, X, Search, Phone, ChevronRight, Star } from "lucide-react"
+import { Menu, X, Search, Phone, ChevronRight, Star, Wrench } from "lucide-react"
 import { NAV_CATEGORIES, PHONE, PHONE_LINK, CATEGORIES } from "@/lib/constants"
 import { useCart } from "@/lib/cart-context"
 import SearchModal from "./SearchModal"
@@ -94,6 +94,22 @@ export default function Header() {
 
           {/* Right: search (mobile) + phone + cart */}
           <div className="flex items-center gap-1.5 sm:gap-2">
+            {/* Telefonnumret med öppettider. Öppettiderna gör samtalet
+                trovärdigt — ett ensamt nummer säger bara att det finns ett
+                nummer, inte att någon svarar nu. */}
+            <a
+              href={`tel:${PHONE_LINK}`}
+              className="mr-1 hidden items-center gap-2.5 rounded-xl px-3 py-1.5 transition-colors hover:bg-white/10 lg:flex"
+            >
+              <Phone size={17} className="text-amber-bg" aria-hidden="true" />
+              <span className="leading-tight">
+                <span className="block font-heading text-[15px] font-bold text-white">
+                  {PHONE}
+                </span>
+                <span className="block text-[11px] text-white/60">Vardagar 08–17</span>
+              </span>
+            </a>
+
             {/* Search icon — mobile only */}
             <button
               onClick={() => setSearchOpen(true)}
@@ -154,6 +170,20 @@ export default function Header() {
                 {item.label}
               </Link>
             ))}
+
+            {/* Maskinsidorna. 30 landningssidor som bara nåddes från footern
+                och startsidan — och det är den ingång B2B-köpare faktiskt vill ha. */}
+            <Link
+              href="/batteri-till"
+              className={`flex h-[46px] items-center gap-1.5 border-b-2 px-4 text-sm font-medium transition-all hover:border-white/30 hover:text-white ${
+                pathname.startsWith("/batteri-till")
+                  ? "border-amber-bg text-white"
+                  : "border-transparent text-white/65"
+              }`}
+            >
+              <Wrench size={14} aria-hidden="true" />
+              Batteri till din maskin
+            </Link>
 
             <div className="flex-1" />
           </div>
