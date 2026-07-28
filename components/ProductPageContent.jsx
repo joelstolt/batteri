@@ -127,6 +127,31 @@ function ProductExtraInfo({ product, className = "" }) {
             Rekommenderad laddare
           </h2>
           <p className="text-sm leading-relaxed text-text-mid">{product.recommendedCharger}</p>
+          <Link
+            href="/laddare"
+            className="mt-3 inline-block text-sm font-semibold text-navy hover:underline"
+          >
+            Så väljer du rätt laddare →
+          </Link>
+        </div>
+      )}
+
+      {/* Bara öppna blybatterier ska vattenfyllas — gel och AGM är förseglade */}
+      {/öppet|ventilerat/i.test(product.specs?.["Typ"] || "") && (
+        <div className="rounded-xl border border-border bg-surface p-5">
+          <h2 className="mb-2 font-heading text-sm font-bold uppercase tracking-wider text-text-dark">
+            Underhåll
+          </h2>
+          <p className="text-sm leading-relaxed text-text-mid">
+            Det här är ett öppet blybatteri och behöver påfyllning av destillerat
+            vatten var fjärde till sjätte vecka vid daglig drift.
+          </p>
+          <Link
+            href="/batterivatten"
+            className="mt-3 inline-block text-sm font-semibold text-navy hover:underline"
+          >
+            Guide till batterivatten →
+          </Link>
         </div>
       )}
     </div>

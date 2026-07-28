@@ -9,6 +9,8 @@ export default function sitemap() {
   const staticPages = [
     { url: SITE_URL, priority: 1.0, changeFrequency: "weekly" },
     { url: `${SITE_URL}/batteri-till`, priority: 0.9, changeFrequency: "weekly" },
+    { url: `${SITE_URL}/laddare`, priority: 0.7, changeFrequency: "monthly" },
+    { url: `${SITE_URL}/batterivatten`, priority: 0.7, changeFrequency: "monthly" },
     { url: `${SITE_URL}/faq`, priority: 0.6, changeFrequency: "monthly" },
     { url: `${SITE_URL}/skotsel`, priority: 0.6, changeFrequency: "monthly" },
     { url: `${SITE_URL}/kontakt`, priority: 0.5, changeFrequency: "yearly" },
