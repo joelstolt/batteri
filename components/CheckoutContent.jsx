@@ -545,9 +545,9 @@ function CheckoutForm({ form, setForm, errors, setErrors, totalPrice, clientSecr
           <Truck size={20} className="text-text-mid" />
           <div className="flex-1">
             <div className="text-sm font-semibold text-text-dark">
-              PostNord — Företagsleverans (1–3 dagar)
+              PostNord — Företagsleverans (normalt 1–3 dagar)
             </div>
-            <div className="text-xs text-text-mid">Spårningsnummer skickas via e-post</div>
+            <div className="text-xs text-text-mid">Spårningsnummer mejlas när ordern skickats</div>
           </div>
           <span className="font-heading text-sm font-bold text-text-dark">
             {freeShipping ? "Fri frakt" : `${formatPrice(SHIPPING_COST)} kr`}

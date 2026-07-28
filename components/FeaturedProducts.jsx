@@ -6,28 +6,28 @@ import FadeIn from "@/components/FadeIn"
 import Link from "next/link"
 
 export default function FeaturedProducts() {
-  const featured = products.filter((p) => p.badge).slice(0, 4)
+  const featured = products.filter((p) => p.badge).slice(0, 8)
 
   // If less than 4 with badges, fill with cheapest
   if (featured.length < 4) {
     const remaining = products
       .filter((p) => !p.badge)
       .sort((a, b) => b.price - a.price)
-      .slice(0, 4 - featured.length)
+      .slice(0, 8 - featured.length)
     featured.push(...remaining)
   }
 
   return (
-    <section className="border-t border-border bg-white py-14">
+    <section className="border-b border-border bg-white py-14">
       <div className="mx-auto max-w-[1200px] px-4 sm:px-6">
         <FadeIn>
           <div className="mb-8 flex flex-wrap items-end justify-between gap-4">
             <div>
               <div className="mb-2 text-xs font-bold uppercase tracking-widest text-amber-text">
-                Populära produkter
+                Mest sålda
               </div>
               <h2 className="font-heading text-[clamp(24px,3.5vw,34px)] font-extrabold tracking-tight text-text-dark">
-                Våra mest sålda batterier
+                Traktionsbatterier och gelbatterier
               </h2>
             </div>
             <Link

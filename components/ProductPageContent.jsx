@@ -127,6 +127,31 @@ function ProductExtraInfo({ product, className = "" }) {
             Rekommenderad laddare
           </h2>
           <p className="text-sm leading-relaxed text-text-mid">{product.recommendedCharger}</p>
+          <Link
+            href="/laddare"
+            className="mt-3 inline-block text-sm font-semibold text-navy hover:underline"
+          >
+            Så väljer du rätt laddare →
+          </Link>
+        </div>
+      )}
+
+      {/* Bara öppna blybatterier ska vattenfyllas — gel och AGM är förseglade */}
+      {/öppet|ventilerat/i.test(product.specs?.["Typ"] || "") && (
+        <div className="rounded-xl border border-border bg-surface p-5">
+          <h2 className="mb-2 font-heading text-sm font-bold uppercase tracking-wider text-text-dark">
+            Underhåll
+          </h2>
+          <p className="text-sm leading-relaxed text-text-mid">
+            Det här är ett öppet blybatteri och behöver påfyllning av destillerat
+            vatten var fjärde till sjätte vecka vid daglig drift.
+          </p>
+          <Link
+            href="/batterivatten"
+            className="mt-3 inline-block text-sm font-semibold text-navy hover:underline"
+          >
+            Guide till batterivatten →
+          </Link>
         </div>
       )}
     </div>
@@ -296,7 +321,7 @@ export default function ProductPageContent() {
 
               {/* Volume order */}
               <div className="mb-6">
-                <a href={`tel:${PHONE_LINK}`} className="text-sm font-semibold text-navy underline underline-offset-2 hover:text-amber">
+                <a href={`tel:${PHONE_LINK}`} className="text-sm font-semibold text-navy underline underline-offset-2 hover:text-amber-text">
                   Beställa större mängd? Vi erbjuder offert på volymköp av högre värde.
                 </a>
               </div>
@@ -305,7 +330,7 @@ export default function ProductPageContent() {
               <div className="mb-6 flex flex-col gap-3 rounded-xl border border-border p-5">
                 {[
                   { icon: <RotateCcw size={16} />, text: "30 dagars öppet köp!" },
-                  { icon: <Truck size={16} />, text: "Snabb leverans 1–3 arbetsdagar" },
+                  { icon: <Truck size={16} />, text: "Leverans normalt 1–3 arbetsdagar" },
                   { icon: <Shield size={16} />, text: "Garanti enligt tillverkare" },
                 ].map((item, i) => (
                   <div key={i} className="flex items-center gap-3 text-sm">

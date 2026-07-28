@@ -3,13 +3,13 @@
 import FadeIn from "./FadeIn"
 
 const CHECKPOINTS = [
-  {
+    {
+    title: "Normalt 1–3 dagars leverans",
+    desc: "Order lagd före 14:00 skickas normalt samma dag och är oftast framme inom 1–3 arbetsdagar. Vid restnotering eller pallbokning kan det ta längre — vi hör av oss om något drar ut.",
+  },
+{
     title: "Sveriges vassaste priser",
     desc: "Vi köper direkt från tillverkaren — inga mellanhänder, inga onödiga påslag. Du får proffs-kvalitet till rätt pris.",
-  },
-  {
-    title: "Leverans inom 1–3 dagar",
-    desc: "Beställ före 14:00 så skickas din order samma dag. Leverans i hela Sverige inom 1–3 arbetsdagar.",
   },
   {
     title: "Ring och prata med en expert",
@@ -23,7 +23,7 @@ const CHECKPOINTS = [
 
 const NUMBERS = [
   { num: "01", title: "Bästa pris", desc: "Direkt från tillverkare, utan mellanhänder" },
-  { num: "02", title: "Snabbast ut", desc: "Samma dag-leverans vid order före kl. 14" },
+  { num: "02", title: "Snabbast ut", desc: "Skickas normalt samma dag vid order före kl. 14" },
   { num: "03", title: "Riktig hjälp", desc: "Prata med en människa som kan din maskin" },
 ]
 

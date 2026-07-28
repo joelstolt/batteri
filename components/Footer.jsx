@@ -1,5 +1,5 @@
 import Link from "next/link"
-import { PHONE, PHONE_LINK, EMAIL } from "@/lib/constants"
+import { PHONE, PHONE_LINK, EMAIL, ADDRESS } from "@/lib/constants"
 import { Phone, Mail, Clock, Shield, Truck, RotateCcw, Award } from "lucide-react"
 
 const COLUMNS = [
@@ -20,6 +20,8 @@ const COLUMNS = [
       { label: "Kontakta oss", href: "/kontakt" },
       { label: "Vanliga frågor", href: "/faq" },
       { label: "Skötsel av batterier", href: "/skotsel" },
+      { label: "Laddare till batteriet", href: "/laddare" },
+      { label: "Batterivatten", href: "/batterivatten" },
       { label: "Frakt & leverans", href: "/villkor" },
     ],
   },
@@ -100,6 +102,8 @@ export default function Footer() {
               </div>
               <div className="pt-1 text-xs leading-relaxed text-white/60">
                 Joel Stolt · Org.nr 901108-0851
+                <br />
+                {ADDRESS.rad}
               </div>
             </div>
           </div>

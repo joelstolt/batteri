@@ -120,8 +120,8 @@ export default function ThankYouContent() {
               <Truck size={18} className="text-navy" />
             </div>
             <div>
-              <div className="text-sm font-bold text-text-dark">Leverans 1–3 dagar</div>
-              <div className="text-sm text-text-mid">Spårningsnummer via e-post</div>
+              <div className="text-sm font-bold text-text-dark">Leverans normalt 1–3 dagar</div>
+              <div className="text-sm text-text-mid">Spårningsnummer mejlas vid avsändning</div>
             </div>
           </div>
         </div>

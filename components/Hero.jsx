@@ -2,77 +2,67 @@
 
 import { motion } from "framer-motion"
 import Link from "next/link"
-import { publicProducts as products } from "@/lib/products"
-import ProductCard from "@/components/ProductCard"
+import { Wrench, Phone } from "lucide-react"
+import { PHONE, PHONE_LINK } from "@/lib/constants"
 
-function getFeatured() {
-  const featured = products.filter((p) => p.badge).slice(0, 4)
-  if (featured.length < 4) {
-    const remaining = products
-      .filter((p) => !p.badge)
-      .sort((a, b) => b.price - a.price)
-      .slice(0, 4 - featured.length)
-    featured.push(...remaining)
-  }
-  return featured
-}
-
+/**
+ * Heron gör två saker: säger vad vi säljer med orden folk söker på, och ger
+ * något att klicka på direkt.
+ *
+ * Tidigare låg 4 produktkort och en knapp här nere, vilket sköt undan
+ * uppmärksamheten från rubriken och gav besökaren en produktvägg innan hen
+ * hunnit förstå vad sajten är. Produkterna ligger nu i egen sektion längre ned.
+ */
 export default function Hero() {
-  const featured = getFeatured()
-
   return (
-    <section className="border-b border-border bg-white">
-      <div className="mx-auto max-w-[1200px] px-4 py-10 sm:px-6 sm:py-14">
-        {/* Top: copy */}
+    <section className="bg-navy">
+      <div className="mx-auto max-w-[1200px] px-4 py-16 sm:px-6 sm:py-24">
         <motion.div
-          className="max-w-[720px]"
+          className="max-w-[780px]"
           initial={{ y: 20 }}
           animate={{ y: 0 }}
           transition={{ duration: 0.8, ease: [0.22, 1, 0.36, 1] }}
         >
-          <div className="mb-5 inline-flex items-center gap-2 rounded-full border border-amber/40 bg-amber/10 px-3.5 py-1.5 font-heading text-xs font-bold uppercase tracking-wider text-amber-text">
+          <div className="mb-6 inline-flex items-center gap-2 rounded-full border border-amber/40 bg-amber/10 px-3.5 py-1.5 font-heading text-xs font-bold uppercase tracking-wider text-amber">
             <span className="text-sm">🏆</span>
             Marknadens vassaste priser
           </div>
 
-          <h1 className="mb-5 font-heading text-[clamp(32px,4.5vw,52px)] font-extrabold leading-[1.05] tracking-tight text-text-dark">
-            Rätt batteri till din maskin
+          <h1 className="mb-5 font-heading text-[clamp(32px,4.5vw,52px)] font-extrabold leading-[1.05] tracking-tight text-white">
+            Batteri till truck, lift och städmaskin
             <br />
-            <span className="text-amber-heading">till bästa pris i Sverige</span>
+            {/* "normalt" är inte utfyllnad. Leverantören skickar direkt till kund
+                i nio fall av tio, så avsändningsdagen är inget Batteriproffs
+                kontrollerar. Utan reservationen är det ett garantilöfte i sidans
+                mest framträdande text — och samma löfte står i köpvillkoren. */}
+            <span className="text-amber">beställ före 14, skickas normalt samma dag</span>
           </h1>
 
-          <p className="max-w-[640px] text-[17px] leading-relaxed text-text-mid">
-            Truckar, städmaskiner, hissar eller solceller — vi har batteriet
-            du behöver. Snabb leverans, vassa priser och riktig experthjälp
-            om du har frågor. Inga mellanhänder, inga krångel.
+          <p className="mb-8 max-w-[640px] text-[17px] leading-relaxed text-white/75">
+            Traktionsbatterier och gelbatterier till truckar, saxliftar,
+            pallyftare, städmaskiner och UPS. Priserna står öppet på sajten,
+            leverans normalt på 1–3 arbetsdagar, och vi svarar själva i telefon när du
+            behöver hjälp att välja rätt.
           </p>
-        </motion.div>
 
-        {/* 4 featured products */}
-        <motion.div
-          className="mt-10 grid grid-cols-2 gap-3 sm:gap-5 lg:grid-cols-4"
-          initial={{ y: 20 }}
-          animate={{ y: 0 }}
-          transition={{ duration: 0.8, delay: 0.15, ease: [0.22, 1, 0.36, 1] }}
-        >
-          {featured.map((p) => (
-            <ProductCard key={p.slug} product={p} />
-          ))}
-        </motion.div>
-
-        {/* CTA below products */}
-        <motion.div
-          className="mt-8 flex justify-center sm:mt-10"
-          initial={{ y: 20 }}
-          animate={{ y: 0 }}
-          transition={{ duration: 0.8, delay: 0.3, ease: [0.22, 1, 0.36, 1] }}
-        >
-          <Link
-            href="/kategori/alla"
-            className="rounded-xl bg-amber-bg px-8 py-3.5 text-center font-heading text-sm font-bold text-navy shadow-sm transition-all hover:-translate-y-px hover:shadow-md sm:text-base"
-          >
-            Se alla batterier
-          </Link>
+          {/* Två vägar vidare vid den punkt där uppmärksamheten är som störst.
+              Sök på maskinen först — det är så B2B-köpare faktiskt letar. */}
+          <div className="flex flex-col gap-3 sm:flex-row">
+            <Link
+              href="/batteri-till"
+              className="inline-flex items-center justify-center gap-2 rounded-xl bg-amber-bg px-7 py-4 font-heading text-base font-bold text-navy shadow-sm transition-transform hover:-translate-y-px"
+            >
+              <Wrench size={18} aria-hidden="true" />
+              Sök på din maskin
+            </Link>
+            <a
+              href={`tel:${PHONE_LINK}`}
+              className="inline-flex items-center justify-center gap-2 rounded-xl border border-white/25 px-7 py-4 font-heading text-base font-bold text-white transition-colors hover:bg-white/10"
+            >
+              <Phone size={17} aria-hidden="true" />
+              Ring {PHONE}
+            </a>
+          </div>
         </motion.div>
       </div>
     </section>

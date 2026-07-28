@@ -102,11 +102,12 @@ export default function VillkorPage() {
 
               <Section title="3. Frakt och leverans">
                 <p>
-                  Vi skickar alla beställningar med PostNord. Order som läggs på vardagar
-                  före kl 14:00 packas normalt samma dag, övriga skickas nästkommande
-                  arbetsdag. Beräknad leveranstid är 1–3 arbetsdagar i hela Sverige. För
-                  produkter med längre leveranstid framgår det aktuella besked på
-                  produktsidan.
+                  Beställningar skickas med PostNord, i de flesta fall direkt från vår
+                  leverantör. Order som läggs på vardagar före kl 14:00 skickas normalt
+                  samma dag och är vanligtvis framme inom 1–3 arbetsdagar i hela Sverige.
+                  Leveranstiden är en uppskattning och ingen garanti — vid restnotering,
+                  pallbokning eller hög belastning hos transportören kan det ta längre.
+                  Blir din order försenad hör vi av oss.
                 </p>
                 <p>
                   <strong>Fraktkostnad:</strong> 695 kr inkl. moms per försändelse i
