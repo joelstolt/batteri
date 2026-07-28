@@ -330,7 +330,7 @@ export default function ProductPageContent() {
               <div className="mb-6 flex flex-col gap-3 rounded-xl border border-border p-5">
                 {[
                   { icon: <RotateCcw size={16} />, text: "30 dagars öppet köp!" },
-                  { icon: <Truck size={16} />, text: "Snabb leverans 1–3 arbetsdagar" },
+                  { icon: <Truck size={16} />, text: "Leverans normalt 1–3 arbetsdagar" },
                   { icon: <Shield size={16} />, text: "Garanti enligt tillverkare" },
                 ].map((item, i) => (
                   <div key={i} className="flex items-center gap-3 text-sm">

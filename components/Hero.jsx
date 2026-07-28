@@ -31,16 +31,17 @@ export default function Hero() {
           <h1 className="mb-5 font-heading text-[clamp(32px,4.5vw,52px)] font-extrabold leading-[1.05] tracking-tight text-white">
             Batteri till truck, lift och städmaskin
             <br />
-            {/* Löftet fanns redan i WhyUs långt ned på sidan. En stillastående
-                truck kostar pengar per timme — det slår "priset syns på sajten",
-                som dessutom är metakommentar om hemsidan snarare än om varan. */}
-            <span className="text-amber">beställ före 14, skickas samma dag</span>
+            {/* "normalt" är inte utfyllnad. Leverantören skickar direkt till kund
+                i nio fall av tio, så avsändningsdagen är inget Batteriproffs
+                kontrollerar. Utan reservationen är det ett garantilöfte i sidans
+                mest framträdande text — och samma löfte står i köpvillkoren. */}
+            <span className="text-amber">beställ före 14, skickas normalt samma dag</span>
           </h1>
 
           <p className="mb-8 max-w-[640px] text-[17px] leading-relaxed text-white/75">
             Traktionsbatterier och gelbatterier till truckar, saxliftar,
             pallyftare, städmaskiner och UPS. Priserna står öppet på sajten,
-            leverans på 1–3 arbetsdagar, och vi svarar själva i telefon när du
+            leverans normalt på 1–3 arbetsdagar, och vi svarar själva i telefon när du
             behöver hjälp att välja rätt.
           </p>
 

@@ -21,7 +21,7 @@ export const metadata = {
   // Nu B2B-orden först.
   title: "Truckbatteri, traktionsbatteri & batteri till städmaskin | Batteriproffs",
   description:
-    "Traktionsbatterier och gelbatterier till truck, lift, pallyftare och städmaskin. Priser öppet på sajten, leverans 1–3 dagar och offert på volym. Vi svarar själva i telefon.",
+    "Traktionsbatterier och gelbatterier till truck, lift, pallyftare och städmaskin. Priser öppet på sajten, normalt 1–3 dagars leverans och offert på volym. Vi svarar själva i telefon.",
   alternates: { canonical: "https://www.batteriproffs.se" },
 }
 

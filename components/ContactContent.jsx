@@ -2,7 +2,7 @@
 
 import { useState } from "react"
 import { Phone, Mail, Clock, MapPin, Send, CheckCircle } from "lucide-react"
-import { PHONE, PHONE_LINK, EMAIL } from "@/lib/constants"
+import { PHONE, PHONE_LINK, EMAIL, ADDRESS } from "@/lib/constants"
 import FadeIn from "@/components/FadeIn"
 
 export default function ContactContent() {
@@ -233,6 +233,28 @@ export default function ContactContent() {
                     </div>
                   ))}
                 </div>
+              </div>
+
+              {/* Företagsadress. Krävs enligt e-handelslagen. Verksamheten är
+                  digital utan kundbesök, därför "postadress" och inget om besök. */}
+              <div className="rounded-2xl border border-border bg-surface p-6">
+                <div className="mb-3 flex items-center gap-2">
+                  <MapPin size={17} className="text-navy" aria-hidden="true" />
+                  <h3 className="font-heading text-lg font-bold text-text-dark">
+                    Postadress
+                  </h3>
+                </div>
+                <address className="text-sm not-italic leading-relaxed text-text-mid">
+                  Batteriproffs
+                  <br />
+                  {ADDRESS.gata}
+                  <br />
+                  {ADDRESS.postnummer} {ADDRESS.ort}
+                </address>
+                <p className="mt-3 text-xs leading-relaxed text-text-light">
+                  Vi är en renodlad e-handel utan butik. Batterierna skickas direkt
+                  från lager till er adress.
+                </p>
               </div>
 
               {/* Expert help */}

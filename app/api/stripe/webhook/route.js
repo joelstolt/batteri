@@ -98,7 +98,7 @@ function buildOrderBody({ orderId, items, subtotal, shipping, total, customer, m
     ])}
 
     <p style="margin-top:24px;font-size:14px;line-height:1.6;color:#374151;">
-      Vi packar ordern inom 1–3 arbetsdagar och skickar den så snart som möjligt.
+      Vi skickar ordern så snart som möjligt, normalt inom 1–3 arbetsdagar.
       Fakturan skickas separat till ${meta.invoice_email ? escape(meta.invoice_email) : "er fakturaadress"}.
     </p>
   `
