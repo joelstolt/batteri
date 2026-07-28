@@ -18,7 +18,7 @@ export default function FeaturedProducts() {
   }
 
   return (
-    <section className="border-t border-border bg-white py-14">
+    <section className="border-b border-border bg-white py-14">
       <div className="mx-auto max-w-[1200px] px-4 sm:px-6">
         <FadeIn>
           <div className="mb-8 flex flex-wrap items-end justify-between gap-4">

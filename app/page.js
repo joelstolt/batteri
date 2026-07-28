@@ -36,15 +36,22 @@ export default function Home() {
       <Header />
       {/*
         Ordningen följer hur en företagsköpare faktiskt tänker:
-        vad säljer ni → hittar jag mitt → vad kostar det → varför just er →
+        vad säljer ni → vad kostar det → hittar jag mitt → varför just er →
         hur beställer jag → vem mer har köpt.
       */}
       <main id="innehall">
         <Hero />
-        {/* Sök på maskinen först — vårt unika grepp och det B2B-köpare gör */}
+        {/*
+          Produkter med pris direkt efter heron. Hela positioneringen är att
+          priserna står öppet medan konkurrenterna gömmer dem bakom
+          offertformulär — då kan de inte ligga under tre andra sektioner.
+          Av de sex konkurrenter som rankar på "truckbatteri" visar två priser
+          på startsidan, och det är just de två som är riktiga e-handlare.
+        */}
+        <FeaturedProducts />
+        {/* Finnaren efter produkterna: för den som inte såg sitt batteri */}
         <FinderSection />
         <Categories />
-        <FeaturedProducts />
         <WhyUs />
         <HelpAndQuote />
         <References />
