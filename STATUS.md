@@ -9,6 +9,29 @@ utan att gräva i historiken.
 - **Live:** https://www.batteriproffs.se
 - **Allt i den här filen är pushat och live**, utom där annat står.
 
+## Bolagsstrukturen (klarlagd 2026-07-29)
+
+Det här var länge fel i den här filen, så läs det noga:
+
+- **Säljare och avtalspart mot kunden är Joel Stolts enskilda firma**, org.nr =
+  hans personnummer. Inget aktiebolag. Kunden betalar dit.
+- **Battericentralen står bakom Batteriproffs** och skickar batterierna från sin
+  leverantör. De är alltså leverantör, inte säljare. **Varumärkena ska hållas
+  isär — skriv aldrig ut kopplingen i kundtext.** Att inte nämna den är en sak,
+  att förneka den vore en annan.
+- Prisfördelen kommer av att inköp sker till Battericentralens pris, byggt på
+  över tjugo års leverantörsrelation. Så formuleras det på sajten, utan att
+  peka någonstans.
+- **AB bildas när verksamheten gått 25 000 kr i vinst.** Fram tills dess ligger
+  allt på den enskilda firman.
+- **Privatkunder öppnas FÖRST när AB:t finns.** Konsumentköplagens tre års
+  reklamationsrätt med omvänd bevisbörda ska inte landa på en privatperson.
+  Kassan är därför företag-bara med flit, inte av glömska.
+- ⚠️ **Momsreg.nr i `lib/constants.js` är härlett ur personnumret och måste
+  verifieras av Joel.** Sajten tar ut 25 % moms på varje order.
+- Tidigare påstod den här filen "delägare: Joel, Isak, Lukas". En enskild firma
+  kan inte ha delägare. Reds ut när AB:t bildas.
+
 ## Affären, som den faktiskt ser ut
 
 Det här styr formuleringar och funktionsval, så läs det innan du skriver copy:
