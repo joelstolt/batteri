@@ -13,6 +13,7 @@ export default function sitemap() {
     { url: `${SITE_URL}/laddare`, priority: 0.7, changeFrequency: "monthly" },
     { url: `${SITE_URL}/batterivatten`, priority: 0.7, changeFrequency: "monthly" },
     { url: `${SITE_URL}/kunskap`, priority: 0.7, changeFrequency: "monthly" },
+    { url: `${SITE_URL}/atervinning`, priority: 0.6, changeFrequency: "yearly" },
     { url: `${SITE_URL}/faq`, priority: 0.6, changeFrequency: "monthly" },
     { url: `${SITE_URL}/skotsel`, priority: 0.6, changeFrequency: "monthly" },
     { url: `${SITE_URL}/kontakt`, priority: 0.5, changeFrequency: "yearly" },

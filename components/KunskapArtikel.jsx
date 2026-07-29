@@ -64,6 +64,17 @@ export default function KunskapArtikel({ artikel }) {
             )}
 
             {s.prislista && <Prislista rader={s.prislista} />}
+
+            {s.lank && (
+              <p className="mt-4">
+                <Link
+                  href={s.lank.href}
+                  className="font-heading font-bold text-accent hover:underline"
+                >
+                  {s.lank.text} →
+                </Link>
+              </p>
+            )}
           </section>
         ))}
       </div>
