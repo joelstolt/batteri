@@ -7,6 +7,7 @@ import TopBar from "@/components/TopBar"
 import Header from "@/components/Header"
 import ProductPageContent from "@/components/ProductPageContent"
 import ProduktOmdomen from "@/components/ProduktOmdomen"
+import { PrisforklaringKort } from "@/components/Prisforklaring"
 import CtaBanner from "@/components/CtaBanner"
 import Footer from "@/components/Footer"
 
@@ -189,6 +190,8 @@ export default async function ProductRoute({ params }) {
       <TopBar />
       <Header />
       <main id="innehall">        <ProductPageContent />
+        {/* Direkt efter priset: det är där tvivlet uppstår, inte längre ned. */}
+        <PrisforklaringKort />
         <ProduktOmdomen omdomen={omdomen} />
         <CtaBanner />
       </main>

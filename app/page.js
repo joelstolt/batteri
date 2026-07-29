@@ -10,6 +10,7 @@ import HelpAndQuote from "@/components/HelpAndQuote"
 // länkar, på startsidan. Det är kategorisidans jobb — /kategori/alla listar
 // exakt samma sortiment. FeaturedProducts visar 8 i stället.
 import FeaturedProducts from "@/components/FeaturedProducts"
+import Prisforklaring from "@/components/Prisforklaring"
 import WhyUs from "@/components/WhyUs"
 import CtaBanner from "@/components/CtaBanner"
 import Footer from "@/components/Footer"
@@ -49,6 +50,12 @@ export default function Home() {
           på startsidan, och det är just de två som är riktiga e-handlare.
         */}
         <FeaturedProducts />
+        {/*
+          Prisförklaringen direkt efter produkterna, medan siffrorna hänger kvar.
+          Halva marknadspriset från en okänd aktör väcker misstanke innan det
+          väcker köplust, och den frågan besvaras inte av något annat på sidan.
+        */}
+        <Prisforklaring />
         {/* Finnaren efter produkterna: för den som inte såg sitt batteri */}
         <FinderSection />
         <Categories />
