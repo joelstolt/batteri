@@ -10,6 +10,7 @@ import {
 } from "@/lib/emails"
 import { scheduleReviewEmail } from "@/lib/review-email"
 import { unloadingLabel } from "@/lib/checkout"
+import { SELJARE } from "@/lib/constants"
 
 const stripe = new Stripe(process.env.STRIPE_SECRET_KEY)
 
@@ -62,6 +63,14 @@ function buildOrderBody({ orderId, items, subtotal, shipping, total, customer, m
         <td style="padding:10px 0;text-align:right;font-size:13px;">${shipping === 0 ? "Fri" : `${formatPriceKr(shipping)} kr`}</td>
       </tr>
       <tr>
+        <td style="padding:12px 0 4px;color:#6B7280;font-size:13px;border-top:1px solid #E5E7EB;">Beskattningsunderlag</td>
+        <td style="padding:12px 0 4px;text-align:right;font-size:13px;border-top:1px solid #E5E7EB;">${formatPriceKr(total / 1.25)} kr</td>
+      </tr>
+      <tr>
+        <td style="padding:4px 0;color:#6B7280;font-size:13px;">Moms 25 %</td>
+        <td style="padding:4px 0;text-align:right;font-size:13px;">${formatPriceKr(total - total / 1.25)} kr</td>
+      </tr>
+      <tr>
         <td style="padding:14px 0 0;font-weight:800;font-size:16px;border-top:2px solid #0A1628;">Totalt (inkl. moms)</td>
         <td style="padding:14px 0 0;text-align:right;font-weight:800;font-size:16px;border-top:2px solid #0A1628;">${formatPriceKr(total)} kr</td>
       </tr>
@@ -97,9 +106,19 @@ function buildOrderBody({ orderId, items, subtotal, shipping, total, customer, m
       ["Beställarens telefon", meta.buyer_phone],
     ])}
 
+    <div style="margin-top:20px;padding:16px 18px;background:#F7F8FA;border-radius:10px;font-size:13px;line-height:1.7;">
+      <div style="font-weight:700;margin-bottom:6px;color:#0A1628;">Säljare</div>
+      ${escape(SELJARE.namn)} (${escape(SELJARE.form)})<br>
+      ${escape(SELJARE.adress)}<br>
+      Org.nr ${escape(SELJARE.orgnr)}${SELJARE.momsnr ? ` · Momsreg.nr ${escape(SELJARE.momsnr)}` : ""}<br>
+      <span style="color:#6B7280;">Godkänd för F-skatt</span>
+    </div>
+
     <p style="margin-top:24px;font-size:14px;line-height:1.6;color:#374151;">
       Vi skickar ordern så snart som möjligt, normalt inom 1–3 arbetsdagar.
-      Fakturan skickas separat till ${meta.invoice_email ? escape(meta.invoice_email) : "er fakturaadress"}.
+      <strong>Det här mejlet är ditt kvitto</strong> och innehåller de uppgifter din
+      bokföring behöver. Någon separat faktura skickas inte, eftersom betalningen
+      redan är gjord med kort.
     </p>
   `
 }

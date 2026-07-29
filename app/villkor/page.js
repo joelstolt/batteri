@@ -47,7 +47,11 @@ export default function VillkorPage() {
                   fyllt 18 år och företag, om inte annat har avtalats skriftligt.
                 </p>
                 <p>
-                  Webbplatsen drivs av Joel Stolt (enskild firma), org.nr 901108-0851.
+                  Säljare och din avtalspart är Joel Stolt (enskild firma), org.nr
+                  901108-0851, momsreg.nr SE901108085101, Väringavägen 10, 281 42
+                  Hässleholm. Godkänd för F-skatt. Batterierna levereras i vissa fall
+                  direkt från vår leverantör, men avtalet har du alltid med oss och det
+                  är hit du vänder dig i alla frågor om din order.
                   Vid frågor om en order, retur eller reklamation når du oss enklast via:
                 </p>
                 <ul className="ml-5 list-disc space-y-1">
