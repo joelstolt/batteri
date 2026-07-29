@@ -148,8 +148,12 @@ export default function VillkorPage() {
                 <p>
                   Hos Batteriproffs betalar du säkert med kort (Visa eller Mastercard).
                   Kortbetalningen hanteras krypterat av Stripe, en PCI&nbsp;DSS Level
-                  1-certifierad betalpartner. Beloppet reserveras när du genomför köpet
-                  och dras när din order skickas från lagret.
+                  1-certifierad betalpartner. Vi lagrar aldrig dina kortuppgifter.
+                </p>
+                <p>
+                  <strong>Beloppet dras när du genomför köpet</strong>, inte vid
+                  leverans. Kan vi mot förmodan inte leverera din order återbetalar vi
+                  hela beloppet till samma kort, normalt inom några bankdagar.
                 </p>
               </Section>
 
