@@ -19,6 +19,9 @@ function plainDescription(product) {
 }
 
 function feedItem(product) {
+  // Traktionsbatterier saluförs inte med GTIN. Utan `identifier_exists: no`
+  // antar Google att streckkoden bara glömts bort och kan flagga artikeln som
+  // ofullständig. Med den satt räcker varumärke plus artikelnummer.
   const mpn = product.specs?.["Artikelnummer"] || product.slug.toUpperCase()
   return `  <item>
     <g:id>${esc(product.slug)}</g:id>
@@ -30,10 +33,6 @@ function feedItem(product) {
     <g:price>${product.price.toFixed(2)} SEK</g:price>
     <g:brand>${esc(getProductBrand(product))}</g:brand>
     <g:mpn>${esc(mpn)}</g:mpn>
-    <!-- Traktionsbatterier saluförs inte med GTIN. Utan identifier_exists antar
-         Google att streckkoden bara glömts bort och kan flagga artikeln som
-         ofullständig. Med den satt till no räcker varumärke plus artikelnummer
-         som identifierare. -->
     <g:identifier_exists>no</g:identifier_exists>
     <g:condition>new</g:condition>
     <g:google_product_category>Electronics &gt; Power &gt; Batteries</g:google_product_category>
