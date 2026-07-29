@@ -40,7 +40,30 @@ export async function POST(request) {
   }
 
   try {
-    const pi = await stripe.paymentIntents.retrieve(paymentIntentId)
+    let pi = await stripe.paymentIntents.retrieve(paymentIntentId)
+
+    /*
+     * Dragningen sker här, i samma ögonblick som spårningsnumret matas in.
+     * Kunden betalar alltså när batteriet går iväg, precis som villkoren säger.
+     *
+     * Går dragningen inte igenom skickas INGET leveransmejl. Ett spårningsmejl
+     * på en order som aldrig betalades är svårare att reda ut än ett fel här.
+     */
+    if (pi.status === "requires_capture") {
+      try {
+        pi = await stripe.paymentIntents.capture(paymentIntentId)
+      } catch (err) {
+        console.error("Kunde inte dra betalningen:", err)
+        return NextResponse.json(
+          {
+            error:
+              "Betalningen kunde inte dras. Reservationen kan ha gått ut (de gäller 7 dygn) eller kortet spärrats. Kontakta kunden innan du skickar.",
+          },
+          { status: 402 }
+        )
+      }
+    }
+
     const charges = await stripe.charges.list({
       payment_intent: pi.id,
       limit: 1,

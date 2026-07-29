@@ -273,6 +273,11 @@ function OrderKort({ order }) {
             >
               {skickad ? "Skickad" : "Behandlas"}
             </span>
+            {order.status === "reserverad" && (
+              <span className="text-xs text-text-light">
+                Beloppet är reserverat och dras när batteriet skickas
+              </span>
+            )}
           </div>
           <p className="mt-1 text-sm text-text-mid">{datum(order.created)}</p>
         </div>

@@ -122,11 +122,30 @@ export async function POST(request) {
     return NextResponse.json({ error: "Invalid signature" }, { status: 400 })
   }
 
-  if (event.type !== "payment_intent.succeeded") {
+  /**
+   * Orderbekräftelsen ska gå ut när KUNDEN BETALAR, inte när vi drar pengarna.
+   *
+   * Med manuell capture är det två skilda ögonblick. Reservationen lyckas direkt
+   * i kassan och ger `payment_intent.amount_capturable_updated`. Först när vi
+   * skickar batteriet görs dragningen, och då kommer `payment_intent.succeeded`.
+   *
+   * Lyssnade vi bara på succeeded, som förut, hade kunden inte fått någon
+   * orderbekräftelse förrän paketet gick iväg. Lyssnar vi på båda utan att
+   * skilja dem åt får hon två.
+   *
+   * Därför: manuella betalningar hanteras på reservationen, automatiska på
+   * dragningen. Exakt en bekräftelse per order, oavsett läge.
+   */
+  const pi = event.data.object
+  const manuell = pi?.capture_method === "manual"
+
+  const rattHandelse = manuell
+    ? event.type === "payment_intent.amount_capturable_updated"
+    : event.type === "payment_intent.succeeded"
+
+  if (!rattHandelse) {
     return NextResponse.json({ received: true })
   }
-
-  const pi = event.data.object
 
   try {
     const items = pi.metadata.items ? JSON.parse(pi.metadata.items) : []

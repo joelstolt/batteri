@@ -261,6 +261,12 @@ export default function AdminOrders() {
               </div>
             </button>
 
+            {o.status === "reserverad" && (
+              <div className="px-5 pb-1">
+                <ReservationsVarning alder={o.reservationsalder} />
+              </div>
+            )}
+
             {oppen === o.id && (
               <OrderDetalj order={o} token={token} onSkickad={markeraSkickad} />
             )}
@@ -283,16 +289,44 @@ export default function AdminOrders() {
   )
 }
 
+const ORDER_ETIKETT = {
+  skickad: { text: "Skickad", klass: "bg-green/10 text-green" },
+  reserverad: { text: "Reserverad", klass: "bg-amber-bg/20 text-amber-text" },
+  betald: { text: "Betald", klass: "bg-accent/10 text-accent" },
+}
+
 function StatusBadge({ status }) {
-  const skickad = status === "skickad"
+  const e = ORDER_ETIKETT[status] || ORDER_ETIKETT.betald
   return (
-    <span
-      className={`rounded-md px-2 py-0.5 text-[11px] font-bold uppercase tracking-wide ${
-        skickad ? "bg-green/10 text-green" : "bg-amber-bg/20 text-amber-text"
+    <span className={`rounded-md px-2 py-0.5 text-[11px] font-bold uppercase tracking-wide ${e.klass}`}>
+      {e.text}
+    </span>
+  )
+}
+
+/**
+ * Varning när en reservation närmar sig sjudygnsgränsen.
+ *
+ * Går den ut släpps pengarna och kunden måste betala om. Det är den enda
+ * verkliga risken med att dra vid leverans i stället för vid köp, och den är
+ * helt undvikbar så länge någon ser den i tid.
+ */
+function ReservationsVarning({ alder }) {
+  if (alder === null || alder === undefined) return null
+  const kvar = 7 - alder
+  if (kvar > 3) return null
+
+  const akut = kvar <= 1
+  return (
+    <p
+      className={`mt-2 rounded-lg px-3 py-2 text-sm font-semibold ${
+        akut ? "bg-red-50 text-red-700" : "bg-amber-bg/15 text-amber-text"
       }`}
     >
-      {skickad ? "Skickad" : "Betald"}
-    </span>
+      {kvar <= 0
+        ? "Reservationen har gått ut. Pengarna är släppta — kontakta kunden för ny betalning."
+        : `Reservationen går ut om ${kvar} ${kvar === 1 ? "dygn" : "dygn"}. Skicka och dra betalningen nu, annars släpps pengarna.`}
+    </p>
   )
 }
 
@@ -453,6 +487,15 @@ function OrderDetalj({ order, token, onSkickad }) {
         <p className="mt-2.5 text-xs text-text-light">
           Mejlet går till {order.customer.email || "— ingen adress på ordern"}. Länken i
           mejlet fungerar bara för PostNord och DHL.
+          {order.status === "reserverad" && (
+            <>
+              {" "}
+              <strong className="text-text-mid">
+                Betalningen dras i samma veva. Går dragningen inte igenom skickas
+                inget mejl.
+              </strong>
+            </>
+          )}
         </p>
       </form>
     </div>

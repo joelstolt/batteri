@@ -124,6 +124,17 @@ export async function POST(request) {
       // så Klarna/Link/Amazon Pay kan inte dyka upp i kassan även om de är
       // påslagna på Stripe-kontot.
       payment_method_types: ["card"],
+      /*
+       * Pengarna reserveras nu och dras när batteriet skickas.
+       *
+       * Det är vad köpvillkoren alltid har lovat, och det är rimligare mot
+       * kunden: hon betalar för en vara som är på väg, inte för ett löfte.
+       *
+       * VIKTIGT: en kortreservation dör efter sju dygn. Görs ingen capture
+       * innan dess släpps pengarna och kunden måste betala om. Dra därför
+       * senast dag fem, även om paketet inte hunnit iväg. Adminvyn varnar.
+       */
+      capture_method: "manual",
       metadata: {
         order_source: "batteriproffs.se",
         items: itemsMeta,

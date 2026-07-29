@@ -151,9 +151,10 @@ export default function VillkorPage() {
                   1-certifierad betalpartner. Vi lagrar aldrig dina kortuppgifter.
                 </p>
                 <p>
-                  <strong>Beloppet dras när du genomför köpet</strong>, inte vid
-                  leverans. Kan vi mot förmodan inte leverera din order återbetalar vi
-                  hela beloppet till samma kort, normalt inom några bankdagar.
+                  <strong>Beloppet reserveras när du genomför köpet och dras först
+                  när batteriet skickas.</strong> Du betalar alltså för en vara som är
+                  på väg, inte för ett löfte. Kan vi mot förmodan inte leverera din
+                  order släpps reservationen och du har aldrig blivit debiterad.
                 </p>
               </Section>
 
