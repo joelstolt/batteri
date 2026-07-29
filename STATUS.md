@@ -224,6 +224,43 @@ Systemet som finns i stället:
 besöksadress kvalificerar inte för Google Business Profile). Funktionen
 returnerade null på första raden. Pekar nu på kontot.
 
+## Betalning: vad som gäller och varför
+
+**Kort dras direkt vid köp.** `create-payment-intent` sätter inget
+`capture_method`, alltså automatisk dragning. Villkoren påstod tidigare att
+beloppet "reserveras och dras när ordern skickas" — det stämde aldrig, och
+texten är rättad 2026-07-29. **Ändrar någon till manuell capture måste
+villkorstexten ändras tillbaka samtidigt.**
+
+Manuell capture övervägdes och valdes bort. Den hade INTE ökat
+bedrägeririsken — ordningen är alltid reservation, dragning, leverans — men en
+kortreservation förfaller efter sju dygn, och leverantörens leveranstakt är
+obekräftad. Ta upp igen när avskärningstiden "före 14" är verifierad.
+
+**Förskottsfaktura mot bankgiro 5218-3480** finns i `/admin`, fliken Fakturor.
+För kunder vars attestrutin kräver ett fakturaunderlag men som inte kan betala
+med kort. Ingen kredit lämnas.
+
+- Fakturan är ett **Stripe Invoice-objekt**, samma logik som att ordrar ligger
+  på PaymentIntents. Ger fakturanummer och status utan ny databas.
+- Betalningen sker utanför Stripe, så fakturan markeras för hand med
+  `paid_out_of_band`. Stripe kan aldrig veta det av sig själv.
+- Mejlet går via Resend i sajtens mall. **Använd aldrig Stripes fakturautskick**
+  — den mallen visar Stripes betalalternativ i stället för bankgirot.
+- Förfallotid **10 dagar**. Trettio är standard för kreditfaktura men fel här:
+  många bolag betalar veckovis, så sju missar en betalkörning medan trettio
+  låter ordern ligga en månad medan priset kan ändras.
+- **Momsberäkningen i `lib/fakturor.js` måste följa `create-payment-intent`.**
+  Verifierad mot nio fall. Divergerar de får kunden en faktura som inte stämmer
+  med kassan.
+- Skicka aldrig batteriet innan betalningen syns på bankgirot.
+
+**Riktig faktura med 30 dagar** kräver en betalpartner (Ledyer, Svea, Walley)
+som köper fordran och tar kreditrisken. Kostar runt 3 %, vilket är en fjärdedel
+av marginalen på de billiga artiklarna. Kräver omsättningshistorik, som saknas.
+Var beredd på krav om **personlig borgen** — det flyttar risken till Joel, Isak
+och Lukas privat i stället för att ta bort den.
+
 ## Kundkontots session
 
 90 dagar, inte 30. B2B-kunder beställer kvartalsvis och med en månad hade varje
