@@ -142,7 +142,11 @@ lager.
    ersättningsuppgift betyder att en kund köper ett batteri som inte passar i
    liften. Fråga leverantören, fyll sedan i `Ersätter` — sidorna genererar sig
    själva ur fältet.
-2. Viktbaserad frakt — bara 8 av 20 produkter har vikt i datan i dag.
+2. **Viktbaserad frakt — BLOCKERAD på samma mejl som punkt 1.** 12 av 20 artiklar
+   saknar vikt. Den går att uppskatta ur GF-seriens Wh/kg-mönster (34–39 Wh/kg)
+   men landar på ±10 %, alltså ±4 kg på ett 40-kilosbatteri. **Publicera aldrig
+   en uppskattad vikt som produktspec** — kunder planerar lyft och hantering
+   efter den. Be leverantören om vikterna i samma mejl som Trojan-numren.
 3. Stafflade priser (mängdrabatt) — normalt i B2B, saknas.
 4. Datablad som PDF per produkt.
 5. Prisjakt-feed.
@@ -163,6 +167,32 @@ Konsekvens: **organiskt är inte det långsamma alternativet utan det enda som
 bär.** För Google Shopping (100 kr/dag, produktval stod öppet): kör bara de sju
 produkterna över ~4 000 kr, släck resten, och behandla första månaderna som
 inköp av konverteringsdata. Köpspårning finns redan i Umami.
+
+## Gratis återvinning
+
+Bekräftat av Joel 2026-07-29. `/atervinning`, en FAQ-post och ett stycke i
+prisartikeln. Det är den trygghetssignal branschen faktiskt använder — ingen av
+sex B2B-konkurrenter visar omdömen, men både Midac och Batteriexpressen gör en
+poäng av återvinningen.
+
+**Logistiken är medvetet öppet formulerad.** Att den är gratis är bekräftat, men
+inte vem som står för frakten eller om batteriet hämtas eller lämnas. Skriv
+aldrig in ett hämtningslöfte utan besked — det är ett leveranslöfte i förklädnad,
+och sådana får enligt affärsreglerna högst upp aldrig formuleras som garantier.
+**Joel: bekräfta upplägget så skärps texten.**
+
+## Tre FAQ-svar var fel (rättade 2026-07-29)
+
+Värt att känna till för att samma sak inte ska smyga sig in igen: FAQ-texten
+skrevs innan kassan och momsvisningen fick sina slutliga beslut, och hann bli
+inaktuell utan att någon märkte det.
+
+- Sa att ni säljer till privatpersoner. Kassan kräver giltigt organisationsnummer
+  med Luhn-kontroll, så en privatperson fyllde varukorgen och gick in i en vägg.
+- Sa att priser visas exklusive moms. `lib/vat-context.js` har `inclVat: true`.
+- Sa "specialiserade på Sonnenschein gel". Gäller 7 av 20 artiklar.
+
+**Regel: ändras kassan, momsvisningen eller sortimentet, läs om `lib/faq.js`.**
 
 ## Kunskapsbanken
 
