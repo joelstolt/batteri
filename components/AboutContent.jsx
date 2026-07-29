@@ -2,6 +2,19 @@
 
 import { Shield, Zap, Users, Award, Truck, HeartHandshake, Clock, Wrench } from "lucide-react"
 import FadeIn from "@/components/FadeIn"
+import { publicProducts } from "@/lib/products"
+
+/**
+ * Antalet härleds, aldrig hårdkodas.
+ *
+ * Stod "21+" när sortimentet var 20. Exakt samma fel som kategoriräknaren hade
+ * på startsidan: en siffra som skrevs en gång och sedan aldrig följde med när
+ * sortimentet ändrades. Räknas den ut kan den inte halka efter igen.
+ */
+const ANTAL_MODELLER = publicProducts.length
+const ANTAL_VARUMARKEN = new Set(
+  publicProducts.map((p) => p.specs?.["Varumärke"]).filter(Boolean)
+).size
 
 export default function AboutContent() {
   return (
@@ -60,8 +73,8 @@ export default function AboutContent() {
               </div>
               <div className="grid grid-cols-2 gap-6">
                 {[
-                  { num: "21+", label: "Batterimodeller i lager" },
-                  { num: "3", label: "Premiumvarumärken" },
+                  { num: String(ANTAL_MODELLER), label: "Batterimodeller i sortimentet" },
+                  { num: String(ANTAL_VARUMARKEN), label: "Premiumvarumärken" },
                   { num: "08–17", label: "Mån–Fre öppet" },
                   { num: "1–3", label: "Dagar, normal leverans" },
                 ].map((s, i) => (
@@ -106,10 +119,23 @@ export default function AboutContent() {
                   produktsortiment spänner över våtbatterier, AGM/Dry Cell och
                   gelbatterier i spänningar från 6V till 12V.
                 </p>
+                {/*
+                  Stod tidigare: "Alla våra batterier levereras med fullständig
+                  teknisk dokumentation." Det stämde inte — noll av tjugo artiklar
+                  har ett datablad, och kunden hade upptäckt det först när kartongen
+                  låg på golvet. Omskrivet till det som faktiskt gäller: specarna
+                  finns på produktsidan.
+
+                  ÅTERSTÄLL DEN ORIGINALA MENINGEN när datablad som PDF finns per
+                  produkt (står i bygg-kön). Kolla att de verkligen medföljer
+                  leveransen och inte bara går att ladda ned, annars är påståendet
+                  fel igen.
+                */}
                 <p>
-                  Alla våra batterier levereras med fullständig teknisk dokumentation
-                  och vi står alltid redo att svara på frågor — före, under och
-                  efter köpet.
+                  Varje produktsida visar fullständiga specifikationer: spänning,
+                  kapacitet, mått, batterityp och vilket batteri artikeln ersätter.
+                  Behöver du något mer står vi alltid redo att svara på frågor —
+                  före, under och efter köpet.
                 </p>
               </div>
             </FadeIn>
