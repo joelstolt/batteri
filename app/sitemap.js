@@ -2,6 +2,7 @@ import { SITE_URL, CATEGORIES } from "@/lib/constants"
 import { publicProducts } from "@/lib/products"
 import { machines } from "@/lib/machines"
 import { replacements } from "@/lib/replacements"
+import { artiklar } from "@/lib/kunskap"
 
 export default function sitemap() {
   const now = new Date()
@@ -11,6 +12,7 @@ export default function sitemap() {
     { url: `${SITE_URL}/batteri-till`, priority: 0.9, changeFrequency: "weekly" },
     { url: `${SITE_URL}/laddare`, priority: 0.7, changeFrequency: "monthly" },
     { url: `${SITE_URL}/batterivatten`, priority: 0.7, changeFrequency: "monthly" },
+    { url: `${SITE_URL}/kunskap`, priority: 0.7, changeFrequency: "monthly" },
     { url: `${SITE_URL}/faq`, priority: 0.6, changeFrequency: "monthly" },
     { url: `${SITE_URL}/skotsel`, priority: 0.6, changeFrequency: "monthly" },
     { url: `${SITE_URL}/kontakt`, priority: 0.5, changeFrequency: "yearly" },
@@ -44,12 +46,19 @@ export default function sitemap() {
     changeFrequency: "monthly",
   }))
 
+  const kunskapPages = artiklar.map((a) => ({
+    url: `${SITE_URL}/kunskap/${a.slug}`,
+    priority: 0.6,
+    changeFrequency: "monthly",
+  }))
+
   return [
     ...staticPages,
     ...categoryPages,
     ...productPages,
     ...machinePages,
     ...replacementPages,
+    ...kunskapPages,
   ].map((p) => ({
     ...p,
     lastModified: now,

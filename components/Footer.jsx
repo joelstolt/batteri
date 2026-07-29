@@ -19,6 +19,7 @@ const COLUMNS = [
     links: [
       { label: "Kontakta oss", href: "/kontakt" },
       { label: "Vanliga frågor", href: "/faq" },
+      { label: "Kunskapsbank", href: "/kunskap" },
       { label: "Skötsel av batterier", href: "/skotsel" },
       { label: "Laddare till batteriet", href: "/laddare" },
       { label: "Batterivatten", href: "/batterivatten" },
