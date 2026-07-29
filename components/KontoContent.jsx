@@ -97,7 +97,7 @@ export default function KontoContent() {
   }
 
   if (status === "utloggad") {
-    return <Inloggning fel={fel} />
+    return <Inloggning fel={fel} forifylld={params.get("epost") || ""} />
   }
 
   return (
@@ -140,8 +140,11 @@ export default function KontoContent() {
   )
 }
 
-function Inloggning({ fel }) {
-  const [epost, setEpost] = useState("")
+function Inloggning({ fel, forifylld }) {
+  // Kommer kunden från omdömesmejlet ligger adressen i länken. Ingen token
+  // följer med — bara förifyllningen, så ett vidarebefordrat mejl inte blir
+  // en inloggning.
+  const [epost, setEpost] = useState(forifylld || "")
   const [skickar, setSkickar] = useState(false)
   const [skickat, setSkickat] = useState(false)
   const [felmed, setFelmed] = useState("")

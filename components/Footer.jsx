@@ -18,6 +18,8 @@ const COLUMNS = [
     title: "Kundservice",
     links: [
       { label: "Kontakta oss", href: "/kontakt" },
+      { label: "Vilket batteri har jag?", href: "/vilket-batteri" },
+      { label: "Företagskund", href: "/foretagskund" },
       { label: "Vanliga frågor", href: "/faq" },
       { label: "Kunskapsbank", href: "/kunskap" },
       { label: "Gratis återvinning", href: "/atervinning" },
