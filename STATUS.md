@@ -32,13 +32,37 @@ Det här styr formuleringar och funktionsval, så läs det innan du skriver copy
 20 produkter i `lib/products.js` (hårdkodade). Sanity är inkopplat men innehåller
 **noll produkter** — rör det inte, det är en fälla att börja läsa därifrån.
 
-Sidor: startsida, 20 produktsidor, kategorier, 29 maskinsidor under
+Sidor: startsida, 20 produktsidor, kategorier, 30 maskinsidor under
 `/batteri-till/<slug>`, 3 ersättningssidor under `/ersatter/<slug>`, `/laddare`,
 `/batterivatten`, `/skotsel`, `/faq`, `/om-oss`, `/kontakt`, `/villkor`,
-`/integritet`, `/kassa`, `/tack`.
+`/integritet`, `/kassa`, `/tack`, `/konto`, `/admin`.
 
 API: `create-payment-intent`, `order-details`, `order`, `order/ship`,
-`stripe/webhook`, `contact`, `google-feed.xml`.
+`stripe/webhook`, `contact`, `google-feed.xml`, `admin/orders`,
+`konto/{logga-in,verifiera,ordrar,logga-ut}`.
+
+## Ordrar: var de bor
+
+Det finns ingen orderdatabas och behövs ingen. **PaymentIntentens metadata ÄR
+ordern** — köpare, rader, frakt och totalsumma skrivs dit av `order-details`
+direkt efter betalningen. `lib/orders.js` är enda stället som översätter en
+PaymentIntent till en order, så admin, kundkontot och leveransmejlet aldrig kan
+tolka samma fält olika.
+
+- **`/admin`** — orderlista bakom `ADMIN_TOKEN`, som klistras in i formuläret och
+  sparas i sessionStorage. Spårningsmejlet skickas med en knapp i stället för
+  handknackad curl. `/api/order/ship` skriver numera tillbaka `tracking`,
+  `carrier` och `shipped_at` på ordern, så leveransstatus finns kvar.
+- **`/konto`** — kundens egna ordrar. Inloggning via mejlad länk, inget lösenord
+  och inget kontoregister: adressen på ordern är kontot. Ordrarna hittas med
+  Stripe-sökning på `metadata['buyer_email']`. Innehåller "beställ igen".
+- **Signeringsnyckeln härleds ur `ADMIN_TOKEN`** med HMAC och en etikett per
+  användning (magisk länk respektive session), så de inte går att byta mot
+  varandra. Inga nya miljövariabler. **Konsekvens: roterar du `ADMIN_TOKEN`
+  loggas alla kunder ut.** De begär bara en ny länk. Vill du koppla isär dem är
+  nästa steg en egen `KONTO_SECRET` i `lib/konto-auth.js`.
+- **Stripes sökindex ligger någon minut efter.** En helt färsk order kan saknas i
+  kundkontot en kort stund. Adminvyn använder `list` och drabbas inte.
 
 Env i Vercel: `NEXT_PUBLIC_STRIPE`, `STRIPE_SECRET_KEY`, `STRIPE_WEBHOOK_SECRET`,
 `RESEND_API_KEY`, `CONTACT_TO_EMAIL`, `ADMIN_TOKEN`.
@@ -56,7 +80,11 @@ Best practices 100, SEO 100, Agentic browsing 100. LCP ~1,0 s.
 | `lib/search-index.js` | Herons sökregister. `sokbar()` måste användas av UI:t också, annars säger rutan "ingen träff" på frågor som aldrig söktes. |
 | `lib/checkout.js` | B2B-validering (orgnr, Luhn). Delas av klient och server — validera aldrig bara i klienten. |
 | `lib/references.js` | Adam Olsson + Lasse Karlsson, `godkand: false`. Visas inte. Flippa först vid skriftligt OK. |
-| `lib/constants.js` | Telefon, adress, öppettider. Ändra på ett ställe. |
+| `lib/constants.js` | Telefon, adress, öppettider. Ändra på ett ställe. Kategoriernas `count` **härleds ur `publicProducts`** — hårdkoda den aldrig igen, den hade halkat efter sortimentet och ljög på startsidan. |
+| `lib/orders.js` | Enda översättningen PaymentIntent → order. Läser **två** radformat: `{name,qty,price}` för ordrar före 2026-07-29 och `{s,n,q,p}` efter. Båda måste fungera för all framtid, gamla ordrar ligger kvar oförändrade i Stripe. `orderIdFor` får aldrig ändras — numret står i utskickade mejl. |
+| `lib/konto-auth.js` | Signering av inloggningslänk och session. Nyckeln härleds ur `ADMIN_TOKEN`. |
+| `lib/admin-auth.js` | Tokenkoll för admin-endpointerna. Konstanttidsjämförelse plus eget tak per IP. |
+| `lib/queries.js` | **Läses inte av något.** Sanity-lagret, urkopplat ur kassan 2026-07-29. Koppla inte in det igen utan att först bestämma vilken källa som äger priset. |
 | `app/globals.css` | Färgtokens med uppmätt kontrast i kommentar. `--color-amber-heading` bara till stora rubriker. Rör inte utan att mäta om. |
 
 ## Fällor som redan kostat tid
@@ -74,6 +102,13 @@ Best practices 100, SEO 100, Agentic browsing 100. LCP ~1,0 s.
   först vid skarpt test mot live.
 - **axe rapporterar falska kontrastfel** på `position: sticky` utan egen bakgrund.
 - **DataForSEO utelämnar `score`** på color-contrast — kör `full_data: true`.
+- **Stripe kapar varje metadatavärde vid 500 tecken.** Orderrader packas därför
+  med korta nycklar, och får de ändå inte plats läggs `{o: N}` sist som säger hur
+  många rader som ströks. Tidigare slicades JSON:en rakt av, blev osyntaxbar och
+  hela radlistan försvann tyst vid ungefär tretton artiklar.
+- **`hidden: true` betyder "syns inte utåt", inte "går inte att sälja".** Kassan
+  slår därför upp priset i hela `products`, inte `publicProducts` — det är så
+  provköpet på 5 kr fungerar. Byt inte till `publicProducts` där.
 
 ## Kvar — Joels bord
 
@@ -89,11 +124,10 @@ Best practices 100, SEO 100, Agentic browsing 100. LCP ~1,0 s.
 
 ## Kvar — bygge
 
-**Nästa: kundkonto + orderhantering.** Fem av sju konkurrenter har inloggning,
-ni har ingen. Ordrarna finns i dag **bara i Stripe och i ett mejl** — ingen lista,
-ingen status, inget "beställ igen". B2B-kunder köper samma batteri om och om igen,
-så det är funktionen som gör återköp friktionsfria. Hänger ihop med att `inStock`
-är hårdkodat i `lib/products.js` och inte speglar leverantörens saldo.
+Kundkonto och orderhantering är **byggt** (se "Ordrar: var de bor" ovan). Kvar
+på den funktionen: `inStock` är hårdkodat i `lib/products.js` och speglar inte
+leverantörens saldo, så "beställ igen" lägger i varukorgen utan att kunna lova
+lager.
 
 Övrigt i kö, i ungefärlig ordning:
 

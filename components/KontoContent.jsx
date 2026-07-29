@@ -311,6 +311,11 @@ function OrderKort({ order }) {
               ))}
             </ul>
           )}
+          {order.struknaRader > 0 && (
+            <p className="mt-2 text-sm text-text-light">
+              + {order.struknaRader} rader till. Ring oss så läser vi upp hela ordern.
+            </p>
+          )}
 
           <div className="mt-3 space-y-1 border-t border-border pt-3 text-sm">
             <div className="flex justify-between text-text-mid">

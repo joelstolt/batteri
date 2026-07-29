@@ -330,20 +330,25 @@ function OrderDetalj({ order, token, onSkickad }) {
         </h3>
         {order.items.length === 0 ? (
           <p className="mt-2 text-sm text-text-light">
-            Raderna kunde inte läsas. Stripe kapar metadata vid 500 tecken — se ordern
-            i Stripe.
+            Raderna kunde inte läsas. Se ordern i Stripe.
           </p>
         ) : (
           <ul className="mt-2 space-y-1.5">
             {order.items.map((i, n) => (
               <li key={n} className="flex justify-between gap-4 text-sm">
                 <span className="text-text-dark">
-                  {i.qty} × {i.name}
+                  {i.qty} × {i.name || i.slug}
                 </span>
                 <span className="shrink-0 font-semibold text-navy">{kr(i.price * i.qty)}</span>
               </li>
             ))}
           </ul>
+        )}
+        {order.struknaRader > 0 && (
+          <p className="mt-2 text-sm text-amber-text">
+            + {order.struknaRader} rader till som inte fick plats i orderdatan. Se
+            hela ordern i Stripe. Totalbeloppet nedan är räknat på allt.
+          </p>
         )}
         <div className="mt-3 space-y-1 border-t border-border pt-3 text-sm">
           <div className="flex justify-between text-text-mid">

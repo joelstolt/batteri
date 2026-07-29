@@ -16,6 +16,25 @@ const VAT_RATE = 1.25
 const SLUG_RE = /^[a-z0-9-]{1,80}$/i
 const MAX_QTY = 99
 const MAX_LINE_ITEMS = 50
+const META_TAK = 500
+
+/**
+ * Packar så många rader som får plats och lägger till hur många som ströks.
+ *
+ * Utan den här föll en order med fler än ett tiotal rader tillbaka på en tom
+ * lista, alltså ingen orderhistorik alls för den kunden. Nu behålls det som
+ * ryms, och {o: N} på slutet gör att vyerna kan säga att det finns fler rader
+ * i stället för att låtsas att ordern var mindre än den var. Beloppet räknas
+ * ändå ut på hela varukorgen, inte på det här.
+ */
+function packaRader(rader) {
+  for (let n = rader.length - 1; n > 0; n--) {
+    const kandidat = JSON.stringify([...rader.slice(0, n), { o: rader.length - n }])
+    if (kandidat.length <= META_TAK) return kandidat
+  }
+  console.warn("Orderrader fick inte plats i metadata:", rader.length, "rader")
+  return JSON.stringify([{ o: rader.length }])
+}
 
 export const runtime = "nodejs"
 
@@ -91,14 +110,11 @@ export async function POST(request) {
     // lib/orders.js läser både det här och det gamla {name,qty,price}-formatet.
     const kompakt = itemSummary.map((i) => ({ s: i.slug, n: i.name, q: i.qty, p: i.price }))
     let itemsMeta = JSON.stringify(kompakt)
-    if (itemsMeta.length > 500) {
+    if (itemsMeta.length > META_TAK) {
       itemsMeta = JSON.stringify(kompakt.map(({ s, q, p }) => ({ s, q, p })))
     }
-    if (itemsMeta.length > 500) {
-      // Extremfall: fler rader än vad som ryms ens utan namn. Hellre inga rader
-      // än trasig JSON — ordern finns ändå i sin helhet i Stripe.
-      console.warn("Orderrader fick inte plats i metadata:", itemSummary.length, "rader")
-      itemsMeta = "[]"
+    if (itemsMeta.length > META_TAK) {
+      itemsMeta = packaRader(kompakt.map(({ s, q, p }) => ({ s, q, p })))
     }
 
     const paymentIntent = await stripe.paymentIntents.create({
