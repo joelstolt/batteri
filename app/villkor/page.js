@@ -131,9 +131,16 @@ export default function VillkorPage() {
                 </p>
                 <p>
                   <strong>Outhämtade paket:</strong> Om du inte hämtar ut ditt paket
-                  debiteras en avgift om 200 kr för returfrakt och hantering, som dras
-                  av vid eventuell återbetalning. Att låta bli att hämta ut paketet
-                  räknas inte som ett giltigt utövande av ångerrätten.
+                  skickas det tillbaka till oss och du debiteras en avgift för
+                  returfrakt och hantering, som dras av vid eventuell återbetalning.
+                  Avgiften är <strong>249 kr</strong>, eller <strong>500 kr</strong> för
+                  artiklar som skickas direkt från leverantör. Eftersom de flesta av
+                  våra batterier skickas direkt från leverantör är 500 kr det som
+                  gäller i normalfallet. Batterier väger mellan 19 och 63 kg och en
+                  outhämtad försändelse innebär frakt i båda riktningarna, vilket är
+                  skälet till avgiften. Att låta bli att hämta ut paketet räknas inte
+                  som ett giltigt utövande av ångerrätten. Kan du inte ta emot
+                  leveransen, hör av dig i förväg så bokar vi om utan kostnad.
                 </p>
               </Section>
 
