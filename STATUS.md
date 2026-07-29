@@ -131,9 +131,46 @@ lager.
 
 Övrigt i kö, i ungefärlig ordning:
 
-1. Viktbaserad frakt — bara 8 av 20 produkter har vikt i datan i dag.
-2. Kunskapsbank. "Vad kostar ett truckbatteri?" träffar PAA och tre relaterade
-   sökningar. Tre av åtta relaterade sökningar innehåller "pris".
+1. **Ersättningssidor — störst effekt per krona, men BLOCKERAD på passformskoll.**
+   Bara 3 av 20 produkter har spec-fältet `Ersätter` ifyllt, så det finns bara
+   tre `/ersatter/`-sidor. Sökdata: "trojan t-105" 40/mån, "trojan batteri"
+   30/mån, "trojan t-125" 20/mån, t-875/t-605/t-145/l16 10/mån var, alla med
+   konkurrensindex 100 och CPC 1,96–5,46 USD. Högsta köpintention som finns.
+   Måtten antyder fler matchningar (evgc6a-a-m8 är 6V 220 Ah i 260×180, alltså
+   GC2-format som T-105; evgc8a-a-m8 är GC8 som T-875), **men det får inte
+   skrivas in utan att leverantören bekräftat passformen.** En felaktig
+   ersättningsuppgift betyder att en kund köper ett batteri som inte passar i
+   liften. Fråga leverantören, fyll sedan i `Ersätter` — sidorna genererar sig
+   själva ur fältet.
+2. Viktbaserad frakt — bara 8 av 20 produkter har vikt i datan i dag.
 3. Stafflade priser (mängdrabatt) — normalt i B2B, saknas.
 4. Datablad som PDF per produkt.
 5. Prisjakt-feed.
+
+## Marginalen styr kanalvalet
+
+Marginalen är **15–20 % på varje produkt** (Joel, 2026-07-29). Priserna i
+`lib/products.js` är inkl. moms, så marginalen räknas på nettot.
+
+CPC på batteritermerna ligger på 1,45–2,60 USD, alltså ca 20 kr per klick.
+Marginal vid 15 % och hur många klick den bär: nm105-6et 263 kr = 13 klick,
+gf-12-160v 791 kr = 40 klick. En normal e-handelskonvertering på 2 % kräver
+50 klick per order. **Betald trafik går alltså back på hela sortimentet vid
+normal konvertering.** Sökningar på artikelnummer kan konvertera betydligt
+högre, men det är omätt: butiken har två genomförda ordrar totalt.
+
+Konsekvens: **organiskt är inte det långsamma alternativet utan det enda som
+bär.** För Google Shopping (100 kr/dag, produktval stod öppet): kör bara de sju
+produkterna över ~4 000 kr, släck resten, och behandla första månaderna som
+inköp av konverteringsdata. Köpspårning finns redan i Umami.
+
+## Kunskapsbanken
+
+`/kunskap` med tre artiklar, ämnesvalda på DataForSEO-data. "Vad kostar ett
+truckbatteri" har bara 10 sökningar/mån men konkurrensindex **14**, alltså nästan
+fri väg.
+
+**Priser hårdkodas ALDRIG i artikeltexten.** De slås upp ur `lib/products.js` via
+`prisFor()` i `lib/kunskap.js`, så prisändringar slår igenom av sig själva. En
+prisguide med inaktuella priser är precis den sida en inköpare mäter er
+trovärdighet mot. Artiklarna är serverkomponenter utan klient-JS.
