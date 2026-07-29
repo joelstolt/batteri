@@ -1,16 +1,28 @@
 import { notFound } from "next/navigation"
 import { products, getProductImage, getProductBrand } from "@/lib/products"
 import { breadcrumbJsonLd, jsonLdProps } from "@/lib/schema"
+import { godkandaFor, sammanfatta } from "@/lib/omdomen"
 import { CATEGORIES } from "@/lib/constants"
 import TopBar from "@/components/TopBar"
 import Header from "@/components/Header"
 import ProductPageContent from "@/components/ProductPageContent"
+import ProduktOmdomen from "@/components/ProduktOmdomen"
 import CtaBanner from "@/components/CtaBanner"
 import Footer from "@/components/Footer"
 
 export async function generateStaticParams() {
   return products.map((p) => ({ slug: p.slug }))
 }
+
+/**
+ * Sidan byggs om varje timme.
+ *
+ * Omdömena måste ligga i server-HTML för att Google och AI-botarna ska se dem,
+ * så de kan inte hämtas i webbläsaren. Med ISR hämtas de på servern och
+ * hamnar i råmarkeringen, utan att sidan blir dynamisk och tappar sin
+ * laddningstid. Ett godkänt omdöme syns alltså inom en timme.
+ */
+export const revalidate = 3600
 
 const CATEGORY_PREFIX = {
   "traktion-industri": "Traktionsbatteri",
@@ -62,11 +74,33 @@ export async function generateMetadata({ params }) {
 
 const SITE = "https://www.batteriproffs.se"
 
-function buildProductJsonLd(product) {
+function buildProductJsonLd(product, omdomen = []) {
+  const sum = sammanfatta(omdomen)
+
   return {
     "@context": "https://schema.org",
     "@type": "Product",
     name: product.name,
+    /*
+     * aggregateRating sätts BARA när det finns riktiga omdömen, och värdet är
+     * det faktiska snittet — aldrig avrundat uppåt.
+     *
+     * Konkurrenten som visar omdömen märker upp ratingValue 5 på produktsidor
+     * som innehåller både ettor och fyror. Google kan då visa 5,0 i
+     * sökresultatet på ett betyg som i verkligheten ligger kring 4,5. Det är
+     * vilseledande, och det är den enda punkt där de går att sätta dit.
+     */
+    ...(sum
+      ? {
+          aggregateRating: {
+            "@type": "AggregateRating",
+            ratingValue: sum.snitt,
+            reviewCount: sum.antal,
+            bestRating: 5,
+            worstRating: 1,
+          },
+        }
+      : {}),
     image: `${SITE}${getProductImage(product)}`,
     description: (product.description || product.metaDescription || "").replace(/\n+/g, " "),
     sku: product.slug,
@@ -121,6 +155,17 @@ export default async function ProductRoute({ params }) {
   // låter Google indexera hur många skräp-URL:er som helst.
   if (!product) notFound()
 
+  // Går Stripe ned ska produktsidan fortfarande fungera. Omdömen är ett
+  // tillägg, inte en förutsättning för att kunna sälja batteriet.
+  let omdomen = []
+  if (!product.hidden) {
+    try {
+      omdomen = await godkandaFor(slug)
+    } catch (err) {
+      console.error("Kunde inte hämta omdömen för", slug, err)
+    }
+  }
+
   return (
     <>
       {/* Ingen Product-schema på interna testartiklar — 5 kr-priset skulle
@@ -128,7 +173,7 @@ export default async function ProductRoute({ params }) {
       {product && !product.hidden && (
         <script
           type="application/ld+json"
-          dangerouslySetInnerHTML={{ __html: JSON.stringify(buildProductJsonLd(product)) }}
+          dangerouslySetInnerHTML={{ __html: JSON.stringify(buildProductJsonLd(product, omdomen)) }}
         />
       )}
       {product && (
@@ -144,6 +189,7 @@ export default async function ProductRoute({ params }) {
       <TopBar />
       <Header />
       <main id="innehall">        <ProductPageContent />
+        <ProduktOmdomen omdomen={omdomen} />
         <CtaBanner />
       </main>
       <Footer />

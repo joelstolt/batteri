@@ -1,6 +1,7 @@
 "use client"
 
 import { useCallback, useEffect, useState } from "react"
+import AdminOmdomen from "./AdminOmdomen"
 
 /**
  * Adminvy för ordrar.
@@ -39,6 +40,7 @@ export default function AdminOrders() {
   const [laddar, setLaddar] = useState(false)
   const [fel, setFel] = useState("")
   const [oppen, setOppen] = useState(null)
+  const [flik, setFlik] = useState("ordrar")
 
   // Läses först i effekten. sessionStorage finns inte under serverrenderingen,
   // och läses den under render blir första klientrenderingen en annan än
@@ -186,6 +188,34 @@ export default function AdminOrders() {
         </div>
       </div>
 
+      <div className="mt-6 flex gap-1 border-b border-border">
+        {[
+          { id: "ordrar", text: "Ordrar" },
+          { id: "omdomen", text: "Omdömen" },
+        ].map((f) => (
+          <button
+            key={f.id}
+            onClick={() => setFlik(f.id)}
+            aria-current={flik === f.id ? "page" : undefined}
+            className={`-mb-px border-b-2 px-4 py-2.5 font-heading text-sm font-bold ${
+              flik === f.id
+                ? "border-navy text-navy"
+                : "border-transparent text-text-light hover:text-text-mid"
+            }`}
+          >
+            {f.text}
+          </button>
+        ))}
+      </div>
+
+      {flik === "omdomen" && (
+        <div className="mt-6">
+          <AdminOmdomen token={token} />
+        </div>
+      )}
+
+      {flik === "ordrar" && (
+        <>
       {fel && (
         <p className="mt-5 rounded-lg bg-red-50 px-4 py-3 text-sm text-red-700">{fel}</p>
       )}
@@ -238,6 +268,8 @@ export default function AdminOrders() {
         >
           {laddar ? "Hämtar…" : "Ladda fler"}
         </button>
+      )}
+        </>
       )}
     </div>
   )

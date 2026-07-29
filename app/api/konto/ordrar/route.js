@@ -2,6 +2,7 @@ import Stripe from "stripe"
 import { NextResponse } from "next/server"
 import { inloggadEpost } from "@/lib/konto-auth"
 import { normaliseraOrder, orderEpost } from "@/lib/orders"
+import { omdomenUrPI } from "@/lib/omdomen"
 
 const stripe = new Stripe(process.env.STRIPE_SECRET_KEY)
 
@@ -37,7 +38,13 @@ export async function GET(request) {
     // Skulle sökningen någonsin matcha bredare än tänkt vill vi inte att någon
     // annans leveransadress dyker upp här.
     const ordrar = svar.data
-      .map(normaliseraOrder)
+      .map((pi) => ({
+        ...normaliseraOrder(pi),
+        // Vilka artiklar kunden redan recenserat, så formuläret bara visas där
+        // det går att lämna ett omdöme. Statusen följer med så kunden ser att
+        // omdömet ligger på granskning i stället för att undra vart det tog vägen.
+        omdomen: omdomenUrPI(pi).map((o) => ({ slug: o.slug, status: o.status })),
+      }))
       .filter((o) => orderEpost(o) === epost)
       .sort((a, b) => b.created - a.created)
 

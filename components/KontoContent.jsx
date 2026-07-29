@@ -5,6 +5,7 @@ import Link from "next/link"
 import { useSearchParams } from "next/navigation"
 import { publicProducts } from "@/lib/products"
 import { useCart } from "@/lib/cart-context"
+import OmdomeFormular from "./OmdomeFormular"
 
 /**
  * Kundkontot.
@@ -234,6 +235,13 @@ function OrderKort({ order }) {
   const [oppen, setOppen] = useState(false)
   const { addItem, setIsOpen } = useCart()
   const [lagtIKorg, setLagtIKorg] = useState(false)
+  // Kvitto per artikel direkt efter att omdömet skickats, så kunden inte
+  // undrar om det gick fram. Serverns svar hämtas inte om.
+  const [nyaOmdomen, setNyaOmdomen] = useState({})
+
+  function omdomeSparat(slug, meddelande) {
+    setNyaOmdomen((f) => ({ ...f, [slug]: meddelande }))
+  }
 
   const bestallbara = order.items
     .map((rad) => ({ rad, produkt: hittaProdukt(rad) }))
@@ -298,17 +306,40 @@ function OrderKort({ order }) {
               dem.
             </p>
           ) : (
-            <ul className="space-y-1.5">
-              {order.items.map((rad, n) => (
-                <li key={n} className="flex justify-between gap-4 text-sm">
-                  <span className="text-text-dark">
-                    {rad.qty} × {rad.name || hittaProdukt(rad)?.name || "Produkt"}
-                  </span>
-                  <span className="shrink-0 font-semibold text-navy">
-                    {kr(rad.price * rad.qty)}
-                  </span>
-                </li>
-              ))}
+            <ul className="space-y-3">
+              {order.items.map((rad, n) => {
+                const befintligt = order.omdomen?.find((o) => o.slug === rad.slug)
+                const nyss = nyaOmdomen[rad.slug]
+                return (
+                  <li key={n} className="text-sm">
+                    <div className="flex justify-between gap-4">
+                      <span className="text-text-dark">
+                        {rad.qty} × {rad.name || hittaProdukt(rad)?.name || "Produkt"}
+                      </span>
+                      <span className="shrink-0 font-semibold text-navy">
+                        {kr(rad.price * rad.qty)}
+                      </span>
+                    </div>
+                    {rad.slug && (
+                      <div className="mt-1">
+                        {nyss ? (
+                          <p className="text-sm text-green">{nyss}</p>
+                        ) : befintligt ? (
+                          <p className="text-xs text-text-light">
+                            {befintligt.status === "g"
+                              ? "Ditt omdöme är publicerat. Tack!"
+                              : befintligt.status === "n"
+                                ? "Ditt omdöme publicerades inte. Ring oss om du undrar varför."
+                                : "Ditt omdöme granskas."}
+                          </p>
+                        ) : (
+                          <OmdomeFormular order={order} rad={rad} onKlar={omdomeSparat} />
+                        )}
+                      </div>
+                    )}
+                  </li>
+                )
+              })}
             </ul>
           )}
           {order.struknaRader > 0 && (
