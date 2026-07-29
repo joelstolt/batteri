@@ -1,6 +1,8 @@
 import { NextResponse } from "next/server"
 import Stripe from "stripe"
 import { resend, FROM, ADMIN_EMAIL, escape, emailLayout } from "@/lib/emails"
+import { kravAdmin } from "@/lib/admin-auth"
+import { orderIdFor } from "@/lib/orders"
 
 const stripe = new Stripe(process.env.STRIPE_SECRET_KEY)
 
@@ -18,10 +20,8 @@ export const runtime = "nodejs"
  *   }
  */
 export async function POST(request) {
-  const token = request.headers.get("x-admin-token")
-  if (!process.env.ADMIN_TOKEN || token !== process.env.ADMIN_TOKEN) {
-    return NextResponse.json({ error: "Unauthorized" }, { status: 401 })
-  }
+  const avvisad = kravAdmin(request)
+  if (avvisad) return avvisad
 
   let body
   try {
@@ -56,7 +56,7 @@ export async function POST(request) {
       )
     }
 
-    const orderId = pi.id.replace("pi_", "BP-").slice(0, 14).toUpperCase()
+    const orderId = orderIdFor(pi.id)
     const trackingUrl =
       carrier.toLowerCase() === "postnord"
         ? `https://www.postnord.se/vara-verktyg/spara-brev-och-paket?shipmentId=${encodeURIComponent(tracking)}`
@@ -106,6 +106,31 @@ export async function POST(request) {
         body: emailBody,
       }),
     })
+
+    // Leveransen skrivs tillbaka på ordern FÖRST efter att mejlet gått iväg, så
+    // en order aldrig kan stå som skickad utan att kunden fått veta det.
+    // Stripe slår ihop metadata per nyckel, så köparens uppgifter rörs inte.
+    try {
+      await stripe.paymentIntents.update(pi.id, {
+        metadata: {
+          tracking,
+          carrier,
+          shipped_at: String(Math.floor(Date.now() / 1000)),
+        },
+      })
+    } catch (err) {
+      // Mejlet ÄR skickat. Sväljer vi det här står ordern kvar som obetjänad i
+      // adminvyn och nästa person skickar spårningsmejlet en gång till.
+      console.error("Kunde inte märka ordern som skickad:", err)
+      return NextResponse.json({
+        ok: true,
+        orderId,
+        tracking,
+        carrier,
+        varning:
+          "Mejlet är skickat, men ordern kunde inte märkas som skickad i Stripe. Skicka inte om — sätt spårningsnumret i Stripe för hand.",
+      })
+    }
 
     return NextResponse.json({ ok: true, orderId, tracking, carrier })
   } catch (err) {

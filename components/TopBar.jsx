@@ -26,6 +26,10 @@ export default function TopBar() {
 
         {/* Right: kundservice + VAT toggle */}
         <div className="flex shrink-0 items-center gap-3 pl-3 text-[13px] font-semibold sm:gap-4 sm:pl-4">
+          <Link href="/konto" className="hidden transition-opacity hover:opacity-70 sm:inline">
+            Mitt konto
+          </Link>
+          <span className="hidden h-3.5 w-px bg-black/15 sm:inline-block" />
           <Link href="/kontakt" className="hidden transition-opacity hover:opacity-70 sm:inline">
             Kundservice
           </Link>

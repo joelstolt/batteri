@@ -1,6 +1,12 @@
 import Stripe from "stripe"
 import { NextResponse } from "next/server"
-import { fetchProductBySlug } from "@/lib/queries"
+// Priset slås upp i lib/products.js, aldrig via Sanity. Sanity-datasetet är
+// tomt, så varje orderrad kostade ett nätverksanrop som ändå föll tillbaka hit.
+// Värre: la någon in en produkt i studion vann Sanity-priset i kassan medan
+// produktsidan visade det hårdkodade — kunden ser ett pris och debiteras ett
+// annat. getProductBySlug slår mot hela `products`, inte publicProducts, så
+// dolda testartiklar går fortfarande att provköpa precis som förut.
+import { getProductBySlug } from "@/lib/products"
 import { rateLimit, clientIp, isOwnOrigin, ALLOWED_ORIGINS } from "@/lib/rate-limit"
 
 const stripe = new Stripe(process.env.STRIPE_SECRET_KEY)
@@ -47,13 +53,11 @@ export async function POST(request) {
       }
     }
 
-    // Resolve products server-side (Sanity → hardcoded fallback)
-    const resolved = await Promise.all(
-      incoming.map(async (i) => {
-        const p = await fetchProductBySlug(i.slug)
-        return p ? { product: p, qty: Number(i.qty) } : null
-      })
-    )
+    // Priset avgörs på servern. Klientens pris läses aldrig.
+    const resolved = incoming.map((i) => {
+      const p = getProductBySlug(i.slug)
+      return p ? { product: p, qty: Number(i.qty) } : null
+    })
 
     if (resolved.some((r) => !r)) {
       return NextResponse.json({ error: "Produkt hittades inte" }, { status: 400 })
@@ -64,6 +68,7 @@ export async function POST(request) {
 
     // Authoritative line items — server-side prices only
     const itemSummary = resolved.map(({ product, qty }) => ({
+      slug: product.slug,
       name: product.name || product.shortName,
       qty,
       price: product.price,
@@ -77,12 +82,23 @@ export async function POST(request) {
     const totalInclVat = subtotalInclVat + Math.round(shipping * VAT_RATE)
     const amountInOre = totalInclVat * 100
 
-    // Stripe metadata caps each value at 500 chars — truncate names if needed
-    let itemsMeta = JSON.stringify(itemSummary)
+    // Stripe kapar varje metadatavärde vid 500 tecken.
+    //
+    // Raderna sparas därför med korta nycklar: s=slug, n=namn, q=antal, p=pris.
+    // Sluggen är det som gör "beställ igen" i kundkontot möjlig, så den ryker
+    // aldrig. Blir det ändå för långt faller vi tillbaka på slug utan namn —
+    // namnet går att slå upp ur lib/products.js, det gör inte sluggen.
+    // lib/orders.js läser både det här och det gamla {name,qty,price}-formatet.
+    const kompakt = itemSummary.map((i) => ({ s: i.slug, n: i.name, q: i.qty, p: i.price }))
+    let itemsMeta = JSON.stringify(kompakt)
     if (itemsMeta.length > 500) {
-      itemsMeta = JSON.stringify(
-        itemSummary.map((i) => ({ name: i.name.slice(0, 40), qty: i.qty, price: i.price }))
-      ).slice(0, 500)
+      itemsMeta = JSON.stringify(kompakt.map(({ s, q, p }) => ({ s, q, p })))
+    }
+    if (itemsMeta.length > 500) {
+      // Extremfall: fler rader än vad som ryms ens utan namn. Hellre inga rader
+      // än trasig JSON — ordern finns ändå i sin helhet i Stripe.
+      console.warn("Orderrader fick inte plats i metadata:", itemSummary.length, "rader")
+      itemsMeta = "[]"
     }
 
     const paymentIntent = await stripe.paymentIntents.create({
