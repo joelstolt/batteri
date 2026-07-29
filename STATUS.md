@@ -194,6 +194,54 @@ inaktuell utan att någon märkte det.
 
 **Regel: ändras kassan, momsvisningen eller sortimentet, läs om `lib/faq.js`.**
 
+## Omdömen (byggt 2026-07-29)
+
+**Påhittade omdömen är uteslutet.** Svartlistad marknadsföring enligt
+marknadsföringslagen sedan Omnibus 2022, förbjudet utan bedömning i det
+enskilda fallet. Frågan har kommit upp och svaret är nej, oavsett hur naturligt
+det skulle se ut. Se även [[reference_batteribransch_omdomen]]: noll av sex
+B2B-konkurrenter visar omdömen alls.
+
+Systemet som finns i stället:
+
+- Omdömet lagras i metadatan på den PaymentIntent köpet gjordes med, nyckel
+  `omd_<slug>`. Ingen ny databas, och omdömet kan inte existera utan ett
+  verifierat köp att hänga på.
+- Kunden skriver det i `/konto`, bara på artiklar som finns på en egen order.
+  Servern kollar session, ägarskap OCH att artikeln fanns på just den ordern.
+  Ett omdöme per artikel och order.
+- Moderering i `/admin`, fliken Omdömen. Nekade raderas inte, bara döljs.
+- Produktsidan är **ISR med `revalidate = 3600`**. Omdömen måste ligga i
+  server-HTML, annars är de osynliga för Google och AI-botarna. Publicerat
+  omdöme syns inom en timme.
+- **`aggregateRating` sätts bara när det finns riktiga omdömen och visar det
+  faktiska snittet.** Aldrig avrundat uppåt. Batteriexperten märker upp femma
+  på sidor som innehåller ettor, och det är den enda punkt där de går att sätta
+  dit. Gör aldrig samma sak här.
+
+**Sjudagarsmejlet hade aldrig skickats.** `lib/review-email.js` pekade på
+`GOOGLE_REVIEW_URL`, som aldrig var satt och aldrig kunde bli det (dropship utan
+besöksadress kvalificerar inte för Google Business Profile). Funktionen
+returnerade null på första raden. Pekar nu på kontot.
+
+## Kundkontots session
+
+90 dagar, inte 30. B2B-kunder beställer kvartalsvis och med en månad hade varje
+besök krävt en ny mejlrunda. Omdömesmejlet förifyller adressen i länken men bär
+**ingen token** — företagsadresser hamnar i delade inkorgar och vidarebefordras,
+och ett mejl ska inte vara en inloggning.
+
+## Sidor från konkurrentgenomgången (2026-07-29)
+
+`/vilket-batteri`, `/foretagskund`, plus FAQ om att ändra order och om
+outhämtade paket.
+
+**Outhämtade paket är en oprissatt risk.** Batterierna väger 19–63 kg, så en
+retur kostar frakt i två riktningar mot en marginal på ett par hundra kronor.
+Villkoret säger nu att kostnaden debiteras, utan schablonbelopp.
+**Joel: sätt ett fast belopp** (Batteriexperten tar 249 kr, upp till 500 kr för
+varor som skickas direkt från leverantör — alltså precis er modell).
+
 ## Kunskapsbanken
 
 `/kunskap` med tre artiklar, ämnesvalda på DataForSEO-data. "Vad kostar ett
