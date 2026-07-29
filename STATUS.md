@@ -174,6 +174,47 @@ lager.
 4. Datablad som PDF per produkt.
 5. Prisjakt-feed.
 
+## Google Merchant Center: blockerat på "Felaktig framställning"
+
+**Alla 20 artiklar står som Inte godkänd.** Konto 5819396648. Orsaken är
+policyn Felaktig framställning (Misrepresentation) på KONTONIVÅ, inte feedfel —
+feeden har alla obligatoriska attribut och är granskad.
+
+Google skriver att problemet upptäcktes **genom automatiska kontroller**. Det
+utesluter i praktiken hypotesen att en granskare fastnade i den företagsbara
+kassan. Automatflaggan träffar profilen: ny domän, ingen handelshistorik, inga
+omdömen, och priser långt under marknaden. Deras system kan inte skilja det från
+en bedrägerisajt.
+
+**Grundorsak vi hittade 2026-07-29: SNI-koden sa Dataprogrammering.** Firman var
+registrerad på 62.100 medan sajten säljer batterier. Googles automatik jämför
+offentliga företagsuppgifter mot sajten, och den diskrepansen är precis vad
+"anledning att tro att kunder blir vilseledda" pekar på.
+
+**Åtgärdat:** ändringsanmälan inskickad till Skatteverket 2026-07-29, kvittens
+20260729-543298. Ny fördelning 62.100 Dataprogrammering 80 %, **46.649
+Partihandel med diverse andra maskiner och diverse annan utrustning 20 %**.
+Notera att SNI2025 numrerat om allt — gamla 46.690 finns inte längre.
+
+**Ordningen härifrån, och den får inte kastas om:**
+
+1. Vänta tills 46.649 syns på registerutdraget (Skatteverket → Mina sidor →
+   Företagsinformation → Registerutdrag). **Ladda inte ned det innan** — då
+   laddar man upp ett dokument som säger att man är programmerare.
+2. Kör identitetsverifieringen hos Google. Den blockerar omprövning helt.
+   Kräver registerutdraget plus pass eller körkort.
+3. Fyll i Företagsinformation komplett i Merchant Center, och lägg in
+   returpolicyn DÄR (räcker inte att den står på sajten).
+4. Först då: begär granskning.
+
+En avslagen omprövning gör nästa svårare, så gå inte i förtid.
+
+**Redan åtgärdat som stärker ärendet:** villkoren namnger säljaren med org.nr
+och momsnr, kvittot har säljaruppgifter och momsspecifikation, FAQ:n motsäger
+inte längre kassan, och prisförklaringen svarar på varför priserna ser för bra
+ut. Det som fortfarande saknas är Googles andra punkt: omdömen eller
+certifikat. Omdömessystemet är byggt men tomt.
+
 ## Marginalen styr kanalvalet
 
 Marginalen är **15–20 % på varje produkt** (Joel, 2026-07-29). Priserna i
