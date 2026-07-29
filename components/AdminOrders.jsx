@@ -2,6 +2,7 @@
 
 import { useCallback, useEffect, useState } from "react"
 import AdminOmdomen from "./AdminOmdomen"
+import AdminFakturor from "./AdminFakturor"
 
 /**
  * Adminvy för ordrar.
@@ -191,6 +192,7 @@ export default function AdminOrders() {
       <div className="mt-6 flex gap-1 border-b border-border">
         {[
           { id: "ordrar", text: "Ordrar" },
+          { id: "fakturor", text: "Fakturor" },
           { id: "omdomen", text: "Omdömen" },
         ].map((f) => (
           <button
@@ -207,6 +209,12 @@ export default function AdminOrders() {
           </button>
         ))}
       </div>
+
+      {flik === "fakturor" && (
+        <div className="mt-6">
+          <AdminFakturor token={token} />
+        </div>
+      )}
 
       {flik === "omdomen" && (
         <div className="mt-6">
