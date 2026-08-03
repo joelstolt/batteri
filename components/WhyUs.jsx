@@ -37,15 +37,22 @@ export default function WhyUs() {
             <div className="mb-2 text-xs font-bold uppercase tracking-widest text-amber-text">
               Varför Batteriproffs?
             </div>
+            {/*
+              Inga superlativ. Rubriken var "Bästa pris. Snabbast leverans." och
+              brödtexten lovade "de bästa priserna" fram till 2026-08-03. Sånt
+              går inte att belägga och bidrog till Googles
+              Felaktig framställning-flagga. Öppna priser är däremot ett
+              påstående vem som helst kan kontrollera på tio sekunder.
+            */}
             <h2 className="mb-5 font-heading text-[clamp(26px,3.5vw,36px)] font-extrabold tracking-tight text-text-dark">
-              Bästa pris. Snabbast leverans.
+              Öppna priser. Smalt sortiment.
               <br />
               Kompetens på riktigt.
             </h2>
             <p className="mb-7 text-base leading-relaxed text-text-mid">
-              Vi säljer inte tusen olika produkter — vi säljer de bästa 
-              industribatterierna till de bästa priserna. Tysktillverkade 
-              gel-batterier som håller längre och presterar bättre.
+              Vi säljer inte tusen olika produkter, vi säljer industribatterier
+              och sätter ut priset direkt på sajten. Tysktillverkade gel-batterier
+              från Sonnenschein, underhållsfria och byggda för daglig drift.
             </p>
 
             <div className="flex flex-col gap-4">

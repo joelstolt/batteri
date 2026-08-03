@@ -251,9 +251,13 @@ export default function ContactContent() {
                   <br />
                   {ADDRESS.postnummer} {ADDRESS.ort}
                 </address>
+                {/* Stod "direkt från lager", men vi har inget lager. Sidan om
+                    oss säger "direkt från vår leverantör" och det är det som
+                    gäller. Två olika svar på samma fråga på samma sajt är
+                    precis vad Googles automatik läser som vilseledande. */}
                 <p className="mt-3 text-xs leading-relaxed text-text-light">
-                  Vi är en renodlad e-handel utan butik. Batterierna skickas direkt
-                  från lager till er adress.
+                  Vi är en renodlad e-handel utan butik och utan eget lager.
+                  Batterierna skickas direkt från vår leverantör till er adress.
                 </p>
               </div>
 

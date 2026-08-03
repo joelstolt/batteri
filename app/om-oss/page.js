@@ -7,7 +7,7 @@ import Footer from "@/components/Footer"
 export const metadata = {
   alternates: { canonical: "https://www.batteriproffs.se/om-oss" },
   title: "Om oss — Batteriproffs",
-  description: "Batteriproffs är ett svenskt företag med över 20 års erfarenhet av professionella batterilösningar för företag och privatpersoner.",
+  description: "Batteriproffs säljer traktionsbatterier, gelbatterier och laddare till företag i hela Sverige. Drivs av Joel Stolt, enskild firma med säte i Hässleholm.",
 }
 
 export default function AboutPage() {

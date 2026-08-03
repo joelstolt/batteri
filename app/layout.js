@@ -21,8 +21,14 @@ const dmSans = DM_Sans({
 export const metadata = {
   metadataBase: new URL("https://www.batteriproffs.se"),
   title: "Batteriproffs — Fritidsbatteri, traktionsbatteri & truckbatteri",
+  // INGA erfarenhetspåståenden här. Det stod "20+ års erfarenhet" fram till
+  // 2026-08-03, på ett bolag som gjort sin första order i juli 2026. Eftersom
+  // det är root-layouten ärvdes påståendet av varje sida som inte satte egen
+  // description. Google flaggade sajten för Felaktig framställning och
+  // stoppade alla 20 produkter i Merchant Center. Skriv bara sånt som går att
+  // verifiera utifrån.
   description:
-    "Köp fritidsbatteri, traktionsbatteri, truckbatteri och gelbatteri. 20+ års erfarenhet, snabb leverans i hela Sverige och 30 dagars öppet köp.",
+    "Köp fritidsbatteri, traktionsbatteri, truckbatteri och gelbatteri. Priser öppet på sajten, leverans i hela Sverige och 30 dagars öppet köp.",
   openGraph: {
     title: "Batteriproffs — Fritidsbatteri, traktionsbatteri & truckbatteri",
     description:

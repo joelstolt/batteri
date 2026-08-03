@@ -3,6 +3,7 @@
 import { Shield, Zap, Users, Award, Truck, HeartHandshake, Clock, Wrench } from "lucide-react"
 import FadeIn from "@/components/FadeIn"
 import { publicProducts } from "@/lib/products"
+import { SELJARE, EMAIL, PHONE, PHONE_LINK } from "@/lib/constants"
 
 /**
  * Antalet härleds, aldrig hårdkodas.
@@ -27,10 +28,20 @@ export default function AboutContent() {
             <h1 className="mb-3 font-heading text-[clamp(28px,4vw,40px)] font-extrabold tracking-tight text-text-dark">
               Batteriproffs — din specialist inom traktionsbatterier
             </h1>
+            {/*
+              INGA superlativ eller rankningspåståenden här. Det stod "en av
+              Sveriges mest fokuserade leverantörer" och "marknadens bästa pris"
+              fram till 2026-08-03. Ingetdera går att verifiera utifrån, och
+              tillsammans med "20+ års erfarenhet" i root-layouten fick de
+              Google att flagga sajten för Felaktig framställning. Beskriv vad
+              vi gör, inte var vi rankar.
+            */}
             <p className="max-w-2xl text-base leading-relaxed text-text-mid">
-              Vi är en av Sveriges mest fokuserade leverantörer av professionella
-              traktionsbatterier och laddare. Vårt uppdrag är enkelt: att göra det
-              lätt att hitta rätt batteri till rätt maskin — till marknadens bästa pris.
+              Vi säljer traktionsbatterier, gelbatterier och laddare till företag
+              i hela Sverige. Sortimentet är smalt med flit: batterier till truckar,
+              liftar, städmaskiner och elfordon, ingenting annat. Priset står öppet
+              på varje produktsida, så du slipper begära offert för att veta vad
+              det kostar.
             </p>
           </FadeIn>
         </div>
@@ -61,6 +72,60 @@ export default function AboutContent() {
                   vassare priser och snabbare leveranser. När du kontaktar oss
                   pratar du med någon som faktiskt förstår ditt användningsområde —
                   inte en ordertagare som läser från ett manus.
+                </p>
+                {/*
+                  Öppenhet om affärsmodellen, medvetet rakt formulerat.
+                  Batteriproffs är en ung, liten e-handel som inte lagerhåller
+                  utan skickar från leverantör. Att inte skriva det gör att
+                  helhetsintrycket (ny domän, låga priser, inga omdömen) läses
+                  som en bluffbutik. Google gjorde exakt den läsningen
+                  2026-08-03. Skriv aldrig om det här till något som låter
+                  större eller äldre än vad bolaget är.
+                */}
+                <p>
+                  Vi är öppna med att vi är små och nystartade. Batteriproffs
+                  lagerhåller inte själva utan skickar batterierna direkt från
+                  vår leverantör, vilket är precis det som gör att vi kan hålla
+                  priserna nere. Det är också därför vi sätter ut priset i
+                  stället för att gömma det bakom ett offertformulär.
+                </p>
+              </div>
+
+              {/* Vem som står bakom köpet. Samma uppgifter som i köpvillkoren,
+                  men de hör hemma här också: en kund ska inte behöva leta i
+                  villkorstexten för att se vem de handlar av. */}
+              <div className="mt-8 rounded-2xl border border-border bg-surface p-6">
+                <h3 className="mb-4 font-heading text-base font-bold text-text-dark">
+                  Vem du handlar av
+                </h3>
+                <dl className="flex flex-col gap-2 text-sm">
+                  {[
+                    ["Företag", `${SELJARE.namn}, ${SELJARE.form}`],
+                    ["Organisationsnummer", SELJARE.orgnr],
+                    ["Momsreg.nr", SELJARE.momsnr],
+                    ["Säte", SELJARE.adress],
+                  ].map(([label, value]) => (
+                    <div key={label} className="flex flex-wrap gap-x-2">
+                      <dt className="text-text-light">{label}:</dt>
+                      <dd className="font-semibold text-text-dark">{value}</dd>
+                    </div>
+                  ))}
+                  <div className="flex flex-wrap gap-x-2">
+                    <dt className="text-text-light">Kontakt:</dt>
+                    <dd className="font-semibold text-text-dark">
+                      <a className="text-navy underline" href={`tel:${PHONE_LINK}`}>
+                        {PHONE}
+                      </a>
+                      {" · "}
+                      <a className="text-navy underline" href={`mailto:${EMAIL}`}>
+                        {EMAIL}
+                      </a>
+                    </dd>
+                  </div>
+                </dl>
+                <p className="mt-4 text-xs leading-relaxed text-text-light">
+                  Godkänd för F-skatt. Vi har ingen butik och tar inte emot
+                  kundbesök, adressen ovan är firmaadress.
                 </p>
               </div>
             </div>
