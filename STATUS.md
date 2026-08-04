@@ -416,6 +416,55 @@ omdömesförfrågan från en noreply-adress är fel avsändare för ett mejl som
 en tjänst. Kolla avsändarraden på en orderbekräftelse och flytta minst
 omdömesmejlet till en bemannad adress.
 
+## Returvillkoren är B2B (omskrivet 2026-08-04)
+
+**Kassan kräver organisationsnummer, alltså finns ingen ångerrätt.** Den följer av
+distansavtalslagen och gäller bara konsumenter. Köplagen (1990:931) styr i
+stället, och den är dispositiv. Sajten lovade ändå "30 dagars öppet köp" på nio
+ställen och villkorssidan beskrev konsumentköplagen, ARN och Konsumentverkets
+ångerblankett, alltså rättigheter för en kund som inte kan slutföra ett köp här.
+
+**Nuvarande villkor:** retur i 14 dagar, godkännande i förväg via mejl, obruten
+originalförpackning, aldrig inkopplat eller laddat (inte ens provkoppling),
+returavdrag 30 %, kunden står returfrakt och risk, frakten återbetalas inte.
+Specialbeställt undantas.
+
+**Varför 30 %:** Batteripoolens egna villkor mot återförsäljare säger att en
+felfri retur ger "ett returavdrag som normalt utgör minst 30 % av varans
+inköpsvärde". Utan motsvarande avdrag mot kund är varje accepterad retur en
+förlustaffär, eftersom vi dessutom betalar returfrakt på pallgods.
+**Siffran är hämtad från butik.batteripoolen.se, inte ur Joels eget
+återförsäljaravtal. Stäm av den och ändra på ett ställe om den skiljer.**
+
+**Passformsgarantin ersätter öppet köp.** En B2B-köpare ångrar sig inte, hon är
+rädd att beställa fel modell till sin maskin. Har vi rekommenderat batteriet
+(batterifinnaren, telefon, mejl) och det inte passar står vi för allt. Har kunden
+valt själv byter vi ändå utan returavdrag, men kunden står returfrakten. Kräver
+obruten förpackning och besked inom 14 dagar.
+
+**Branschen ger inte företag returrätt.** Batteriexpressen: "Företag, kommuner,
+landsting och stat har ingen returrätt enl. denna skrift." Batteriexperten: "30
+dagars ångerrätt (gäller ej företag)." Batteripoolen: minst 30 % avdrag.
+
+**Ändras returvillkoren ska följande ändras i SAMMA commit**, annars uppstår
+exakt den motsägelse Google flaggar som Felaktig framställning:
+`app/villkor/page.js`, `lib/faq.js`, `lib/constants.js` (USPS + TRUST_ITEMS),
+`components/Footer.jsx`, `components/ProductPageContent.jsx`,
+`components/Prisforklaring.jsx`, `components/AboutContent.jsx`,
+`app/kategori/[slug]/page.js`, `app/layout.js` och `hasMerchantReturnPolicy` i
+`app/produkt/[slug]/page.js`. Plus returpolicyn i Merchant Center.
+
+**"20+ år i branschen" levde kvar.** Påståendet ströks ur metabeskrivningen
+2026-08-03 som en av orsakerna till misrepresentation-flaggan, men satt kvar som
+synlig badge i footern, i TRUST_ITEMS och i skötselguidens ingress. Borttaget
+2026-08-04. Ersatt av "Priser utan offert", som går att verifiera och dessutom är
+en verklig skillnad mot konkurrenterna som gömmer priser bakom offertformulär.
+
+**Kvar att göra i Merchant Center** (Joels bord, kräver inloggning):
+returfönster 14 dagar, kunden betalar returfrakt, returmetod med frakt,
+restocking fee 30 %, policy-URL `https://www.batteriproffs.se/villkor`.
+Gör det FÖRE identitetsverifieringen och överklagandet.
+
 ## Varifrån ordern kom (byggt 2026-08-04)
 
 Attributionen ligger i `lib/attribution.js` (ren logik) och
