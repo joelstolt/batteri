@@ -30,7 +30,10 @@ export async function POST(request) {
     return NextResponse.json({ error: "Invalid JSON" }, { status: 400 })
   }
 
-  const { paymentIntentId, tracking, carrier = "PostNord" } = body || {}
+  // tyst: true drar betalningen och registrerar leveransen, men skickar inget
+  // systemmejl. Används när kunden får ett personligt mejl i stället, så att
+  // hon inte får två utskick om samma leverans.
+  const { paymentIntentId, tracking, carrier = "PostNord", tyst = false } = body || {}
 
   if (!paymentIntentId || !tracking) {
     return NextResponse.json(
@@ -122,20 +125,25 @@ export async function POST(request) {
       </p>
     `
 
-    await resend.emails.send({
-      from: FROM,
-      to: customerEmail,
-      replyTo: ADMIN_EMAIL,
-      subject: `Din order är skickad — ${orderId}`,
-      html: emailLayout({
-        title: `Din order är skickad — ${orderId}`,
-        preheader: `${carrier} · ${tracking}`,
-        body: emailBody,
-      }),
-    })
+    if (!tyst) {
+      await resend.emails.send({
+        from: FROM,
+        to: customerEmail,
+        replyTo: ADMIN_EMAIL,
+        subject: `Din order är skickad — ${orderId}`,
+        html: emailLayout({
+          title: `Din order är skickad — ${orderId}`,
+          preheader: `${carrier} · ${tracking}`,
+          body: emailBody,
+        }),
+      })
+    }
 
     // Leveransen skrivs tillbaka på ordern FÖRST efter att mejlet gått iväg, så
     // en order aldrig kan stå som skickad utan att kunden fått veta det.
+    // I tyst läge gäller inte den invarianten här utan hos den som skickar det
+    // personliga mejlet. Betalningen är redan dragen, så ordern får inte lämnas
+    // omärkt heller då.
     // Stripe slår ihop metadata per nyckel, så köparens uppgifter rörs inte.
     try {
       await stripe.paymentIntents.update(pi.id, {
@@ -146,20 +154,23 @@ export async function POST(request) {
         },
       })
     } catch (err) {
-      // Mejlet ÄR skickat. Sväljer vi det här står ordern kvar som obetjänad i
-      // adminvyn och nästa person skickar spårningsmejlet en gång till.
+      // Betalningen är dragen och mejlet eventuellt skickat. Sväljer vi det här
+      // står ordern kvar som obetjänad i adminvyn och nästa person skickar
+      // spårningsmejlet en gång till.
       console.error("Kunde inte märka ordern som skickad:", err)
       return NextResponse.json({
         ok: true,
         orderId,
         tracking,
         carrier,
-        varning:
-          "Mejlet är skickat, men ordern kunde inte märkas som skickad i Stripe. Skicka inte om — sätt spårningsnumret i Stripe för hand.",
+        tyst,
+        varning: tyst
+          ? "Betalningen är dragen, men ordern kunde inte märkas som skickad i Stripe. Sätt spårningsnumret i Stripe för hand."
+          : "Mejlet är skickat, men ordern kunde inte märkas som skickad i Stripe. Skicka inte om — sätt spårningsnumret i Stripe för hand.",
       })
     }
 
-    return NextResponse.json({ ok: true, orderId, tracking, carrier })
+    return NextResponse.json({ ok: true, orderId, tracking, carrier, tyst })
   } catch (err) {
     console.error("Ship route error:", err)
     return NextResponse.json(

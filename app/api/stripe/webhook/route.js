@@ -97,7 +97,9 @@ function buildOrderBody({ orderId, items, subtotal, shipping, total, customer, m
       ["Momsreg.nr", meta.vat_nr],
       ["Er referens", meta.reference],
       ["Inköpsordernr", meta.po_number],
-      ["Faktura skickas till", meta.invoice_email],
+      // Ingen faktura skickas, betalningen är gjord med kort. Etiketten hette
+      // "Faktura skickas till" och motsade därmed stycket längst ner i samma mejl.
+      ["Kvitto till bokföringen", meta.invoice_email],
       ["Fakturaadress", meta.invoice_address === "samma som leverans" ? "" : meta.invoice_address],
     ])}
 
@@ -209,12 +211,29 @@ export async function POST(request) {
     const orderId = pi.id.replace("pi_", "BP-").slice(0, 14).toUpperCase()
     const sends = []
 
+    /*
+     * Kvittot går till beställaren, med kundens ekonomiadress som kopia.
+     *
+     * invoice_email är obligatoriskt i kassan just för att bokföringen ska få
+     * underlaget, men fram till 2026-08-04 skickades ingenting dit. Kunden
+     * fyllde alltså i en adress som aldrig användes, och beställaren fick
+     * vidarebefordra kvittot för hand.
+     *
+     * Bara när adressen skiljer sig från beställarens, annars får hon dubbelt.
+     */
+    const ekonomiKopia =
+      meta.invoice_email &&
+      meta.invoice_email.trim().toLowerCase() !== (customer.email || "").trim().toLowerCase()
+        ? [meta.invoice_email.trim()]
+        : undefined
+
     // Customer confirmation
     if (customer.email) {
       sends.push(
         resend.emails.send({
           from: FROM,
           to: customer.email,
+          cc: ekonomiKopia,
           replyTo: ADMIN_EMAIL,
           subject: `Orderbekräftelse — Batteriproffs (${orderId})`,
           html: emailLayout({

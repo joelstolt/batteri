@@ -113,6 +113,17 @@ export default function AdminOrders() {
     setOppen(null)
   }
 
+  /** Flippar en order till betald lokalt efter en fristående dragning. */
+  function markeraBetald(id) {
+    setOrdrar((tidigare) =>
+      tidigare.map((o) =>
+        o.id === id && o.status === "reserverad"
+          ? { ...o, status: "betald", reservationsalder: null }
+          : o
+      )
+    )
+  }
+
   /** Flippar en order till skickad lokalt, så badgen uppdateras direkt. */
   function markeraSkickad(id, tracking, carrier) {
     setOrdrar((tidigare) =>
@@ -268,7 +279,12 @@ export default function AdminOrders() {
             )}
 
             {oppen === o.id && (
-              <OrderDetalj order={o} token={token} onSkickad={markeraSkickad} />
+              <OrderDetalj
+                order={o}
+                token={token}
+                onSkickad={markeraSkickad}
+                onDragen={markeraBetald}
+              />
             )}
           </li>
         ))}
@@ -330,10 +346,12 @@ function ReservationsVarning({ alder }) {
   )
 }
 
-function OrderDetalj({ order, token, onSkickad }) {
+function OrderDetalj({ order, token, onSkickad, onDragen }) {
   const [tracking, setTracking] = useState(order.tracking?.number || "")
   const [carrier, setCarrier] = useState(order.tracking?.carrier || "PostNord")
+  const [tyst, setTyst] = useState(false)
   const [skickar, setSkickar] = useState(false)
+  const [drar, setDrar] = useState(false)
   const [resultat, setResultat] = useState("")
   const [felmed, setFelmed] = useState("")
 
@@ -351,17 +369,55 @@ function OrderDetalj({ order, token, onSkickad }) {
           paymentIntentId: order.id,
           tracking: tracking.trim(),
           carrier,
+          tyst,
         }),
       })
       const data = await res.json()
       if (!res.ok) throw new Error(data.error || "Kunde inte skicka")
 
       onSkickad(order.id, tracking.trim(), carrier)
-      setResultat(data.varning || `Spårningsmejl skickat till ${order.customer.email}.`)
+      setResultat(
+        data.varning ||
+          (tyst
+            ? "Leveransen registrerad och betalningen dragen. Inget mejl skickat, hör av dig till kunden själv."
+            : `Spårningsmejl skickat till ${order.customer.email}.`)
+      )
     } catch (e) {
       setFelmed(e.message || "Något gick fel")
     } finally {
       setSkickar(false)
+    }
+  }
+
+  /**
+   * Drar betalningen utan att skicka något mejl och utan spårningsnummer.
+   * Finns för att reservationen dör efter sju dygn medan fraktbolagets nummer
+   * ofta dröjer, och villkoren lovar dragning när varan skickas.
+   */
+  async function draBetalning() {
+    if (drar) return
+    setDrar(true)
+    setResultat("")
+    setFelmed("")
+    try {
+      const res = await fetch("/api/order/capture", {
+        method: "POST",
+        headers: { "Content-Type": "application/json", "x-admin-token": token },
+        body: JSON.stringify({ paymentIntentId: order.id }),
+      })
+      const data = await res.json()
+      if (!res.ok) throw new Error(data.error || "Kunde inte dra betalningen")
+
+      onDragen(order.id)
+      setResultat(
+        data.redanDragen
+          ? "Betalningen var redan dragen."
+          : `${kr(data.belopp)} draget. Kunden har inte fått något mejl.`
+      )
+    } catch (e) {
+      setFelmed(e.message || "Något gick fel")
+    } finally {
+      setDrar(false)
     }
   }
 
@@ -440,6 +496,26 @@ function OrderDetalj({ order, token, onSkickad }) {
         </div>
       </div>
 
+      {order.status === "reserverad" && (
+        <div className="mt-5 border-t border-border pt-5">
+          <h3 className="font-heading text-xs font-bold uppercase tracking-wide text-text-light">
+            Dra betalningen nu
+          </h3>
+          <p className="mt-1.5 text-sm text-text-mid">
+            När godset gått men fraktbolaget inte lämnat spårningsnumret än. Inget mejl
+            skickas till kunden.
+          </p>
+          <button
+            type="button"
+            onClick={draBetalning}
+            disabled={drar}
+            className="mt-3 rounded-lg border border-navy px-4 py-2.5 font-heading text-sm font-bold text-navy disabled:opacity-40"
+          >
+            {drar ? "Drar…" : `Dra ${kr(order.totalInclVat)}`}
+          </button>
+        </div>
+      )}
+
       <form onSubmit={skickaSparning} className="mt-5 border-t border-border pt-5">
         <h3 className="font-heading text-xs font-bold uppercase tracking-wide text-text-light">
           {order.status === "skickad" ? "Skicka om spårningsmejl" : "Skicka spårningsmejl"}
@@ -482,11 +558,24 @@ function OrderDetalj({ order, token, onSkickad }) {
             {skickar ? "Skickar…" : "Skicka"}
           </button>
         </div>
+        <label className="mt-3 flex items-start gap-2.5 text-sm text-text-mid">
+          <input
+            type="checkbox"
+            checked={tyst}
+            onChange={(e) => setTyst(e.target.checked)}
+            className="mt-0.5"
+          />
+          <span>
+            Skicka inget mejl. Leveransen registreras och betalningen dras, men kunden
+            hör inget från systemet. Använd när du mejlar personligen i stället.
+          </span>
+        </label>
         {resultat && <p className="mt-2.5 text-sm text-green">{resultat}</p>}
         {felmed && <p className="mt-2.5 text-sm text-red-700">{felmed}</p>}
         <p className="mt-2.5 text-xs text-text-light">
-          Mejlet går till {order.customer.email || "— ingen adress på ordern"}. Länken i
-          mejlet fungerar bara för PostNord och DHL.
+          {tyst
+            ? "Inget mejl skickas. Kom ihåg att höra av dig till kunden själv."
+            : `Mejlet går till ${order.customer.email || "— ingen adress på ordern"}. Länken i mejlet fungerar bara för PostNord och DHL.`}
           {order.status === "reserverad" && (
             <>
               {" "}
