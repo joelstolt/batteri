@@ -353,3 +353,61 @@ fri väg.
 `prisFor()` i `lib/kunskap.js`, så prisändringar slår igenom av sig själva. En
 prisguide med inaktuella priser är precis den sida en inköpare mäter er
 trovärdighet mot. Artiklarna är serverkomponenter utan klient-JS.
+
+## Första skarpa B2B-ordern (2026-08-04)
+
+SRVAB, 8 285 kr, 2 st Discover EV31A-A till Stockholm. Ordern avslöjade fyra
+buggar, alla fixade och deployade samma dag.
+
+- **Orderbekräftelsen visade tom produktrad.** Metadatan lagrar raderna kompakt
+  som `{s,n,q,p}` för att rymmas i Stripes teckengräns, men `buildOrderBody` i
+  webhooken läste `i.name/i.qty/i.price`. `parsaItems` i `lib/orders.js` hade
+  rätt översättning men var inte exporterad, så webhooken hade byggt en egen som
+  glidit isär. Nu exporteras den och det finns återigen bara EN översättning.
+  `/konto` och `/admin` var aldrig drabbade.
+- **PostNord-länken i leveransmejlet gav 404.** Adressen
+  `postnord.se/vara-verktyg/spara-brev-och-paket?shipmentId=` är borttagen av
+  PostNord. Rätt form är `tracking.postnord.com/se/tracking?id=`. Läxa:
+  transportörernas spårnings-URL:er ruttnar tyst, verifiera mot en skarp
+  försändelse. DHL-grenen är okontrollerad.
+- **`invoice_email` användes aldrig.** Fältet är obligatoriskt i kassan och
+  visades i kvittot, men ingenting skickades någonsin dit. Kundens bokföring fick
+  alltså inget underlag. Kvittot går nu som kopia dit när adressen skiljer sig
+  från beställarens.
+- **Etiketten "Faktura skickas till"** motsade stycket längre ner i samma mejl om
+  att ingen faktura skickas. Heter nu "Kvitto till bokföringen".
+
+Två funktioner tillkom:
+
+- **`/api/order/capture`** drar en reserverad betalning utan mejl och utan
+  spårningsnummer.
+- **`tyst: true` på `/api/order/ship`** registrerar leveransen och drar
+  betalningen men skickar inget systemmejl, för när kunden ska få ett personligt
+  mejl i stället.
+
+Båda finns som knapp respektive kryssruta i adminvyn. **Tyst-läget är ännu
+oprövat i produktion**, den första ordern registrerades via en direkt
+metadata-skrivning mot Stripe.
+
+## Betalflödet i praktiken
+
+- **Utbetalningsschemat står på `manual`.** Stripe skickar ALDRIG pengar till
+  banken av sig självt, oavsett saldo. Varje utbetalning startas för hand på
+  `dashboard.stripe.com/balance`. Medel blir tillgängliga 3 dygn efter dragning.
+- Kortreservationen gäller **7 dygn**. Dras den inte innan dess släpps pengarna
+  och ordern måste läggas om.
+- Dragningen sitter i `/api/order/ship` och krävde spårningsnummer, vilket
+  krockade med att leverantören ofta lämnar numret ett par dygn senare. Därav
+  capture-endpointen ovan.
+- Kontoutdragstexten står som **BATTERIPROFFSEN**, inte Batteriproffs. Ändras i
+  Stripe under Företagsuppgifter. Fel namn på kortfakturan är den vanligaste
+  orsaken till onödiga kortreklamationer.
+- **Omdömesmejlet schemaläggs hos Resend redan när ordern läggs**, med
+  `scheduledAt: "in 7 days"`. Avsändaren bakas in vid schemaläggningen, så en
+  ändring av `EMAIL_FROM` påverkar inte redan köade mejl.
+
+**Öppet:** `EMAIL_FROM` är inte satt i `.env.local`, så koden faller tillbaka på
+`noreply@batteriproffs.se`. Vad Vercel har satt är okontrollerat. En
+omdömesförfrågan från en noreply-adress är fel avsändare för ett mejl som ber om
+en tjänst. Kolla avsändarraden på en orderbekräftelse och flytta minst
+omdömesmejlet till en bemannad adress.
