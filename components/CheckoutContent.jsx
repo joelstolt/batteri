@@ -7,6 +7,7 @@ import { loadStripe } from "@stripe/stripe-js"
 import { Elements, PaymentElement, useStripe, useElements } from "@stripe/react-stripe-js"
 import { ShoppingCart, Loader2, Lock, Truck, ChevronDown, ChevronUp, Building2 } from "lucide-react"
 import { useCart } from "@/lib/cart-context"
+import { useAttribution } from "@/lib/attribution-context"
 import FadeIn from "@/components/FadeIn"
 import {
   EMPTY_FORM,
@@ -120,6 +121,7 @@ function SectionHeading({ children, note }) {
 function CheckoutForm({ form, setForm, errors, setErrors, totalPrice, clientSecret, freeShipping }) {
   const stripe = useStripe()
   const elements = useElements()
+  const hamtaKallan = useAttribution()
   const [loading, setLoading] = useState(false)
   const [paymentError, setPaymentError] = useState(null)
   // Så länge kunden inte själv rört momsnumret följer det organisationsnumret
@@ -157,7 +159,8 @@ function CheckoutForm({ form, setForm, errors, setErrors, totalPrice, clientSecr
     setLoading(true)
 
     // Spara företags- och leveransuppgifterna på betalningen innan den bekräftas,
-    // annars saknas de i orderbekräftelsen och i Stripe.
+    // annars saknas de i orderbekräftelsen och i Stripe. Källan följer med samma
+    // anrop: den är fångad vid landningen och finns bara i minnet fram till hit.
     try {
       const res = await fetch("/api/order-details", {
         method: "POST",
@@ -166,6 +169,7 @@ function CheckoutForm({ form, setForm, errors, setErrors, totalPrice, clientSecr
           paymentIntentId: clientSecret.split("_secret_")[0],
           clientSecret,
           form,
+          source: hamtaKallan(),
         }),
       })
       const data = await res.json()

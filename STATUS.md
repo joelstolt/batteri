@@ -399,9 +399,13 @@ metadata-skrivning mot Stripe.
 - Dragningen sitter i `/api/order/ship` och krävde spårningsnummer, vilket
   krockade med att leverantören ofta lämnar numret ett par dygn senare. Därav
   capture-endpointen ovan.
-- Kontoutdragstexten står som **BATTERIPROFFSEN**, inte Batteriproffs. Ändras i
-  Stripe under Företagsuppgifter. Fel namn på kortfakturan är den vanligaste
-  orsaken till onödiga kortreklamationer.
+- Kontoutdragstexten står som **BATTERIPROFFSEN**, alltså bestämd form av
+  varumärket. Det är kosmetik, inte ett problem: kunden känner igen ordet och
+  Stripes krav är igenkännbarhet, inte exakt varumärkesstavning. Reklamationer
+  kommer av texter som är något HELT annat än det kunden handlade av
+  (moderbolag, gammalt firmanamn, betalleverantör). Vill man ändå ändra sitter
+  fältet under Offentliga uppgifter i dashboarden och går INTE via API,
+  `POST /v1/accounts/<eget konto>` avvisas som Connect-only.
 - **Omdömesmejlet schemaläggs hos Resend redan när ordern läggs**, med
   `scheduledAt: "in 7 days"`. Avsändaren bakas in vid schemaläggningen, så en
   ändring av `EMAIL_FROM` påverkar inte redan köade mejl.
@@ -411,3 +415,69 @@ metadata-skrivning mot Stripe.
 omdömesförfrågan från en noreply-adress är fel avsändare för ett mejl som ber om
 en tjänst. Kolla avsändarraden på en orderbekräftelse och flytta minst
 omdömesmejlet till en bemannad adress.
+
+## Varifrån ordern kom (byggt 2026-08-04)
+
+Attributionen ligger i `lib/attribution.js` (ren logik) och
+`lib/attribution-context.js` (fångsten). Källan läses ur `document.referrer`
+och adressraden vid FÖRSTA sidladdningen, hålls i en ref i rot-layouten
+genom hela besöket och fästs på PaymentIntent av `/api/order-details`
+tillsammans med företagsuppgifterna. Adminvyn visar den som blocket **Källa**.
+
+- **Ingenting lagras på kundens enhet.** ePrivacy art. 5(3) gäller all lagring
+  på terminalutrustning, inte bara kakor, och annonsattribution är inte
+  "strikt nödvändigt". React-state är flyktigt minne och omfattas inte.
+- **gclid slår referrer.** Ett annonsklick har ändå google.com som referrer och
+  hade annars räknats som organiskt. `wbraid`/`gbraid` fångas också.
+- Fälten heter `source_channel`, `source_landing`, `source_referrer`,
+  `source_gclid`, `source_campaign` i Stripe-metadatan. `source_gclid` är
+  dessutom råvaran till en offline-konverteringsexport till Google Ads.
+- **Ordrar lagda före 2026-08-04 saknar fälten** och visas som "Okänd (ordern
+  lades före mätningen)". Skillnaden mot "Direkt" är avsiktlig.
+- Attributionen strippas medvetet ur `/api/konto/ordrar`. Det är vår affärsdata,
+  inte kundens orderuppgift.
+- Gräns: laddar kunden om sidan mitt i besöket monteras providern på nytt och
+  referrern blir vår egen domän. Märks som "Egen sajt (sidan laddades om)".
+
+**De två första ordrarna mättes för hand** via Umami, genom att leta upp
+sessionen vars `/tack`-sidvisning bär rätt `payment_intent` i adressraden:
+
+| Order | Kanal | Landade på |
+|---|---|---|
+| 2026-07-27, Eventcenter Norrköping, 5 085 kr | Organiskt Google | `/` |
+| 2026-08-04, SRVAB, 8 285 kr | Organiskt Google | `/produkt/ev31a-a-m8` |
+
+**`kop`-eventet i Umami avfyrades aldrig för SRVAB-ordern**, trots att koden
+funnits sedan 28 juli. Både det och Ads-konverteringen ligger bakom
+`if (!data.error)` i `ThankYouContent.jsx`, och det var precis `/api/order` som
+var trasigt den dagen. Endpointen svarar rätt nu, men tratten i Umami har alltså
+noll uppmätta köp och Ads-konverteringen missade sannolikt ordern.
+
+## Modellnummer är den kanal som säljer (2026-08-04)
+
+SRVAB-ordern kom från en sökning som landade rakt på produktsidan, utan att
+besökaren rörde startsidan eller någon kategorisida. Det är den avsikten som
+konverterar: den som söker på ett artikelnummer har redan bestämt sig.
+
+**Alla 20 produktsidor saknade artikelnumret i title-taggen.** Titeln byggdes av
+`shortName`, så EVGC8A-A-sidan hette "Fritidsbatteri 8V 160 Ah Dry Cell 8V
+160Ah" med volt och amperetimmar dubbelt och modellen ingenstans. Rättat:
+varumärke och artikelnummer först, kategoriordet kvar efter.
+
+Uppmätt SERP-läge i Sverige (DataForSEO, 2026-08-04):
+
+| Sökning | Vår plats | Svenska konkurrenter på sida 1 |
+|---|---|---|
+| discover ev31a-a | 7 | 0 (vi är enda svenska träffen) |
+| discover evgc8a-a | 7 | 2 (tryckluftservice 5 134 kr, batteripoolen) |
+| sonnenschein gf12050v | utanför | 6 (batteriexpressen, ahlsell, cleanstep, m.fl.) |
+
+**Slutsats: Discover-serien är öppen, Sonnenschein är upptaget.** Discover har
+sex artiklar hos oss och SERP:en är full av amerikanska butiker i USD som en
+svensk B2B-köpare inte kan handla av. Sonnenschein-numren äger etablerade
+svenska återförsäljare, där krävs mer än en titeltagg. Nordmax är Batteripoolens
+eget varumärke och har ingen extern söktrafik att hämta.
+
+**Namnvariant att lösa för Sonnenschein:** vi skriver GF1250V, marknaden skriver
+även GF12050V och "GF 12 050 V". Powerland listar alla tre i sin titel. Våra
+sidor nämner bara en form, alltså missar vi de andra sökningarna.

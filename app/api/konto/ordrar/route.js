@@ -40,6 +40,9 @@ export async function GET(request) {
     const ordrar = svar.data
       .map((pi) => ({
         ...normaliseraOrder(pi),
+        // Attributionen är vår affärsdata, inte kundens orderuppgift. Den ska
+        // inte ligga i ett svar som går ut till webbläsaren hos kunden.
+        source: undefined,
         // Vilka artiklar kunden redan recenserat, så formuläret bara visas där
         // det går att lämna ett omdöme. Statusen följer med så kunden ser att
         // omdömet ligger på granskning i stället för att undra vart det tog vägen.

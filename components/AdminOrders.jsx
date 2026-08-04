@@ -452,6 +452,16 @@ function OrderDetalj({ order, token, onSkickad, onDragen }) {
             }
           />
         </Block>
+
+        <Block titel="Källa">
+          <Rad label="Kanal" varde={order.source.channel} />
+          <Rad label="Landade på" varde={order.source.landing} />
+          <Rad label="Hänvisad från" varde={order.source.referrer} />
+          <Rad label="Kampanj" varde={order.source.campaign} />
+          {order.source.gclid && (
+            <Rad label="Google-klick-id" varde={order.source.gclid} />
+          )}
+        </Block>
       </div>
 
       <div className="mt-5">

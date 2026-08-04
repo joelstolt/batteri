@@ -5,6 +5,7 @@ import {
   buildOrderMetadata,
   normalizePostalCode,
 } from "@/lib/checkout"
+import { buildSourceMetadata } from "@/lib/attribution"
 import { rateLimit, clientIp, isOwnOrigin, ALLOWED_ORIGINS } from "@/lib/rate-limit"
 
 const stripe = new Stripe(process.env.STRIPE_SECRET_KEY)
@@ -57,6 +58,10 @@ export async function POST(request) {
     }
 
     const meta = buildOrderMetadata(form)
+    // Källan är obekräftad indata från webbläsaren och saneras därför på samma
+    // sätt som formuläret. Saknas den blir det ett tomt objekt, inte ett fel:
+    // en order får aldrig falla för att mätningen strular.
+    const kallmeta = buildSourceMetadata(body?.source)
     const company = meta.company_name
 
     // Leveransuppgifterna läggs på Stripes shipping-fält så att de syns i
@@ -80,6 +85,7 @@ export async function POST(request) {
         // Behåll radartiklarna och prisuppdelningen som skapades server-side
         ...pi.metadata,
         ...meta,
+        ...kallmeta,
       },
     })
 

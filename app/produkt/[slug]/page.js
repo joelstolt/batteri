@@ -32,13 +32,33 @@ const CATEGORY_PREFIX = {
   "fritid-solenergi": "Fritidsbatteri",
 }
 
+/**
+ * Titeln på en produktsida.
+ *
+ * Varumärke och artikelnummer först, och det är hela poängen.
+ *
+ * Den som söker på ett artikelnummer har redan bestämt sig och letar bara
+ * efter var man beställer. Det är den trafiken som faktiskt köper: ordern
+ * 2026-08-04 kom från en sökning som landade rakt på produktsidan för exakt
+ * det batteriet, utan att besökaren rörde vare sig startsidan eller en
+ * kategorisida. Fram till dess byggdes titeln av shortName ("Dry Cell 8V
+ * 160Ah"), så artikelnumret saknades helt i title-taggen på alla 20 sidorna
+ * och volt och amperetimmar stod dubbelt.
+ *
+ * Kategoriordet ligger kvar efter modellen, så sidorna behåller sin chans på
+ * de generiska sökningarna ("traktionsbatteri 12V").
+ */
 function buildSeoTitle(product) {
   const prefix = CATEGORY_PREFIX[product.category] || "Batteri"
   const v = product.voltage || ""
   const ah = (product.capacity || "").match(/(\d+)\s*Ah/i)?.[0] || ""
-  const model = product.shortName || product.name
-  const parts = [prefix, v, ah, model].filter(Boolean)
-  return `${parts.join(" ")} — Batteriproffs`
+  // Medvetet INTE getProductBrand här: den faller tillbaka på "Batteriproffs",
+  // och "Batteriproffs NM125 ... | Batteriproffs" vore en sämre titel än ingen.
+  const brand = product.specs?.["Varumärke"] || ""
+  const artNr = product.specs?.["Artikelnummer"] || ""
+  const modell = [brand, artNr].filter(Boolean).join(" ") || product.shortName || product.name
+  const parts = [modell, prefix, v, ah].filter(Boolean)
+  return `${parts.join(" ")} | Batteriproffs`
 }
 
 export async function generateMetadata({ params }) {
