@@ -80,9 +80,13 @@ export async function POST(request) {
     }
 
     const orderId = orderIdFor(pi.id)
+    // PostNord flyttade spårningen till tracking.postnord.com. Den gamla
+    // adressen (postnord.se/vara-verktyg/spara-brev-och-paket?shipmentId=)
+    // ger 404, och den låg i det här mejlet fram till 2026-08-04. Verifierad
+    // mot en skarp försändelse innan bytet.
     const trackingUrl =
       carrier.toLowerCase() === "postnord"
-        ? `https://www.postnord.se/vara-verktyg/spara-brev-och-paket?shipmentId=${encodeURIComponent(tracking)}`
+        ? `https://tracking.postnord.com/se/tracking?id=${encodeURIComponent(tracking)}`
         : carrier.toLowerCase() === "dhl"
           ? `https://www.dhl.com/se-sv/home/tracking.html?tracking-id=${encodeURIComponent(tracking)}`
           : null
