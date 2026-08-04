@@ -8,6 +8,7 @@ import {
   formatPriceKr,
   emailLayout,
 } from "@/lib/emails"
+import { parsaItems } from "@/lib/orders"
 import { scheduleReviewEmail } from "@/lib/review-email"
 import { unloadingLabel } from "@/lib/checkout"
 import { SELJARE } from "@/lib/constants"
@@ -32,14 +33,18 @@ function infoBlock(title, rows) {
     </div>`
 }
 
-function buildOrderBody({ orderId, items, subtotal, shipping, total, customer, meta, intro }) {
+function buildOrderBody({ orderId, items, subtotal, shipping, total, customer, meta, intro, strukna = 0 }) {
+  // Antal och artikelnummer visas ALLTID. Kvittot är det enda dokument som
+  // följer med ordern, och utan dem går det inte att se vad som ska plockas.
   const rows = items
     .map(
       (i) => `
         <tr>
           <td style="padding:10px 0;border-bottom:1px solid #F0F1F4;">
             <div style="font-weight:600;font-size:14px;">${escape(i.name)}</div>
-            ${i.qty > 1 ? `<div style="color:#6B7280;font-size:12px;">${i.qty} st × ${formatPriceKr(i.price)} kr</div>` : ""}
+            <div style="color:#6B7280;font-size:12px;">
+              ${i.qty} st × ${formatPriceKr(i.price)} kr${i.slug ? ` · Art.nr ${escape(i.slug)}` : ""}
+            </div>
           </td>
           <td style="padding:10px 0;border-bottom:1px solid #F0F1F4;text-align:right;font-weight:600;font-size:14px;white-space:nowrap;">
             ${formatPriceKr(i.price * i.qty)} kr
@@ -47,6 +52,15 @@ function buildOrderBody({ orderId, items, subtotal, shipping, total, customer, m
         </tr>`
     )
     .join("")
+
+  // Ryms inte alla rader i Stripes metadata lagras en {o:N}-markör. Säg det
+  // rakt ut i stället för att tyst skicka ett kvitto som saknar rader.
+  const struknaRad =
+    strukna > 0
+      ? `<tr><td colspan="2" style="padding:10px 0;border-bottom:1px solid #F0F1F4;font-size:13px;color:#B45309;">
+           + ${strukna} ytterligare ${strukna === 1 ? "rad" : "rader"} som inte fick plats i kvittot. Kontakta oss så bekräftar vi hela ordern.
+         </td></tr>`
+      : ""
 
   return `
     <h1 style="margin:0 0 6px;font-size:22px;line-height:1.2;font-weight:800;letter-spacing:-0.01em;">
@@ -58,6 +72,7 @@ function buildOrderBody({ orderId, items, subtotal, shipping, total, customer, m
 
     <table role="presentation" width="100%" cellpadding="0" cellspacing="0">
       ${rows}
+      ${struknaRad}
       <tr>
         <td style="padding:10px 0;color:#6B7280;font-size:13px;">Frakt</td>
         <td style="padding:10px 0;text-align:right;font-size:13px;">${shipping === 0 ? "Fri" : `${formatPriceKr(shipping)} kr`}</td>
@@ -167,7 +182,11 @@ export async function POST(request) {
   }
 
   try {
-    const items = pi.metadata.items ? JSON.parse(pi.metadata.items) : []
+    // Metadatan lagrar raderna kompakt ({s,n,q,p}) för att rymmas i Stripes
+    // teckengräns. parsaItems är enda översättningen och används av /konto och
+    // /admin. Läs ALDRIG i.name/i.qty/i.price rakt ur metadatan, de heter
+    // n/q/p där och ger tomma rader i kvittot.
+    const { rader: items, strukna } = parsaItems(pi.metadata.items)
     const subtotal = Number(pi.metadata.subtotal) || 0
     const shipping = Math.round((Number(pi.metadata.shipping) || 0) * 1.25) // visa frakt inkl. moms i kvittot
     const total = pi.amount / 100
@@ -204,6 +223,7 @@ export async function POST(request) {
             body: buildOrderBody({
               orderId,
               items,
+              strukna,
               subtotal,
               shipping,
               total,
@@ -230,6 +250,7 @@ export async function POST(request) {
             body: buildOrderBody({
               orderId,
               items,
+              strukna,
               subtotal,
               shipping,
               total,
