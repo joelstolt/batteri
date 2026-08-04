@@ -248,7 +248,7 @@ export default function AboutContent() {
               { icon: <Shield size={22} />, title: "Kvalitet", desc: "Vi säljer enbart batterier från tillverkare vi litar på: Nordmax, Discover och Sonnenschein." },
               { icon: <Zap size={22} />, title: "Snabbhet", desc: "Batterier skickas direkt från vår leverantör, vilket kortar vägen. De flesta leveranser når dig inom 1–3 arbetsdagar." },
               { icon: <Users size={22} />, title: "Personligt", desc: "Ring eller mejla oss på vardagar 08–17. Vi tar oss tid att förstå ditt behov innan vi rekommenderar." },
-              { icon: <Truck size={22} />, title: "Service", desc: "Leverans normalt inom 1–3 dagar, 30 dagars öppet köp och support som faktiskt hjälper dig." },
+              { icon: <Truck size={22} />, title: "Service", desc: "Leverans normalt inom 1–3 dagar, passformsgaranti på alla batterier och support som faktiskt hjälper dig." },
             ].map((val, i) => (
               <FadeIn key={i} delay={i * 0.06}>
                 <div className="h-full rounded-2xl border border-border bg-surface p-6 transition-all duration-200 hover:-translate-y-1 hover:shadow-md">

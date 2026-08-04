@@ -42,11 +42,13 @@ const COLUMNS = [
 
 /* ─── Trust bar icons ─── */
 
+// Se kommentaren i lib/constants.js: inga påståenden som inte går att belägga,
+// och inget öppet köp att lova på en kassa som bara släpper in företag.
 const TRUST_FEATURES = [
   { icon: Truck, label: "Snabb leverans 1–3 dgr" },
-  { icon: RotateCcw, label: "30 dagars öppet köp" },
+  { icon: RotateCcw, label: "Passformsgaranti" },
   { icon: Shield, label: "Säker betalning" },
-  { icon: Award, label: "20+ år i branschen" },
+  { icon: Award, label: "Priser utan offert" },
 ]
 
 export default function Footer() {

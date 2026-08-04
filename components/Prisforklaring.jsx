@@ -57,7 +57,8 @@ export function PrisforklaringKort() {
           inte batteriet.
         </p>
         <p className="mt-2.5 leading-relaxed text-text-dark">
-          Passar det inte i din maskin tar vi tillbaka det inom 30 dagar.
+          Passar det inte i din maskin byter vi det utan returavdrag, så länge
+          förpackningen är obruten och du hör av dig inom 14 dagar.
         </p>
         <p className="mt-3.5 text-sm">
           <Link href="/om-oss" className="font-heading font-bold text-accent hover:underline">

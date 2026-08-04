@@ -156,13 +156,26 @@ function buildProductJsonLd(product, omdomen = []) {
           transitTime: { "@type": "QuantitativeValue", minValue: 1, maxValue: 5, unitCode: "DAY" },
         },
       },
+      /*
+       * Måste spegla /villkor exakt.
+       *
+       * Google flaggade redan sajten för Felaktig framställning en gång, och
+       * motstridiga returuppgifter mellan strukturerad data och villkorstexten
+       * är precis en sådan motsägelse. Ändras returvillkoren ska de fyra
+       * fälten nedan ändras i samma commit.
+       *
+       * restockingFee är ett tal = procent av varans pris, alltså vårt
+       * returavdrag på 30 % som speglar leverantörens avdrag mot oss.
+       */
       hasMerchantReturnPolicy: {
         "@type": "MerchantReturnPolicy",
         applicableCountry: "SE",
         returnPolicyCategory: "https://schema.org/MerchantReturnFiniteReturnWindow",
-        merchantReturnDays: 30,
+        merchantReturnDays: 14,
         returnMethod: "https://schema.org/ReturnByMail",
         returnFees: "https://schema.org/ReturnFeesCustomerResponsibility",
+        restockingFee: 30,
+        merchantReturnLink: `${SITE}/villkor`,
       },
     },
   }

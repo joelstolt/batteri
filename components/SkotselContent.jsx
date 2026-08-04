@@ -104,8 +104,8 @@ export default function SkotselContent() {
             </h1>
             <p className="max-w-2xl text-base leading-relaxed text-text-mid">
               En gedigen guide till laddning, förvaring och underhåll av gel-,
-              AGM- och blybatterier. Skriven av oss på Batteriproffs efter
-              20+ år i branschen.
+              AGM- och blybatterier. Skriven av oss på Batteriproffs utifrån
+              tillverkarnas egna datablad och rekommendationer.
             </p>
           </FadeIn>
         </div>

@@ -329,7 +329,7 @@ export default function ProductPageContent() {
               {/* Trust items */}
               <div className="mb-6 flex flex-col gap-3 rounded-xl border border-border p-5">
                 {[
-                  { icon: <RotateCcw size={16} />, text: "30 dagars öppet köp!" },
+                  { icon: <RotateCcw size={16} />, text: "Passar den inte din maskin byter vi" },
                   { icon: <Truck size={16} />, text: "Leverans normalt 1–3 arbetsdagar" },
                   { icon: <Shield size={16} />, text: "Garanti enligt tillverkare" },
                 ].map((item, i) => (

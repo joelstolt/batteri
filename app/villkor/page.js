@@ -6,7 +6,7 @@ export const metadata = {
   alternates: { canonical: "https://www.batteriproffs.se/villkor" },
   title: "Köpvillkor & Leveransvillkor — Batteriproffs",
   description:
-    "Villkor för beställning, leverans, betalning, ångerrätt och reklamation hos Batteriproffs.",
+    "Villkor för beställning, leverans, betalning, retur och reklamation hos Batteriproffs. Försäljning till företag.",
 }
 
 function Section({ title, children }) {
@@ -33,7 +33,7 @@ export default function VillkorPage() {
                 Köpvillkor &amp; Leveransvillkor
               </h1>
               <p className="mt-3 text-sm text-text-mid">
-                Senast uppdaterad: april 2026
+                Senast uppdaterad: augusti 2026
               </p>
             </div>
           </div>
@@ -43,8 +43,18 @@ export default function VillkorPage() {
               <Section title="Allmänt">
                 <p>
                   Dessa villkor gäller för alla beställningar som görs på{" "}
-                  <strong>batteriproffs.se</strong>. De omfattar både privatpersoner som
-                  fyllt 18 år och företag, om inte annat har avtalats skriftligt.
+                  <strong>batteriproffs.se</strong>. Webbutiken säljer{" "}
+                  <strong>till företag</strong>: kassan kräver ett giltigt
+                  organisationsnummer och köpet sker i din näringsverksamhet. På sådana
+                  köp gäller köplagen (1990:931), som är dispositiv. Det som står här
+                  gäller alltså framför lagens utfyllande regler, om inte annat har
+                  avtalats skriftligt.
+                </p>
+                <p>
+                  Skulle ett köp ändå komma till stånd med dig som konsument, till
+                  exempel efter en överenskommelse per telefon, gäller konsumentköplagen
+                  och distansavtalslagen. De reglerna är tvingande och tar då över de
+                  villkor nedan som säger något annat.
                 </p>
                 <p>
                   Säljare och din avtalspart är Joel Stolt (enskild firma), org.nr
@@ -140,8 +150,9 @@ export default function VillkorPage() {
                   eventuell återbetalning. Batterier väger mellan 19 och 63 kg och en
                   outhämtad försändelse innebär frakt i båda riktningarna, vilket är
                   skälet till avgiften. Att låta bli att hämta ut paketet räknas inte
-                  som ett giltigt utövande av ångerrätten. Kan du inte ta emot
-                  leveransen, hör av dig i förväg så bokar vi om utan kostnad.
+                  som en retur och befriar dig inte från betalningsskyldigheten. Kan du
+                  inte ta emot leveransen, hör av dig i förväg så bokar vi om utan
+                  kostnad.
                 </p>
               </Section>
 
@@ -159,70 +170,101 @@ export default function VillkorPage() {
                 </p>
               </Section>
 
-              <Section title="5. Ångerrätt">
+              <Section title="5. Retur">
                 <p>
-                  Som privatkund har du <strong>30 dagars ångerrätt</strong> räknat från
-                  den dag du tog emot varan — det är längre än lagens minimikrav på 14
-                  dagar. Du får undersöka produkten i den utsträckning som varit rimlig
-                  i en fysisk butik utan att förlora ångerrätten. Om produkten har
-                  tagits i bruk, monterats eller laddats anses den använd i en
-                  omfattning som påverkar värdet.
+                  Vid köp i näringsverksamhet finns ingen ångerrätt. Den rätten följer av
+                  distansavtalslagen och gäller bara konsumenter. Vi tar ändå emot
+                  returer enligt villkoren nedan, som en service och inte som en
+                  skyldighet.
                 </p>
                 <p>
-                  <strong>Undantag:</strong> Ångerrätten gäller inte vid specialbeställda
-                  produkter, t.ex. batteripack som tillverkats efter dina egna
-                  specifikationer.
+                  <strong>Kontakta oss alltid först.</strong> Hör av dig till{" "}
+                  <a className="text-navy underline" href="mailto:info@batteriproffs.se">info@batteriproffs.se</a>{" "}
+                  inom <strong>14 dagar</strong> från det att du tog emot leveransen.
+                  Först när vi godkänt returen skriftligt får varan skickas tillbaka, och
+                  då får du returadress och instruktioner av oss. En retur som skickas
+                  utan godkännande i förväg kan vi inte ta emot.
                 </p>
                 <p>
-                  För att åberopa ångerrätten meddelar du oss inom 30 dagar — enklast via{" "}
-                  <a className="text-navy underline" href="mailto:info@batteriproffs.se">info@batteriproffs.se</a>.
-                  Du kan också använda Konsumentverkets standardblankett (se längst ner
-                  på sidan). Därefter har du 14 dagar på dig att skicka tillbaka varan.
+                  <strong>Batteriet måste vara obrukat och förpackningen obruten.</strong>{" "}
+                  Ett batteri som kopplats in, laddats, monterats eller på annat sätt
+                  tagits i bruk kan inte returneras. Det gäller även provkoppling. Ett
+                  traktionsbatteri som varit i drift går inte att sälja vidare som nytt,
+                  och det är också skälet till att branschen i övrigt inte erbjuder
+                  företag returrätt alls.
+                </p>
+                <p>
+                  <strong>Returavdrag 30 %.</strong> Vid godkänd retur av en felfri vara
+                  gör vi ett avdrag på 30 % av varans värde. Avdraget motsvarar det som
+                  vår leverantör drar av oss för kontroll, provning och åter i lager.
+                  Fraktkostnaden återbetalas inte, och du står själv för returfrakten
+                  samt för risken under transporten. Välj ett spårbart fraktsätt och
+                  packa batteriet omsorgsfullt, helst i originalemballaget.
+                </p>
+                <p>
+                  <strong>Undantag:</strong> specialbeställda produkter och artiklar som
+                  tagits hem särskilt på din begäran kan inte returneras.
+                </p>
+                <p>
+                  Återbetalning sker inom 14 dagar från det att vi tagit emot varan och
+                  kontrollerat den, via samma betalningsmetod som användes vid köpet.
+                  Kommer varan tillbaka i sämre skick än vad som avtalats förbehåller vi
+                  oss rätten till ett större avdrag eller att neka återbetalning.
                 </p>
               </Section>
 
-              <Section title="6. Returer">
+              <Section title="6. Passformsgaranti">
                 <p>
-                  Du står själv för returfrakten samt risken under transporten — vi
-                  rekommenderar därför ett spårbart fraktalternativ. Packa produkten
-                  omsorgsfullt, gärna i originalförpackningen, så att den inte skadas på
-                  vägen.
+                  Har du fått hem ett batteri som inte passar din maskin löser vi det.
+                  Det är den risk som faktiskt finns när man köper traktionsbatterier på
+                  nätet, och den ska inte ligga hos dig.
                 </p>
                 <p>
-                  Återbetalning sker inom 14 dagar från det att vi mottagit varan eller
-                  fått bevis på att returen är skickad. Pengarna återförs alltid via
-                  samma betalningsmetod som användes vid köpet. Om varan returneras i
-                  försämrat skick förbehåller vi oss rätten att göra ett värdeavdrag
-                  eller, vid mer omfattande skador, neka återbetalning.
+                  <strong>Har vi rekommenderat batteriet</strong>, via batterifinnaren,
+                  telefon eller mejl, och det ändå inte passar, byter vi till rätt modell
+                  och står för frakten åt båda hållen. Inget returavdrag.
                 </p>
                 <p>
-                  Kontakta oss på{" "}
-                  <a className="text-navy underline" href="mailto:info@batteriproffs.se">info@batteriproffs.se</a>{" "}
-                  innan du skickar din retur — vi återkommer med returadress och
-                  instruktioner.
+                  <strong>Har du beställt på egen hand</strong> och råkat välja fel modell
+                  byter vi ändå utan returavdrag. Då står du för returfrakten.
+                </p>
+                <p>
+                  Garantin förutsätter att förpackningen är obruten och att batteriet
+                  aldrig kopplats in, och att du hör av dig inom 14 dagar från leveransen.
+                  Uppge maskinens märke och modell så hittar vi rätt batteri direkt. Är du
+                  osäker före köpet, ring{" "}
+                  <a className="text-navy underline" href="tel:+46735546968">073-554 69 68</a>{" "}
+                  i stället, det är alltid billigare för oss båda än en retur.
                 </p>
               </Section>
 
               <Section title="7. Reklamation och garanti">
                 <p>
-                  Konsumentköplagen ger dig som privatkund rätt att reklamera en
-                  felaktig vara i tre år från mottagandet. Reklamationsrätten omfattar
-                  ursprungliga fabrikationsfel, transportskador och produkter som
-                  avviker från det avtalade. Vid sidan av detta gäller respektive
-                  tillverkares produktgaranti.
+                  Vid köp i näringsverksamhet gäller köplagen. Du ska undersöka varan när
+                  du tar emot den och reklamera ett fel inom skälig tid från det att du
+                  märkt eller borde ha märkt det. Yttersta gräns för att åberopa ett fel
+                  är två år från mottagandet, om inte annat följer av en garanti.
+                  Reklamationsrätten omfattar ursprungliga fabrikationsfel,
+                  transportskador och produkter som avviker från det avtalade.
                 </p>
                 <p>
-                  Vid reklamation efter sex månader är det du som kund som ska kunna
-                  visa att felet fanns från början. När en reklamation godkänns
-                  reparerar vi produkten, ersätter den med en ny eller — om det inte är
-                  möjligt — återbetalar köpet.
+                  <strong>Vid sidan av detta gäller tillverkarens produktgaranti</strong>,
+                  som är det som betyder mest på ett traktionsbatteri. Garantitiden och
+                  vad den täcker framgår av respektive tillverkare. Hör av dig så tar vi
+                  reda på exakt vad som gäller för din modell.
                 </p>
                 <p>
-                  Anmäl alltid felet så snart som möjligt; en anmälan inom två månader
-                  från upptäckt fel betraktas alltid som inom rimlig tid. Hör av dig
-                  till oss <em>innan</em> du skickar produkten i retur så får du
-                  instruktioner. Vid godkänd reklamation står Batteriproffs för både
-                  returfrakt och frakt för en eventuell ersättningsvara.
+                  Transportskador och felleveranser anmäler du så snart som möjligt, helst
+                  samma dag som leveransen. Fotografera emballaget innan du packar upp om
+                  något ser skadat ut, det gör ärendet mot transportören enklare för oss
+                  båda.
+                </p>
+                <p>
+                  När en reklamation godkänns ersätter vi produkten med en ny, eller
+                  återbetalar köpet om det inte är möjligt. Hör av dig{" "}
+                  <em>innan</em> du skickar produkten i retur så får du instruktioner. Vid
+                  godkänd reklamation står Batteriproffs för både returfrakt och frakt för
+                  ersättningsvaran.
                 </p>
                 <p>
                   Skador på person eller egendom som orsakas av en produkt täcks av den
@@ -241,8 +283,13 @@ export default function VillkorPage() {
 
               <Section title="8. Tvister">
                 <p>
-                  Skulle vi inte vara överens om utfallet av ett ärende följer vi i
-                  första hand rekommendationer från Allmänna reklamationsnämnden (ARN).
+                  Svensk rätt tillämpas på avtalet. Blir vi oense försöker vi i första
+                  hand lösa det direkt, hör alltid av dig till oss först. Går det inte
+                  prövas tvisten av allmän domstol.
+                </p>
+                <p>
+                  Har köpet gjorts av dig som konsument gäller i stället att vi följer
+                  rekommendationer från Allmänna reklamationsnämnden (ARN).
                   Du når ARN på{" "}
                   <a
                     className="text-navy underline"
@@ -293,39 +340,27 @@ export default function VillkorPage() {
                 </p>
               </Section>
 
-              <Section title="Ångerblankett">
-                <p>
-                  Vill du häva ett köp kan du använda Konsumentverkets standardblankett
-                  nedan, eller helt enkelt mejla oss formlöst — då rekommenderar vi att
-                  du sparar ett kvitto på meddelandet (t.ex. en kopia av mejlet).
-                </p>
+              <Section title="Retur i korthet">
                 <div className="rounded-xl border border-border bg-surface p-6 text-sm">
-                  <p className="mb-3 font-semibold text-text-dark">Mottagare</p>
-                  <p className="mb-5">
-                    Batteriproffs
-                    <br />
-                    E-post:{" "}
-                    <a className="text-navy underline" href="mailto:info@batteriproffs.se">
-                      info@batteriproffs.se
-                    </a>
-                  </p>
-
-                  <p className="mb-2 font-semibold text-text-dark">Konsumentens uppgifter</p>
-                  <p className="mb-1">Namn: ______________________________________________</p>
-                  <p className="mb-1">Eventuell medköpare: ________________________________</p>
-                  <p className="mb-1">Adress: ____________________________________________</p>
-                  <p className="mb-1">Telefon: ___________________________________________</p>
-                  <p className="mb-5">E-post: ____________________________________________</p>
-
-                  <p className="mb-2 font-semibold text-text-dark">Beställning som ångras</p>
-                  <p className="mb-1">Produkt(er) / tjänst(er): __________________________</p>
-                  <p className="mb-1">Beställningsdatum: _________________________________</p>
-                  <p className="mb-5">Mottagningsdatum: __________________________________</p>
-
-                  <p className="mb-1">Ort: _______________________________________________</p>
-                  <p className="mb-1">Datum: _____________________________________________</p>
-                  <p className="mb-1">Underskrift (vid pappersblankett): _________________</p>
-                  <p>Eventuell medköpare: ________________________________</p>
+                  <ul className="ml-5 list-disc space-y-2">
+                    <li>
+                      Ingen ångerrätt vid företagsköp. Vi tar ändå emot retur i 14 dagar.
+                    </li>
+                    <li>
+                      Mejla{" "}
+                      <a className="text-navy underline" href="mailto:info@batteriproffs.se">
+                        info@batteriproffs.se
+                      </a>{" "}
+                      och invänta vårt godkännande innan du skickar något.
+                    </li>
+                    <li>Obruten förpackning, aldrig inkopplat eller laddat.</li>
+                    <li>Returavdrag 30 % av varans värde. Frakten återbetalas inte.</li>
+                    <li>Du står för returfrakten och risken under transporten.</li>
+                    <li>
+                      Passar batteriet inte din maskin gäller passformsgarantin i stället,
+                      utan returavdrag.
+                    </li>
+                  </ul>
                 </div>
               </Section>
             </div>

@@ -27,8 +27,12 @@ export const metadata = {
   // description. Google flaggade sajten för Felaktig framställning och
   // stoppade alla 20 produkter i Merchant Center. Skriv bara sånt som går att
   // verifiera utifrån.
+  //
+  // Av samma skäl ströks "30 dagars öppet köp" 2026-08-04: kassan kräver
+  // organisationsnummer, och vid företagsköp finns ingen ångerrätt att lova
+  // bort. Löftet gick inte att infria för någon som faktiskt kunde handla här.
   description:
-    "Köp fritidsbatteri, traktionsbatteri, truckbatteri och gelbatteri. Priser öppet på sajten, leverans i hela Sverige och 30 dagars öppet köp.",
+    "Köp fritidsbatteri, traktionsbatteri, truckbatteri och gelbatteri till företag. Priser öppet på sajten, leverans i hela Sverige och passformsgaranti på alla batterier.",
   openGraph: {
     title: "Batteriproffs — Fritidsbatteri, traktionsbatteri & truckbatteri",
     description:
