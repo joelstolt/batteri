@@ -88,6 +88,23 @@ export default function MachinePageContent({ machine, products }) {
                   batteri i serie med gamla åldras i takt med de gamla. Halva besparingen försvinner.
                 </li>
               </ul>
+              {/*
+                Kopplingarna bygger på maskinens spänning och kapacitet, som går
+                att belägga hos tillverkaren. Batterifackets mått gör det inte,
+                varken Kärcher eller Nilfisk publicerar dem. Garantin nedan är
+                det som bär den risken, och därför ska den stå här och inte bara
+                på villkorssidan. Se kommentaren i lib/machines.js.
+              */}
+              <p className="mt-4 rounded-xl bg-white p-4 text-sm leading-relaxed text-text-mid">
+                <strong className="text-text-dark">Passar det ändå inte byter vi.</strong>{" "}
+                Har vi rekommenderat batteriet står vi för bytet och frakten åt båda hållen,
+                utan returavdrag. Förpackningen ska vara obruten och batteriet får inte ha
+                kopplats in. Villkoren står under{" "}
+                <Link href="/villkor" className="text-navy underline">
+                  passformsgarantin
+                </Link>
+                .
+              </p>
             </div>
 
             <div className="rounded-2xl border border-border bg-surface p-6">
