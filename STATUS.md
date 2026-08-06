@@ -502,6 +502,50 @@ funnits sedan 28 juli. Både det och Ads-konverteringen ligger bakom
 var trasigt den dagen. Endpointen svarar rätt nu, men tratten i Umami har alltså
 noll uppmätta köp och Ads-konverteringen missade sannolikt ordern.
 
+## Teknisk data på produktsidorna (2026-08-06)
+
+Ligger i `lib/teknik.js` och renderas som **text, inte som PDF-länk**. En PDF
+rankar dåligt, är osynlig för AI-assistenter och kräver nedladdning i mobilen,
+vilket är där den första ordern lades. Vi hostar inga tillverkardokument, bara
+länkar till deras egna.
+
+Bakgrunden: en kund installerade två EV31A-A och frågade vilket läge han skulle
+köra laddaren i. Svaret krävde att vi letade upp laddtabellen åt honom.
+
+**Täckning: 12 av 20 artiklar.**
+
+| Varumärke | Status | Källa |
+|---|---|---|
+| Discover (6) | klar | Driftmanual för Dry Cell Traction, Table 1 och 4 |
+| Sonnenschein GF-V (6) | klar | Exides GF-V-datablad + driftinstruktion |
+| Sonnenschein GF-Y (2) | saknas | GF1252Y och GF1263Y står inte i GF-V-databladet |
+| Nordmax (6) | saknas | Leverantörens eget märke, inga publika datablad |
+
+**Exide blockerar automatisk hämtning.** WebFetch och curl mot exidegroup.com
+ger 403. Dokumenten togs via webbläsaren, som når dem utan problem. PDF-URL:erna
+står i `lib/teknik.js` och går att curl:a direkt när man väl har dem.
+
+**Tillverkarna skiljer sig på en punkt som inte får slås ihop:** Discover
+FÖRBJUDER utjämningsladdning rakt av, Exide tillåter den men bara med laddare de
+själva godkänt.
+
+**Absorptionsspänningen finns bara hos Discover.** Exides dokument anger
+laddmetod (DIN 41773) men ingen siffra, så Sonnenschein-sidorna anger metoden i
+stället. Gissa aldrig fram den, fel laddprogram förstör ett gelbatteri.
+
+**Rättat ur databladet 2026-08-06:** GF1276V står som **86 Ah C20, inte 83**, och
+väger **28,8 kg, inte 29**. Det är batteriet Lööve Global köpte.
+
+**Bonus: vikterna finns nu för alla sex GF-V.** 18,0 / 28,8 / 30,0 / 38,7 / 47,0
+/ 62,5 kg. Det var den datan som blockerade viktbaserad frakt, där bara 8 av 20
+produkter hade vikt. Discover har två av sex, hämtade från deras produktsidor,
+och de gäller AM-polen medan våra artiklar ofta är M8, därav "ca".
+
+**Öppen fråga:** villkoren och FAQ:n säger att batterierna väger "mellan 19 och
+63 kilo". GF1250V väger 18,0 kg och GF12160V 62,5 kg, så spannet stämmer inte
+riktigt. Rätta först när alla tjugo vikter är kända, annars byts en ostyrkt
+siffra mot en annan.
+
 ## Maskinsidor: var passformsdatan kommer ifrån (2026-08-06)
 
 **`fitsTo` är uttömt.** Varje modell som nämns där hade redan en sida. Fler
