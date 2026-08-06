@@ -6,6 +6,7 @@ import { AttributionProvider } from "@/lib/attribution-context"
 import CartDrawer from "@/components/CartDrawer"
 import CartToast from "@/components/CartToast"
 import ScrollToTop from "@/components/ScrollToTop"
+import KlickSparning from "@/components/KlickSparning"
 
 export default function Providers({ children }) {
   return (
@@ -13,6 +14,7 @@ export default function Providers({ children }) {
       <VatProvider>
         <CartProvider>
           <ScrollToTop />
+          <KlickSparning />
           {children}
           <CartDrawer />
           <CartToast />

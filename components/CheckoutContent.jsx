@@ -8,6 +8,7 @@ import { Elements, PaymentElement, useStripe, useElements } from "@stripe/react-
 import { ShoppingCart, Loader2, Lock, Truck, ChevronDown, ChevronUp, Building2 } from "lucide-react"
 import { useCart } from "@/lib/cart-context"
 import { useAttribution } from "@/lib/attribution-context"
+import { track } from "@/lib/track"
 import FadeIn from "@/components/FadeIn"
 import {
   EMPTY_FORM,
@@ -151,6 +152,19 @@ function CheckoutForm({ form, setForm, errors, setErrors, totalPrice, clientSecr
       setErrors(formErrors)
       const first = document.querySelector(`[data-field="${Object.keys(formErrors)[0]}"]`)
       first?.scrollIntoView({ block: "center" })
+      /*
+       * Var kunden fastnar i kassan.
+       *
+       * Ett avhopp syns i dag bara som en PaymentIntent som blir kvar på
+       * requires_payment_method, utan att det går att se varför. Kraven på
+       * orgnr, er referens och fakturamejl är hårdare än vad en B2B-köpare
+       * väntar sig, och slår ett av dem oftare än de andra ska det fältet
+       * ifrågasättas. Bara fältnamnen skickas, aldrig vad kunden skrev.
+       */
+      track("kassa-valideringsfel", {
+        falt: Object.keys(formErrors).sort().join(","),
+        antal: Object.keys(formErrors).length,
+      })
       return
     }
 

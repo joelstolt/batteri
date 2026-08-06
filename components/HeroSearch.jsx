@@ -2,6 +2,7 @@
 
 import { useState, useRef, useEffect, useId } from "react"
 import { useRouter } from "next/navigation"
+import { track } from "@/lib/track"
 import { Search, Wrench, Package, RefreshCw, CornerDownLeft } from "lucide-react"
 import { sok, sokbar } from "@/lib/search-index"
 
@@ -64,9 +65,11 @@ export default function HeroSearch({ onForhandsvisning }) {
   useEffect(() => {
     if (query.trim().length < 3) return
     const t = setTimeout(() => {
-      if (typeof window !== "undefined" && window.umami) {
-        window.umami.track("hero-sok", { term: query.trim().toLowerCase(), traffar: traffar.length })
-      }
+      const term = query.trim().toLowerCase()
+      track("hero-sok", { term, traffar: traffar.length })
+      // Eget event, av samma skäl som i SearchModal: en nolla begravd i en
+      // egenskap syns inte i Umamis eventlista.
+      if (traffar.length === 0) track("sok-utan-traff", { term })
     }, 1200)
     return () => clearTimeout(t)
   }, [query, traffar.length])

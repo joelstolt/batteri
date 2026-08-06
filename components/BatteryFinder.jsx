@@ -1,6 +1,7 @@
 "use client"
 
 import { useState } from "react"
+import { track } from "@/lib/track"
 import { useRouter } from "next/navigation"
 import { motion, AnimatePresence } from "framer-motion"
 import { PHONE, PHONE_LINK } from "@/lib/constants"
@@ -45,6 +46,17 @@ export default function BatteryFinder() {
     // Spänningen följer med som ?volt= så kategorisidan öppnar förfiltrerad
     const volt = VOLTAGES.find((v) => v.id === voltage)
     const q = volt && voltage !== "vet-ej" ? `?volt=${encodeURIComponent(volt.label)}` : ""
+    /*
+     * Finnaren är hero-elementet på startsidan men har aldrig mätts. Utan det
+     * här går det inte att säga om den leder någon vidare eller bara tar plats.
+     * traffar = 0 betyder att kunden gick igenom hela guiden och fick ett tomt
+     * resultat, vilket är ett sortimentshål och inte ett gränssnittsproblem.
+     */
+    track("batterifinnare", {
+      omrade: selectedArea.slug,
+      spanning: volt?.label || "vet ej",
+      traffar: resultCount,
+    })
     router.push(`/kategori/${selectedArea.slug}${q}`)
   }
 

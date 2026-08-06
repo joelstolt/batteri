@@ -9,6 +9,7 @@ import { publicProducts as products } from "@/lib/products"
 import { CATEGORIES } from "@/lib/constants"
 import { machines } from "@/lib/machines"
 import { useVat } from "@/lib/vat-context"
+import { track } from "@/lib/track"
 
 function formatPrice(n) {
   return new Intl.NumberFormat("sv-SE").format(n)
@@ -77,12 +78,16 @@ export default function SearchModal({ isOpen, onClose }) {
   useEffect(() => {
     if (q.length < 3) return
     const t = setTimeout(() => {
-      if (typeof window !== "undefined" && window.umami) {
-        window.umami.track("sok", {
-          term: q,
-          traffar: matchedProducts.length + matchedMachines.length,
-        })
-      }
+      const traffar = matchedProducts.length + matchedMachines.length
+      track("sok", { term: q, traffar })
+      /*
+       * Noll träffar får ett EGET event, inte bara traffar: 0 på "sok".
+       * Umami listar event per namn, så en nolla begravd i en egenskap syns
+       * inte förrän någon aktivt filtrerar. Som eget namn står den i listan
+       * och blir en sortimentsignal: det här ville kunden köpa och vi hade
+       * det inte.
+       */
+      if (traffar === 0) track("sok-utan-traff", { term: q })
     }, 1200)
     return () => clearTimeout(t)
   }, [q, matchedProducts.length, matchedMachines.length])
