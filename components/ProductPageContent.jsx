@@ -9,6 +9,7 @@ import { getProductBySlug, getProductsByCategory, getProductBrand, getProductChe
 import { CATEGORIES, PHONE, PHONE_LINK } from "@/lib/constants"
 import { machinesForProduct } from "@/lib/machines"
 import { slugifyModel } from "@/lib/replacements"
+import { teknikFor } from "@/lib/teknik"
 import { useCart } from "@/lib/cart-context"
 import { useVat } from "@/lib/vat-context"
 import ProductCard from "@/components/ProductCard"
@@ -71,7 +72,8 @@ function ImageGallery({ images, alt }) {
 }
 
 function ProductExtraInfo({ product, className = "" }) {
-  if (!product.fitsTo && !product.recommendedCharger) return null
+  const teknik = teknikFor(product)
+  if (!product.fitsTo && !product.recommendedCharger && !teknik) return null
 
   return (
     <div className={`space-y-5 ${className}`}>
@@ -133,6 +135,44 @@ function ProductExtraInfo({ product, className = "" }) {
           >
             Så väljer du rätt laddare →
           </Link>
+        </div>
+      )}
+
+      {/*
+        Laddspänningar och urladdningsgränser i klartext.
+        Renderas som text och inte som en PDF-länk med flit: en PDF rankar
+        dåligt, syns inte för AI-assistenter och kräver nedladdning i mobilen.
+        Se lib/teknik.js för källan, som är tillverkarens egen driftmanual.
+      */}
+      {teknik && (
+        <div className="rounded-xl border border-border bg-surface p-5">
+          <h2 className="mb-3 font-heading text-sm font-bold uppercase tracking-wider text-text-dark">
+            Teknisk data
+          </h2>
+          <dl className="flex flex-col gap-2.5">
+            {teknik.rader.map((r) => (
+              <div key={r.label} className="text-sm leading-relaxed">
+                <dt className="font-semibold text-text-dark">{r.label}</dt>
+                <dd className="text-text-mid">{r.value}</dd>
+              </div>
+            ))}
+          </dl>
+          <p className="mt-4 border-t border-border pt-3 text-xs leading-relaxed text-text-light">
+            Uppgifterna kommer från{" "}
+            <a
+              href={teknik.kalla}
+              target="_blank"
+              rel="noopener noreferrer"
+              className="text-navy underline"
+            >
+              {teknik.kallaNamn}
+            </a>
+            . Osäker på din laddare? Ring{" "}
+            <a href={`tel:${PHONE_LINK}`} className="text-navy underline">
+              {PHONE}
+            </a>{" "}
+            så går vi igenom den tillsammans.
+          </p>
         </div>
       )}
 
