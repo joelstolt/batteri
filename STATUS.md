@@ -502,6 +502,27 @@ funnits sedan 28 juli. Både det och Ads-konverteringen ligger bakom
 var trasigt den dagen. Endpointen svarar rätt nu, men tratten i Umami har alltså
 noll uppmätta köp och Ads-konverteringen missade sannolikt ordern.
 
+## Maskinsidor: var passformsdatan kommer ifrån (2026-08-06)
+
+**`fitsTo` är uttömt.** Varje modell som nämns där hade redan en sida. Fler
+maskinsidor kräver ny data, och `lib/machines.js` tillåter från och med nu två
+källor: `fitsTo`, eller tillverkarens egen publicerade batterispec med källan
+utskriven i kod över posten.
+
+**Vad spåret kan belägga:** systemspänning och kapacitet. **Vad det inte kan:**
+batterifackets mått. Varken Kärcher eller Nilfisk publicerar dem. Den risken
+bärs av passformsgarantin, som därför nu står i rutan "Kontrollera detta innan
+du beställer" på alla maskinsidor och inte bara på villkorssidan. Joel valde
+medvetet den avvägningen 2026-08-06.
+
+**Kärcher är lätt att belägga, Nilfisk är det inte.** Kärcher skriver ut
+kapaciteten i artikelnamnet ("BD 43/25 C Classic Bp Pack 76 Ah", "24V/105 Ah
+wet", "24V/100 Ah AGM"). Nilfisk anger ofta bara spänningen, och flera av deras
+mindre maskiner har gått över till **litium**, som vi inte säljer alls. Mal
+igenom Kärcher-katalogen först, ta Nilfisk när leverantörens lista kommer.
+
+Utbytet ligger på ungefär en användbar modell per sökning.
+
 ## Modellnummer är den kanal som säljer (2026-08-04)
 
 SRVAB-ordern kom från en sökning som landade rakt på produktsidan, utan att
