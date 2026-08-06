@@ -1,5 +1,6 @@
 "use client"
 
+import Image from "next/image"
 import { Shield, Zap, Users, Award, Truck, HeartHandshake, Clock, Wrench } from "lucide-react"
 import FadeIn from "@/components/FadeIn"
 import { publicProducts } from "@/lib/products"
@@ -89,6 +90,23 @@ export default function AboutContent() {
                   priserna nere. Det är också därför vi sätter ut priset i
                   stället för att gömma det bakom ett offertformulär.
                 </p>
+                {/*
+                  Erfarenheten hör till LEVERANTÖREN, inte till Batteriproffs.
+                  Den skillnaden är hela poängen. "20+ år i branschen" stod som
+                  ett påstående om vårt eget bolag fram till 2026-08-04 och är
+                  en av orsakerna Google flaggade sajten för Felaktig
+                  framställning: bolaget gjorde sin första order i juli 2026.
+
+                  Formuleringen nedan är godkänd av leverantören 2026-08-06 på
+                  villkor att de inte namnges. NAMNGE DEM ALDRIG här eller
+                  någon annanstans på sajten. Vid en granskning kan avtalet
+                  visas för Google privat, det är den vägen påståendet styrks.
+                */}
+                <p>
+                  Sortimentet kommer från en etablerad svensk batterileverantör
+                  med över 20 år i branschen. Bolaget Batteriproffs är nytt,
+                  men batterierna och kunskapen bakom dem är det inte.
+                </p>
               </div>
 
               {/* Vem som står bakom köpet. Samma uppgifter som i köpvillkoren,
@@ -148,6 +166,33 @@ export default function AboutContent() {
                     <div className="mt-1 text-sm text-white/50">{s.label}</div>
                   </div>
                 ))}
+              </div>
+            </div>
+
+            {/*
+              Ett ansikte på bolaget. En ny e-handel utan omdömen, utan butik
+              och utan Google Business-profil har inga andra förtroendesignaler
+              än den här, och en köpare som ska lägga 8 000 kr vill se vem hon
+              pratar med. Bara Joel är fotograferad än, de två partnerna ska in
+              när bilder finns.
+            */}
+            <div className="mt-6 flex items-center gap-5 rounded-2xl border border-border bg-white p-6">
+              <Image
+                src="/joel-stolt.webp"
+                alt="Joel Stolt, Batteriproffs"
+                width={96}
+                height={96}
+                className="h-24 w-24 flex-shrink-0 rounded-full object-cover"
+              />
+              <div>
+                <div className="font-heading text-base font-bold text-text-dark">
+                  Joel Stolt
+                </div>
+                <p className="mt-1 text-sm leading-relaxed text-text-mid">
+                  Det är jag som svarar när du ringer. Vet du inte vilket batteri
+                  din maskin ska ha, hör av dig så tar vi det på telefon i stället
+                  för att du ska gissa.
+                </p>
               </div>
             </div>
           </FadeIn>
