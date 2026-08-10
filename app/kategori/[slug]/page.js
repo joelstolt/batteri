@@ -1,6 +1,9 @@
 import { Suspense } from "react"
+import Link from "next/link"
 import { notFound } from "next/navigation"
+import { ChevronRight } from "lucide-react"
 import { CATEGORIES } from "@/lib/constants"
+import { anvandningBySlug } from "@/lib/anvandning"
 import { breadcrumbJsonLd, jsonLdProps } from "@/lib/schema"
 import TopBar from "@/components/TopBar"
 import Header from "@/components/Header"
@@ -55,6 +58,59 @@ const CATEGORY_SEO = {
   },
 }
 
+/**
+ * Kategorisidorna är de som har mest auktoritet på sajten, och fritid-solenergi
+ * rankar redan på husvagnsbatteri utan att vi gjort något åt det (position 15,
+ * uppmätt 2026-08-10). Länkarna härifrån är alltså det starkaste vi kan ge de
+ * nya användningssidorna, och de ska peka med sökordet som ankartext.
+ */
+const ANVANDNINGAR_PER_KATEGORI = {
+  "fritid-solenergi": ["husbilsbatteri", "husvagnsbatteri", "marinbatteri", "solcellsbatteri-12v"],
+  "traktion-industri": ["golfbilsbatteri"],
+  stationara: ["solcellsbatteri-12v"],
+  alla: ["husbilsbatteri", "husvagnsbatteri", "marinbatteri", "solcellsbatteri-12v", "golfbilsbatteri"],
+}
+
+function AnvandningLankar({ slug }) {
+  const sidor = (ANVANDNINGAR_PER_KATEGORI[slug] || [])
+    .map((s) => anvandningBySlug(s))
+    .filter(Boolean)
+
+  if (!sidor.length) return null
+
+  return (
+    <section className="border-t border-border bg-surface">
+      <div className="mx-auto max-w-[1200px] px-4 py-12 sm:px-6">
+        <h2 className="mb-1.5 font-heading text-xl font-bold text-text-dark">
+          Vet du vad batteriet ska sitta i?
+        </h2>
+        <p className="mb-6 max-w-2xl text-sm leading-relaxed text-text-mid">
+          Då är det oftast snabbare att utgå från användningen än från kategorin. Sidorna
+          nedan visar bara de batterier som passar, med råd om kapacitet och montering.
+        </p>
+        <div className="grid gap-3 sm:grid-cols-2 lg:grid-cols-4">
+          {sidor.map((s) => (
+            <Link
+              key={s.slug}
+              href={`/${s.slug}`}
+              className="group flex items-start justify-between gap-3 rounded-2xl border border-border bg-white p-5 transition-colors hover:border-navy"
+            >
+              <div>
+                <div className="font-heading text-base font-bold text-text-dark">{s.h1}</div>
+                <div className="mt-1 text-xs text-text-light">{s.eyebrow}</div>
+              </div>
+              <ChevronRight
+                size={16}
+                className="mt-0.5 shrink-0 text-text-light transition-transform group-hover:translate-x-0.5"
+              />
+            </Link>
+          ))}
+        </div>
+      </div>
+    </section>
+  )
+}
+
 export async function generateMetadata({ params }) {
   const { slug } = await params
   const category = CATEGORIES.find((c) => c.slug === slug)
@@ -102,6 +158,7 @@ export default async function CategoryRoute({ params }) {
         <Suspense>
           <CategoryPageContent />
         </Suspense>
+        <AnvandningLankar slug={slug} />
         <CtaBanner />
       </main>
       <Footer />

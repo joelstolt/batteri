@@ -15,6 +15,18 @@ const COLUMNS = [
     ],
   },
   {
+    // Användningssidorna i lib/anvandning.js. Samma skäl som för maskinnavet
+    // ovan: utan en länk hit finns sidorna bara i sitemapen.
+    title: "Batteri till",
+    links: [
+      { label: "Husbil och bodel", href: "/husbilsbatteri" },
+      { label: "Husvagn", href: "/husvagnsbatteri" },
+      { label: "Båt och marin", href: "/marinbatteri" },
+      { label: "Solceller 12V", href: "/solcellsbatteri-12v" },
+      { label: "Golfbil", href: "/golfbilsbatteri" },
+    ],
+  },
+  {
     title: "Kundservice",
     links: [
       { label: "Kontakta oss", href: "/kontakt" },
@@ -72,7 +84,7 @@ export default function Footer() {
 
       {/* ── Main content ── */}
       <div className="mx-auto max-w-[1200px] px-4 pt-12 sm:px-6">
-        <div className="grid gap-10 border-b border-white/6 pb-10 sm:grid-cols-2 lg:grid-cols-[2fr_1fr_1fr_1fr]">
+        <div className="grid gap-10 border-b border-white/6 pb-10 sm:grid-cols-2 lg:grid-cols-[1.6fr_1fr_1fr_1fr_1fr]">
           {/* Brand + contact */}
           <div>
             <div className="mb-4 flex items-center gap-2.5">

@@ -3,6 +3,7 @@ import { publicProducts } from "@/lib/products"
 import { machines } from "@/lib/machines"
 import { replacements } from "@/lib/replacements"
 import { artiklar } from "@/lib/kunskap"
+import { anvandningar } from "@/lib/anvandning"
 
 export default function sitemap() {
   const now = new Date()
@@ -49,6 +50,14 @@ export default function sitemap() {
     changeFrequency: "monthly",
   }))
 
+  // Användningssidorna bär fritids- och solklustret, samma prioritet som
+  // maskinsidorna eftersom de fyller samma roll för ett bredare sökbeteende
+  const anvandningPages = anvandningar.map((a) => ({
+    url: `${SITE_URL}/${a.slug}`,
+    priority: 0.8,
+    changeFrequency: "monthly",
+  }))
+
   const kunskapPages = artiklar.map((a) => ({
     url: `${SITE_URL}/kunskap/${a.slug}`,
     priority: 0.6,
@@ -61,6 +70,7 @@ export default function sitemap() {
     ...productPages,
     ...machinePages,
     ...replacementPages,
+    ...anvandningPages,
     ...kunskapPages,
   ].map((p) => ({
     ...p,
