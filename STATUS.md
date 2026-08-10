@@ -595,3 +595,54 @@ eget varumärke och har ingen extern söktrafik att hämta.
 **Namnvariant att lösa för Sonnenschein:** vi skriver GF1250V, marknaden skriver
 även GF12050V och "GF 12 050 V". Powerland listar alla tre i sin titel. Våra
 sidor nämner bara en form, alltså missar vi de andra sökningarna.
+
+## Våg 1: fem användningssidor live 2026-08-10
+
+Bakgrund i `research/marknadsanalys-online-2026-08.md`. Kort: fritid, marin, sol
+och golfbil har de svagaste förstasidorna av alla segment vi kan leverera till på
+befintligt sortiment, sökordssvårigheten ligger på noll på i princip hela klustret,
+och domänen rankade redan position 15 på husvagnsbatteri via kategorisidan utan att
+vi gjort något åt det.
+
+Live och curl-verifierade:
+
+| Sida | Produkter | Grund |
+|---|---|---|
+| /golfbilsbatteri | 6 | fitsTo nämner golfbilar på samtliga |
+| /solcellsbatteri-12v | 6 | fitsTo nämner solcells- eller energilagring |
+| /husbilsbatteri | 6 | 2 via fitsTo, 4 via spec (sluten, djupcyklisk, 12V) |
+| /husvagnsbatteri | 6 | samma som husbil |
+| /marinbatteri | 6 | 1 via fitsTo, 5 via spec |
+
+Plus `/kunskap/agm-gel-eller-litium-i-husbilen`,
+`/kunskap/dimensionera-solcellsbatteri` och
+`/kunskap/startbatteri-eller-forbrukningsbatteri-i-baten`.
+
+**Passformsregeln gäller här också.** `lib/anvandning.js` har ett fält `grund` per
+sida och ett `specnot` som skrivs ut för kunden när en produkt står där på sin
+konstruktion i stället för på en belagd passform. Skillnaden mellan "produktdatan
+säger att EV31A-A passar båtinstallationer" och "ett slutet gelbatteri kan monteras
+i boendedelen eftersom det inte gasar" ska synas, inte gömmas.
+
+**Tre saker sidorna säger rakt ut, med flit:**
+- Vi säljer inte startbatterier till båt.
+- Vi säljer inte litium, och litiumguiden avråder från oss för den som bestämt sig.
+- Kassan kräver organisationsnummer. Samma problem som en gång löstes på
+  /foretagskund, nu löst innan kunden fyller varukorgen.
+
+**Vi är inte prisledande i fritid och copyn påstår inte det.** Uppmätt: Varta LA95
+AGM 95Ah kostar 2 610 kr i handeln, vår gel 105Ah 4 495 kr. I traktion är läget det
+omvända (Trojan T-105 4 728 mot vår 2 195), och där är prisargumentet hela poängen.
+
+**Kunde INTE byggas, saknar produkter:** åkgräsklippare och lastbil/traktor
+(startbatterier) samt UPS-ersättning 7 till 9 Ah. Ligger i frågelistan till
+leverantören.
+
+**Gate för konsumentkassan:** leverantörens B2C-paketfrakt ≤ ca 200 kr/kolli.
+Marknaden kör fri frakt eller ca 50 kr, vår platta 695 kr är tio gånger fel för
+privatkund. Tills det är löst är sidorna B2B: uthyrare, marinor, campingar,
+golfklubbar.
+
+**MÄTPUNKT 15 oktober 2026:** topp 20 på husvagnsbatteri, fritidsbatteri och
+husbilsbatteri? Ja, då Ads-test 50 kr/dag på fritid. Nej, då analysera innan mer
+byggs.
