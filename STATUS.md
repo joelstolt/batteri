@@ -93,6 +93,19 @@ Env i Vercel: `NEXT_PUBLIC_STRIPE`, `STRIPE_SECRET_KEY`, `STRIPE_WEBHOOK_SECRET`
 **Mätvärden (Lighthouse, live):** Prestanda 96, Tillgänglighet 100,
 Best practices 100, SEO 100, Agentic browsing 100. LCP ~1,0 s.
 
+## Kundservicenumret är ett 46elks-nummer (2026-08-17)
+
+**076-686 77 52 (+46766867752)** överallt på sajten, i mejlmallarna och i
+llms.txt — INTE Joels mobil. Numret är ett virtuellt 46elks-nummer som
+vidarekopplar samtal till Joels mobil med Batteriproffs-numret som callerid,
+och sms mejlas till joel@stoltmarketing.se. Routern:
+`Dev/internal/elks-router` (`+46766867752` i `VARUMARKEN`). Kedjan är
+E2E-verifierad 2026-08-17 (testsms → notismejl på 2 sekunder).
+Konstanten är `PHONE`/`PHONE_LINK` i `lib/constants.js`, men numret står
+även hårdkodat i faq.js, emails.js, review-email.js, villkor, kassa m.fl. —
+byts numret igen: grep:a hela kodbasen på båda formaten. Gamla numret
+(073-554 69 68) var Joels mobil och krockade med stoltmarketing-GBP:n.
+
 ## Filer att känna till innan du ändrar något
 
 | Fil | Varför den spelar roll |
