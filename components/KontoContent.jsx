@@ -227,7 +227,7 @@ function Inloggning({ fel, forifylld }) {
         </form>
 
         <p className="mt-5 text-xs leading-relaxed text-text-light">
-          Frågor om en order? Ring 073-554 69 68 eller mejla info@batteriproffs.se.
+          Frågor om en order? Ring 076-686 77 52 eller mejla info@batteriproffs.se.
         </p>
       </div>
     </section>

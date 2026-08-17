@@ -27,7 +27,7 @@ export const metadata = pageMeta({
 const FRAGOR = [
   {
     q: "Kan privatpersoner handla hos er?",
-    a: "Kassan är byggd för företag och kräver organisationsnummer, så en beställning går inte att slutföra som privatperson på sajten. Ring oss på 073-554 69 68 eller mejla info@batteriproffs.se så löser vi köpet manuellt.",
+    a: "Kassan är byggd för företag och kräver organisationsnummer, så en beställning går inte att slutföra som privatperson på sajten. Ring oss på 076-686 77 52 eller mejla info@batteriproffs.se så löser vi köpet manuellt.",
   },
   {
     q: "Kan vi beställa mot faktura?",

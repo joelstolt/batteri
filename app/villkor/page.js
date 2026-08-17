@@ -66,7 +66,7 @@ export default function VillkorPage() {
                 </p>
                 <ul className="ml-5 list-disc space-y-1">
                   <li>E-post: <a className="text-navy underline" href="mailto:info@batteriproffs.se">info@batteriproffs.se</a></li>
-                  <li>Telefon: <a className="text-navy underline" href="tel:+46735546968">073-554 69 68</a></li>
+                  <li>Telefon: <a className="text-navy underline" href="tel:+46766867752">076-686 77 52</a></li>
                   <li>Öppettider: Måndag–fredag 08:00–17:00</li>
                 </ul>
               </Section>
@@ -108,7 +108,7 @@ export default function VillkorPage() {
                   din order? Hör av dig på{" "}
                   <a className="text-navy underline" href="mailto:info@batteriproffs.se">info@batteriproffs.se</a>{" "}
                   eller{" "}
-                  <a className="text-navy underline" href="tel:+46735546968">073-554 69 68</a>{" "}
+                  <a className="text-navy underline" href="tel:+46766867752">076-686 77 52</a>{" "}
                   så snart som möjligt. Ändringar kan göras fram till dess att ordern
                   tagits ut för packning.
                 </p>
@@ -233,7 +233,7 @@ export default function VillkorPage() {
                   aldrig kopplats in, och att du hör av dig inom 14 dagar från leveransen.
                   Uppge maskinens märke och modell så hittar vi rätt batteri direkt. Är du
                   osäker före köpet, ring{" "}
-                  <a className="text-navy underline" href="tel:+46735546968">073-554 69 68</a>{" "}
+                  <a className="text-navy underline" href="tel:+46766867752">076-686 77 52</a>{" "}
                   i stället, det är alltid billigare för oss båda än en retur.
                 </p>
               </Section>
@@ -277,7 +277,7 @@ export default function VillkorPage() {
                   <a className="text-navy underline" href="mailto:info@batteriproffs.se">info@batteriproffs.se</a>
                   <br />
                   Telefon:{" "}
-                  <a className="text-navy underline" href="tel:+46735546968">073-554 69 68</a>
+                  <a className="text-navy underline" href="tel:+46766867752">076-686 77 52</a>
                 </p>
               </Section>
 

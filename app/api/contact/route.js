@@ -23,7 +23,7 @@ export async function POST(request) {
     const limit = rateLimit(`contact:${ip}`, 3, 10 * 60 * 1000)
     if (!limit.ok) {
       return NextResponse.json(
-        { error: "För många meddelanden. Vänta en stund eller ring oss på 073-554 69 68." },
+        { error: "För många meddelanden. Vänta en stund eller ring oss på 076-686 77 52." },
         { status: 429, headers: { "Retry-After": String(limit.retryAfter) } }
       )
     }
@@ -77,7 +77,7 @@ export async function POST(request) {
       <p style="margin:0 0 16px;font-size:14px;line-height:1.6;color:#374151;">
         Vi har tagit emot ditt meddelande och återkommer normalt inom
         24 timmar på vardagar. Behöver du svar snabbare? Ring oss på
-        <a href="tel:+46735546968" style="color:#0B1D3A;font-weight:600;">073-554 69 68</a>.
+        <a href="tel:+46766867752" style="color:#0B1D3A;font-weight:600;">076-686 77 52</a>.
       </p>
       <div style="margin-top:8px;padding:14px 16px;background:#F7F8FA;border-radius:10px;font-size:13px;line-height:1.6;color:#6B7280;">
         <div style="font-weight:600;color:#0A1628;margin-bottom:4px;">Ditt meddelande</div>

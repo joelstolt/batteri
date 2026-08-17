@@ -185,8 +185,8 @@ export default function HeroSearch({ onForhandsvisning }) {
             <div className="px-4 py-5 text-sm text-text-mid">
               Ingen träff på <strong className="text-text-dark">{query.trim()}</strong>. Vi har fler
               batterier än vad som listas här — ring{" "}
-              <a href="tel:+46735546968" className="font-semibold text-navy hover:underline">
-                073-554 69 68
+              <a href="tel:+46766867752" className="font-semibold text-navy hover:underline">
+                076-686 77 52
               </a>{" "}
               med modellbeteckningen så tar vi fram rätt.
             </div>

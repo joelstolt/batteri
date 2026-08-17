@@ -129,7 +129,7 @@ export default function ContactContent() {
                       value={form.phone}
                       onChange={(e) => setForm({ ...form, phone: e.target.value })}
                       className="w-full rounded-xl border border-border bg-white px-4 py-3 text-sm text-text-dark outline-none transition-colors placeholder:text-text-light focus:border-navy"
-                      placeholder="073-554 69 68"
+                      placeholder="076-686 77 52"
                     />
                   </div>
 
