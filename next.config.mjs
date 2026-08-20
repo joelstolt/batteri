@@ -9,6 +9,19 @@ const nextConfig = {
     ],
   },
 
+  // /batteri-till/elrullstol bytte slug till /batteri-till/permobil 2026-08-20,
+  // eftersom sökfrasen är "batteri till permobil" (110/mån) och den gamla
+  // sluggen inte matchade den. Permanent, gamla URL:en har funnits publikt.
+  async redirects() {
+    return [
+      {
+        source: "/batteri-till/elrullstol",
+        destination: "/batteri-till/permobil",
+        permanent: true,
+      },
+    ]
+  },
+
   async headers() {
     return [
       {

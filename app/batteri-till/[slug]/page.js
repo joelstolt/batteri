@@ -2,7 +2,7 @@ import { notFound } from "next/navigation"
 import { machines, machineBySlug } from "@/lib/machines"
 import { publicProducts, getProductImage } from "@/lib/products"
 import { SITE_URL } from "@/lib/constants"
-import { breadcrumbJsonLd, jsonLdProps } from "@/lib/schema"
+import { breadcrumbJsonLd, faqJsonLd, jsonLdProps } from "@/lib/schema"
 import TopBar from "@/components/TopBar"
 import Header from "@/components/Header"
 import MachinePageContent from "@/components/MachinePageContent"
@@ -28,10 +28,16 @@ export async function generateMetadata({ params }) {
   const products = productsFor(machine)
   const priceFrom = products.length ? Math.min(...products.map((p) => p.price)) : null
 
-  const title = `Batteri till ${machine.name} — ${machine.type} | Batteriproffs`
-  const description = priceFrom
-    ? `Batterier som passar ${machine.name}. ${products.length} alternativ från ${priceFrom} kr inkl. moms. Snabb leverans i hela Sverige och hjälp att välja rätt.`
-    : `Batterier som passar ${machine.name}. Snabb leverans i hela Sverige och hjälp att välja rätt.`
+  // Genererad titel som standard. Sidor med uppmätt egen efterfrågan sätter
+  // title/description i registret i stället, eftersom mallens variant blir för
+  // lång och upprepar maskinnamnet. Se lib/machines.js.
+  const title =
+    machine.title || `Batteri till ${machine.name} — ${machine.type} | Batteriproffs`
+  const description =
+    machine.description ||
+    (priceFrom
+      ? `Batterier som passar ${machine.name}. ${products.length} alternativ från ${priceFrom} kr inkl. moms. Snabb leverans i hela Sverige och hjälp att välja rätt.`
+      : `Batterier som passar ${machine.name}. Snabb leverans i hela Sverige och hjälp att välja rätt.`)
 
   return {
     title,
@@ -96,6 +102,7 @@ export default async function MachineRoute({ params }) {
         type="application/ld+json"
         dangerouslySetInnerHTML={{ __html: JSON.stringify(buildJsonLd(machine, products)) }}
       />
+      {machine.faq?.length ? <script {...jsonLdProps(faqJsonLd(machine.faq))} /> : null}
       <script {...jsonLdProps(breadcrumbJsonLd([
         { name: "Hem", path: "/" },
         { name: "Batteri till maskin", path: "/batteri-till" },

@@ -59,6 +59,26 @@ export default function MachinePageContent({ machine, products }) {
           </div>
         </FadeIn>
 
+        {/* Egen brödtext, bara på sidor med uppmätt efterfrågan. Se lib/machines.js. */}
+        {machine.sections?.length ? (
+          <FadeIn delay={0.03}>
+            <div className="mt-14 max-w-2xl">
+              {machine.sections.map((sec) => (
+                <div key={sec.h} className="mb-8 last:mb-0">
+                  <h2 className="mb-3 font-heading text-xl font-bold text-text-dark">
+                    {sec.h}
+                  </h2>
+                  {sec.p.map((stycke) => (
+                    <p key={stycke} className="mb-3 text-sm leading-relaxed text-text-mid last:mb-0">
+                      {stycke}
+                    </p>
+                  ))}
+                </div>
+              ))}
+            </div>
+          </FadeIn>
+        ) : null}
+
         {/* Innan du beställer */}
         <FadeIn delay={0.05}>
           <div className="mt-14 grid gap-6 lg:grid-cols-2">
@@ -134,6 +154,24 @@ export default function MachinePageContent({ machine, products }) {
             </div>
           </div>
         </FadeIn>
+
+        {/* Frågorna kommer från Googles People Also Ask på sökfrasen, så de
+            matchar det folk faktiskt undrar. FAQPage-schemat sätts i page.js. */}
+        {machine.faq?.length ? (
+          <FadeIn delay={0.1}>
+            <div className="mt-14 max-w-2xl">
+              <h2 className="font-heading text-xl font-bold text-text-dark">Vanliga frågor</h2>
+              <dl className="mt-5 space-y-5">
+                {machine.faq.map((f) => (
+                  <div key={f.q}>
+                    <dt className="font-heading font-bold text-text-dark">{f.q}</dt>
+                    <dd className="mt-1.5 text-sm leading-relaxed text-text-mid">{f.a}</dd>
+                  </div>
+                ))}
+              </dl>
+            </div>
+          </FadeIn>
+        ) : null}
       </div>
     </div>
   )
