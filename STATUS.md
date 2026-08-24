@@ -491,6 +491,13 @@ tillsammans med företagsuppgifterna. Adminvyn visar den som blocket **Källa**.
   "strikt nödvändigt". React-state är flyktigt minne och omfattas inte.
 - **gclid slår referrer.** Ett annonsklick har ändå google.com som referrer och
   hade annars räknats som organiskt. `wbraid`/`gbraid` fångas också.
+- **AI-källan slår utm_source** (ändrat 2026-08-24 efter Dalakvarn-ordern).
+  ChatGPT skickar `noreferrer` och taggar i stället länken med
+  `?utm_source=chatgpt.com`, så AI-matchningen läser både referrern och
+  utm_source och ligger före utm-grenen. Annars hade kanalen blivit råsträngen
+  "chatgpt.com" och AI-köpen inte gått att räkna på etiketten. Räkna AI-trafik
+  på `AI-assistent <namn>` i `source_channel`; `pyntaKanal` normaliserar även
+  de råvärden som redan ligger i Stripe.
 - Fälten heter `source_channel`, `source_landing`, `source_referrer`,
   `source_gclid`, `source_campaign` i Stripe-metadatan. `source_gclid` är
   dessutom råvaran till en offline-konverteringsexport till Google Ads.
