@@ -26,12 +26,30 @@ function cardBrandName(brand) {
   return brands[brand] || brand || "Kort"
 }
 
-// Google Ads köp-konvertering — firas en gång per order (transaction_id dedupar hos Google)
 const reportedOrders = new Set()
+
+// Laddar kunden om tack-sidan hämtas ordern igen och konverteringen räknas en
+// gång till. Ads dedupar på transaction_id, men Umami gör det inte, så vakten
+// måste överleva omladdning — därav localStorage och inte bara minnet.
+// Returnerar true bara första gången ordern rapporteras på den kanalen.
+function firstReport(orderId, kanal) {
+  if (!orderId) return false
+  const key = `bp_reported_${kanal}_${orderId}`
+  if (reportedOrders.has(key)) return false
+  reportedOrders.add(key)
+  try {
+    if (localStorage.getItem(key)) return false
+    localStorage.setItem(key, "1")
+  } catch {
+    // Privat läge: minnesvakten ovan får räcka.
+  }
+  return true
+}
+
+// Google Ads köp-konvertering — firas en gång per order (transaction_id dedupar hos Google)
 function reportPurchaseConversion(order) {
-  if (!order?.id || reportedOrders.has(order.id)) return
   if (typeof window === "undefined" || typeof window.gtag !== "function") return
-  reportedOrders.add(order.id)
+  if (!firstReport(order?.id, "ads")) return
   window.gtag("event", "conversion", {
     send_to: "AW-17955953885/J7C0CJ2do8ocEN25iPJC",
     value: order.totalInclVat,
@@ -71,7 +89,7 @@ export default function ThankYouContent() {
           reportPurchaseConversion(data)
           // Köpet rapporterades tidigare bara till Google Ads. Utan det här
           // steget i Umami går tratten inte att räkna hem.
-          if (typeof window !== "undefined" && window.umami) {
+          if (typeof window !== "undefined" && window.umami && firstReport(data.id, "umami")) {
             window.umami.track("kop", {
               order: data.id,
               varde: data.totalInclVat,
