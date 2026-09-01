@@ -252,7 +252,7 @@ function BetygsRad({ betyg }) {
   )
 }
 
-export default function ProductPageContent({ betyg = null }) {
+export default function ProductPageContent({ betyg = null, senasteKop = null }) {
   const params = useParams()
   const product = getProductBySlug(params.slug)
   const [qty, setQty] = useState(1)
@@ -364,6 +364,25 @@ export default function ProductPageContent({ betyg = null }) {
                 </svg>
                 <span className="text-sm font-semibold text-green">Skickas direkt från leverantör</span>
               </div>
+
+              {/* Senaste riktiga köpet av just den här produkten, ur Stripe.
+                  Datum och antal, aldrig vem — samma regel som startsidan. */}
+              {senasteKop && (
+                <div className="-mt-2 mb-5 flex items-center gap-2 text-sm text-text-mid">
+                  <svg width="20" height="20" viewBox="0 0 20 20" fill="none" aria-hidden="true">
+                    <circle cx="10" cy="10" r="10" fill="#16a34a" opacity="0.15" />
+                    <path d="M6 10l2.5 2.5L14 7" stroke="#16a34a" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" />
+                  </svg>
+                  <span>
+                    Senast köpt{" "}
+                    <span className="font-semibold text-text-dark">
+                      {new Date(senasteKop.datum * 1000).toLocaleDateString("sv-SE", { day: "numeric", month: "long" })}
+                    </span>
+                    {senasteKop.antal > 1 && ` · ${senasteKop.antal} st`}
+                    {senasteKop.ordrar > 1 && ` · ${senasteKop.ordrar} verifierade köp`}
+                  </span>
+                </div>
+              )}
 
               {/* Qty + Add to cart */}
               <div className="mb-5 flex items-center gap-3">

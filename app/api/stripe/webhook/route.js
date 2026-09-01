@@ -287,6 +287,7 @@ export async function POST(request) {
     try {
       revalidateTag("kop")
       revalidatePath("/")
+      for (const rad of items) if (rad.slug) revalidatePath(`/produkt/${rad.slug}`)
     } catch (err) {
       console.error("Kunde inte revalidera senaste köp:", err)
     }

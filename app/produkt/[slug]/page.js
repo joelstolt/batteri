@@ -2,6 +2,7 @@ import { notFound } from "next/navigation"
 import { products, getProductImage, getProductBrand } from "@/lib/products"
 import { breadcrumbJsonLd, jsonLdProps } from "@/lib/schema"
 import { hamtaGodkandaCachat, sammanfatta } from "@/lib/omdomen"
+import { hamtaKopPerProduktCachat } from "@/lib/orders"
 import { CATEGORIES } from "@/lib/constants"
 import TopBar from "@/components/TopBar"
 import Header from "@/components/Header"
@@ -192,6 +193,12 @@ export default async function ProductRoute({ params }) {
   // Går Stripe ned ska produktsidan fortfarande fungera. Omdömen är ett
   // tillägg, inte en förutsättning för att kunna sälja batteriet.
   let omdomen = []
+  let senasteKop = null
+  try {
+    senasteKop = (await hamtaKopPerProduktCachat())[slug] || null
+  } catch (err) {
+    console.error("Kunde inte läsa senaste köp:", err)
+  }
   if (!product.hidden) {
     try {
       omdomen = (await hamtaGodkandaCachat()).filter((o) => o.slug === slug)
@@ -225,7 +232,7 @@ export default async function ProductRoute({ params }) {
       <main id="innehall">
         {/* Betygssammanfattningen visas vid priset (social proof där köpbeslutet
             tas); hela listan ligger som egen sektion direkt under köpboxen. */}
-        <ProductPageContent betyg={sammanfatta(omdomen)} />
+        <ProductPageContent betyg={sammanfatta(omdomen)} senasteKop={senasteKop} />
         <ProduktOmdomen omdomen={omdomen} />
         <PrisforklaringKort />
         <CtaBanner />
