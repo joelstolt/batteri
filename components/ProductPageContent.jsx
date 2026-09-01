@@ -227,7 +227,32 @@ function ExpandableDescription({ description }) {
   )
 }
 
-export default function ProductPageContent() {
+/** Kompakt stjärnrad för betygssammanfattningen vid priset. */
+function BetygsRad({ betyg }) {
+  if (!betyg) return null
+  const hela = Math.round(betyg.snitt)
+  return (
+    <a
+      href="#omdomen-rubrik"
+      className="mb-3 inline-flex items-center gap-2 text-sm text-text-mid hover:text-text-dark"
+      aria-label={`${betyg.snitt.toFixed(1)} av 5 i betyg, ${betyg.antal} ${betyg.antal === 1 ? "omdöme" : "omdömen"}. Läs omdömena`}
+    >
+      <span className="flex gap-0.5" aria-hidden="true">
+        {[1, 2, 3, 4, 5].map((n) => (
+          <svg key={n} width="16" height="16" viewBox="0 0 20 20" fill="currentColor" className={n <= hela ? "text-amber-bg" : "text-border-dark"}>
+            <path d="M10 1.5l2.6 5.3 5.9.9-4.3 4.1 1 5.8-5.2-2.7-5.2 2.7 1-5.8L1.5 7.7l5.9-.9z" />
+          </svg>
+        ))}
+      </span>
+      <span className="font-semibold text-text-dark">{betyg.snitt.toFixed(1)}</span>
+      <span className="underline underline-offset-2">
+        {betyg.antal} {betyg.antal === 1 ? "omdöme" : "omdömen"} · verifierade köp
+      </span>
+    </a>
+  )
+}
+
+export default function ProductPageContent({ betyg = null }) {
   const params = useParams()
   const product = getProductBySlug(params.slug)
   const [qty, setQty] = useState(1)
@@ -298,6 +323,8 @@ export default function ProductPageContent() {
               <h1 className="mb-2 font-heading text-[clamp(24px,3.5vw,32px)] font-extrabold tracking-tight text-text-dark">
                 {product.name}
               </h1>
+
+              <BetygsRad betyg={betyg} />
 
               {/* Price */}
               <div className="mb-5">

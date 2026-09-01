@@ -222,10 +222,12 @@ export default async function ProductRoute({ params }) {
       )}
       <TopBar />
       <Header />
-      <main id="innehall">        <ProductPageContent />
-        {/* Direkt efter priset: det är där tvivlet uppstår, inte längre ned. */}
-        <PrisforklaringKort />
+      <main id="innehall">
+        {/* Betygssammanfattningen visas vid priset (social proof där köpbeslutet
+            tas); hela listan ligger som egen sektion direkt under köpboxen. */}
+        <ProductPageContent betyg={sammanfatta(omdomen)} />
         <ProduktOmdomen omdomen={omdomen} />
+        <PrisforklaringKort />
         <CtaBanner />
       </main>
       <Footer />
