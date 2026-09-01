@@ -11,16 +11,21 @@ export default function TopBar() {
     <aside aria-label="Snabbfakta och kundservice" className="bg-gradient-to-r from-amber-bg to-amber-light text-text-dark">
       <div className="mx-auto flex max-w-[1200px] items-center justify-between px-4 py-2 sm:px-6 sm:py-2.5">
         {/* USPs */}
-        <div className="flex min-w-0 flex-1 items-center gap-4 overflow-x-auto text-xs font-semibold sm:gap-6 sm:text-sm [scrollbar-width:none] [-ms-overflow-style:none] [&::-webkit-scrollbar]:hidden"
-          tabIndex={0}>
-          {USPS.map((text, i) => (
-            <span key={i} className="flex shrink-0 items-center gap-1.5">
-              <svg width="14" height="14" viewBox="0 0 15 15" fill="none" className="shrink-0">
+        {/* På mobil visas bara det första löftet. Den gamla sidledsscrollen
+            dolde två av tre löften bakom kanten utan att någon såg det. */}
+        <div className="flex min-w-0 flex-1 items-center gap-4 text-xs font-semibold sm:gap-6 sm:text-sm">
+          {USPS.map((usp, i) => (
+            <Link
+              key={usp.href}
+              href={usp.href}
+              className={`${i === 0 ? "flex" : "hidden sm:flex"} shrink-0 items-center gap-1.5 transition-opacity hover:opacity-70`}
+            >
+              <svg width="14" height="14" viewBox="0 0 15 15" fill="none" className="shrink-0" aria-hidden="true">
                 <circle cx="7.5" cy="7.5" r="7.5" fill="#1A1A1A" opacity="0.12" />
                 <path d="M4.5 7.5l2 2 4-4" stroke="#1A1A1A" strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round" />
               </svg>
-              {text}
-            </span>
+              {usp.text}
+            </Link>
           ))}
         </div>
 

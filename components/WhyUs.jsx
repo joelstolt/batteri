@@ -3,28 +3,30 @@
 import FadeIn from "./FadeIn"
 
 const CHECKPOINTS = [
-    {
+  {
     title: "Normalt 1–3 dagars leverans",
     desc: "Order lagd före 14:00 skickas normalt samma dag och är oftast framme inom 1–3 arbetsdagar. Vid restnotering eller pallbokning kan det ta längre — vi hör av oss om något drar ut.",
   },
-{
-    title: "Sveriges vassaste priser",
-    desc: "Vi köper direkt från tillverkaren — inga mellanhänder, inga onödiga påslag. Du får proffs-kvalitet till rätt pris.",
+  {
+    // Inte "direkt från tillverkaren": vi köper via distributör. Det som ÄR
+    // sant och går att kontrollera är prisnivån och att priserna står öppet.
+    title: "Öppna priser, långt under märkespriset",
+    desc: "Priset står på varje produkt, inga offertformulär. Ett likvärdigt batteri till Trojan T-105 kostar 2 195 kr hos oss — jämför gärna med vad märkesåterförsäljarna tar.",
   },
   {
-    title: "Ring och prata med en expert",
-    desc: "Hos oss svarar någon som faktiskt kan batterier — inte en ordertagare som läser från ett manus.",
+    title: "Svar direkt, dygnet runt",
+    desc: "Chatten kan hela sortimentet: pris, passform, frakt. Behövs en människa tar vi över i chatten eller svarar per mejl inom några timmar på vardagar.",
   },
   {
-    title: "B2B & privat, samma service",
-    desc: "Visa pris exkl. moms med ett klick. Större beställning? Chatta med oss för volympriser.",
+    title: "Byggt för företagsköp",
+    desc: "Pris exkl. moms med ett klick, orgnr och referens på kvittot, lossningsval för pallgods. Större beställning? Chatta med oss för volympriser.",
   },
 ]
 
 const NUMBERS = [
-  { num: "01", title: "Bästa pris", desc: "Direkt från tillverkare, utan mellanhänder" },
+  { num: "01", title: "Öppna priser", desc: "Står på varje produkt, långt under märkespriset" },
   { num: "02", title: "Snabbast ut", desc: "Skickas normalt samma dag vid order före kl. 14" },
-  { num: "03", title: "Riktig hjälp", desc: "Prata med en människa som kan din maskin" },
+  { num: "03", title: "Svar direkt", desc: "Chatten svarar dygnet runt, en människa tar över vid behov" },
 ]
 
 export default function WhyUs() {

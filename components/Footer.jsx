@@ -7,10 +7,10 @@ const COLUMNS = [
   {
     title: "Kategorier",
     links: [
-      { label: "Traktion & Industri", href: "/kategori/traktion-industri" },
+      { label: "Truck & Traktion", href: "/kategori/traktion-industri" },
       { label: "Städmaskiner", href: "/kategori/stadmaskiner" },
-      { label: "Stationära", href: "/kategori/stationara" },
-      { label: "Fritid & Sol", href: "/kategori/fritid-solenergi" },
+      { label: "UPS & Backup", href: "/kategori/stationara" },
+      { label: "Fritid & Husvagn", href: "/kategori/fritid-solenergi" },
       // Navet för maskinsidorna — utan den här länken blir de föräldralösa
       { label: "Batteri till din maskin", href: "/batteri-till" },
     ],

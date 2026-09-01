@@ -60,8 +60,7 @@ export default function Hero() {
             transition={{ duration: 0.8, ease: [0.22, 1, 0.36, 1] }}
           >
             <div className="mb-6 inline-flex items-center gap-2 rounded-full border border-amber/40 bg-amber/10 px-3.5 py-1.5 font-heading text-xs font-bold uppercase tracking-wider text-amber">
-              <span className="text-sm">🏆</span>
-              Marknadens vassaste priser
+              Öppna priser · verifierade köp
             </div>
 
             <h1 className="mb-5 font-heading text-[clamp(32px,4.5vw,52px)] font-extrabold leading-[1.05] tracking-tight text-white">
@@ -76,9 +75,8 @@ export default function Hero() {
 
             <p className="mb-8 max-w-[620px] text-[17px] leading-relaxed text-white/75">
               Traktionsbatterier och gelbatterier till truckar, saxliftar,
-              pallyftare, städmaskiner och UPS. Priserna står öppet på sajten,
-              leverans normalt på 1–3 arbetsdagar, och du får svar direkt i chatten
-              när du behöver hjälp att välja rätt.
+              städmaskiner och UPS. Priserna står öppet, leverans normalt 1–3
+              arbetsdagar, och chatten hjälper dig välja rätt.
             </p>
 
             {/* Sökfältet i stället för knappar. Besökaren skriver sin maskin och
