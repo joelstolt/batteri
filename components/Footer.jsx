@@ -97,8 +97,8 @@ export default function Footer() {
               </div>
             </div>
             <p className="mb-5 max-w-[280px] text-sm leading-relaxed text-white/60">
-              Professionella batterilösningar för företag och privatpersoner
-              i hela Sverige — Sonnenschein, Nordmax och fler kvalitetsmärken.
+              Traktions- och gelbatterier till företag i hela Sverige.
+              Sonnenschein, Nordmax och Discover, med priset öppet på varje produkt.
             </p>
             <div className="space-y-2.5">
               <ChattKnapp className="flex items-center gap-2 text-sm text-white/50 transition-colors hover:text-white/80">
