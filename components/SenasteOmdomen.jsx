@@ -26,13 +26,61 @@ function Stjarnor({ betyg }) {
   )
 }
 
-export default function SenasteOmdomen({ omdomen }) {
-  if (!omdomen?.length) return null
+function datum(unix) {
+  return new Date(unix * 1000).toLocaleDateString("sv-SE", { day: "numeric", month: "long" })
+}
+
+/**
+ * "Senaste köp": riktiga ordrar ur Stripe, bara produkt och datum. Inga namn,
+ * inga belopp — det räcker för att visa att butiken lever, utan att lova mer
+ * än sanningen eller peka ut en kund.
+ */
+function SenasteKop({ kop }) {
+  if (!kop?.length) return null
+  return (
+    <div className="rounded-2xl border border-border bg-surface/60 p-6">
+      <div className="mb-3 font-heading text-sm font-bold uppercase tracking-wider text-text-dark">
+        Senaste köp
+      </div>
+      <ul className="divide-y divide-border">
+        {kop.map((k, i) => {
+          const produkt = k.slug ? publicProducts.find((p) => p.slug === k.slug) : null
+          const titel = produkt?.shortName || k.namn
+          return (
+            <li key={`${k.datum}-${i}`} className="flex items-center justify-between gap-3 py-2.5 text-sm">
+              <span className="min-w-0 truncate">
+                {produkt ? (
+                  <Link href={`/produkt/${produkt.slug}`} className="font-semibold text-text-dark hover:text-amber-text">
+                    {titel}
+                  </Link>
+                ) : (
+                  <span className="font-semibold text-text-dark">{titel}</span>
+                )}
+                {k.antal > 1 && <span className="text-text-mid"> · {k.antal} st</span>}
+              </span>
+              <span className="flex shrink-0 items-center gap-2 text-text-light">
+                {datum(k.datum)}
+                <span className="rounded-md bg-green/10 px-1.5 py-0.5 text-[10px] font-bold uppercase tracking-wide text-green">
+                  Verifierat
+                </span>
+              </span>
+            </li>
+          )
+        })}
+      </ul>
+    </div>
+  )
+}
+
+export default function SenasteOmdomen({ omdomen, kop }) {
+  if (!omdomen?.length && !kop?.length) return null
+  if (!omdomen?.length) omdomen = []
   const visa = omdomen.slice(0, 3)
-  const snitt = Math.round((omdomen.reduce((s, o) => s + o.betyg, 0) / omdomen.length) * 10) / 10
+  const snitt = omdomen.length
+    ? Math.round((omdomen.reduce((s, o) => s + o.betyg, 0) / omdomen.length) * 10) / 10
+    : 0
   const visaSnitt = omdomen.length >= 3
-  const rubrik =
-    omdomen.length === 1 ? "Senaste omdömet" : omdomen.length < 3 ? "Senaste omdömena" : "Kunder om oss"
+  const rubrik = omdomen.length >= 3 ? "Kunder om oss" : "Senaste köp och omdömen"
 
   return (
     <section className="border-b border-border bg-white" aria-labelledby="kunder-rubrik">
@@ -55,7 +103,9 @@ export default function SenasteOmdomen({ omdomen }) {
           )}
         </div>
 
-        <div className={visa.length === 1 ? "max-w-[520px]" : "grid gap-4 sm:grid-cols-2 lg:grid-cols-3"}>
+        <div className="grid gap-4 lg:grid-cols-[1fr_1.4fr]">
+          <SenasteKop kop={kop} />
+          <div className={visa.length > 1 ? "grid gap-4 sm:grid-cols-2" : ""}>
           {visa.map((o, i) => {
             const produkt = publicProducts.find((p) => p.slug === o.slug)
             return (
@@ -90,9 +140,11 @@ export default function SenasteOmdomen({ omdomen }) {
               </article>
             )
           })}
+          </div>
         </div>
 
         <p className="mt-6 text-xs leading-relaxed text-text-light">
+          Köpen hämtas direkt ur vårt ordersystem och visas utan namn och belopp.
           Bara kunder som köpt hos oss kan lämna omdöme: inbjudan mejlas efter
           leverans till adressen som användes vid köpet, och varje omdöme granskas
           manuellt innan det publiceras. Vi ändrar aldrig i texterna.

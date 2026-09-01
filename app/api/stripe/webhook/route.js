@@ -1,4 +1,5 @@
 import { NextResponse } from "next/server"
+import { revalidateTag, revalidatePath } from "next/cache"
 import Stripe from "stripe"
 import {
   resend,
@@ -279,6 +280,15 @@ export async function POST(request) {
           }),
         })
       )
+    }
+
+    // Startsidans "Senaste köp" läser en taggad cache — töm den så den nya
+    // ordern syns direkt. Får aldrig fälla ordermejlen.
+    try {
+      revalidateTag("kop")
+      revalidatePath("/")
+    } catch (err) {
+      console.error("Kunde inte revalidera senaste köp:", err)
     }
 
     // Omdömesmejlet schemaläggs INTE här längre. Det köas i /api/order/ship

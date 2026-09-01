@@ -7,6 +7,7 @@ import Categories from "@/components/Categories"
 import References from "@/components/References"
 import SenasteOmdomen from "@/components/SenasteOmdomen"
 import { hamtaGodkandaCachat } from "@/lib/omdomen"
+import { hamtaSenasteKopCachat } from "@/lib/orders"
 import HelpAndQuote from "@/components/HelpAndQuote"
 // AllProducts låg tidigare här och dumpade hela katalogen, 20 produkter och 48
 // länkar, på startsidan. Det är kategorisidans jobb — /kategori/alla listar
@@ -30,10 +31,11 @@ export const metadata = {
 
 export default async function Home() {
   let omdomen = []
+  let kop = []
   try {
-    omdomen = await hamtaGodkandaCachat()
+    ;[omdomen, kop] = await Promise.all([hamtaGodkandaCachat(), hamtaSenasteKopCachat()])
   } catch (err) {
-    console.error("Kunde inte läsa omdömen till startsidan:", err)
+    console.error("Kunde inte läsa omdömen/köp till startsidan:", err)
   }
   return (
     <>
@@ -70,7 +72,7 @@ export default async function Home() {
           svaret på precis den frågan. Längre ned hade blocket bara bekräftat
           den som redan bestämt sig.
         */}
-        <SenasteOmdomen omdomen={omdomen} />
+        <SenasteOmdomen omdomen={omdomen} kop={kop} />
         {/* Finnaren efter produkterna: för den som inte såg sitt batteri */}
         <FinderSection />
         <Categories />
