@@ -368,8 +368,8 @@ export default function ProductPageContent() {
               </div>
 
               <p className="mb-4 -mt-1 text-xs text-text-light">
-                Försäljning till företag — organisationsnummer anges i kassan
-                (enskild firma går bra).
+                Försäljning till företag. Organisationsnummer anges i kassan,
+                enskild firma går bra.
               </p>
 
               {/* Volume order */}
