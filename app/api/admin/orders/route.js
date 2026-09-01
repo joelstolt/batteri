@@ -40,8 +40,11 @@ export async function GET(request) {
 
     // Misslyckade och avbrutna betalningsförsök är inte ordrar. De ligger kvar
     // i Stripe som requires_payment_method och skulle annars fylla listan.
+    // requires_capture ÄR däremot en order: kunden har bekräftat och pengarna
+    // är reserverade — det är precis de ordrarna som ska skickas (och dras)
+    // härifrån, så de måste synas. Filtret dolde PCB-ordern 2026-09-01.
     const ordrar = svar.data
-      .filter((pi) => pi.status === "succeeded")
+      .filter((pi) => pi.status === "succeeded" || pi.status === "requires_capture")
       .map(normaliseraOrder)
 
     return NextResponse.json({
