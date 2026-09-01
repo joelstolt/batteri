@@ -27,7 +27,11 @@ export const dynamic = "force-dynamic"
  * loggar in.
  */
 export default async function OmdomePage({ searchParams }) {
-  const { t } = await searchParams
+  const { t, betyg } = await searchParams
+  // Stjärnan kunden tryckte på i mejlet. Bara förval — sparas först när hon
+  // bekräftar på sidan, eftersom B2B-mejlgateways föröppnar länkar och en
+  // GET som skrev betyg hade gett spökomdömen från skannrar.
+  const forvaltBetyg = Math.min(5, Math.max(0, Number(betyg) || 0))
   const piId = lasOmdomeToken(t)
 
   let order = null
@@ -59,6 +63,7 @@ export default async function OmdomePage({ searchParams }) {
             buyerName={order.customer.name}
             items={order.items}
             redanLamnade={redanLamnade}
+            forvaltBetyg={forvaltBetyg}
           />
         ) : (
           <section className="mx-auto max-w-xl px-5 py-20 text-center">

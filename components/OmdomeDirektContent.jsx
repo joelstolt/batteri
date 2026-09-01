@@ -38,9 +38,10 @@ function Stjarnvaljare({ betyg, onValj, disabled }) {
  * ordern — de flesta ordrar har en. Samma regler som kontovägen: betyget är
  * det enda obligatoriska, texten frivillig, allt modereras före publicering.
  */
-function ArtikelOmdome({ token, buyerName, rad, redanLamnad }) {
-  const [betyg, setBetyg] = useState(0)
+function ArtikelOmdome({ token, buyerName, rad, redanLamnad, forvaltBetyg }) {
+  const [betyg, setBetyg] = useState(forvaltBetyg || 0)
   const [text, setText] = useState("")
+  const [visaText, setVisaText] = useState(false)
   const [anonym, setAnonym] = useState(false)
   const [skickar, setSkickar] = useState(false)
   const [klart, setKlart] = useState(redanLamnad ? "Du har redan lämnat ett omdöme på den här artikeln." : "")
@@ -85,39 +86,51 @@ function ArtikelOmdome({ token, buyerName, rad, redanLamnad }) {
           <Stjarnvaljare betyg={betyg} onValj={setBetyg} disabled={skickar} />
         </div>
 
-        <label htmlFor={`txt-${rad.slug}`} className="mt-4 block text-sm text-text-mid">
-          Vill du skriva något? (frivilligt)
-        </label>
-        <textarea
-          id={`txt-${rad.slug}`}
-          value={text}
-          onChange={(e) => setText(e.target.value.slice(0, MAX_TEXT))}
-          rows={3}
-          className="mt-1.5 w-full rounded-lg border border-border px-3 py-2 text-sm"
-          placeholder="Hur har batteriet fungerat?"
-        />
-        <p className="mt-1 text-xs text-text-light">
-          {text.length} / {MAX_TEXT} tecken
-        </p>
-
-        <label className="mt-3 flex items-center gap-2 text-sm text-text-mid">
-          <input
-            type="checkbox"
-            checked={anonym}
-            onChange={(e) => setAnonym(e.target.checked)}
-            className="h-4 w-4"
-          />
-          Visa mig som anonym
-        </label>
+        {/* Stjärnorna ÄR omdömet — allt annat är frivilliga tillägg som göms
+            tills kunden själv ber om dem. Lägsta möjliga tröskel. */}
+        {visaText ? (
+          <>
+            <textarea
+              id={`txt-${rad.slug}`}
+              value={text}
+              onChange={(e) => setText(e.target.value.slice(0, MAX_TEXT))}
+              rows={3}
+              autoFocus
+              className="mt-3 w-full rounded-lg border border-border px-3 py-2 text-sm"
+              placeholder="Hur har batteriet fungerat?"
+              aria-label="Kommentar (frivilligt)"
+            />
+            <p className="mt-1 text-xs text-text-light">
+              {text.length} / {MAX_TEXT} tecken
+            </p>
+            <label className="mt-2 flex items-center gap-2 text-sm text-text-mid">
+              <input
+                type="checkbox"
+                checked={anonym}
+                onChange={(e) => setAnonym(e.target.checked)}
+                className="h-4 w-4"
+              />
+              Visa mig som anonym
+            </label>
+          </>
+        ) : (
+          <button
+            type="button"
+            onClick={() => setVisaText(true)}
+            className="mt-3 text-sm text-text-mid underline underline-offset-2 hover:text-text-dark"
+          >
+            + Lägg till en kommentar (frivilligt)
+          </button>
+        )}
 
         {fel && <p className="mt-2.5 text-sm text-red-700">{fel}</p>}
 
         <button
           type="submit"
           disabled={!betyg || skickar}
-          className="mt-4 rounded-lg bg-navy px-5 py-2.5 font-heading text-sm font-bold text-white disabled:opacity-40"
+          className="mt-4 w-full rounded-lg bg-navy px-5 py-3.5 font-heading text-base font-bold text-white disabled:opacity-40 sm:w-auto sm:px-8"
         >
-          {skickar ? "Skickar…" : "Skicka omdöme"}
+          {skickar ? "Skickar…" : betyg ? `Skicka betyget ${betyg} av 5` : "Välj betyg först"}
         </button>
 
         <p className="mt-3 text-xs leading-relaxed text-text-light">
@@ -130,7 +143,7 @@ function ArtikelOmdome({ token, buyerName, rad, redanLamnad }) {
   )
 }
 
-export default function OmdomeDirektContent({ token, orderId, buyerName, items, redanLamnade }) {
+export default function OmdomeDirektContent({ token, orderId, buyerName, items, redanLamnade, forvaltBetyg }) {
   const fornamn = String(buyerName || "").split(" ")[0]
   return (
     <section className="mx-auto max-w-xl px-5 py-14">
@@ -138,8 +151,10 @@ export default function OmdomeDirektContent({ token, orderId, buyerName, items, 
         {fornamn ? `Hej ${fornamn}!` : "Hej!"}
       </h1>
       <p className="mt-2 text-sm leading-relaxed text-text-mid">
-        Hur blev det med din order <strong className="text-text-dark">{orderId}</strong>? Sätt ett
-        betyg — det tar tio sekunder och hjälper nästa kund att våga handla hos oss.
+        Hur blev det med din order <strong className="text-text-dark">{orderId}</strong>?
+        {forvaltBetyg
+          ? " Din stjärna är förvald, bekräfta med ett tryck så är du klar."
+          : " Sätt ett betyg, det tar tio sekunder och hjälper nästa kund att våga handla hos oss."}
       </p>
 
       <div className="mt-8 flex flex-col gap-4">
@@ -150,6 +165,7 @@ export default function OmdomeDirektContent({ token, orderId, buyerName, items, 
             buyerName={buyerName}
             rad={rad}
             redanLamnad={redanLamnade.includes(rad.slug)}
+            forvaltBetyg={forvaltBetyg}
           />
         ))}
       </div>
