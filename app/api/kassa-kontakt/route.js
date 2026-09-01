@@ -1,6 +1,7 @@
 import Stripe from "stripe"
 import { NextResponse } from "next/server"
 import { giltigEpost } from "@/lib/konto-auth"
+import { resend, FROM, ADMIN_EMAIL, escape, emailLayout } from "@/lib/emails"
 import { rateLimit, clientIp, isOwnOrigin, ALLOWED_ORIGINS } from "@/lib/rate-limit"
 
 const stripe = new Stripe(process.env.STRIPE_SECRET_KEY)
@@ -50,12 +51,56 @@ export async function POST(request) {
       return NextResponse.json({ error: "Betalningen kan inte ändras" }, { status: 409 })
     }
 
+    const adress = String(epost).trim().toLowerCase()
+    // Samma adress på samma betalning = redan noterad, ingen ny notis.
+    const redan = (pi.metadata?.kontakt_epost || "") === adress
+
     await stripe.paymentIntents.update(paymentIntentId, {
       metadata: {
-        kontakt_epost: String(epost).trim().toLowerCase(),
+        kontakt_epost: adress,
         kontakt_epost_at: String(Math.floor(Date.now() / 1000)),
       },
     })
+
+    // Notis till Joel: någon står i kassan med ifylld mejladress. Poängen är
+    // uppföljningen — köper de inte inom en timme går det att mejla och fråga
+    // om de behöver hjälp. Notisen får aldrig fälla själva sparningen.
+    if (!redan && ADMIN_EMAIL) {
+      let rader = []
+      try {
+        rader = JSON.parse(pi.metadata?.items || "[]")
+          .filter((r) => r && r.o === undefined)
+          .map((r) => `${r.q ?? r.qty ?? 1} st ${r.n ?? r.name ?? "?"}`)
+      } catch {}
+      resend.emails
+        .send({
+          from: FROM,
+          to: ADMIN_EMAIL,
+          replyTo: adress,
+          subject: `I kassan nu: ${adress} (${Math.round(pi.amount / 100)} kr)`,
+          html: emailLayout({
+            title: "Någon står i kassan",
+            preheader: `${adress} · ${Math.round(pi.amount / 100)} kr`,
+            internt: true,
+            body: `
+              <h1 style="margin:0 0 12px;font-size:20px;font-weight:800;">Någon står i kassan</h1>
+              <p style="margin:0 0 14px;font-size:14px;line-height:1.7;color:#374151;">
+                <strong>${escape(adress)}</strong> har fyllt i sin mejladress i kassan.
+                Varukorg: ${Math.round(pi.amount / 100)} kr.
+              </p>
+              <p style="margin:0 0 14px;font-size:14px;line-height:1.7;color:#374151;">
+                ${rader.length ? rader.map(escape).join("<br>") : "(rader saknas i metadatan)"}
+              </p>
+              <p style="margin:0;font-size:13px;line-height:1.6;color:#6B7280;">
+                Kommer ingen orderbekräftelse inom en timme har köpet troligen
+                fastnat — svara på det här mejlet (går direkt till kunden) och
+                fråga om de behöver hjälp. Kolla först i Stripe att ordern inte
+                gick igenom.
+              </p>`,
+          }),
+        })
+        .catch((err) => console.error("Kassanotis kunde inte skickas:", err))
+    }
 
     return NextResponse.json({ ok: true })
   } catch (error) {
