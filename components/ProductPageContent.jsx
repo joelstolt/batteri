@@ -314,6 +314,13 @@ export default function ProductPageContent() {
                     : ` · ${formatPrice(product.price)} kr inkl. moms`
                   }
                 </div>
+                {/* Frakten på produktsidan, inte som överraskning i kassan —
+                    oväntade extrakostnader är e-handelns största avhoppsskäl.
+                    Platt frakt gör dessutom flerköp till ett argument. */}
+                <div className="mt-1.5 text-sm text-text-mid">
+                  + frakt <span className="font-semibold text-text-dark">695 kr</span> per
+                  order, oavsett antal batterier
+                </div>
               </div>
 
               {/* Artnr */}
@@ -359,6 +366,11 @@ export default function ProductPageContent() {
                   LÄGG I VARUKORG
                 </button>
               </div>
+
+              <p className="mb-4 -mt-1 text-xs text-text-light">
+                Försäljning till företag — organisationsnummer anges i kassan
+                (enskild firma går bra).
+              </p>
 
               {/* Volume order */}
               <div className="mb-6">
