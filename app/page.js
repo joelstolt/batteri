@@ -64,13 +64,18 @@ export default async function Home() {
           väcker köplust, och den frågan besvaras inte av något annat på sidan.
         */}
         <Prisforklaring />
+        {/*
+          Verifierade omdömen direkt efter prisförklaringen: det är här
+          misstanken uppstår ("kan man lita på dem?"), och ett riktigt köp är
+          svaret på precis den frågan. Längre ned hade blocket bara bekräftat
+          den som redan bestämt sig.
+        */}
+        <SenasteOmdomen omdomen={omdomen} />
         {/* Finnaren efter produkterna: för den som inte såg sitt batteri */}
         <FinderSection />
         <Categories />
         <WhyUs />
         <HelpAndQuote />
-        {/* Riktiga omdömen före referenserna: verifierade köp väger tyngst. */}
-        <SenasteOmdomen omdomen={omdomen} />
         <References />
         <CtaBanner />
       </main>
