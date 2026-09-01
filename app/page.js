@@ -8,6 +8,7 @@ import References from "@/components/References"
 import SenasteOmdomen from "@/components/SenasteOmdomen"
 import { hamtaGodkandaCachat } from "@/lib/omdomen"
 import { hamtaSenasteKopCachat } from "@/lib/orders"
+import { unstable_noStore as noStore } from "next/cache"
 import HelpAndQuote from "@/components/HelpAndQuote"
 // AllProducts låg tidigare här och dumpade hela katalogen, 20 produkter och 48
 // länkar, på startsidan. Det är kategorisidans jobb — /kategori/alla listar
@@ -35,7 +36,11 @@ export default async function Home() {
   try {
     ;[omdomen, kop] = await Promise.all([hamtaGodkandaCachat(), hamtaSenasteKopCachat()])
   } catch (err) {
+    // Rendera utan sektionen men LÅS INTE in den tomma sidan i ISR-cachen.
+    // Utan noStore låg startsidan en timme utan "Senaste köp och omdömen"
+    // efter ett enda misslyckat Stripe-anrop (2026-09-02).
     console.error("Kunde inte läsa omdömen/köp till startsidan:", err)
+    noStore()
   }
   return (
     <>

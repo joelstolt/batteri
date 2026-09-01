@@ -3,6 +3,7 @@ import Script from "next/script"
 import Providers from "@/components/Providers"
 import { hamtaGodkandaCachat, betygPerProdukt } from "@/lib/omdomen"
 import { hamtaKopPerProduktCachat } from "@/lib/orders"
+import { unstable_noStore as noStore } from "next/cache"
 import CookieBanner from "@/components/CookieBanner"
 import "./globals.css"
 
@@ -62,7 +63,9 @@ export default async function RootLayout({ children }) {
     betyg = betygPerProdukt(godkanda)
     kop = kopPer
   } catch (err) {
+    // Sidan får inga stjärnor den här gången — men cacha inte det i en timme.
     console.error("Kunde inte läsa omdömen/köp till layouten:", err)
+    noStore()
   }
   return (
     <html lang="sv" className={`${outfit.variable} ${dmSans.variable}`}>
