@@ -9,9 +9,20 @@ export const metadata = {
     "Villkor för beställning, leverans, betalning, retur och reklamation hos Batteriproffs. Försäljning till företag.",
 }
 
+// Ankare per sektion så USP-raden och andra länkar kan peka rakt på t.ex.
+// #3-frakt-och-leverans. scroll-mt lämnar plats för den fasta headern.
+function ankare(title) {
+  return title
+    .toLowerCase()
+    .replace(/[åä]/g, "a")
+    .replace(/ö/g, "o")
+    .replace(/[^a-z0-9]+/g, "-")
+    .replace(/^-+|-+$/g, "")
+}
+
 function Section({ title, children }) {
   return (
-    <section>
+    <section id={ankare(title)} className="scroll-mt-32">
       <h2 className="mb-3 font-heading text-xl font-bold text-text-dark">{title}</h2>
       <div className="flex flex-col gap-3">{children}</div>
     </section>

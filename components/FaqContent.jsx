@@ -82,7 +82,10 @@ export default function FaqContent() {
                   <div className="flex h-9 w-9 items-center justify-center rounded-lg bg-navy/5">
                     <section.icon className="h-4.5 w-4.5 text-navy" strokeWidth={2} />
                   </div>
-                  <h2 className="font-heading text-lg font-extrabold text-text-dark">
+                  <h2
+                    id={section.title.toLowerCase().replace(/[åä]/g, "a").replace(/ö/g, "o").replace(/[^a-z0-9]+/g, "-").replace(/^-+|-+$/g, "")}
+                    className="scroll-mt-32 font-heading text-lg font-extrabold text-text-dark"
+                  >
                     {section.title}
                   </h2>
                 </div>

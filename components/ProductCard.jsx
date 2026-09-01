@@ -82,12 +82,12 @@ export default function ProductCard({ product }) {
             {vatLabel}
           </div>
 
-          {/* "I lager" stod här förut — en uppgift vi inte kan belägga (inget
-              eget lager) och som motsade produktsidans "skickas direkt från
-              leverantör". Leveranstiden är det löfte som går att hålla. */}
+          {/* Inte bara "I lager": vi har inget eget lager, men leverantörens
+              saldo på sortimentet är känt. "Hos leverantör" är den sanna raden
+              och rimmar med produktsidans "skickas direkt från leverantör". */}
           <div className="mb-2 hidden items-center gap-1.5 sm:flex">
             <span className="h-1.5 w-1.5 rounded-full bg-green" />
-            <span className="text-[11px] font-medium text-green">Leverans 1–3 arbetsdagar</span>
+            <span className="text-[11px] font-medium text-green">I lager hos leverantör</span>
           </div>
           {/* Senaste riktiga köpet ur Stripe: datum och antal, aldrig vem. */}
           {kop && (

@@ -93,7 +93,7 @@ export default function SenasteOmdomen({ omdomen, kop }) {
             <div className="mb-2 text-xs font-bold uppercase tracking-widest text-amber-text">
               Verifierade köp
             </div>
-            <h2 id="kunder-rubrik" className="font-heading text-[clamp(22px,3vw,30px)] font-extrabold tracking-tight text-text-dark">
+            <h2 id="kunder-rubrik" className="scroll-mt-32 font-heading text-[clamp(22px,3vw,30px)] font-extrabold tracking-tight text-text-dark">
               {rubrik}
             </h2>
           </div>
