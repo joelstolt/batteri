@@ -1,4 +1,5 @@
 import { NextResponse } from "next/server"
+import { revalidatePath } from "next/cache"
 import { kravAdmin } from "@/lib/admin-auth"
 import { hamtaAllaOmdomen, moderera, GODKANT, NEKAT, VANTAR } from "@/lib/omdomen"
 import { publicProducts } from "@/lib/products"
@@ -47,6 +48,9 @@ export async function POST(request) {
 
   try {
     await moderera(paymentIntentId, slug, status)
+    // Produktsidan är ISR-cachad i en timme. Utan det här syntes ett godkänt
+    // omdöme först när cachen råkade gå ut — nu byggs sidan om direkt.
+    revalidatePath(`/produkt/${slug}`)
     return NextResponse.json({ ok: true, status })
   } catch (err) {
     console.error("Moderering misslyckades:", err)

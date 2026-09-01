@@ -157,7 +157,7 @@ export default function AdminOmdomen({ token }) {
       </ul>
 
       <p className="mt-6 text-xs leading-relaxed text-text-light">
-        Publicerade omdömen syns på produktsidan inom en timme. Nekade raderas
+        Publicerade omdömen syns på produktsidan direkt. Nekade raderas
         inte, bara döljs, så ett felklick går att ångra.
       </p>
     </div>
