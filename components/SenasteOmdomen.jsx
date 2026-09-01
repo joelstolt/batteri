@@ -4,9 +4,15 @@ import { publicProducts } from "@/lib/products"
 /**
  * "Kunder om oss" på startsidan — riktiga, verifierade omdömen, nyast först.
  *
- * Ärlig presentation med flit: antalet skrivs ut, varje omdöme länkar till
- * produkten det gäller, och MFL 12 c §-raden om hur de samlas in står med.
- * Ett omdöme visas som ett omdöme. Sektionen renderas inte alls utan data.
+ * Ärlig presentation med flit: varje omdöme länkar till produkten det gäller,
+ * och MFL 12 c §-raden om hur de samlas in står med. Sektionen renderas inte
+ * alls utan data.
+ *
+ * Snittet med antal visas först från tre omdömen. Under det säger raden
+ * "5.0 av 5 · 1 omdöme" mer om räknaren än om kunderna och läses lätt som
+ * "de har sålt ett batteri". Rubriken säger i stället precis vad det är:
+ * det senaste omdömet. Antalet finns alltid på produktsidan, där det hör
+ * hemma intill omdömena.
  */
 function Stjarnor({ betyg }) {
   return (
@@ -24,6 +30,9 @@ export default function SenasteOmdomen({ omdomen }) {
   if (!omdomen?.length) return null
   const visa = omdomen.slice(0, 3)
   const snitt = Math.round((omdomen.reduce((s, o) => s + o.betyg, 0) / omdomen.length) * 10) / 10
+  const visaSnitt = omdomen.length >= 3
+  const rubrik =
+    omdomen.length === 1 ? "Senaste omdömet" : omdomen.length < 3 ? "Senaste omdömena" : "Kunder om oss"
 
   return (
     <section className="border-b border-border bg-white" aria-labelledby="kunder-rubrik">
@@ -34,17 +43,19 @@ export default function SenasteOmdomen({ omdomen }) {
               Verifierade köp
             </div>
             <h2 id="kunder-rubrik" className="font-heading text-[clamp(22px,3vw,30px)] font-extrabold tracking-tight text-text-dark">
-              Kunder om oss
+              {rubrik}
             </h2>
           </div>
-          <div className="flex items-center gap-2 text-sm text-text-mid">
-            <Stjarnor betyg={Math.round(snitt)} />
-            <span className="font-semibold text-text-dark">{snitt.toFixed(1)}</span>
-            <span>av 5 · {omdomen.length} {omdomen.length === 1 ? "omdöme" : "omdömen"}</span>
-          </div>
+          {visaSnitt && (
+            <div className="flex items-center gap-2 text-sm text-text-mid">
+              <Stjarnor betyg={Math.round(snitt)} />
+              <span className="font-semibold text-text-dark">{snitt.toFixed(1)}</span>
+              <span>av 5 · {omdomen.length} omdömen</span>
+            </div>
+          )}
         </div>
 
-        <div className="grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
+        <div className={visa.length === 1 ? "max-w-[520px]" : "grid gap-4 sm:grid-cols-2 lg:grid-cols-3"}>
           {visa.map((o, i) => {
             const produkt = publicProducts.find((p) => p.slug === o.slug)
             return (
