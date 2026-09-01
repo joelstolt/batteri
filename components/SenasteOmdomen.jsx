@@ -68,6 +68,9 @@ function SenasteKop({ kop }) {
           )
         })}
       </ul>
+      <p className="mt-3 text-xs leading-relaxed text-text-light">
+        Hämtas ur vårt ordersystem. Visas utan namn och belopp.
+      </p>
     </div>
   )
 }
@@ -105,6 +108,7 @@ export default function SenasteOmdomen({ omdomen, kop }) {
 
         <div className="grid gap-4 lg:grid-cols-[1fr_1.4fr]">
           <SenasteKop kop={kop} />
+          <div>
           <div className={visa.length > 1 ? "grid gap-4 sm:grid-cols-2" : ""}>
           {visa.map((o, i) => {
             const produkt = publicProducts.find((p) => p.slug === o.slug)
@@ -141,14 +145,12 @@ export default function SenasteOmdomen({ omdomen, kop }) {
             )
           })}
           </div>
+          <p className="mt-3 text-xs leading-relaxed text-text-light">
+            Bara verifierade köpare kan lämna omdöme. Alla granskas innan de publiceras, texterna ändras aldrig.
+          </p>
+          </div>
         </div>
 
-        <p className="mt-6 text-xs leading-relaxed text-text-light">
-          Köpen hämtas direkt ur vårt ordersystem och visas utan namn och belopp.
-          Bara kunder som köpt hos oss kan lämna omdöme: inbjudan mejlas efter
-          leverans till adressen som användes vid köpet, och varje omdöme granskas
-          manuellt innan det publiceras. Vi ändrar aldrig i texterna.
-        </p>
       </div>
     </section>
   )
