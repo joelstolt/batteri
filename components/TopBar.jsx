@@ -14,8 +14,12 @@ export default function TopBar() {
         {/* På mobil visas bara det första löftet. Den gamla sidledsscrollen
             dolde två av tre löften bakom kanten utan att någon såg det. */}
         <div className="flex min-w-0 flex-1 items-center gap-4 text-xs font-semibold sm:gap-6 sm:text-sm">
-          {USPS.map((usp, i) => (
-            <Link
+          {USPS.map((usp, i) => {
+            // Hash-länkar som vanlig <a>: Next-Link + ScrollToTop-komponenten
+            // scrollade till toppen i stället för till sektionen.
+            const Tag = usp.href.includes("#") ? "a" : Link
+            return (
+            <Tag
               key={usp.href}
               href={usp.href}
               className={`${i === 0 ? "flex" : "hidden sm:flex"} shrink-0 items-center gap-1.5 transition-opacity hover:opacity-70`}
@@ -25,8 +29,9 @@ export default function TopBar() {
                 <path d="M4.5 7.5l2 2 4-4" stroke="#1A1A1A" strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round" />
               </svg>
               {usp.text}
-            </Link>
-          ))}
+            </Tag>
+            )
+          })}
         </div>
 
         {/* Right: kundservice + VAT toggle */}

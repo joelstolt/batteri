@@ -7,7 +7,7 @@ import { ShoppingCart } from "lucide-react"
 import { useCart } from "@/lib/cart-context"
 import { useVat } from "@/lib/vat-context"
 import { getProductBrand, getProductChemistry } from "@/lib/products"
-import { useBetyg } from "@/lib/betyg-context"
+import { useBetyg, useSenasteKop } from "@/lib/betyg-context"
 
 export default function ProductCard({ product }) {
   const [qty, setQty] = useState(1)
@@ -15,6 +15,7 @@ export default function ProductCard({ product }) {
   const { displayPrice, vatLabel } = useVat()
   const { slug, shortName, voltage, capacity, price, images, badge } = product
   const betyg = useBetyg(slug)
+  const kop = useSenasteKop(slug)
   const image = images?.[0] || "/produkter/placeholder.jpg"
 
   const formattedPrice = new Intl.NumberFormat("sv-SE").format(displayPrice(price))
@@ -81,11 +82,23 @@ export default function ProductCard({ product }) {
             {vatLabel}
           </div>
 
-          {/* In stock badge */}
+          {/* "I lager" stod här förut — en uppgift vi inte kan belägga (inget
+              eget lager) och som motsade produktsidans "skickas direkt från
+              leverantör". Leveranstiden är det löfte som går att hålla. */}
           <div className="mb-2 hidden items-center gap-1.5 sm:flex">
             <span className="h-1.5 w-1.5 rounded-full bg-green" />
-            <span className="text-[11px] font-medium text-green">I lager</span>
+            <span className="text-[11px] font-medium text-green">Leverans 1–3 arbetsdagar</span>
           </div>
+          {/* Senaste riktiga köpet ur Stripe: datum och antal, aldrig vem. */}
+          {kop && (
+            <div className="mb-2 text-[11px] text-text-mid sm:mb-3">
+              Senast köpt{" "}
+              <span className="font-semibold text-text-dark">
+                {new Date(kop.datum * 1000).toLocaleDateString("sv-SE", { day: "numeric", month: "short" })}
+              </span>
+              {kop.antal > 1 && ` · ${kop.antal} st`}
+            </div>
+          )}
 
           {/* Buy button */}
           <button

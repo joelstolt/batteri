@@ -9,10 +9,10 @@ import CartToast from "@/components/CartToast"
 import ScrollToTop from "@/components/ScrollToTop"
 import KlickSparning from "@/components/KlickSparning"
 
-export default function Providers({ children, betyg }) {
+export default function Providers({ children, betyg, kop }) {
   return (
     <AttributionProvider>
-      <BetygProvider betyg={betyg}>
+      <BetygProvider betyg={betyg} kop={kop}>
       <VatProvider>
         <CartProvider>
           <ScrollToTop />

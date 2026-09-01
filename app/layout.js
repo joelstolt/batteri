@@ -2,6 +2,7 @@ import { Outfit, DM_Sans } from "next/font/google"
 import Script from "next/script"
 import Providers from "@/components/Providers"
 import { hamtaGodkandaCachat, betygPerProdukt } from "@/lib/omdomen"
+import { hamtaKopPerProduktCachat } from "@/lib/orders"
 import CookieBanner from "@/components/CookieBanner"
 import "./globals.css"
 
@@ -55,10 +56,13 @@ export const revalidate = 3600
 export default async function RootLayout({ children }) {
   // Ett trasigt Stripe-anrop får aldrig fälla sajten — då visas inga stjärnor.
   let betyg = {}
+  let kop = {}
   try {
-    betyg = betygPerProdukt(await hamtaGodkandaCachat())
+    const [godkanda, kopPer] = await Promise.all([hamtaGodkandaCachat(), hamtaKopPerProduktCachat()])
+    betyg = betygPerProdukt(godkanda)
+    kop = kopPer
   } catch (err) {
-    console.error("Kunde inte läsa omdömen till layouten:", err)
+    console.error("Kunde inte läsa omdömen/köp till layouten:", err)
   }
   return (
     <html lang="sv" className={`${outfit.variable} ${dmSans.variable}`}>
@@ -98,7 +102,7 @@ export default async function RootLayout({ children }) {
           Hoppa till innehåll
         </a>
 
-        <Providers betyg={betyg}>{children}</Providers>
+        <Providers betyg={betyg} kop={kop}>{children}</Providers>
         <CookieBanner />
 
         {/* Umami är cookielöst och kräver inget samtycke */}
