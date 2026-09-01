@@ -1,14 +1,15 @@
 import Link from "next/link"
 import { notFound } from "next/navigation"
-import { ChevronRight, ArrowRight, Phone, Ruler } from "lucide-react"
+import { ChevronRight, ArrowRight, Ruler, MessageCircle } from "lucide-react"
 import { replacements, replacementBySlug } from "@/lib/replacements"
 import { getProductImage } from "@/lib/products"
-import { SITE_URL, PHONE, PHONE_LINK } from "@/lib/constants"
+import { SITE_URL } from "@/lib/constants"
 import TopBar from "@/components/TopBar"
 import Header from "@/components/Header"
 import ProductCard from "@/components/ProductCard"
 import CtaBanner from "@/components/CtaBanner"
 import Footer from "@/components/Footer"
+import ChattKnapp from "@/components/ChattKnapp"
 
 export async function generateStaticParams() {
   return replacements.map((r) => ({ slug: r.slug }))
@@ -135,13 +136,12 @@ export default async function ReplacementRoute({ params }) {
                   </p>
                 </div>
 
-                <a
-                  href={`tel:${PHONE_LINK}`}
+                <ChattKnapp
                   className="mt-6 inline-flex items-center gap-2 rounded-xl bg-navy px-5 py-3 font-heading text-sm font-bold text-white transition-colors hover:bg-navy-light"
                 >
-                  <Phone size={15} />
-                  Osäker på passformen? Ring {PHONE}
-                </a>
+                  <MessageCircle size={15} />
+                  Osäker på passformen? Chatta med oss
+                </ChattKnapp>
               </div>
 
               <div>

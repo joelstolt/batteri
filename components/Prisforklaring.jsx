@@ -1,5 +1,5 @@
 import Link from "next/link"
-import { PHONE, PHONE_LINK } from "@/lib/constants"
+import ChattKnapp from "@/components/ChattKnapp"
 
 /**
  * Varför priset är hälften mot marknaden.
@@ -103,16 +103,15 @@ export default function Prisforklaring() {
           du köpa Trojan.
         </p>
         <p className="mt-3 leading-relaxed text-text-dark">
-          Är du osäker på om ett likvärdigt batteri passar just din maskin, ring oss med
+          Är du osäker på om ett likvärdigt batteri passar just din maskin, chatta med oss med
           maskinens fabrikat och modell. Vi svarar själva.
         </p>
 
-        <a
-          href={`tel:${PHONE_LINK}`}
+        <ChattKnapp
           className="mt-6 inline-block rounded-lg bg-navy px-5 py-2.5 font-heading text-sm font-bold text-white"
         >
-          Ring {PHONE}
-        </a>
+          Chatta med oss
+        </ChattKnapp>
       </div>
     </section>
   )

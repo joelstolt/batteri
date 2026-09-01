@@ -1,20 +1,11 @@
 "use client"
 
 import Link from "next/link"
-import {
-  Phone,
-  ChevronRight,
-  PackageCheck,
-  Lightbulb,
-  HelpCircle,
-  Info,
-  AlertTriangle,
-  Building2,
-} from "lucide-react"
-import { PHONE, PHONE_LINK } from "@/lib/constants"
+import { ChevronRight, PackageCheck, Lightbulb, HelpCircle, Info, AlertTriangle, Building2, MessageCircle } from "lucide-react"
 import { paketpris } from "@/lib/anvandning"
 import ProductCard from "@/components/ProductCard"
 import FadeIn from "@/components/FadeIn"
+import ChattKnapp from "@/components/ChattKnapp"
 
 export default function AnvandningPageContent({ sida, produkter }) {
   const paket = (sida.paket || [])
@@ -41,13 +32,12 @@ export default function AnvandningPageContent({ sida, produkter }) {
           <p className="max-w-2xl text-base leading-relaxed text-text-mid">{sida.intro}</p>
 
           <div className="mt-6 flex flex-wrap gap-3">
-            <a
-              href={`tel:${PHONE_LINK}`}
+            <ChattKnapp
               className="inline-flex items-center gap-2 rounded-xl bg-navy px-5 py-3 font-heading text-sm font-bold text-white transition-colors hover:bg-navy-light"
             >
-              <Phone size={15} />
-              Osäker på vilket som passar? Ring {PHONE}
-            </a>
+              <MessageCircle size={15} />
+              Osäker på vilket som passar? Chatta med oss
+            </ChattKnapp>
           </div>
         </div>
       </div>

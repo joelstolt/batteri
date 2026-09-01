@@ -1,13 +1,14 @@
 import Link from "next/link"
-import { Phone, FileText, Wrench } from "lucide-react"
-import { PHONE, PHONE_LINK, EMAIL } from "@/lib/constants"
+import { MessageCircle, FileText, Wrench } from "lucide-react"
+import { EMAIL } from "@/lib/constants"
+import ChattKnapp from "@/components/ChattKnapp"
 
 /**
  * Två saker startsidan saknade helt:
  *
- * 1. Telefonnumret syntes bara i headern. I B2B är telefon den primära vägen
- *    för den osäkre köparen, och ordern från Eventcenter visar att riktiga
- *    företagsköp kommer in.
+ * 1. Den osäkre B2B-köparen behöver en människokanal. Sedan chatten tog över
+ *    som primär kontaktväg (telefonen kunde inte bemannas) är det chatten som
+ *    fyller den rollen här.
  * 2. Orden "offert" och "faktura" fanns inte någonstans på sidan. Den inköpare
  *    som söker de villkoren lämnade sajten utan att fråga.
  */
@@ -23,29 +24,29 @@ export default function HelpAndQuote() {
             Osäker på vilket batteri maskinen tar?
           </h2>
           <p className="text-[15px] leading-relaxed text-white/75">
-            Ring med maskinens modellbeteckning och märkspänning, eller
-            fotografera etiketten på batteriet som sitter i nu. Vi svarar själva,
-            och vi säljer bara batterier — ingen växel, inga mellanhänder.
+            Skriv maskinens modellbeteckning och märkspänning i chatten, eller
+            mejla en bild på etiketten på batteriet som sitter i nu. Vi säljer
+            bara batterier, inga mellanhänder.
           </p>
         </div>
 
         <div className="grid gap-4 sm:grid-cols-3">
-          {/* Telefon först — den snabbaste vägen till en order */}
-          <a
-            href={`tel:${PHONE_LINK}`}
+          {/* Chatten först — den kanal som alltid kan svara */}
+          <ChattKnapp
             className="group flex flex-col rounded-2xl border border-white/12 bg-white/5 p-6 transition-colors hover:border-amber/40 hover:bg-white/8"
           >
-            <Phone size={20} className="mb-3 text-amber" aria-hidden="true" />
+            <MessageCircle size={20} className="mb-3 text-amber" aria-hidden="true" />
             <div className="mb-1 font-heading text-base font-bold text-white">
-              Ring oss
+              Chatta med oss
             </div>
             <div className="mb-3 text-sm leading-relaxed text-white/70">
-              Vardagar 08:00–17:00. Vi reder ut spänning och mått på ett samtal.
+              Svar direkt, dygnet runt. Vi reder ut spänning, mått och passform
+              medan du har maskinen framför dig.
             </div>
             <span className="mt-auto font-heading text-lg font-extrabold text-amber">
-              {PHONE}
+              Öppna chatten →
             </span>
-          </a>
+          </ChattKnapp>
 
           {/* Offert och faktura — orden saknades helt på sidan tidigare */}
           <Link

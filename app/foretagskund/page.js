@@ -1,11 +1,12 @@
 import Link from "next/link"
 import { breadcrumbJsonLd, faqJsonLd, jsonLdProps } from "@/lib/schema"
 import { pageMeta } from "@/lib/seo"
-import { PHONE, PHONE_LINK, EMAIL } from "@/lib/constants"
+import { EMAIL } from "@/lib/constants"
 import TopBar from "@/components/TopBar"
 import Header from "@/components/Header"
 import CtaBanner from "@/components/CtaBanner"
 import Footer from "@/components/Footer"
+import ChattKnapp from "@/components/ChattKnapp"
 
 /**
  * Företagskund.
@@ -27,7 +28,7 @@ export const metadata = pageMeta({
 const FRAGOR = [
   {
     q: "Kan privatpersoner handla hos er?",
-    a: "Kassan är byggd för företag och kräver organisationsnummer, så en beställning går inte att slutföra som privatperson på sajten. Ring oss på 076-686 77 52 eller mejla info@batteriproffs.se så löser vi köpet manuellt.",
+    a: "Kassan är byggd för företag och kräver organisationsnummer, så en beställning går inte att slutföra som privatperson på sajten. Chatta med oss eller mejla info@batteriproffs.se så löser vi köpet manuellt.",
   },
   {
     q: "Kan vi beställa mot faktura?",
@@ -54,7 +55,7 @@ const PUNKTER = [
   },
   {
     titel: "Ni pratar med oss som kan produkten",
-    text: "Ingen växel, ingen chattbot. Ring med maskinens fabrikat och modell så får ni svar direkt.",
+    text: "Skriv maskinens fabrikat och modell i chatten så får ni svar direkt, dygnet runt. Behövs en människa svarar vi per mejl inom några timmar.",
   },
   {
     titel: "Offert på volym",
@@ -130,12 +131,11 @@ export default function ForetagskundPage() {
               betalvillkor. Hör av er så tar vi det direkt.
             </p>
             <div className="mt-4 flex flex-wrap gap-3">
-              <a
-                href={`tel:${PHONE_LINK}`}
+              <ChattKnapp
                 className="rounded-lg bg-navy px-5 py-2.5 font-heading text-sm font-bold text-white"
               >
-                Ring {PHONE}
-              </a>
+                Chatta med oss
+              </ChattKnapp>
               <a
                 href={`mailto:${EMAIL}`}
                 className="rounded-lg border border-border bg-white px-5 py-2.5 font-heading text-sm font-bold text-navy"

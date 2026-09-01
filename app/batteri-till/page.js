@@ -2,11 +2,12 @@ import Link from "next/link"
 import { ChevronRight } from "lucide-react"
 import { machines, machinesByGroup, MACHINE_GROUPS } from "@/lib/machines"
 import { publicProducts } from "@/lib/products"
-import { SITE_URL, PHONE, PHONE_LINK } from "@/lib/constants"
+import { SITE_URL } from "@/lib/constants"
 import TopBar from "@/components/TopBar"
 import Header from "@/components/Header"
 import CtaBanner from "@/components/CtaBanner"
 import Footer from "@/components/Footer"
+import ChattKnapp from "@/components/ChattKnapp"
 
 const title = "Batteri till din maskin — hitta rätt batteri per modell | Batteriproffs"
 const description =
@@ -57,7 +58,7 @@ export default function MachineHubPage() {
               <p className="max-w-2xl text-base leading-relaxed text-text-mid">
                 Sök på maskinen i stället för på batteriet. Vi har listat de modeller vi får
                 flest frågor om, med pris och lagerstatus på de batterier som passar. Står inte
-                din maskin med, ring {PHONE} med modellbeteckningen så tar vi fram rätt paket.
+                din maskin med, chatta med oss med modellbeteckningen så tar vi fram rätt paket.
               </p>
             </div>
           </div>
@@ -114,16 +115,15 @@ export default function MachineHubPage() {
                 Din maskin saknas i listan?
               </div>
               <p className="mx-auto mb-5 max-w-xl text-sm leading-relaxed text-text-mid">
-                Vi har fler batterier i lager än vad som listas här. Ring med maskinens
+                Vi har fler batterier i lager än vad som listas här. Chatta med oss med maskinens
                 modellbeteckning och märkspänning, eller fotografera etiketten på batteriet som
                 sitter i nu, så hittar vi en direkt ersättare.
               </p>
-              <a
-                href={`tel:${PHONE_LINK}`}
+              <ChattKnapp
                 className="inline-flex items-center gap-2 rounded-xl bg-navy px-6 py-3 font-heading text-sm font-bold text-white transition-colors hover:bg-navy-light"
               >
-                Ring {PHONE}
-              </a>
+                Chatta med oss
+              </ChattKnapp>
             </div>
           </div>
         </div>

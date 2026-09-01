@@ -1,11 +1,12 @@
 import Link from "next/link"
 import { breadcrumbJsonLd, jsonLdProps } from "@/lib/schema"
 import { pageMeta } from "@/lib/seo"
-import { PHONE, PHONE_LINK, EMAIL } from "@/lib/constants"
+import { EMAIL } from "@/lib/constants"
 import TopBar from "@/components/TopBar"
 import Header from "@/components/Header"
 import CtaBanner from "@/components/CtaBanner"
 import Footer from "@/components/Footer"
+import ChattKnapp from "@/components/ChattKnapp"
 
 /**
  * Gratis återvinning.
@@ -31,7 +32,7 @@ const STEG = [
   {
     n: "1",
     titel: "Säg till när du beställer",
-    text: "Ring eller mejla oss i samband med din order och berätta hur många gamla batterier du har och var de står. Har du redan beställt går det bra att höra av sig i efterhand.",
+    text: "Chatta eller mejla oss i samband med din order och berätta hur många gamla batterier du har och var de står. Har du redan beställt går det bra att höra av sig i efterhand.",
   },
   {
     n: "2",
@@ -110,12 +111,11 @@ export default function AtervinningPage() {
               med hur vi tar hand om dem.
             </p>
             <div className="mt-4 flex flex-wrap gap-3">
-              <a
-                href={`tel:${PHONE_LINK}`}
+              <ChattKnapp
                 className="rounded-lg bg-navy px-5 py-2.5 font-heading text-sm font-bold text-white"
               >
-                Ring {PHONE}
-              </a>
+                Chatta med oss
+              </ChattKnapp>
               <a
                 href={`mailto:${EMAIL}`}
                 className="rounded-lg border border-border bg-white px-5 py-2.5 font-heading text-sm font-bold text-navy"

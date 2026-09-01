@@ -1,6 +1,7 @@
 import Link from "next/link"
-import { PHONE, PHONE_LINK, EMAIL, ADDRESS } from "@/lib/constants"
-import { Phone, Mail, Clock, Shield, Truck, RotateCcw, Award } from "lucide-react"
+import { EMAIL, ADDRESS } from "@/lib/constants"
+import { MessageCircle, Mail, Clock, Shield, Truck, RotateCcw, Award } from "lucide-react"
+import ChattKnapp from "./ChattKnapp"
 
 const COLUMNS = [
   {
@@ -100,13 +101,10 @@ export default function Footer() {
               i hela Sverige — Sonnenschein, Nordmax och fler kvalitetsmärken.
             </p>
             <div className="space-y-2.5">
-              <a
-                href={`tel:${PHONE_LINK}`}
-                className="flex items-center gap-2 text-sm text-white/50 transition-colors hover:text-white/80"
-              >
-                <Phone className="h-3.5 w-3.5" />
-                {PHONE}
-              </a>
+              <ChattKnapp className="flex items-center gap-2 text-sm text-white/50 transition-colors hover:text-white/80">
+                <MessageCircle className="h-3.5 w-3.5" />
+                Chatta med oss
+              </ChattKnapp>
               <a
                 href={`mailto:${EMAIL}`}
                 className="flex items-center gap-2 text-sm text-white/50 transition-colors hover:text-white/80"

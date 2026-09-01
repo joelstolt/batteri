@@ -105,6 +105,18 @@ export default function RootLayout({ children }) {
             gtag('config', 'AW-17955953885');
           `}
         </Script>
+
+        {/* Chatten är sajtens primära kontaktväg (telefonen är nedtonad tills
+            verksamheten bemannas på heltid). Lazy så att Prestanda 96 står
+            kvar — widgeten behövs inte för första målningen. */}
+        <Script
+          src="https://chatbot-widget.joel-d77.workers.dev/widget.js"
+          data-client="batteriproffs"
+          data-company="Batteriproffs"
+          data-primary="#0B1D3A"
+          data-accent="#FDB813"
+          strategy="lazyOnload"
+        />
       </body>
     </html>
   )

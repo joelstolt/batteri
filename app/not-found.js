@@ -2,7 +2,8 @@ import Link from "next/link"
 import TopBar from "@/components/TopBar"
 import Header from "@/components/Header"
 import Footer from "@/components/Footer"
-import { CATEGORIES, PHONE, PHONE_LINK } from "@/lib/constants"
+import { CATEGORIES } from "@/lib/constants"
+import ChattKnapp from "@/components/ChattKnapp"
 
 export const metadata = {
   title: "Sidan hittades inte — Batteriproffs",
@@ -49,12 +50,11 @@ export default function NotFound() {
               >
                 Till startsidan
               </Link>
-              <a
-                href={`tel:${PHONE_LINK}`}
+              <ChattKnapp
                 className="rounded-xl border border-border px-6 py-3 font-heading text-sm font-bold text-text-dark transition-colors hover:bg-surface"
               >
-                Ring {PHONE}
-              </a>
+                Chatta med oss
+              </ChattKnapp>
             </div>
           </div>
         </div>

@@ -8,10 +8,10 @@ import {
   Wrench,
   AlertTriangle,
   CheckCircle2,
-  HelpCircle,
-} from "lucide-react"
-import { PHONE, PHONE_LINK, EMAIL } from "@/lib/constants"
+  HelpCircle } from "lucide-react"
+import { EMAIL } from "@/lib/constants"
 import FadeIn from "@/components/FadeIn"
+import ChattKnapp from "@/components/ChattKnapp"
 
 const TOC = [
   { id: "grunder", label: "Grunderna" },
@@ -84,7 +84,7 @@ const SECTIONS = [
     body: [
       "Batteriet håller inte längre laddning? Mät vilospänningen efter 24 timmars vila. Under 12,4 V tyder på sulfatering eller cellfel. Mät också spänningen direkt under belastning — sjunker den snabbt under 11 V är batteriet sannolikt slut.",
       "Batteriet blir varmt under laddning? Sluta ladda omedelbart. Antingen är laddaren för aggressiv eller så är en cell internt kortsluten. Båda är farliga och behöver åtgärdas innan du fortsätter.",
-      "Är du osäker — ring oss. Vi har hjälpt tusentals kunder felsöka batterier över telefon. Det kostar inget och vi säger ärligt om batteriet är värt att rädda eller om det är dags att byta.",
+      "Är du osäker: chatta med oss. Felsökningen kostar inget och vi säger ärligt om batteriet är värt att rädda eller om det är dags att byta.",
     ],
   },
 ]
@@ -189,16 +189,15 @@ export default function SkotselContent() {
                   Osäker på vad ditt batteri behöver?
                 </h3>
                 <p className="mb-6 max-w-md text-sm leading-relaxed text-white/60">
-                  Ring eller mejla oss med ditt användningsområde och nuvarande
+                  Chatta eller mejla oss med ditt användningsområde och nuvarande
                   setup. Vi ger dig ett rakt svar — utan säljsnack.
                 </p>
                 <div className="flex flex-col gap-3 sm:flex-row">
-                  <a
-                    href={`tel:${PHONE_LINK}`}
+                  <ChattKnapp
                     className="inline-flex items-center justify-center gap-2 rounded-full bg-amber-bg px-6 py-3 text-sm font-bold text-navy transition-all hover:brightness-110"
                   >
-                    Ring {PHONE}
-                  </a>
+                    Chatta med oss
+                  </ChattKnapp>
                   <a
                     href={`mailto:${EMAIL}`}
                     className="inline-flex items-center justify-center gap-2 rounded-full border border-white/15 px-6 py-3 text-sm font-bold text-white transition-all hover:bg-white/5"

@@ -3,9 +3,10 @@
 import { useState, useEffect, useRef } from "react"
 import { useRouter } from "next/navigation"
 import Image from "next/image"
-import { X, Search, ArrowRight, Wrench, RefreshCw, LayoutGrid, Phone } from "lucide-react"
+import { X, Search, ArrowRight, Wrench, RefreshCw, LayoutGrid, MessageCircle } from "lucide-react"
 import { motion, AnimatePresence } from "framer-motion"
-import { CATEGORIES, PHONE, PHONE_LINK } from "@/lib/constants"
+import { CATEGORIES } from "@/lib/constants"
+import { oppnaChatt } from "@/components/ChattKnapp"
 import { sok, sokbar } from "@/lib/search-index"
 import { useVat } from "@/lib/vat-context"
 import { track } from "@/lib/track"
@@ -209,13 +210,17 @@ export default function SearchModal({ isOpen, onClose }) {
                     modellbeteckningen så tar vi fram rätt batteri och pris.
                   </p>
                   <div className="flex flex-wrap items-center justify-center gap-2.5">
-                    <a
-                      href={`tel:${PHONE_LINK}`}
+                    <button
+                      type="button"
+                      onClick={() => {
+                        onClose()
+                        oppnaChatt()
+                      }}
                       className="inline-flex items-center gap-2 rounded-lg bg-navy px-4 py-2.5 font-heading text-sm font-bold text-white"
                     >
-                      <Phone size={14} aria-hidden="true" />
-                      Ring {PHONE}
-                    </a>
+                      <MessageCircle size={14} aria-hidden="true" />
+                      Chatta med oss
+                    </button>
                     <button
                       onClick={() => goTo("/kontakt")}
                       className="rounded-lg border border-border px-4 py-2.5 text-sm font-semibold text-text-dark hover:bg-surface"

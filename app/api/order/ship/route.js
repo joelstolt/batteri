@@ -122,7 +122,7 @@ export async function POST(request) {
 
       <p style="margin-top:24px;font-size:14px;line-height:1.6;color:#374151;">
         Leveranstid är normalt 1–3 arbetsdagar. Frågor om leveransen? Svara
-        på det här mejlet eller ring oss.
+        på det här mejlet.
       </p>
     `
 

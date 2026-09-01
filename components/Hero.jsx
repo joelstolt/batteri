@@ -4,9 +4,9 @@ import { useState, useCallback } from "react"
 import { motion, AnimatePresence } from "framer-motion"
 import Image from "next/image"
 import Link from "next/link"
-import { Phone, ArrowRight } from "lucide-react"
+import { MessageCircle, ArrowRight } from "lucide-react"
 import HeroSearch from "@/components/HeroSearch"
-import { PHONE, PHONE_LINK } from "@/lib/constants"
+import ChattKnapp from "@/components/ChattKnapp"
 import { publicProducts } from "@/lib/products"
 
 /** Utgångsläget: det batteri som bär "Populär"-märket. */
@@ -90,13 +90,10 @@ export default function Hero() {
               <span className="text-white/70">
                 Priset står på varje produkt. Inga offertformulär.
               </span>
-              <a
-                href={`tel:${PHONE_LINK}`}
-                className="inline-flex items-center gap-2 font-heading font-bold text-amber hover:underline"
-              >
-                <Phone size={15} aria-hidden="true" />
-                Hellre ringa? {PHONE}
-              </a>
+              <ChattKnapp className="inline-flex items-center gap-2 font-heading font-bold text-amber hover:underline">
+                <MessageCircle size={15} aria-hidden="true" />
+                Frågor? Chatta med oss
+              </ChattKnapp>
             </div>
           </motion.div>
 

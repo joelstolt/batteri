@@ -1,12 +1,13 @@
 import Link from "next/link"
-import { ChevronRight, Droplets, AlertTriangle, Phone } from "lucide-react"
+import { ChevronRight, Droplets, AlertTriangle, MessageCircle } from "lucide-react"
 import { publicProducts } from "@/lib/products"
 import { breadcrumbJsonLd, jsonLdProps } from "@/lib/schema"
-import { SITE_URL, PHONE, PHONE_LINK, EMAIL } from "@/lib/constants"
+import { SITE_URL, EMAIL } from "@/lib/constants"
 import TopBar from "@/components/TopBar"
 import Header from "@/components/Header"
 import CtaBanner from "@/components/CtaBanner"
 import Footer from "@/components/Footer"
+import ChattKnapp from "@/components/ChattKnapp"
 
 const title = "Batterivatten — påfyllning av öppna traktionsbatterier | Batteriproffs"
 const description =
@@ -173,13 +174,12 @@ export default function BatteryWaterPage() {
                 Hör av dig med antal maskiner så räknar vi på hur mycket ni gör av med.
               </p>
               <div className="flex flex-wrap gap-3">
-                <a
-                  href={`tel:${PHONE_LINK}`}
+                <ChattKnapp
                   className="inline-flex items-center gap-2 rounded-xl bg-amber-bg px-6 py-3.5 font-heading text-sm font-bold text-navy transition-transform hover:-translate-y-px"
                 >
-                  <Phone size={16} aria-hidden="true" />
-                  Ring {PHONE}
-                </a>
+                  <MessageCircle size={16} aria-hidden="true" />
+                  Chatta med oss
+                </ChattKnapp>
                 <a
                   href={`mailto:${EMAIL}`}
                   className="inline-flex items-center gap-2 rounded-xl border border-white/25 px-6 py-3.5 font-heading text-sm font-bold text-white transition-colors hover:bg-white/10"

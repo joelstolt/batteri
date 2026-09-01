@@ -7,7 +7,7 @@ import OmdomeDirektContent from "@/components/OmdomeDirektContent"
 import { lasOmdomeToken } from "@/lib/konto-auth"
 import { normaliseraOrder } from "@/lib/orders"
 import { omdomenUrPI } from "@/lib/omdomen"
-import { PHONE, PHONE_LINK } from "@/lib/constants"
+import ChattKnapp from "@/components/ChattKnapp"
 
 const stripe = new Stripe(process.env.STRIPE_SECRET_KEY)
 
@@ -71,10 +71,10 @@ export default async function OmdomePage({ searchParams }) {
               <Link href="/konto" className="font-semibold text-navy underline">
                 ditt konto
               </Link>{" "}
-              — eller ring oss på{" "}
-              <a href={`tel:${PHONE_LINK}`} className="font-semibold text-navy hover:underline">
-                {PHONE}
-              </a>{" "}
+              eller{" "}
+              <ChattKnapp className="font-semibold text-navy hover:underline">
+                chatta med oss
+              </ChattKnapp>{" "}
               så hjälper vi dig.
             </p>
           </section>

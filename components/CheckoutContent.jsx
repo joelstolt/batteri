@@ -229,7 +229,7 @@ function CheckoutForm({ form, setForm, errors, setErrors, totalPrice, clientSecr
       setLoading(false)
       setPaymentError(
         "Betalningen tar ovanligt lång tid. Ladda om sidan och försök igen — " +
-          "blir det samma sak, ring oss på 076-686 77 52 så tar vi ordern manuellt."
+          "blir det samma sak, chatta med oss eller mejla info@batteriproffs.se så tar vi ordern manuellt."
       )
     }, 45000)
 
@@ -266,7 +266,7 @@ function CheckoutForm({ form, setForm, errors, setErrors, totalPrice, clientSecr
       // Utan den här grenen dog knappen tyst i "Bearbetar betalning...".
       console.error("Stripe confirmPayment kastade:", err)
       setPaymentError(
-        err?.message || "Betalningen kunde inte genomföras. Försök igen eller ring 076-686 77 52."
+        err?.message || "Betalningen kunde inte genomföras. Försök igen, eller chatta med oss så hjälper vi dig."
       )
     } finally {
       clearTimeout(watchdog)
@@ -324,7 +324,7 @@ function CheckoutForm({ form, setForm, errors, setErrors, totalPrice, clientSecr
               <FormInput
                 label="Telefon"
                 type="tel"
-                placeholder="076-686 77 52"
+                placeholder="070-123 45 67"
                 autoComplete="tel"
                 value={form.phone}
                 onChange={handleChange("phone")}

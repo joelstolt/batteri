@@ -6,7 +6,7 @@ import Link from "next/link"
 import Image from "next/image"
 import { ShoppingCart, Truck, Shield, Phone, ChevronRight, RotateCcw } from "lucide-react"
 import { getProductBySlug, getProductsByCategory, getProductBrand, getProductChemistry } from "@/lib/products"
-import { CATEGORIES, PHONE, PHONE_LINK } from "@/lib/constants"
+import { CATEGORIES } from "@/lib/constants"
 import { machinesForProduct } from "@/lib/machines"
 import { slugifyModel } from "@/lib/replacements"
 import { teknikFor } from "@/lib/teknik"
@@ -14,6 +14,7 @@ import { useCart } from "@/lib/cart-context"
 import { useVat } from "@/lib/vat-context"
 import ProductCard from "@/components/ProductCard"
 import FadeIn from "@/components/FadeIn"
+import ChattKnapp from "@/components/ChattKnapp"
 
 function formatPrice(n) {
   return new Intl.NumberFormat("sv-SE").format(n)
@@ -168,9 +169,9 @@ function ProductExtraInfo({ product, className = "" }) {
               {teknik.kallaNamn}
             </a>
             . Osäker på din laddare? Ring{" "}
-            <a href={`tel:${PHONE_LINK}`} className="text-navy underline">
-              {PHONE}
-            </a>{" "}
+            <ChattKnapp className="text-navy underline">
+              Chatta med oss
+            </ChattKnapp>{" "}
             så går vi igenom den tillsammans.
           </p>
         </div>
@@ -361,9 +362,9 @@ export default function ProductPageContent() {
 
               {/* Volume order */}
               <div className="mb-6">
-                <a href={`tel:${PHONE_LINK}`} className="text-sm font-semibold text-navy underline underline-offset-2 hover:text-amber-text">
+                <ChattKnapp className="text-sm font-semibold text-navy underline underline-offset-2 hover:text-amber-text">
                   Beställa större mängd? Vi erbjuder offert på volymköp av högre värde.
-                </a>
+                </ChattKnapp>
               </div>
 
               {/* Trust items */}

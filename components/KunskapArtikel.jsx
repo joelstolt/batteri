@@ -1,6 +1,6 @@
 import Link from "next/link"
 import { prisFor, artikelBySlug } from "@/lib/kunskap"
-import { PHONE, PHONE_LINK } from "@/lib/constants"
+import ChattKnapp from "@/components/ChattKnapp"
 
 /**
  * Renderar en kunskapsartikel.
@@ -83,15 +83,14 @@ export default function KunskapArtikel({ artikel }) {
         <h2 className="font-heading text-lg font-bold text-navy">Osäker på vilket du behöver?</h2>
         <p className="mt-2 leading-relaxed text-text-mid">
           Ring med maskinens fabrikat och modell, plus spänning och kapacitet på batteriet
-          som sitter i nu, så tar vi fram rätt batteri. Vi svarar själva i telefonen.
+          som sitter i nu, så tar vi fram rätt batteri. Chatten svarar direkt, dygnet runt.
         </p>
         <div className="mt-4 flex flex-wrap gap-3">
-          <a
-            href={`tel:${PHONE_LINK}`}
+          <ChattKnapp
             className="rounded-lg bg-navy px-5 py-2.5 font-heading text-sm font-bold text-white"
           >
-            Ring {PHONE}
-          </a>
+            Chatta med oss
+          </ChattKnapp>
           <Link
             href="/batteri-till"
             className="rounded-lg border border-border bg-white px-5 py-2.5 font-heading text-sm font-bold text-navy"

@@ -1,10 +1,10 @@
 "use client"
 
 import Link from "next/link"
-import { Phone, ChevronRight, Wrench, PackageCheck, HelpCircle } from "lucide-react"
-import { PHONE, PHONE_LINK } from "@/lib/constants"
+import { ChevronRight, Wrench, PackageCheck, HelpCircle, MessageCircle } from "lucide-react"
 import ProductCard from "@/components/ProductCard"
 import FadeIn from "@/components/FadeIn"
+import ChattKnapp from "@/components/ChattKnapp"
 
 export default function MachinePageContent({ machine, products }) {
   return (
@@ -29,13 +29,12 @@ export default function MachinePageContent({ machine, products }) {
           <p className="max-w-2xl text-base leading-relaxed text-text-mid">{machine.intro}</p>
 
           <div className="mt-6 flex flex-wrap gap-3">
-            <a
-              href={`tel:${PHONE_LINK}`}
+            <ChattKnapp
               className="inline-flex items-center gap-2 rounded-xl bg-navy px-5 py-3 font-heading text-sm font-bold text-white transition-colors hover:bg-navy-light"
             >
-              <Phone size={15} />
-              Osäker på modellen? Ring {PHONE}
-            </a>
+              <MessageCircle size={15} />
+              Osäker på modellen? Chatta med oss
+            </ChattKnapp>
           </div>
         </div>
       </div>
@@ -141,12 +140,11 @@ export default function MachinePageContent({ machine, products }) {
                 det batteri som sitter i nu och mejla bilden.
               </p>
               <div className="flex flex-col gap-2 text-sm">
-                <a
-                  href={`tel:${PHONE_LINK}`}
+                <ChattKnapp
                   className="font-semibold text-navy hover:underline"
                 >
-                  {PHONE}
-                </a>
+                  Chatta med oss
+                </ChattKnapp>
                 <Link href="/kontakt" className="font-semibold text-navy hover:underline">
                   Skicka ett meddelande
                 </Link>

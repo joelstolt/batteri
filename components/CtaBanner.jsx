@@ -1,7 +1,8 @@
 "use client"
 
-import { EMAIL, PHONE, PHONE_LINK } from "@/lib/constants"
-import { Phone } from "lucide-react"
+import { EMAIL } from "@/lib/constants"
+import { MessageCircle } from "lucide-react"
+import ChattKnapp from "@/components/ChattKnapp"
 
 export default function CtaBanner() {
   return (
@@ -26,13 +27,12 @@ export default function CtaBanner() {
           </p>
         </div>
         <div className="flex flex-wrap gap-3">
-          <a
-            href={`tel:${PHONE_LINK}`}
+          <ChattKnapp
             className="flex items-center gap-2 rounded-[10px] bg-amber-bg px-7 py-3.5 font-heading text-[15px] font-bold text-navy transition-transform hover:-translate-y-px"
           >
-            <Phone size={16} />
-            Ring {PHONE}
-          </a>
+            <MessageCircle size={16} />
+            Chatta med oss
+          </ChattKnapp>
           <a
             href={`mailto:${EMAIL}`}
             className="rounded-[10px] border border-white/20 px-7 py-3.5 text-[15px] font-semibold text-white transition-colors hover:border-white/40 hover:bg-white/4"

@@ -227,7 +227,7 @@ function Inloggning({ fel, forifylld }) {
         </form>
 
         <p className="mt-5 text-xs leading-relaxed text-text-light">
-          Frågor om en order? Ring 076-686 77 52 eller mejla info@batteriproffs.se.
+          Frågor om en order? Chatta med oss eller mejla info@batteriproffs.se.
         </p>
       </div>
     </section>
@@ -310,7 +310,7 @@ function OrderKort({ order }) {
         <div className="border-t border-border bg-surface/50 px-5 py-5">
           {order.items.length === 0 ? (
             <p className="text-sm text-text-light">
-              Raderna finns inte sparade på den här ordern. Ring oss så tar vi fram
+              Raderna finns inte sparade på den här ordern. Mejla oss så tar vi fram
               dem.
             </p>
           ) : (
@@ -337,7 +337,7 @@ function OrderKort({ order }) {
                             {befintligt.status === "g"
                               ? "Ditt omdöme är publicerat. Tack!"
                               : befintligt.status === "n"
-                                ? "Ditt omdöme publicerades inte. Ring oss om du undrar varför."
+                                ? "Ditt omdöme publicerades inte. Mejla oss om du undrar varför."
                                 : "Ditt omdöme granskas."}
                           </p>
                         ) : (
@@ -352,7 +352,7 @@ function OrderKort({ order }) {
           )}
           {order.struknaRader > 0 && (
             <p className="mt-2 text-sm text-text-light">
-              + {order.struknaRader} rader till. Ring oss så läser vi upp hela ordern.
+              + {order.struknaRader} rader till. Mejla oss så läser vi upp hela ordern.
             </p>
           )}
 
@@ -391,7 +391,7 @@ function OrderKort({ order }) {
                 <p className="mt-2 text-xs text-text-light">
                   Bara {bestallbara.length} av {order.items.length}{" "}
                   {order.items.length === 1 ? "rad" : "rader"} går att beställa om.
-                  Resten finns inte kvar i sortimentet — ring oss så löser vi det.
+                  Resten finns inte kvar i sortimentet, mejla oss så löser vi det.
                 </p>
               )}
               <p className="mt-2 text-xs text-text-light">

@@ -1,8 +1,9 @@
 "use client"
 
 import { useState } from "react"
-import { Phone, Mail, Clock, MapPin, Send, CheckCircle } from "lucide-react"
+import { Phone, Mail, Clock, MapPin, Send, CheckCircle, MessageCircle } from "lucide-react"
 import { PHONE, PHONE_LINK, EMAIL, ADDRESS } from "@/lib/constants"
+import ChattKnapp from "@/components/ChattKnapp"
 import FadeIn from "@/components/FadeIn"
 
 export default function ContactContent() {
@@ -61,14 +62,11 @@ export default function ContactContent() {
                   Tack för ditt meddelande!
                 </h2>
                 <p className="mb-6 max-w-sm text-text-mid">
-                  Vi återkommer inom 24 timmar. Behöver du svar snabbare? Ring oss direkt.
+                  Vi återkommer inom 24 timmar. Behöver du svar snabbare? Chatta med oss.
                 </p>
-                <a
-                  href={`tel:${PHONE_LINK}`}
-                  className="rounded-xl bg-navy px-6 py-3 font-heading text-sm font-bold text-white transition-colors hover:bg-navy-light"
-                >
-                  Ring {PHONE}
-                </a>
+                <ChattKnapp className="rounded-xl bg-navy px-6 py-3 font-heading text-sm font-bold text-white transition-colors hover:bg-navy-light">
+                  Chatta med oss
+                </ChattKnapp>
               </div>
             ) : (
               <div>
@@ -129,7 +127,7 @@ export default function ContactContent() {
                       value={form.phone}
                       onChange={(e) => setForm({ ...form, phone: e.target.value })}
                       className="w-full rounded-xl border border-border bg-white px-4 py-3 text-sm text-text-dark outline-none transition-colors placeholder:text-text-light focus:border-navy"
-                      placeholder="076-686 77 52"
+                      placeholder="070-123 45 67"
                     />
                   </div>
 
@@ -267,15 +265,12 @@ export default function ContactContent() {
                   Snabb hjälp?
                 </div>
                 <p className="mb-4 text-sm text-text-mid">
-                  Behöver du hjälp att välja rätt batteri? Ring oss så guidar vi dig — kostnadsfritt.
+                  Behöver du hjälp att välja rätt batteri? Chatta med oss så guidar vi dig, kostnadsfritt och dygnet runt.
                 </p>
-                <a
-                  href={`tel:${PHONE_LINK}`}
-                  className="inline-flex items-center gap-2 rounded-lg bg-amber-bg px-5 py-2.5 text-sm font-bold text-navy transition-transform hover:-translate-y-px"
-                >
-                  <Phone size={14} />
-                  Ring nu
-                </a>
+                <ChattKnapp className="inline-flex items-center gap-2 rounded-lg bg-amber-bg px-5 py-2.5 text-sm font-bold text-navy transition-transform hover:-translate-y-px">
+                  <MessageCircle size={14} />
+                  Chatta nu
+                </ChattKnapp>
               </div>
             </div>
           </FadeIn>

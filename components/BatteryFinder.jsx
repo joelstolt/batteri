@@ -4,8 +4,8 @@ import { useState } from "react"
 import { track } from "@/lib/track"
 import { useRouter } from "next/navigation"
 import { motion, AnimatePresence } from "framer-motion"
-import { PHONE, PHONE_LINK } from "@/lib/constants"
 import { publicProducts } from "@/lib/products"
+import ChattKnapp from "@/components/ChattKnapp"
 
 const AREAS = [
   { id: "traktion", slug: "traktion-industri", label: "Traktion & Industri", icon: "🏗️", sub: "Truckar · Golfbilar · Bygg" },
@@ -159,17 +159,17 @@ export default function BatteryFinder() {
                 </div>
                 <p className="text-[13px] leading-relaxed text-text-mid">
                   {voltage === "vet-ej"
-                    ? "Ring oss så hjälper vi dig avgöra vilken spänning och kapacitet som passar bäst."
+                    ? "Chatta med oss så hjälper vi dig avgöra vilken spänning och kapacitet som passar bäst."
                     : resultCount === 0
-                      ? "Vi har inget lagerfört batteri med exakt den kombinationen — ring oss så tar vi fram ett alternativ."
+                      ? "Vi har inget lagerfört batteri med exakt den kombinationen, chatta med oss så tar vi fram ett alternativ."
                       : `Vi har ${resultCount} ${resultCount === 1 ? "batteri" : "batterier"} som matchar ditt val.`}
                 </p>
               </div>
               <div className="flex gap-2.5">
                 {voltage === "vet-ej" || resultCount === 0 ? (
-                  <a href={`tel:${PHONE_LINK}`} className="flex flex-1 items-center justify-center rounded-[10px] bg-amber-bg px-5 py-3.5 text-sm font-bold text-navy transition-transform hover:-translate-y-px">
-                    Ring {PHONE}
-                  </a>
+                  <ChattKnapp className="flex flex-1 items-center justify-center rounded-[10px] bg-amber-bg px-5 py-3.5 text-sm font-bold text-navy transition-transform hover:-translate-y-px">
+                    Chatta med oss
+                  </ChattKnapp>
                 ) : (
                   <button onClick={handleShowProducts} className="flex-1 rounded-[10px] bg-amber-bg px-5 py-3.5 text-sm font-bold text-navy transition-transform hover:-translate-y-px">
                     Visa produkter

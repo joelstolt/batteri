@@ -68,7 +68,7 @@ export async function POST(request) {
 
     if (omdomenUrPI(pi).some((o) => o.slug === slug)) {
       return NextResponse.json(
-        { error: "Du har redan lämnat ett omdöme på den artikeln. Ring oss om du vill ändra det." },
+        { error: "Du har redan lämnat ett omdöme på den artikeln. Mejla info@batteriproffs.se om du vill ändra det." },
         { status: 409 }
       )
     }

@@ -3,10 +3,11 @@
 import { useState, useEffect } from "react"
 import Link from "next/link"
 import { usePathname } from "next/navigation"
-import { Menu, X, Search, Phone, ChevronRight, Star, Wrench } from "lucide-react"
-import { NAV_CATEGORIES, PHONE, PHONE_LINK, CATEGORIES } from "@/lib/constants"
+import { Menu, X, Search, MessageCircle, ChevronRight, Star, Wrench } from "lucide-react"
+import { NAV_CATEGORIES, CATEGORIES } from "@/lib/constants"
 import { useCart } from "@/lib/cart-context"
 import SearchModal from "./SearchModal"
+import { oppnaChatt } from "./ChattKnapp"
 
 export default function Header() {
   const [scrolled, setScrolled] = useState(false)
@@ -94,21 +95,22 @@ export default function Header() {
 
           {/* Right: search (mobile) + phone + cart */}
           <div className="flex items-center gap-1.5 sm:gap-2">
-            {/* Telefonnumret med öppettider. Öppettiderna gör samtalet
-                trovärdigt — ett ensamt nummer säger bara att det finns ett
-                nummer, inte att någon svarar nu. */}
-            <a
-              href={`tel:${PHONE_LINK}`}
+            {/* Chatten är primära kontaktvägen — den kan alltid svara, till
+                skillnad från en telefon som ingen hinner bemanna. Numret
+                finns kvar på kontakt- och villkorssidorna. */}
+            <button
+              type="button"
+              onClick={() => oppnaChatt()}
               className="mr-1 hidden items-center gap-2.5 rounded-xl px-3 py-1.5 transition-colors hover:bg-white/10 lg:flex"
             >
-              <Phone size={17} className="text-amber-bg" aria-hidden="true" />
-              <span className="leading-tight">
+              <MessageCircle size={17} className="text-amber-bg" aria-hidden="true" />
+              <span className="leading-tight text-left">
                 <span className="block font-heading text-[15px] font-bold text-white">
-                  {PHONE}
+                  Chatta med oss
                 </span>
-                <span className="block text-[11px] text-white/60">Vardagar 08–17</span>
+                <span className="block text-[11px] text-white/60">Svar direkt, dygnet runt</span>
               </span>
-            </a>
+            </button>
 
             {/* Search icon — mobile only */}
             <button

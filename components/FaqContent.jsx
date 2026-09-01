@@ -2,10 +2,11 @@
 
 import { useState } from "react"
 import { ChevronDown, Package, Truck, CreditCard, RotateCcw, Zap, HelpCircle } from "lucide-react"
-import { PHONE, PHONE_LINK, EMAIL } from "@/lib/constants"
+import { EMAIL } from "@/lib/constants"
 import FadeIn from "@/components/FadeIn"
 import { FAQ_SECTIONS } from "@/lib/faq"
 import Link from "next/link"
+import ChattKnapp from "@/components/ChattKnapp"
 
 
 function FaqItem({ question, answer }) {
@@ -103,15 +104,14 @@ export default function FaqContent() {
               Hittade du inte svaret?
             </h3>
             <p className="mb-6 text-sm leading-relaxed text-white/50">
-              Ring oss eller skicka ett mejl så hjälper vi dig inom kort.
+              Chatta med oss eller skicka ett mejl så hjälper vi dig inom kort.
             </p>
             <div className="flex flex-col items-center justify-center gap-3 sm:flex-row">
-              <a
-                href={`tel:${PHONE_LINK}`}
+              <ChattKnapp
                 className="inline-flex items-center gap-2 rounded-full bg-amber-bg px-6 py-3 text-sm font-bold text-navy transition-all hover:brightness-110"
               >
-                Ring {PHONE}
-              </a>
+                Chatta med oss
+              </ChattKnapp>
               <a
                 href={`mailto:${EMAIL}`}
                 className="inline-flex items-center gap-2 rounded-full border border-white/15 px-6 py-3 text-sm font-bold text-white transition-all hover:bg-white/5"

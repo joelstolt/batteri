@@ -5,6 +5,7 @@ import { useRouter } from "next/navigation"
 import { track } from "@/lib/track"
 import { Search, Wrench, Package, RefreshCw, CornerDownLeft, LayoutGrid } from "lucide-react"
 import { sok, sokbar } from "@/lib/search-index"
+import { oppnaChatt } from "@/components/ChattKnapp"
 
 const IKON = {
   maskin: Wrench,
@@ -141,7 +142,7 @@ export default function HeroSearch({ onForhandsvisning }) {
         {kanSoka &&
           (traffar.length > 0
             ? `${traffar.length} träffar`
-            : "Inga träffar — ring oss så hjälper vi dig")}
+            : "Inga träffar — chatta med oss så hjälper vi dig")}
       </div>
 
       {oppen && kanSoka && (
@@ -186,10 +187,14 @@ export default function HeroSearch({ onForhandsvisning }) {
           ) : (
             <div className="px-4 py-5 text-sm text-text-mid">
               Ingen träff på <strong className="text-text-dark">{query.trim()}</strong>. Vi har fler
-              batterier än vad som listas här — ring{" "}
-              <a href="tel:+46766867752" className="font-semibold text-navy hover:underline">
-                076-686 77 52
-              </a>{" "}
+              batterier än vad som listas här —{" "}
+              <button
+                type="button"
+                onClick={() => oppnaChatt()}
+                className="font-semibold text-navy hover:underline"
+              >
+                chatta med oss
+              </button>{" "}
               med modellbeteckningen så tar vi fram rätt.
             </div>
           )}

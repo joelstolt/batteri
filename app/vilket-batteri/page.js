@@ -1,13 +1,14 @@
 import Link from "next/link"
 import { breadcrumbJsonLd, faqJsonLd, jsonLdProps } from "@/lib/schema"
 import { pageMeta } from "@/lib/seo"
-import { PHONE, PHONE_LINK, EMAIL } from "@/lib/constants"
+import { EMAIL } from "@/lib/constants"
 import { replacements } from "@/lib/replacements"
 import TopBar from "@/components/TopBar"
 import Header from "@/components/Header"
 import BatteryFinder from "@/components/BatteryFinder"
 import CtaBanner from "@/components/CtaBanner"
 import Footer from "@/components/Footer"
+import ChattKnapp from "@/components/ChattKnapp"
 
 /**
  * "Vilket batteri har jag?"
@@ -109,19 +110,18 @@ export default function VilketBatteriPage() {
 
           <div className="mt-8 rounded-2xl border border-border bg-surface/60 p-6">
             <h2 className="font-heading text-lg font-bold text-navy">
-              Snabbaste vägen: ring oss
+              Snabbaste vägen: chatten
             </h2>
             <p className="mt-2 leading-relaxed text-text-mid">
-              Har du uppgifterna framför dig tar det en minut i telefon. Vi svarar
-              själva, ingen växel och ingen chattbot.
+              Har du uppgifterna framför dig tar det en minut i chatten, dygnet
+              runt. Behövs en människa svarar vi per mejl inom några timmar.
             </p>
             <div className="mt-4 flex flex-wrap gap-3">
-              <a
-                href={`tel:${PHONE_LINK}`}
+              <ChattKnapp
                 className="rounded-lg bg-navy px-5 py-2.5 font-heading text-sm font-bold text-white"
               >
-                Ring {PHONE}
-              </a>
+                Chatta med oss
+              </ChattKnapp>
               <a
                 href={`mailto:${EMAIL}`}
                 className="rounded-lg border border-border bg-white px-5 py-2.5 font-heading text-sm font-bold text-navy"
