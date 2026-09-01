@@ -27,7 +27,7 @@ export default function ContactContent() {
       setSent(true)
       if (typeof window !== "undefined" && window.umami) { window.umami.track("lead-kontaktformular") }
     } catch (err) {
-      setError(err.message || "Något gick fel — prova igen eller ring oss")
+      setError(err.message || "Något gick fel, prova igen eller mejla info@batteriproffs.se")
     } finally {
       setSubmitting(false)
     }

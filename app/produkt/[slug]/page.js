@@ -1,7 +1,7 @@
 import { notFound } from "next/navigation"
 import { products, getProductImage, getProductBrand } from "@/lib/products"
 import { breadcrumbJsonLd, jsonLdProps } from "@/lib/schema"
-import { godkandaFor, sammanfatta } from "@/lib/omdomen"
+import { hamtaGodkandaCachat, sammanfatta } from "@/lib/omdomen"
 import { CATEGORIES } from "@/lib/constants"
 import TopBar from "@/components/TopBar"
 import Header from "@/components/Header"
@@ -194,7 +194,7 @@ export default async function ProductRoute({ params }) {
   let omdomen = []
   if (!product.hidden) {
     try {
-      omdomen = await godkandaFor(slug)
+      omdomen = (await hamtaGodkandaCachat()).filter((o) => o.slug === slug)
     } catch (err) {
       console.error("Kunde inte hämta omdömen för", slug, err)
     }

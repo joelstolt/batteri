@@ -5,6 +5,8 @@ import Hero from "@/components/Hero"
 import FinderSection from "@/components/FinderSection"
 import Categories from "@/components/Categories"
 import References from "@/components/References"
+import SenasteOmdomen from "@/components/SenasteOmdomen"
+import { hamtaGodkandaCachat } from "@/lib/omdomen"
 import HelpAndQuote from "@/components/HelpAndQuote"
 // AllProducts låg tidigare här och dumpade hela katalogen, 20 produkter och 48
 // länkar, på startsidan. Det är kategorisidans jobb — /kategori/alla listar
@@ -22,11 +24,17 @@ export const metadata = {
   // Nu B2B-orden först.
   title: "Truckbatteri, traktionsbatteri & batteri till städmaskin | Batteriproffs",
   description:
-    "Traktionsbatterier och gelbatterier till truck, lift, pallyftare och städmaskin. Priser öppet på sajten, normalt 1–3 dagars leverans och offert på volym. Vi svarar själva i telefon.",
+    "Traktionsbatterier och gelbatterier till truck, lift, pallyftare och städmaskin. Priser öppet på sajten, normalt 1–3 dagars leverans och offert på volym. Svar direkt i chatten, dygnet runt.",
   alternates: { canonical: "https://www.batteriproffs.se" },
 }
 
-export default function Home() {
+export default async function Home() {
+  let omdomen = []
+  try {
+    omdomen = await hamtaGodkandaCachat()
+  } catch (err) {
+    console.error("Kunde inte läsa omdömen till startsidan:", err)
+  }
   return (
     <>
       {/* Organization knyter företaget till en entitet hos Google. Renderas
@@ -61,6 +69,8 @@ export default function Home() {
         <Categories />
         <WhyUs />
         <HelpAndQuote />
+        {/* Riktiga omdömen före referenserna: verifierade köp väger tyngst. */}
+        <SenasteOmdomen omdomen={omdomen} />
         <References />
         <CtaBanner />
       </main>

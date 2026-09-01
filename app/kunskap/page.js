@@ -31,7 +31,7 @@ export default function KunskapPage() {
         <section className="mx-auto max-w-3xl px-5 py-12 sm:py-16">
           <h1 className="font-heading text-3xl font-bold text-navy sm:text-4xl">Kunskapsbank</h1>
           <p className="mt-4 max-w-xl text-lg leading-relaxed text-text-mid">
-            Raka svar på de frågor vi får i telefon, med priserna utskrivna. Hittar du
+            Raka svar på de frågor vi får från kunder, med priserna utskrivna. Hittar du
             inte svaret här ringer du oss, så tar vi det direkt.
           </p>
 

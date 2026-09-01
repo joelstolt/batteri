@@ -7,12 +7,14 @@ import { ShoppingCart } from "lucide-react"
 import { useCart } from "@/lib/cart-context"
 import { useVat } from "@/lib/vat-context"
 import { getProductBrand, getProductChemistry } from "@/lib/products"
+import { useBetyg } from "@/lib/betyg-context"
 
 export default function ProductCard({ product }) {
   const [qty, setQty] = useState(1)
   const { addItem } = useCart()
   const { displayPrice, vatLabel } = useVat()
   const { slug, shortName, voltage, capacity, price, images, badge } = product
+  const betyg = useBetyg(slug)
   const image = images?.[0] || "/produkter/placeholder.jpg"
 
   const formattedPrice = new Intl.NumberFormat("sv-SE").format(displayPrice(price))
@@ -50,6 +52,21 @@ export default function ProductCard({ product }) {
             {shortName}
           </div>
           <div className="mb-2 text-xs text-text-mid sm:mb-4 sm:text-sm">{capacity}</div>
+          {/* Stjärnor bara där det finns riktiga omdömen. Antalet skrivs alltid
+              ut — ett betyg ska aldrig se ut som hundra. */}
+          {betyg && (
+            <div className="-mt-1 mb-2 flex items-center gap-1.5 text-[11px] text-text-mid sm:mb-3 sm:text-xs" aria-label={`${betyg.snitt.toFixed(1)} av 5, ${betyg.antal} omdömen`}>
+              <span className="flex gap-px" aria-hidden="true">
+                {[1, 2, 3, 4, 5].map((n) => (
+                  <svg key={n} width="12" height="12" viewBox="0 0 20 20" fill="currentColor" className={n <= Math.round(betyg.snitt) ? "text-amber-bg" : "text-border-dark"}>
+                    <path d="M10 1.5l2.6 5.3 5.9.9-4.3 4.1 1 5.8-5.2-2.7-5.2 2.7 1-5.8L1.5 7.7l5.9-.9z" />
+                  </svg>
+                ))}
+              </span>
+              <span className="font-semibold text-text-dark">{betyg.snitt.toFixed(1)}</span>
+              <span>({betyg.antal})</span>
+            </div>
+          )}
         </Link>
 
         {/* Price + actions */}

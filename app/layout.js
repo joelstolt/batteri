@@ -1,6 +1,7 @@
 import { Outfit, DM_Sans } from "next/font/google"
 import Script from "next/script"
 import Providers from "@/components/Providers"
+import { hamtaGodkandaCachat, betygPerProdukt } from "@/lib/omdomen"
 import CookieBanner from "@/components/CookieBanner"
 import "./globals.css"
 
@@ -47,7 +48,18 @@ export const metadata = {
   },
 }
 
-export default function RootLayout({ children }) {
+// Timvis ISR på allt: omdömesdatan i layouten ska inte frysa vid bygget.
+// Godkännande i admin revaliderar dessutom direkt (tag + layout-path).
+export const revalidate = 3600
+
+export default async function RootLayout({ children }) {
+  // Ett trasigt Stripe-anrop får aldrig fälla sajten — då visas inga stjärnor.
+  let betyg = {}
+  try {
+    betyg = betygPerProdukt(await hamtaGodkandaCachat())
+  } catch (err) {
+    console.error("Kunde inte läsa omdömen till layouten:", err)
+  }
   return (
     <html lang="sv" className={`${outfit.variable} ${dmSans.variable}`}>
       <body>
@@ -86,7 +98,7 @@ export default function RootLayout({ children }) {
           Hoppa till innehåll
         </a>
 
-        <Providers>{children}</Providers>
+        <Providers betyg={betyg}>{children}</Providers>
         <CookieBanner />
 
         {/* Umami är cookielöst och kräver inget samtycke */}

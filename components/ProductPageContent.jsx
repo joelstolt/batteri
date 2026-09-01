@@ -168,7 +168,7 @@ function ProductExtraInfo({ product, className = "" }) {
             >
               {teknik.kallaNamn}
             </a>
-            . Osäker på din laddare? Ring{" "}
+            . Osäker på din laddare?{" "}
             <ChattKnapp className="text-navy underline">
               Chatta med oss
             </ChattKnapp>{" "}

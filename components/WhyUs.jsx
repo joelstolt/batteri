@@ -17,7 +17,7 @@ const CHECKPOINTS = [
   },
   {
     title: "B2B & privat, samma service",
-    desc: "Visa pris exkl. moms med ett klick. Större beställning? Ring oss för volympriser.",
+    desc: "Visa pris exkl. moms med ett klick. Större beställning? Chatta med oss för volympriser.",
   },
 ]
 
