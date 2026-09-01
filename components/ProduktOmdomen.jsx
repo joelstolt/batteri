@@ -28,8 +28,12 @@ export default function ProduktOmdomen({ omdomen }) {
         </p>
       </div>
 
+      {/* MFL 12 c §: den som visar konsumentrecensioner måste tala om HUR
+          äktheten säkerställs — informationen räknas som väsentlig. */}
       <p className="mt-1.5 text-sm text-text-light">
-        Bara kunder som köpt artikeln hos oss kan lämna omdöme.
+        Bara kunder som köpt artikeln hos oss kan lämna omdöme: inbjudan mejlas
+        efter leverans till adressen som användes vid köpet, och varje omdöme
+        granskas manuellt innan det publiceras. Vi ändrar aldrig i texterna.
       </p>
 
       <ul className="mt-6 space-y-4">

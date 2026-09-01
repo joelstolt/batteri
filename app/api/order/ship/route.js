@@ -3,6 +3,7 @@ import Stripe from "stripe"
 import { resend, FROM, ADMIN_EMAIL, escape, emailLayout } from "@/lib/emails"
 import { kravAdmin } from "@/lib/admin-auth"
 import { orderIdFor } from "@/lib/orders"
+import { scheduleReviewEmail } from "@/lib/review-email"
 
 const stripe = new Stripe(process.env.STRIPE_SECRET_KEY)
 
@@ -139,6 +140,28 @@ export async function POST(request) {
       })
     }
 
+    // Omdömesmejlet köas när ordern skickas — då räknar fördröjningen från
+    // leveransen och inte från orderläggningen. Skickas även i tyst läge:
+    // tyst gäller LEVERANSbeskedet, omdömesfrågan är ett eget ärende.
+    // review_email_at spärrar dubbletter om ship körs om på samma order.
+    let reviewKoad = false
+    if (!pi.metadata?.review_email_at) {
+      try {
+        await scheduleReviewEmail({
+          to: customerEmail,
+          // Beställarens namn, inte företagsnamnet — mejlet inleds med "Hej X"
+          fullName: pi.metadata?.buyer_name || customerName,
+          orderId,
+          piId: pi.id,
+          replyTo: ADMIN_EMAIL,
+        })
+        reviewKoad = true
+      } catch (err) {
+        // Ett trasigt omdömesmejl får aldrig stoppa leveransregistreringen.
+        console.error("Omdömesmejl kunde inte schemaläggas:", err)
+      }
+    }
+
     // Leveransen skrivs tillbaka på ordern FÖRST efter att mejlet gått iväg, så
     // en order aldrig kan stå som skickad utan att kunden fått veta det.
     // I tyst läge gäller inte den invarianten här utan hos den som skickar det
@@ -151,6 +174,7 @@ export async function POST(request) {
           tracking,
           carrier,
           shipped_at: String(Math.floor(Date.now() / 1000)),
+          ...(reviewKoad ? { review_email_at: String(Math.floor(Date.now() / 1000)) } : {}),
         },
       })
     } catch (err) {

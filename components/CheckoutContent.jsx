@@ -143,6 +143,27 @@ function CheckoutForm({ form, setForm, errors, setErrors, totalPrice, clientSecr
     if (errors[field]) setErrors((prev) => ({ ...prev, [field]: null }))
   }
 
+  // Fäst beställarens mejl på betalningen så fort adressen är giltig — inte
+  // först vid bekräftelsen. En övergiven kassa var annars helt anonym och gick
+  // aldrig att följa upp; nu ligger kontakt_epost på PaymentIntenten i Stripe.
+  // Fire-and-forget med fördröjning: får aldrig störa själva kassan.
+  useEffect(() => {
+    const epost = String(form.email || "").trim()
+    if (!clientSecret || !/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(epost)) return
+    const t = setTimeout(() => {
+      fetch("/api/kassa-kontakt", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({
+          paymentIntentId: clientSecret.split("_secret_")[0],
+          clientSecret,
+          epost,
+        }),
+      }).catch(() => {})
+    }, 1200)
+    return () => clearTimeout(t)
+  }, [form.email, clientSecret])
+
   const handleSubmit = async (e) => {
     e.preventDefault()
     setPaymentError(null)
@@ -257,6 +278,63 @@ function CheckoutForm({ form, setForm, errors, setErrors, totalPrice, clientSecr
 
   return (
     <form onSubmit={handleSubmit} className="flex flex-col gap-10">
+      {/* Beställare först: mejlen fästs på betalningen så fort den är ifylld,
+          och då kan en övergiven kassa följas upp. Med sektionen sist hann de
+          flesta avhoppare aldrig dit. */}
+      <div data-field="firstName">
+        <SectionHeading note="Vem vi kontaktar om något behöver stämmas av.">
+          Beställare
+        </SectionHeading>
+        <div className="flex flex-col gap-4">
+          <div className="grid gap-4 sm:grid-cols-2">
+            <FormInput
+              label="Förnamn"
+              type="text"
+              placeholder="Anna"
+              autoComplete="given-name"
+              value={form.firstName}
+              onChange={handleChange("firstName")}
+              error={errors.firstName}
+            />
+            <div data-field="lastName">
+              <FormInput
+                label="Efternamn"
+                type="text"
+                placeholder="Andersson"
+                autoComplete="family-name"
+                value={form.lastName}
+                onChange={handleChange("lastName")}
+                error={errors.lastName}
+              />
+            </div>
+          </div>
+          <div className="grid gap-4 sm:grid-cols-2">
+            <div data-field="email">
+              <FormInput
+                label="E-post"
+                type="email"
+                placeholder="anna@exempelindustri.se"
+                autoComplete="email"
+                value={form.email}
+                onChange={handleChange("email")}
+                error={errors.email}
+              />
+            </div>
+            <div data-field="phone">
+              <FormInput
+                label="Telefon"
+                type="tel"
+                placeholder="076-686 77 52"
+                autoComplete="tel"
+                value={form.phone}
+                onChange={handleChange("phone")}
+                error={errors.phone}
+              />
+            </div>
+          </div>
+        </div>
+      </div>
+
       {/* Företagsuppgifter */}
       <div data-field="companyName">
         <SectionHeading note="Vi säljer till företag. Uppgifterna här hamnar på fakturan.">
@@ -331,61 +409,6 @@ function CheckoutForm({ form, setForm, errors, setErrors, totalPrice, clientSecr
               onChange={handleChange("invoiceEmail")}
               error={errors.invoiceEmail}
             />
-          </div>
-        </div>
-      </div>
-
-      {/* Beställare */}
-      <div data-field="firstName">
-        <SectionHeading note="Vem vi kontaktar om något behöver stämmas av.">
-          Beställare
-        </SectionHeading>
-        <div className="flex flex-col gap-4">
-          <div className="grid gap-4 sm:grid-cols-2">
-            <FormInput
-              label="Förnamn"
-              type="text"
-              placeholder="Anna"
-              autoComplete="given-name"
-              value={form.firstName}
-              onChange={handleChange("firstName")}
-              error={errors.firstName}
-            />
-            <div data-field="lastName">
-              <FormInput
-                label="Efternamn"
-                type="text"
-                placeholder="Andersson"
-                autoComplete="family-name"
-                value={form.lastName}
-                onChange={handleChange("lastName")}
-                error={errors.lastName}
-              />
-            </div>
-          </div>
-          <div className="grid gap-4 sm:grid-cols-2">
-            <div data-field="email">
-              <FormInput
-                label="E-post"
-                type="email"
-                placeholder="anna@exempelindustri.se"
-                autoComplete="email"
-                value={form.email}
-                onChange={handleChange("email")}
-                error={errors.email}
-              />
-            </div>
-            <div data-field="phone">
-              <FormInput
-                label="Telefon"
-                type="tel"
-                placeholder="076-686 77 52"
-                autoComplete="tel"
-                value={form.phone}
-                onChange={handleChange("phone")}
-                error={errors.phone}
-              />
-            </div>
           </div>
         </div>
       </div>

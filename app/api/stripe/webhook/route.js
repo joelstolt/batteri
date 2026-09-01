@@ -9,7 +9,6 @@ import {
   emailLayout,
 } from "@/lib/emails"
 import { parsaItems } from "@/lib/orders"
-import { scheduleReviewEmail } from "@/lib/review-email"
 import { unloadingLabel } from "@/lib/checkout"
 import { SELJARE } from "@/lib/constants"
 
@@ -282,18 +281,9 @@ export async function POST(request) {
       )
     }
 
-    // Schedule review request (no-op if GOOGLE_REVIEW_URL inte är satt)
-    if (customer.email) {
-      sends.push(
-        scheduleReviewEmail({
-          to: customer.email,
-          // Beställarens namn, inte företagsnamnet — mejlet inleds med "Hej X"
-          fullName: meta.buyer_name || billing.name,
-          orderId,
-          replyTo: ADMIN_EMAIL,
-        })
-      )
-    }
+    // Omdömesmejlet schemaläggs INTE här längre. Det köas i /api/order/ship
+    // när ordern faktiskt skickas — annars räknar det sju dygn från
+    // orderläggningen och landar hos kunden innan pallgodset gjort det.
 
     await Promise.allSettled(sends)
   } catch (err) {

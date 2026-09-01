@@ -3,19 +3,21 @@
 import { useState, useRef, useEffect, useId } from "react"
 import { useRouter } from "next/navigation"
 import { track } from "@/lib/track"
-import { Search, Wrench, Package, RefreshCw, CornerDownLeft } from "lucide-react"
+import { Search, Wrench, Package, RefreshCw, CornerDownLeft, LayoutGrid } from "lucide-react"
 import { sok, sokbar } from "@/lib/search-index"
 
 const IKON = {
   maskin: Wrench,
   ersattning: RefreshCw,
   produkt: Package,
+  sida: LayoutGrid,
 }
 
 const ETIKETT = {
   maskin: "Maskin",
   ersattning: "Ersättning",
   produkt: "Batteri",
+  sida: "Kategori",
 }
 
 function formatPris(n) {

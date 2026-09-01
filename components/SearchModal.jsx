@@ -3,11 +3,10 @@
 import { useState, useEffect, useRef } from "react"
 import { useRouter } from "next/navigation"
 import Image from "next/image"
-import { X, Search, ArrowRight } from "lucide-react"
+import { X, Search, ArrowRight, Wrench, RefreshCw, LayoutGrid, Phone } from "lucide-react"
 import { motion, AnimatePresence } from "framer-motion"
-import { publicProducts as products } from "@/lib/products"
-import { CATEGORIES } from "@/lib/constants"
-import { machines } from "@/lib/machines"
+import { CATEGORIES, PHONE, PHONE_LINK } from "@/lib/constants"
+import { sok, sokbar } from "@/lib/search-index"
 import { useVat } from "@/lib/vat-context"
 import { track } from "@/lib/track"
 
@@ -15,6 +14,15 @@ function formatPrice(n) {
   return new Intl.NumberFormat("sv-SE").format(n)
 }
 
+/**
+ * Sökrutan bakom förstoringsglaset i headern.
+ *
+ * Söker i SAMMA register som herons sökfält (lib/search-index). Modalen hade
+ * tidigare en egen enklare matchning som varken kände till ersättningssidorna
+ * eller normaliserade bort bindestreck — mätningen visade att 15 av 22
+ * sökningar gav noll träffar, däribland "trojan", "truckbatteri" och
+ * "laddare" som alla har egna sidor. En sökmotor, ett beteende.
+ */
 export default function SearchModal({ isOpen, onClose }) {
   const [query, setQuery] = useState("")
   const inputRef = useRef(null)
@@ -40,36 +48,13 @@ export default function SearchModal({ isOpen, onClose }) {
   }, [onClose])
 
   const q = query.toLowerCase().trim()
+  const kanSoka = sokbar(query)
+  const traffar = kanSoka ? sok(query, 12) : []
 
-
-  const matchedProducts = q.length >= 2
-    ? products.filter((p) =>
-        p.name.toLowerCase().includes(q) ||
-        p.shortName.toLowerCase().includes(q) ||
-        p.voltage.toLowerCase().includes(q) ||
-        p.capacity.toLowerCase().includes(q) ||
-        p.description.toLowerCase().includes(q) ||
-        p.slug.toLowerCase().includes(q)
-      ).slice(0, 6)
-    : []
-
-  // Besökare söker på maskinen, inte på batteriet. Utan det här gav
-  // "nilfisk sc401" noll träffar trots att vi har en sida för exakt det.
-  const matchedMachines = q.length >= 2
-    ? machines.filter((m) =>
-        m.name.toLowerCase().includes(q) ||
-        m.type.toLowerCase().includes(q) ||
-        (m.brand || "").toLowerCase().includes(q) ||
-        m.slug.includes(q.replace(/\s+/g, "-"))
-      ).slice(0, 5)
-    : []
-
-  const matchedCategories = q.length >= 2
-    ? CATEGORIES.filter((c) =>
-        c.title.toLowerCase().includes(q) ||
-        c.desc.toLowerCase().includes(q)
-      )
-    : []
+  const maskiner = traffar.filter((t) => t.typ === "maskin").slice(0, 5)
+  const ersattningar = traffar.filter((t) => t.typ === "ersattning").slice(0, 4)
+  const sidor = traffar.filter((t) => t.typ === "sida").slice(0, 3)
+  const produkter = traffar.filter((t) => t.typ === "produkt").slice(0, 6)
 
   // Logga vad besökarna faktiskt söker efter. Det är den billigaste källan vi
   // har till vilka maskinmodeller och artikelnummer som ska bli egna sidor
@@ -78,8 +63,7 @@ export default function SearchModal({ isOpen, onClose }) {
   useEffect(() => {
     if (q.length < 3) return
     const t = setTimeout(() => {
-      const traffar = matchedProducts.length + matchedMachines.length
-      track("sok", { term: q, traffar })
+      track("sok", { term: q, traffar: traffar.length })
       /*
        * Noll träffar får ett EGET event, inte bara traffar: 0 på "sok".
        * Umami listar event per namn, så en nolla begravd i en egenskap syns
@@ -87,18 +71,42 @@ export default function SearchModal({ isOpen, onClose }) {
        * och blir en sortimentsignal: det här ville kunden köpa och vi hade
        * det inte.
        */
-      if (traffar === 0) track("sok-utan-traff", { term: q })
+      if (traffar.length === 0) track("sok-utan-traff", { term: q })
     }, 1200)
     return () => clearTimeout(t)
-  }, [q, matchedProducts.length, matchedMachines.length])
+  }, [q, traffar.length])
 
-  const hasResults =
-    matchedProducts.length > 0 || matchedCategories.length > 0 || matchedMachines.length > 0
+  const hasResults = traffar.length > 0
 
   const goTo = (href) => {
     onClose()
     router.push(href)
   }
+
+  const RadUtanBild = ({ post, Ikon }) => (
+    <button
+      onClick={() => goTo(post.href)}
+      className="flex w-full items-center gap-3 rounded-lg px-3 py-2.5 text-left transition-colors hover:bg-surface"
+    >
+      <div className="flex h-9 w-9 flex-shrink-0 items-center justify-center rounded-lg bg-surface">
+        <Ikon size={16} className="text-navy" aria-hidden="true" />
+      </div>
+      <div className="min-w-0 flex-1">
+        <div className="truncate text-sm font-semibold text-text-dark">{post.titel}</div>
+        <div className="truncate text-xs text-text-light">{post.undertitel}</div>
+      </div>
+      {post.pris ? (
+        <div className="flex-shrink-0 text-right">
+          <div className="font-heading text-sm font-bold text-text-dark">
+            {formatPrice(displayPrice(post.pris))} kr
+          </div>
+          <div className="text-[10px] text-text-light">{vatLabel.toLowerCase()}</div>
+        </div>
+      ) : (
+        <ArrowRight size={14} className="flex-shrink-0 text-text-light" />
+      )}
+    </button>
+  )
 
   return (
     <AnimatePresence>
@@ -151,7 +159,7 @@ export default function SearchModal({ isOpen, onClose }) {
 
             {/* Results */}
             <div className="max-h-[60vh] overflow-y-auto">
-              {q.length < 2 ? (
+              {!kanSoka ? (
                 /* Empty state — popular categories */
                 <div className="px-5 py-6">
                   <div className="mb-3 text-xs font-bold uppercase tracking-wider text-text-light">
@@ -186,100 +194,104 @@ export default function SearchModal({ isOpen, onClose }) {
                   </div>
                 </div>
               ) : !hasResults ? (
-                /* No results */
+                /*
+                 * Noll träffar är ett säljläge, inte en återvändsgränd. Den som
+                 * skriver ett modellnummer vi inte känner igen har redan
+                 * bestämt sig — ge en människa att prata med i stället för
+                 * "prova ett annat sökord".
+                 */
                 <div className="px-5 py-10 text-center">
                   <p className="mb-1 font-heading text-base font-bold text-text-dark">
-                    Inga resultat för "{query}"
+                    Ingen träff på "{query}"
                   </p>
-                  <p className="text-sm text-text-mid">
-                    Prova ett annat sökord eller{" "}
-                    <button onClick={() => setQuery("")} className="font-semibold text-amber underline">
-                      visa alla kategorier
+                  <p className="mx-auto mb-4 max-w-[420px] text-sm leading-relaxed text-text-mid">
+                    Vi har fler batterier än vad som listas på sajten. Skicka
+                    modellbeteckningen så tar vi fram rätt batteri och pris.
+                  </p>
+                  <div className="flex flex-wrap items-center justify-center gap-2.5">
+                    <a
+                      href={`tel:${PHONE_LINK}`}
+                      className="inline-flex items-center gap-2 rounded-lg bg-navy px-4 py-2.5 font-heading text-sm font-bold text-white"
+                    >
+                      <Phone size={14} aria-hidden="true" />
+                      Ring {PHONE}
+                    </a>
+                    <button
+                      onClick={() => goTo("/kontakt")}
+                      className="rounded-lg border border-border px-4 py-2.5 text-sm font-semibold text-text-dark hover:bg-surface"
+                    >
+                      Skicka modellnumret
                     </button>
-                  </p>
+                  </div>
                 </div>
               ) : (
                 /* Results */
                 <div>
-                  {/* Category matches */}
-                  {matchedMachines.length > 0 && (
+                  {maskiner.length > 0 && (
                     <div className="border-b border-border px-5 py-4">
                       <div className="mb-2 text-xs font-bold uppercase tracking-wider text-text-light">
                         Din maskin
                       </div>
-                      {matchedMachines.map((m) => (
-                        <button
-                          key={m.slug}
-                          onClick={() => goTo(`/batteri-till/${m.slug}`)}
-                          className="flex w-full items-center gap-3 rounded-lg px-3 py-2.5 text-left transition-colors hover:bg-surface"
-                        >
-                          <span className="text-xl">🔧</span>
-                          <div className="flex-1">
-                            <div className="text-sm font-semibold text-text-dark">
-                              Batteri till {m.name}
-                            </div>
-                            <div className="text-xs text-text-light">{m.type}</div>
-                          </div>
-                          <ArrowRight size={14} className="text-text-light" />
-                        </button>
+                      {maskiner.map((m) => (
+                        <RadUtanBild key={m.href} post={m} Ikon={Wrench} />
                       ))}
                     </div>
                   )}
 
-                  {matchedCategories.length > 0 && (
+                  {ersattningar.length > 0 && (
                     <div className="border-b border-border px-5 py-4">
                       <div className="mb-2 text-xs font-bold uppercase tracking-wider text-text-light">
-                        Kategorier
+                        Ersätter
                       </div>
-                      {matchedCategories.map((cat) => (
-                        <button
-                          key={cat.slug}
-                          onClick={() => goTo(`/kategori/${cat.slug}`)}
-                          className="flex w-full items-center gap-3 rounded-lg px-3 py-2.5 text-left transition-colors hover:bg-surface"
-                        >
-                          <span className="text-xl">{cat.icon}</span>
-                          <div className="flex-1">
-                            <div className="text-sm font-semibold text-text-dark">{cat.title}</div>
-                            <div className="text-xs text-text-light">{cat.desc}</div>
-                          </div>
-                          <ArrowRight size={14} className="text-text-light" />
-                        </button>
+                      {ersattningar.map((r) => (
+                        <RadUtanBild key={r.href} post={r} Ikon={RefreshCw} />
+                      ))}
+                    </div>
+                  )}
+
+                  {sidor.length > 0 && (
+                    <div className="border-b border-border px-5 py-4">
+                      <div className="mb-2 text-xs font-bold uppercase tracking-wider text-text-light">
+                        Kategorier & guider
+                      </div>
+                      {sidor.map((s) => (
+                        <RadUtanBild key={s.href} post={s} Ikon={LayoutGrid} />
                       ))}
                     </div>
                   )}
 
                   {/* Product matches */}
-                  {matchedProducts.length > 0 && (
+                  {produkter.length > 0 && (
                     <div className="px-5 py-4">
                       <div className="mb-2 text-xs font-bold uppercase tracking-wider text-text-light">
                         Produkter
                       </div>
-                      {matchedProducts.map((p) => (
+                      {produkter.map((p) => (
                         <button
-                          key={p.slug}
-                          onClick={() => goTo(`/produkt/${p.slug}`)}
+                          key={p.href}
+                          onClick={() => goTo(p.href)}
                           className="flex w-full items-center gap-4 rounded-lg px-3 py-3 text-left transition-colors hover:bg-surface"
                         >
                           <div className="relative h-14 w-14 flex-shrink-0 overflow-hidden rounded-lg border border-border bg-white">
-                            <Image
-                              src={p.images[0]}
-                              alt={p.shortName}
-                              fill
-                              className="object-contain p-1"
-                              sizes="56px"
-                            />
+                            {p.bild && (
+                              <Image
+                                src={p.bild}
+                                alt={p.titel}
+                                fill
+                                className="object-contain p-1"
+                                sizes="56px"
+                              />
+                            )}
                           </div>
                           <div className="flex-1 min-w-0">
                             <div className="truncate text-sm font-semibold text-text-dark">
-                              {p.shortName}
+                              {p.titel}
                             </div>
-                            <div className="text-xs text-text-light">
-                              {p.voltage} · {p.capacity}
-                            </div>
+                            <div className="text-xs text-text-light">{p.undertitel}</div>
                           </div>
                           <div className="flex-shrink-0 text-right">
                             <div className="font-heading text-sm font-bold text-text-dark">
-                              {formatPrice(displayPrice(p.price))} kr
+                              {formatPrice(displayPrice(p.pris))} kr
                             </div>
                             <div className="text-[10px] text-text-light">{vatLabel.toLowerCase()}</div>
                           </div>

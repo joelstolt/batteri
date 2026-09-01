@@ -96,9 +96,21 @@ export default function ThankYouContent() {
               foretag: data.company?.name || null,
             })
           }
+        } else {
+          // /api/order strulade men betalningen ÄR genomförd — kunden står på
+          // tack-sidan. Utan den här grenen försvann köpet ur mätningen varje
+          // gång orderhämtningen felade (så missades den första skarpa ordern).
+          // Dedupa på betalnings-id:t i stället för ordernumret.
+          if (typeof window !== "undefined" && window.umami && firstReport(paymentIntent, "umami")) {
+            window.umami.track("kop", { order: paymentIntent })
+          }
         }
       })
-      .catch(() => {})
+      .catch(() => {
+        if (typeof window !== "undefined" && window.umami && firstReport(paymentIntent, "umami")) {
+          window.umami.track("kop", { order: paymentIntent })
+        }
+      })
       .finally(() => setLoading(false))
   }, [searchParams])
 
