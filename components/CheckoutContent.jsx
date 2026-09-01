@@ -380,6 +380,7 @@ function CheckoutForm({ form, setForm, errors, setErrors, totalPrice, clientSecr
               <FormInput
                 label="Er referens"
                 type="text"
+                optional
                 placeholder="Anna Andersson"
                 hint="Namnet på beställaren, trycks på fakturan"
                 value={form.reference}
