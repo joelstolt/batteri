@@ -43,8 +43,12 @@ export async function GET(request) {
     // requires_capture ÄR däremot en order: kunden har bekräftat och pengarna
     // är reserverade — det är precis de ordrarna som ska skickas (och dras)
     // härifrån, så de måste synas. Filtret dolde PCB-ordern 2026-09-01.
+    // dold=1 i metadatan gömmer interna testköp ur vyn. Stripe raderar aldrig
+    // betalningar, så dölja är det som finns — flaggan går att ta bort i
+    // Stripe-dashboarden om en rad behöver fram igen.
     const ordrar = svar.data
       .filter((pi) => pi.status === "succeeded" || pi.status === "requires_capture")
+      .filter((pi) => pi.metadata?.dold !== "1")
       .map(normaliseraOrder)
 
     return NextResponse.json({
