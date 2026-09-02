@@ -254,6 +254,14 @@ Kan ni kolla med leverantören om de har följande, och till vilket pris:
 
 Vi ska sälja dem även till privatpersoner, så leverans hem till kund måste fungera på samma sätt som i dag.
 
+Jag har kollat vad konkurrenterna tar, och för att vi ska kunna ligga rätt i pris och ändå tjäna på dem behöver inköpspriset exklusive moms hamna ungefär här:
+AGM 12V 100Ah: under 1 400 kr
+AGM 12V 120Ah: under 1 800 kr
+AGM eller gel 12V 200 till 230Ah: under 2 500 kr
+LiFePO4 12V 100Ah: under 2 500 kr
+
+Ligger de över det säg gärna vad de landar på ändå, så räknar jag på om det går att ta ett högre läge i butiken.
+
 Hälsningar
 Joel
 ```
