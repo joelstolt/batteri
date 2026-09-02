@@ -24,9 +24,13 @@ Det här var länge fel i den här filen, så läs det noga:
   peka någonstans.
 - **AB bildas när verksamheten gått 25 000 kr i vinst.** Fram tills dess ligger
   allt på den enskilda firman.
-- **Privatkunder öppnas FÖRST när AB:t finns.** Konsumentköplagens tre års
-  reklamationsrätt med omvänd bevisbörda ska inte landa på en privatperson.
-  Kassan är därför företag-bara med flit, inte av glömska.
+- **Privatkunder (ändrat beslut 2026-09-02):** bly, gel och AGM får säljas till
+  privatpersoner i den enskilda firman redan före AB:t, med företagsförsäkring
+  som täcker produktansvar, ångerrätt i villkoren och priser inkl. moms i
+  B2C-vyn. **Litium till privatpersoner väntar tills AB:t finns** (importör-
+  ansvar vid brand ska inte landa på en privatperson). Kassan är i skrivande
+  stund fortfarande företag-bara; B2C byggs när partnern bekräftat vilka
+  fritidsbatterier leverantören har (mejl klart i `docs/lankbygge-texter.md`, del 7).
 - ⚠️ **Momsreg.nr i `lib/constants.js` är härlett ur personnumret och måste
   verifieras av Joel.** Sajten tar ut 25 % moms på varje order.
 - Tidigare påstod den här filen "delägare: Joel, Isak, Lukas". En enskild firma
@@ -666,3 +670,22 @@ golfklubbar.
 **MÄTPUNKT 15 oktober 2026:** topp 20 på husvagnsbatteri, fritidsbatteri och
 husbilsbatteri? Ja, då Ads-test 50 kr/dag på fritid. Nej, då analysera innan mer
 byggs.
+
+## Veckorapport och länkbygge (2026-09-02)
+
+- **`/api/cron/veckorapport`** körs av Vercel cron (`vercel.json`, måndag 05:00 UTC)
+  och mejlar `CONTACT_TO_EMAIL`: ordrar och omsättning senaste 7 dagarna, ordrar
+  som väntar på spårningsnummer (med varning när kortreservationen är på väg
+  att dö), adresser som fastnade i kassan (`kontakt_epost` utan köp), Umami
+  (besökare, sökningar utan träff, sidor, källor) och nya länkar via DataForSEO.
+  Logiken i `lib/veckorapport.js`, varje källa i egen try/catch. Manuellt:
+  `curl -H "Authorization: Bearer $CRON_SECRET" https://www.batteriproffs.se/api/cron/veckorapport?dagar=30`.
+- **Nya env i Vercel (prod + preview):** `UMAMI_URL`, `UMAMI_USERNAME`,
+  `UMAMI_PASSWORD`, `UMAMI_WEBSITE_ID` (99e7d795…), `DATAFORSEO_USERNAME`,
+  `DATAFORSEO_PASSWORD`, `CRON_SECRET` (även i `.env.local`).
+- **`docs/lankgap-2026-09.md`**: 97 svenska/nordiska domäner som länkar
+  Batteriexpressen/Batteriexperten men inte oss. Batteriproffs har 21 hänvisande
+  domäner, alla skräp. Mål: 25 riktiga domäner till 2026-11-01.
+- **`docs/lankbygge-texter.md`**: klubbpitch (golfklubbar = B2B nu, båt/husbil
+  när B2C finns), sex forumsvar, katalogtext, återförsäljarlista, testsajtpitch,
+  rabattkodstext, partnermejlet om fritidssortimentet. Konton skapar Joel själv.
