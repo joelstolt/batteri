@@ -1,6 +1,7 @@
 "use client"
 
-import { useState } from "react"
+import { useEffect, useState } from "react"
+import { track } from "@/lib/track"
 
 const MAX_TEXT = 350
 
@@ -60,6 +61,9 @@ function ArtikelOmdome({ token, buyerName, rad, redanLamnad, forvaltBetyg }) {
       })
       const data = await res.json()
       if (!res.ok) throw new Error(data.error || "Kunde inte spara omdömet")
+      // Mätpunkt 2 av 2. Skillnaden mot omdome-oppnad är exakt det vi vill
+      // veta: hur många som landar här men aldrig trycker skicka.
+      track("omdome-skickat", { betyg, medText: text.trim().length > 0 })
       setKlart(data.meddelande || "Tack! Ditt omdöme granskas innan det publiceras.")
     } catch (err) {
       setFel(err.message)
@@ -145,6 +149,22 @@ function ArtikelOmdome({ token, buyerName, rad, redanLamnad, forvaltBetyg }) {
 
 export default function OmdomeDirektContent({ token, orderId, buyerName, items, redanLamnade, forvaltBetyg }) {
   const fornamn = String(buyerName || "").split(" ")[0]
+
+  /*
+   * Två mätpunkter, en fråga: hur många klickar stjärnan i mejlet men
+   * skickar aldrig? Sidvisningar räckte inte, de blandar ihop kundernas
+   * besök med våra egna tester. `forvalt` skiljer dem som klickade en
+   * stjärna i mejlet från dem som öppnade länken utan betyg.
+   * Ingen personuppgift går till Umami, bara betyget och antalet rader.
+   */
+  useEffect(() => {
+    track("omdome-oppnad", {
+      forvalt: forvaltBetyg || 0,
+      rader: items.length,
+      redanLamnat: redanLamnade.length > 0,
+    })
+  }, [forvaltBetyg, items.length, redanLamnade.length])
+
   return (
     <section className="mx-auto max-w-xl px-5 py-14">
       <h1 className="font-heading text-2xl font-bold text-navy sm:text-3xl">
