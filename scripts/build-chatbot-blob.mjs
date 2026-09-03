@@ -76,6 +76,26 @@ rader.push("- Batteriladdare | Sida: /laddare")
 rader.push("- Batterivatten och påfyllning | Sida: /batterivatten")
 rader.push("")
 
+/*
+ * Antal batterier per system.
+ *
+ * Chatten räknade fel två gånger i test 2026-09-03 (sa 2 respektive 4 st
+ * 8V-batterier till en 48V golfbil, rätt svar är 6). Fel antal betyder att
+ * kunden får hem en halv sats, så formeln och de vanliga kombinationerna
+ * står nu utskrivna i stället för att modellen ska räkna själv.
+ */
+rader.push("ANTAL BATTERIER PER SYSTEM")
+rader.push("Antal = systemspänning delat med batteriets spänning. Batterierna kopplas i serie.")
+for (const sys of [24, 36, 48]) {
+  for (const v of [6, 8, 12]) {
+    if (sys % v === 0) rader.push(`- ${sys}V-system med ${v}V-batterier: ${sys / v} st i serie`)
+  }
+}
+rader.push(
+  "Bekräfta alltid mot maskinen: be kunden räkna batterierna som sitter i den i dag, eller skicka en bild. Systemspänningen står oftast på laddaren."
+)
+rader.push("")
+
 rader.push("KÖP OCH VILLKOR")
 rader.push("- Kassan säljer till FÖRETAG (organisationsnummer krävs, enskild firma fungerar). Betalning med kort.")
 rader.push("- Leverans normalt 1-3 arbetsdagar, order före 14 på vardagar skickas i regel samma dag. Ge aldrig ett datum som garanti.")
@@ -89,3 +109,31 @@ const blob = rader.join("\n")
 const ut = join(har, "../../../products/chatbot-widget/content-blobs/batteriproffs.txt")
 writeFileSync(ut, blob)
 console.log(`Skrev ${blob.length.toLocaleString("sv-SE")} tecken till ${ut}`)
+
+/*
+ * Produktkatalog för chattens produktkort.
+ *
+ * Blobben ovan är text som modellen läser. Det här är strukturerad data som
+ * WIDGETEN renderar, och den finns av ett skäl: modellen får aldrig hitta på
+ * ett kort. Verktyget slår upp sluggen i den här filen och släpper igenom
+ * bara det som finns här, med pris och bild ur butikens egen produktdata.
+ * Ändras priser eller sortiment: kör om skriptet, bygg och deploya widgeten.
+ */
+const SITE = "https://www.batteriproffs.se"
+const katalog = publicProducts.map((p) => {
+  const s = p.specs || {}
+  return {
+    slug: p.slug,
+    namn: p.shortName || p.name,
+    fullnamn: p.name,
+    spec: [p.voltage, p.capacity, s["Typ"]].filter(Boolean).join(" · "),
+    pris: p.price,
+    prisExkl: exkl(p.price),
+    bild: p.images?.[0] ? `${SITE}${p.images[0]}` : null,
+    url: `${SITE}/produkt/${p.slug}`,
+    ersatter: s["Ersätter"] || null,
+  }
+})
+const utKatalog = join(har, "../../../products/chatbot-widget/content-blobs/batteriproffs.produkter.json")
+writeFileSync(utKatalog, JSON.stringify(katalog, null, 1))
+console.log(`Skrev ${katalog.length} produkter till ${utKatalog}`)
