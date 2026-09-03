@@ -33,7 +33,7 @@ export async function POST(request) {
     }
 
     const body = await request.json().catch(() => null)
-    const { paymentIntentId, clientSecret, epost } = body || {}
+    const { paymentIntentId, clientSecret, epost, namn, foretag } = body || {}
 
     if (!paymentIntentId || !clientSecret || !giltigEpost(epost)) {
       return NextResponse.json({ error: "Ogiltigt anrop" }, { status: 400 })
@@ -55,10 +55,20 @@ export async function POST(request) {
     // Samma adress på samma betalning = redan noterad, ingen ny notis.
     const redan = (pi.metadata?.kontakt_epost || "") === adress
 
+    /*
+     * Namn och företag sparas med, när de är ifyllda. Påminnelsemejlet kan
+     * annars bara säga "Hej", och ett anonymt mejl om en övergiven kassa
+     * läser som spam. Fälten är frivilliga: kunden hinner ofta fylla i
+     * mejladressen först.
+     */
+    const trimma = (v, max) =>
+      typeof v === "string" && v.trim() ? v.trim().slice(0, max) : undefined
     await stripe.paymentIntents.update(paymentIntentId, {
       metadata: {
         kontakt_epost: adress,
         kontakt_epost_at: String(Math.floor(Date.now() / 1000)),
+        ...(trimma(namn, 80) ? { kontakt_namn: trimma(namn, 80) } : {}),
+        ...(trimma(foretag, 100) ? { kontakt_foretag: trimma(foretag, 100) } : {}),
       },
     })
 

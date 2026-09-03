@@ -158,11 +158,15 @@ function CheckoutForm({ form, setForm, errors, setErrors, totalPrice, clientSecr
           paymentIntentId: clientSecret.split("_secret_")[0],
           clientSecret,
           epost,
+          namn: `${form.firstName || ""} ${form.lastName || ""}`.trim(),
+          foretag: form.companyName || "",
         }),
       }).catch(() => {})
     }, 1200)
     return () => clearTimeout(t)
-  }, [form.email, clientSecret])
+    // Namn och företag är med i beroendelistan så en adress som fylldes i
+    // före namnet ändå kompletteras när namnet skrivs.
+  }, [form.email, form.firstName, form.lastName, form.companyName, clientSecret])
 
   const handleSubmit = async (e) => {
     e.preventDefault()

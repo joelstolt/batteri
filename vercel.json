@@ -3,6 +3,10 @@
     {
       "path": "/api/cron/veckorapport",
       "schedule": "0 5 * * 1"
+    },
+    {
+      "path": "/api/cron/kassa-paminnelse",
+      "schedule": "*/15 * * * *"
     }
   ]
 }
