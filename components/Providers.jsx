@@ -1,5 +1,6 @@
 "use client"
 
+import { CompareProvider } from "@/lib/compare-context"
 import { CartProvider } from "@/lib/cart-context"
 import { VatProvider } from "@/lib/vat-context"
 import { AttributionProvider } from "@/lib/attribution-context"
@@ -13,15 +14,17 @@ export default function Providers({ children, betyg, kop }) {
   return (
     <AttributionProvider>
       <BetygProvider betyg={betyg} kop={kop}>
-      <VatProvider>
-        <CartProvider>
-          <ScrollToTop />
-          <KlickSparning />
-          {children}
-          <CartDrawer />
-          <CartToast />
-        </CartProvider>
-      </VatProvider>
+        <VatProvider>
+          <CartProvider>
+            <CompareProvider>
+              <ScrollToTop />
+              <KlickSparning />
+              {children}
+              <CartDrawer />
+              <CartToast />
+            </CompareProvider>
+          </CartProvider>
+        </VatProvider>
       </BetygProvider>
     </AttributionProvider>
   )

@@ -3,7 +3,15 @@
 import { useState, useEffect, useRef } from "react"
 import { useRouter } from "next/navigation"
 import Image from "next/image"
-import { X, Search, ArrowRight, Wrench, RefreshCw, LayoutGrid, MessageCircle } from "lucide-react"
+import {
+  X,
+  Search,
+  ArrowRight,
+  Wrench,
+  RefreshCw,
+  LayoutGrid,
+  MessageCircle,
+} from "lucide-react"
 import { motion, AnimatePresence } from "framer-motion"
 import { CATEGORIES } from "@/lib/constants"
 import { oppnaChatt } from "@/components/ChattKnapp"
@@ -27,6 +35,7 @@ function formatPrice(n) {
 export default function SearchModal({ isOpen, onClose }) {
   const [query, setQuery] = useState("")
   const inputRef = useRef(null)
+  const dialogRef = useRef(null)
   const router = useRouter()
   const { displayPrice, vatLabel } = useVat()
 
@@ -38,15 +47,50 @@ export default function SearchModal({ isOpen, onClose }) {
       document.body.style.overflow = ""
       setQuery("")
     }
-    return () => { document.body.style.overflow = "" }
+    return () => {
+      document.body.style.overflow = ""
+    }
   }, [isOpen])
 
-  // Close on Escape
   useEffect(() => {
-    const handler = (e) => { if (e.key === "Escape") onClose() }
-    window.addEventListener("keydown", handler)
-    return () => window.removeEventListener("keydown", handler)
-  }, [onClose])
+    if (!isOpen) return
+    const previous = document.activeElement
+    const handler = (e) => {
+      if (e.key === "Escape") {
+        e.preventDefault()
+        onClose()
+      }
+      if (e.key !== "Tab") return
+      const dialog = dialogRef.current
+      const controls = [
+        ...(dialog?.querySelectorAll(
+          "button:not([disabled]), a[href], input:not([disabled])",
+        ) || []),
+      ].filter((el) => el.getClientRects().length)
+      const first = controls[0],
+        last = controls.at(-1)
+      if (
+        e.shiftKey &&
+        (document.activeElement === first ||
+          !dialog?.contains(document.activeElement))
+      ) {
+        e.preventDefault()
+        last?.focus()
+      } else if (
+        !e.shiftKey &&
+        (document.activeElement === last ||
+          !dialog?.contains(document.activeElement))
+      ) {
+        e.preventDefault()
+        first?.focus()
+      }
+    }
+    document.addEventListener("keydown", handler)
+    return () => {
+      document.removeEventListener("keydown", handler)
+      if (previous?.isConnected) previous.focus()
+    }
+  }, [isOpen, onClose])
 
   const q = query.toLowerCase().trim()
   const kanSoka = sokbar(query)
@@ -93,15 +137,21 @@ export default function SearchModal({ isOpen, onClose }) {
         <Ikon size={16} className="text-navy" aria-hidden="true" />
       </div>
       <div className="min-w-0 flex-1">
-        <div className="truncate text-sm font-semibold text-text-dark">{post.titel}</div>
-        <div className="truncate text-xs text-text-light">{post.undertitel}</div>
+        <div className="truncate text-sm font-semibold text-text-dark">
+          {post.titel}
+        </div>
+        <div className="truncate text-xs text-text-light">
+          {post.undertitel}
+        </div>
       </div>
       {post.pris ? (
         <div className="flex-shrink-0 text-right">
           <div className="font-heading text-sm font-bold text-text-dark">
             {formatPrice(displayPrice(post.pris))} kr
           </div>
-          <div className="text-[10px] text-text-light">{vatLabel.toLowerCase()}</div>
+          <div className="text-[10px] text-text-light">
+            {vatLabel.toLowerCase()}
+          </div>
         </div>
       ) : (
         <ArrowRight size={14} className="flex-shrink-0 text-text-light" />
@@ -125,6 +175,10 @@ export default function SearchModal({ isOpen, onClose }) {
 
           {/* Modal */}
           <motion.div
+            ref={dialogRef}
+            role="dialog"
+            aria-modal="true"
+            aria-label="Sök i sortimentet"
             initial={{ opacity: 0, y: -20 }}
             animate={{ opacity: 1, y: 0 }}
             exit={{ opacity: 0, y: -20 }}
@@ -183,7 +237,14 @@ export default function SearchModal({ isOpen, onClose }) {
                     Populära sökningar
                   </div>
                   <div className="flex flex-wrap gap-2">
-                    {["12V", "6V", "GF 12 105", "Städmaskin", "Golfbil", "Sonnenschein"].map((term) => (
+                    {[
+                      "12V",
+                      "6V",
+                      "GF 12 105",
+                      "Städmaskin",
+                      "Golfbil",
+                      "Sonnenschein",
+                    ].map((term) => (
                       <button
                         key={term}
                         onClick={() => setQuery(term)}
@@ -214,7 +275,7 @@ export default function SearchModal({ isOpen, onClose }) {
                       type="button"
                       onClick={() => {
                         onClose()
-                        oppnaChatt()
+                        if (!oppnaChatt()) router.push("/kontakt")
                       }}
                       className="inline-flex items-center gap-2 rounded-lg bg-navy px-4 py-2.5 font-heading text-sm font-bold text-white"
                     >
@@ -292,13 +353,17 @@ export default function SearchModal({ isOpen, onClose }) {
                             <div className="truncate text-sm font-semibold text-text-dark">
                               {p.titel}
                             </div>
-                            <div className="text-xs text-text-light">{p.undertitel}</div>
+                            <div className="text-xs text-text-light">
+                              {p.undertitel}
+                            </div>
                           </div>
                           <div className="flex-shrink-0 text-right">
                             <div className="font-heading text-sm font-bold text-text-dark">
                               {formatPrice(displayPrice(p.pris))} kr
                             </div>
-                            <div className="text-[10px] text-text-light">{vatLabel.toLowerCase()}</div>
+                            <div className="text-[10px] text-text-light">
+                              {vatLabel.toLowerCase()}
+                            </div>
                           </div>
                         </button>
                       ))}

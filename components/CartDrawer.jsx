@@ -1,6 +1,6 @@
 "use client"
 
-import { useEffect, useState } from "react"
+import { useEffect, useRef } from "react"
 import Image from "next/image"
 import Link from "next/link"
 import { useRouter } from "next/navigation"
@@ -14,15 +14,64 @@ function formatPrice(n) {
 }
 
 export default function CartDrawer() {
-  const { items, isOpen, setIsOpen, updateQty, removeItem, totalItems, totalPrice } =
-    useCart()
+  const {
+    items,
+    isOpen,
+    setIsOpen,
+    updateQty,
+    removeItem,
+    totalItems,
+    totalPrice,
+  } = useCart()
   const { displayPrice, vatLabel, inclVat } = useVat()
   const router = useRouter()
+  const drawerRef = useRef(null)
 
   const handleCheckout = () => {
     setIsOpen(false)
     router.push("/kassa")
   }
+
+  useEffect(() => {
+    if (!isOpen) return
+    const previous = document.activeElement
+    const drawer = drawerRef.current
+    drawer?.querySelector("button")?.focus()
+    const keydown = (event) => {
+      if (event.key === "Escape") {
+        event.preventDefault()
+        setIsOpen(false)
+      }
+      if (event.key !== "Tab" || !drawer) return
+      const controls = [
+        ...drawer.querySelectorAll(
+          'button:not([disabled]), a[href], input:not([disabled]), [tabindex="0"]',
+        ),
+      ].filter((el) => el.getClientRects().length)
+      const first = controls[0],
+        last = controls.at(-1)
+      if (
+        event.shiftKey &&
+        (document.activeElement === first ||
+          !drawer.contains(document.activeElement))
+      ) {
+        event.preventDefault()
+        last?.focus()
+      } else if (
+        !event.shiftKey &&
+        (document.activeElement === last ||
+          !drawer.contains(document.activeElement))
+      ) {
+        event.preventDefault()
+        first?.focus()
+      }
+    }
+    document.addEventListener("keydown", keydown)
+    return () => {
+      document.removeEventListener("keydown", keydown)
+      if (previous?.isConnected) previous.focus()
+    }
+  }, [isOpen, setIsOpen])
 
   // Lock body scroll when open
   useEffect(() => {
@@ -31,7 +80,9 @@ export default function CartDrawer() {
     } else {
       document.body.style.overflow = ""
     }
-    return () => { document.body.style.overflow = "" }
+    return () => {
+      document.body.style.overflow = ""
+    }
   }, [isOpen])
 
   return (
@@ -50,6 +101,10 @@ export default function CartDrawer() {
 
           {/* Drawer */}
           <motion.div
+            ref={drawerRef}
+            role="dialog"
+            aria-modal="true"
+            aria-label="Varukorg"
             initial={{ x: "100%" }}
             animate={{ x: 0 }}
             exit={{ x: "100%" }}
@@ -62,6 +117,7 @@ export default function CartDrawer() {
                 Varukorg ({totalItems})
               </h2>
               <button
+                aria-label="Stäng varukorgen"
                 onClick={() => setIsOpen(false)}
                 className="flex h-9 w-9 items-center justify-center rounded-lg text-text-mid transition-colors hover:bg-surface hover:text-text-dark"
               >
@@ -73,7 +129,11 @@ export default function CartDrawer() {
             <div className="flex-1 overflow-y-auto px-6 py-4">
               {items.length === 0 ? (
                 <div className="flex flex-col items-center justify-center py-16 text-center">
-                  <ShoppingCart size={48} className="mb-4 text-border" strokeWidth={1.5} />
+                  <ShoppingCart
+                    size={48}
+                    className="mb-4 text-border"
+                    strokeWidth={1.5}
+                  />
                   <p className="mb-1 font-heading text-lg font-bold text-text-dark">
                     Varukorgen är tom
                   </p>
@@ -122,7 +182,8 @@ export default function CartDrawer() {
                             {item.capacity}
                           </div>
                           <div className="mt-1.5 font-heading text-base font-extrabold text-text-dark">
-                            {formatPrice(displayPrice(item.price) * item.qty)} kr
+                            {formatPrice(displayPrice(item.price) * item.qty)}{" "}
+                            kr
                           </div>
                         </div>
                       </div>
@@ -131,11 +192,30 @@ export default function CartDrawer() {
                       <div className="flex items-center justify-between">
                         <div className="flex items-center gap-2">
                           <span className="flex items-center gap-1 text-xs font-medium text-green-600">
-                            <svg width="14" height="14" viewBox="0 0 14 14" fill="none">
-                              <circle cx="7" cy="7" r="7" fill="#16a34a" opacity="0.15" />
-                              <path d="M4 7l2 2 4-4" stroke="#16a34a" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round" />
+                            <svg
+                              width="14"
+                              height="14"
+                              viewBox="0 0 14 14"
+                              fill="none"
+                            >
+                              <circle
+                                cx="7"
+                                cy="7"
+                                r="7"
+                                fill="#16a34a"
+                                opacity="0.15"
+                              />
+                              <path
+                                d="M4 7l2 2 4-4"
+                                stroke="#16a34a"
+                                strokeWidth="1.5"
+                                strokeLinecap="round"
+                                strokeLinejoin="round"
+                              />
                             </svg>
-                            Skickas direkt
+                            {item.inStock === false || item.unavailable
+                              ? "Ej beställningsbar"
+                              : "Från leverantör"}
                           </span>
                         </div>
 
@@ -143,6 +223,7 @@ export default function CartDrawer() {
                           {/* Qty controls */}
                           <div className="flex items-center rounded-lg border border-border bg-surface">
                             <button
+                              aria-label={`Minska antal: ${item.shortName}`}
                               onClick={() => updateQty(item.slug, item.qty - 1)}
                               className="flex h-8 w-8 items-center justify-center text-text-mid transition-colors hover:text-text-dark"
                             >
@@ -152,6 +233,7 @@ export default function CartDrawer() {
                               {item.qty}
                             </span>
                             <button
+                              aria-label={`Öka antal: ${item.shortName}`}
                               onClick={() => updateQty(item.slug, item.qty + 1)}
                               className="flex h-8 w-8 items-center justify-center text-text-mid transition-colors hover:text-text-dark"
                             >
@@ -161,6 +243,7 @@ export default function CartDrawer() {
 
                           {/* Delete */}
                           <button
+                            aria-label={`Ta bort: ${item.shortName}`}
                             onClick={() => removeItem(item.slug)}
                             className="flex h-8 w-8 items-center justify-center rounded-lg text-text-mid transition-colors hover:bg-red-50 hover:text-red-500"
                           >
@@ -186,9 +269,14 @@ export default function CartDrawer() {
                 </div>
 
                 <div className="mb-1 flex items-center justify-between">
-                  <span className="text-sm text-text-mid">Produkter {vatLabel.toLowerCase()}</span>
+                  <span className="text-sm text-text-mid">
+                    Produkter {vatLabel.toLowerCase()}
+                  </span>
                   <span className="text-sm font-medium text-text-dark">
-                    {formatPrice(inclVat ? totalPrice : Math.round(totalPrice / 1.25))} kr
+                    {formatPrice(
+                      inclVat ? totalPrice : Math.round(totalPrice / 1.25),
+                    )}{" "}
+                    kr
                   </span>
                 </div>
                 <div className="mb-1 flex items-center justify-between">
@@ -198,13 +286,16 @@ export default function CartDrawer() {
                   </span>
                 </div>
                 <div className="mb-4 flex items-center justify-between border-t border-border pt-3 mt-2">
-                  <span className="font-heading text-base font-bold text-text-dark">Totalt {vatLabel.toLowerCase()}</span>
+                  <span className="font-heading text-base font-bold text-text-dark">
+                    Totalt {vatLabel.toLowerCase()}
+                  </span>
                   <span className="font-heading text-xl font-extrabold text-text-dark">
                     {formatPrice(
                       inclVat
                         ? totalPrice + Math.round(556 * 1.25)
-                        : Math.round(totalPrice / 1.25) + 556
-                    )} kr
+                        : Math.round(totalPrice / 1.25) + 556,
+                    )}{" "}
+                    kr
                   </span>
                 </div>
 
@@ -213,13 +304,31 @@ export default function CartDrawer() {
                   className="flex w-full items-center justify-center gap-2 rounded-xl bg-gradient-to-br from-[#16a34a] to-[#15803d] py-4 font-heading text-base font-bold text-white shadow-lg transition-transform hover:-translate-y-px"
                 >
                   Till kassan
-                  <svg width="18" height="18" fill="none" stroke="#fff" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round">
+                  <svg
+                    width="18"
+                    height="18"
+                    fill="none"
+                    stroke="#fff"
+                    strokeWidth="2.5"
+                    strokeLinecap="round"
+                    strokeLinejoin="round"
+                  >
                     <path d="M4 9h10M10 5l4 4-4 4" />
                   </svg>
                 </button>
+                <Link
+                  href="/offert"
+                  onClick={() => setIsOpen(false)}
+                  className="mt-3 block rounded-xl border border-border px-4 py-3 text-center text-sm font-semibold text-navy"
+                >
+                  Begär offert på varukorgen
+                </Link>
                 <div className="mt-3 flex items-center justify-center gap-3">
                   {["Visa", "Mastercard", "PostNord"].map((m) => (
-                    <span key={m} className="text-[10px] font-semibold uppercase tracking-wider text-text-mid/60">
+                    <span
+                      key={m}
+                      className="text-[10px] font-semibold uppercase tracking-wider text-text-mid/60"
+                    >
                       {m}
                     </span>
                   ))}

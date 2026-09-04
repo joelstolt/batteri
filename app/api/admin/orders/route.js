@@ -1,3 +1,4 @@
+import { orderHealth } from "@/lib/order-health"
 import Stripe from "stripe"
 import { NextResponse } from "next/server"
 import { kravAdmin } from "@/lib/admin-auth"
@@ -47,9 +48,11 @@ export async function GET(request) {
     // betalningar, så dölja är det som finns — flaggan går att ta bort i
     // Stripe-dashboarden om en rad behöver fram igen.
     const ordrar = svar.data
-      .filter((pi) => pi.status === "succeeded" || pi.status === "requires_capture")
+      .filter(
+        (pi) => pi.status === "succeeded" || pi.status === "requires_capture",
+      )
       .filter((pi) => pi.metadata?.dold !== "1")
-      .map(normaliseraOrder)
+      .map((pi) => ({ ...normaliseraOrder(pi), warnings: orderHealth(pi) }))
 
     return NextResponse.json({
       ordrar,
@@ -59,6 +62,9 @@ export async function GET(request) {
     })
   } catch (err) {
     console.error("Admin orders error:", err)
-    return NextResponse.json({ error: "Kunde inte hämta ordrar" }, { status: 500 })
+    return NextResponse.json(
+      { error: "Kunde inte hämta ordrar" },
+      { status: 500 },
+    )
   }
 }

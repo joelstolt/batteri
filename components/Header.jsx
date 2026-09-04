@@ -2,8 +2,16 @@
 
 import { useState, useEffect } from "react"
 import Link from "next/link"
-import { usePathname } from "next/navigation"
-import { Menu, X, Search, MessageCircle, ChevronRight, Star, Wrench } from "lucide-react"
+import { usePathname, useRouter } from "next/navigation"
+import {
+  Menu,
+  X,
+  Search,
+  MessageCircle,
+  ChevronRight,
+  Star,
+  Wrench,
+} from "lucide-react"
 import { NAV_CATEGORIES, CATEGORIES } from "@/lib/constants"
 import { useCart } from "@/lib/cart-context"
 import SearchModal from "./SearchModal"
@@ -15,6 +23,7 @@ export default function Header() {
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false)
   const { totalItems, setIsOpen } = useCart()
   const pathname = usePathname()
+  const router = useRouter()
 
   useEffect(() => {
     const handle = () => setScrolled(window.scrollY > 20)
@@ -30,7 +39,9 @@ export default function Header() {
   // Lock body scroll when mobile menu open
   useEffect(() => {
     document.body.style.overflow = mobileMenuOpen ? "hidden" : ""
-    return () => { document.body.style.overflow = "" }
+    return () => {
+      document.body.style.overflow = ""
+    }
   }, [mobileMenuOpen])
 
   return (
@@ -47,7 +58,7 @@ export default function Header() {
         }}
       >
         {/* Main header row */}
-        <div className="mx-auto flex h-16 max-w-[1200px] items-center justify-between gap-3 px-4 sm:h-[72px] sm:px-6">
+        <div className="mx-auto flex h-16 max-w-[1200px] items-center justify-between gap-3 px-4 max-[360px]:gap-1 max-[360px]:px-2 sm:h-[72px] sm:px-6">
           {/* Left: hamburger + logo */}
           <div className="flex items-center gap-2.5">
             {/* Hamburger — mobile only */}
@@ -100,15 +111,23 @@ export default function Header() {
                 finns kvar på kontakt- och villkorssidorna. */}
             <button
               type="button"
-              onClick={() => oppnaChatt()}
+              onClick={() => {
+                if (!oppnaChatt()) router.push("/kontakt")
+              }}
               className="mr-1 hidden items-center gap-2.5 rounded-xl px-3 py-1.5 transition-colors hover:bg-white/10 lg:flex"
             >
-              <MessageCircle size={17} className="text-amber-bg" aria-hidden="true" />
+              <MessageCircle
+                size={17}
+                className="text-amber-bg"
+                aria-hidden="true"
+              />
               <span className="leading-tight text-left">
                 <span className="block font-heading text-[15px] font-bold text-white">
                   Chatta med oss
                 </span>
-                <span className="block text-[11px] text-white/60">Svar direkt, dygnet runt</span>
+                <span className="block text-[11px] text-white/60">
+                  Svar direkt, dygnet runt
+                </span>
               </span>
             </button>
 
@@ -153,7 +172,10 @@ export default function Header() {
         {/* Desktop nav row */}
         <div className="hidden border-t border-white/6 md:block">
           <div className="mx-auto flex h-[46px] max-w-[1200px] items-center px-6">
-            <Link href="/kategori/alla" className="flex h-[46px] items-center gap-2 border-b-2 border-amber-bg bg-white/6 px-5 text-sm font-semibold text-white transition-colors hover:bg-white/10">
+            <Link
+              href="/kategori/alla"
+              className="flex h-[46px] items-center gap-2 border-b-2 border-amber-bg bg-white/6 px-5 text-sm font-semibold text-white transition-colors hover:bg-white/10"
+            >
               <Menu size={16} />
               Alla batterier
               <ChevronRight size={12} className="rotate-90" />
@@ -231,7 +253,10 @@ export default function Header() {
             {/* Links */}
             <div className="border-b border-white/6 px-5 py-4">
               <button
-                onClick={() => { setMobileMenuOpen(false); setSearchOpen(true) }}
+                onClick={() => {
+                  setMobileMenuOpen(false)
+                  setSearchOpen(true)
+                }}
                 className="flex w-full items-center gap-3 rounded-lg px-3 py-3 text-sm font-medium text-white/70 transition-colors hover:bg-white/6 hover:text-white"
               >
                 <Search size={16} />

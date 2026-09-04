@@ -36,8 +36,8 @@ export async function generateMetadata({ params }) {
   const description =
     machine.description ||
     (priceFrom
-      ? `Batterier som passar ${machine.name}. ${products.length} alternativ från ${priceFrom} kr inkl. moms. Snabb leverans i hela Sverige och hjälp att välja rätt.`
-      : `Batterier som passar ${machine.name}. Snabb leverans i hela Sverige och hjälp att välja rätt.`)
+      ? `Batterival för ${machine.name}. ${products.length} alternativ att kontrollera från ${priceFrom} kr inkl. moms. Snabb leverans i hela Sverige och hjälp att välja rätt.`
+      : `Hjälp med batterival för ${machine.name}. Snabb leverans i hela Sverige och hjälp att välja rätt.`)
 
   return {
     title,

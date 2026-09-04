@@ -1,6 +1,6 @@
 "use client"
 
-import { useState } from "react"
+import { CompareButton } from "@/lib/compare-context"
 import Link from "next/link"
 import Image from "next/image"
 import { ShoppingCart } from "lucide-react"
@@ -10,7 +10,7 @@ import { getProductBrand, getProductChemistry } from "@/lib/products"
 import { useBetyg, useSenasteKop } from "@/lib/betyg-context"
 
 export default function ProductCard({ product }) {
-  const [qty, setQty] = useState(1)
+  const qty = 1
   const { addItem } = useCart()
   const { displayPrice, vatLabel } = useVat()
   const { slug, shortName, voltage, capacity, price, images, badge } = product
@@ -18,7 +18,9 @@ export default function ProductCard({ product }) {
   const kop = useSenasteKop(slug)
   const image = images?.[0] || "/produkter/placeholder.jpg"
 
-  const formattedPrice = new Intl.NumberFormat("sv-SE").format(displayPrice(price))
+  const formattedPrice = new Intl.NumberFormat("sv-SE").format(
+    displayPrice(price),
+  )
 
   return (
     <div className="group flex h-full flex-col overflow-hidden rounded-xl border border-border bg-white transition-all duration-200 hover:-translate-y-1 hover:border-border-dark hover:shadow-[0_8px_30px_rgba(0,0,0,0.06)] sm:rounded-2xl">
@@ -47,24 +49,43 @@ export default function ProductCard({ product }) {
       <div className="flex flex-1 flex-col p-3 sm:p-5">
         <Link href={`/produkt/${slug}`}>
           <div className="mb-0.5 hidden text-xs font-medium text-text-mid sm:block">
-            {getProductBrand(product)} · {getProductChemistry(product)} · {voltage}
+            {getProductBrand(product)} · {getProductChemistry(product)} ·{" "}
+            {voltage}
           </div>
           <div className="mb-0.5 font-heading text-sm font-bold text-text-dark transition-colors group-hover:text-amber-text sm:mb-1 sm:text-[17px]">
             {shortName}
           </div>
-          <div className="mb-2 text-xs text-text-mid sm:mb-4 sm:text-sm">{capacity}</div>
+          <div className="mb-2 text-xs text-text-mid sm:mb-4 sm:text-sm">
+            {capacity}
+          </div>
           {/* Stjärnor bara där det finns riktiga omdömen. Antalet skrivs alltid
               ut — ett betyg ska aldrig se ut som hundra. */}
           {betyg && (
-            <div className="-mt-1 mb-2 flex items-center gap-1.5 text-[11px] text-text-mid sm:mb-3 sm:text-xs" aria-label={`${betyg.snitt.toFixed(1)} av 5, ${betyg.antal} omdömen`}>
+            <div
+              className="-mt-1 mb-2 flex items-center gap-1.5 text-[11px] text-text-mid sm:mb-3 sm:text-xs"
+              aria-label={`${betyg.snitt.toFixed(1)} av 5, ${betyg.antal} omdömen`}
+            >
               <span className="flex gap-px" aria-hidden="true">
                 {[1, 2, 3, 4, 5].map((n) => (
-                  <svg key={n} width="12" height="12" viewBox="0 0 20 20" fill="currentColor" className={n <= Math.round(betyg.snitt) ? "text-amber-bg" : "text-border-dark"}>
+                  <svg
+                    key={n}
+                    width="12"
+                    height="12"
+                    viewBox="0 0 20 20"
+                    fill="currentColor"
+                    className={
+                      n <= Math.round(betyg.snitt)
+                        ? "text-amber-bg"
+                        : "text-border-dark"
+                    }
+                  >
                     <path d="M10 1.5l2.6 5.3 5.9.9-4.3 4.1 1 5.8-5.2-2.7-5.2 2.7 1-5.8L1.5 7.7l5.9-.9z" />
                   </svg>
                 ))}
               </span>
-              <span className="font-semibold text-text-dark">{betyg.snitt.toFixed(1)}</span>
+              <span className="font-semibold text-text-dark">
+                {betyg.snitt.toFixed(1)}
+              </span>
               <span>({betyg.antal})</span>
             </div>
           )}
@@ -76,7 +97,9 @@ export default function ProductCard({ product }) {
             <span className="font-heading text-base font-extrabold text-text-dark sm:text-xl">
               {formattedPrice}
             </span>
-            <span className="text-xs font-medium text-text-mid sm:text-sm">kr</span>
+            <span className="text-xs font-medium text-text-mid sm:text-sm">
+              kr
+            </span>
           </div>
           <div className="mb-2 text-[11px] text-text-light sm:mb-3">
             {vatLabel}
@@ -87,14 +110,21 @@ export default function ProductCard({ product }) {
               och rimmar med produktsidans "skickas direkt från leverantör". */}
           <div className="mb-2 hidden items-center gap-1.5 sm:flex">
             <span className="h-1.5 w-1.5 rounded-full bg-green" />
-            <span className="text-[11px] font-medium text-green">I lager hos leverantör</span>
+            <span className="text-[11px] font-medium text-green">
+              {product.inStock === false
+                ? "Ej beställningsbar"
+                : "Beställningsbar från leverantör"}
+            </span>
           </div>
           {/* Senaste riktiga köpet ur Stripe: datum och antal, aldrig vem. */}
           {kop && (
             <div className="mb-2 text-[11px] text-text-mid sm:mb-3">
               Senast köpt{" "}
               <span className="font-semibold text-text-dark">
-                {new Date(kop.datum * 1000).toLocaleDateString("sv-SE", { day: "numeric", month: "short" })}
+                {new Date(kop.datum * 1000).toLocaleDateString("sv-SE", {
+                  day: "numeric",
+                  month: "short",
+                })}
               </span>
               {kop.antal > 1 && ` · ${kop.antal} st`}
             </div>
@@ -102,12 +132,14 @@ export default function ProductCard({ product }) {
 
           {/* Buy button */}
           <button
+            disabled={product.inStock === false}
             onClick={() => addItem(product, qty)}
             className="flex w-full items-center justify-center gap-2 rounded-lg bg-navy py-2 text-xs font-bold text-white transition-all hover:bg-navy-light sm:py-2.5 sm:text-sm"
           >
             <ShoppingCart size={14} strokeWidth={2.5} />
-            Köp
+            {product.inStock === false ? "Slut för tillfället" : "Köp"}
           </button>
+          <CompareButton product={product} />
         </div>
       </div>
     </div>

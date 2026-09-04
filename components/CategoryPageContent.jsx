@@ -3,17 +3,27 @@
 import { useState, useMemo } from "react"
 import { useParams, useSearchParams } from "next/navigation"
 import Link from "next/link"
-import { SlidersHorizontal, ChevronDown, Grid3X3, LayoutList } from "lucide-react"
-import { getProductsByCategory, publicProducts as allProductsList } from "@/lib/products"
+import {
+  SlidersHorizontal,
+  ChevronDown,
+  Grid3X3,
+  LayoutList,
+} from "lucide-react"
+import {
+  getProductsByCategory,
+  publicProducts as allProductsList,
+} from "@/lib/products"
 import { CATEGORIES } from "@/lib/constants"
 import ProductCard from "@/components/ProductCard"
+import { filterProducts } from "@/lib/product-selection"
+import { getProductChemistry } from "@/lib/products"
 import FadeIn from "@/components/FadeIn"
 
 const SORT_OPTIONS = [
-  { value: "popular", label: "Populärast" },
+  { value: "popular", label: "Utvalda" },
   { value: "price-asc", label: "Pris: Lägst först" },
   { value: "price-desc", label: "Pris: Högst först" },
-  { value: "capacity", label: "Kapacitet: Störst" },
+  { value: "capacity", label: "Kapacitet: Störst (vald mätgrund)" },
 ]
 
 export default function CategoryPage() {
@@ -21,47 +31,32 @@ export default function CategoryPage() {
   const slug = params.slug
 
   const category = CATEGORIES.find((c) => c.slug === slug)
-  const allProducts = slug === "alla" ? allProductsList : getProductsByCategory(slug)
+  const allProducts =
+    slug === "alla" ? allProductsList : getProductsByCategory(slug)
 
   // Batterifinnaren skickar hit ?volt=6V så listan öppnar förfiltrerad
   const searchParams = useSearchParams()
-  const [sort, setSort] = useState("popular")
-  const [voltageFilter, setVoltageFilter] = useState(searchParams.get("volt") || "all")
+  const filters = Object.fromEntries(searchParams.entries())
+  const sort = filters.sort || "popular"
+  const voltageFilter = filters.volt || "all"
   const [showSort, setShowSort] = useState(false)
-
-  const voltages = useMemo(() => {
-    const set = new Set(allProducts.map((p) => p.voltage))
-    return ["all", ...Array.from(set).sort()]
-  }, [allProducts])
-
-  const filtered = useMemo(() => {
-    let list = [...allProducts]
-
-    if (voltageFilter !== "all") {
-      list = list.filter((p) => p.voltage === voltageFilter)
+  function changeFilters(changes) {
+    const next = new URLSearchParams(searchParams.toString())
+    for (const [key, value] of Object.entries(changes)) {
+      if (value && value !== "all") next.set(key, value)
+      else next.delete(key)
     }
-
-    switch (sort) {
-      case "price-asc":
-        list.sort((a, b) => a.price - b.price)
-        break
-      case "price-desc":
-        list.sort((a, b) => b.price - a.price)
-        break
-      case "capacity":
-        list.sort((a, b) => {
-          const capA = parseInt(a.capacity) || 0
-          const capB = parseInt(b.capacity) || 0
-          return capB - capA
-        })
-        break
-      default:
-        // popular — badges first
-        list.sort((a, b) => (b.badge ? 1 : 0) - (a.badge ? 1 : 0))
-    }
-
-    return list
-  }, [allProducts, sort, voltageFilter])
+    window.history.replaceState(
+      null,
+      "",
+      `${window.location.pathname}${next.size ? `?${next}` : ""}`,
+    )
+  }
+  const setSort = (value) => changeFilters({ sort: value })
+  const setVoltageFilter = (value) => changeFilters({ volt: value })
+  const voltages = ["all", ...new Set(allProducts.map((p) => p.voltage))]
+  const chemistries = [...new Set(allProducts.map(getProductChemistry))]
+  const filtered = filterProducts(allProducts, filters)
 
   if (!category) {
     return (
@@ -105,7 +100,8 @@ export default function CategoryPage() {
               </p>
             </div>
             <div className="text-sm font-medium text-text-mid">
-              {filtered.length} {filtered.length === 1 ? "produkt" : "produkter"}
+              {filtered.length}{" "}
+              {filtered.length === 1 ? "produkt" : "produkter"}
             </div>
           </div>
         </div>
@@ -171,6 +167,88 @@ export default function CategoryPage() {
         </div>
       </div>
 
+      <div className="mx-auto max-w-[1200px] px-4 pt-5 sm:px-6">
+        <details
+          className="rounded-xl border border-border p-4"
+          open={
+            !!(
+              filters.kemi ||
+              filters.ah ||
+              filters.ahmax ||
+              filters.langd ||
+              filters.bredd ||
+              filters.hojd
+            )
+          }
+        >
+          <summary className="cursor-pointer text-sm font-semibold text-navy">
+            Batterityp, kapacitet och mått
+          </summary>
+          <div className="mt-4 grid grid-cols-2 gap-4 sm:grid-cols-3 lg:grid-cols-6">
+            <label className="text-xs font-medium">
+              Batterityp
+              <select
+                className="mt-1 w-full rounded-lg border border-border p-2"
+                value={filters.kemi || ""}
+                onChange={(e) => changeFilters({ kemi: e.target.value })}
+              >
+                <option value="">Alla</option>
+                {chemistries.map((c) => (
+                  <option key={c}>{c}</option>
+                ))}
+              </select>
+            </label>
+            <label className="text-xs font-medium">
+              Mätgrund
+              <select
+                className="mt-1 w-full rounded-lg border border-border p-2"
+                value={filters.basis === "C5" ? "C5" : "C20"}
+                onChange={(e) => changeFilters({ basis: e.target.value })}
+              >
+                <option>C20</option>
+                <option>C5</option>
+              </select>
+            </label>
+            {[
+              ["ah", "Minsta kapacitet (Ah)"],
+              ["ahmax", "Högsta kapacitet (Ah)"],
+              ["langd", "Max längd (mm)"],
+              ["bredd", "Max bredd (mm)"],
+              ["hojd", "Max höjd (mm)"],
+            ].map(([key, label]) => (
+              <label key={key} className="text-xs font-medium">
+                {label}
+                <input
+                  type="number"
+                  min="0"
+                  inputMode="decimal"
+                  className="mt-1 w-full rounded-lg border border-border p-2"
+                  value={filters[key] || ""}
+                  onChange={(e) => changeFilters({ [key]: e.target.value })}
+                />
+              </label>
+            ))}
+          </div>
+          <p className="mt-3 text-xs text-text-mid">
+            Produkter med saknade uppgifter visas inte när det filtret används.
+            Mått anges som längd, bredd och höjd. Kontrollera polplacering och
+            utrymme för anslutningar separat.
+          </p>
+        </details>
+        {Object.keys(filters).length > 0 && (
+          <button
+            className="mt-3 text-sm underline"
+            onClick={() =>
+              window.history.replaceState(null, "", window.location.pathname)
+            }
+          >
+            Rensa alla filter
+          </button>
+        )}
+        <p className="sr-only" role="status">
+          {filtered.length} produkter visas
+        </p>
+      </div>
       {/* Product grid */}
       <div className="mx-auto max-w-[1200px] px-4 pt-6 sm:px-6 sm:pt-8">
         {filtered.length === 0 ? (
@@ -179,7 +257,9 @@ export default function CategoryPage() {
               Inga produkter matchar ditt filter
             </p>
             <button
-              onClick={() => setVoltageFilter("all")}
+              onClick={() =>
+                window.history.replaceState(null, "", window.location.pathname)
+              }
               className="text-amber-text underline"
             >
               Visa alla produkter

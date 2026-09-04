@@ -1,23 +1,24 @@
 import TopBar from "@/components/TopBar"
 import Header from "@/components/Header"
-import CheckoutContent from "@/components/CheckoutContent"
+import ContactContent from "@/components/ContactContent"
 import Footer from "@/components/Footer"
 
 export const metadata = {
-  robots: { index: false, follow: false },
-  title: "Kassa — Batteriproffs",
-  description: "Slutför din beställning hos Batteriproffs.",
+  alternates: { canonical: "https://www.batteriproffs.se/offert" },
+  title: "Begär offert | Batteriproffs",
+  description: "Begär offert på artiklarna i din varukorg.",
 }
 
-export default function KassaPage() {
+export default function QuotePage() {
   return (
     <>
       <TopBar />
       <Header />
       <main id="innehall">
         {" "}
-        <CheckoutContent
+        <ContactContent
           reviewPreview={process.env.BP_REVIEW_PREVIEW === "1"}
+          quote
         />
       </main>
       <Footer />

@@ -1,6 +1,12 @@
+import { quoteText } from "@/lib/quote"
 import { NextResponse } from "next/server"
 import { resend, FROM, ADMIN_EMAIL, escape, emailLayout } from "@/lib/emails"
-import { rateLimit, clientIp, isOwnOrigin, ALLOWED_ORIGINS } from "@/lib/rate-limit"
+import {
+  rateLimit,
+  clientIp,
+  isOwnOrigin,
+  ALLOWED_ORIGINS,
+} from "@/lib/rate-limit"
 
 export const runtime = "nodejs"
 
@@ -23,13 +29,25 @@ export async function POST(request) {
     const limit = rateLimit(`contact:${ip}`, 3, 10 * 60 * 1000)
     if (!limit.ok) {
       return NextResponse.json(
-        { error: "För många meddelanden. Vänta en stund eller mejla info@batteriproffs.se." },
-        { status: 429, headers: { "Retry-After": String(limit.retryAfter) } }
+        {
+          error:
+            "För många meddelanden. Vänta en stund eller mejla info@batteriproffs.se.",
+        },
+        { status: 429, headers: { "Retry-After": String(limit.retryAfter) } },
       )
     }
 
     const body = await request.json()
-    const { name, email, phone, message, type, hp_field } = body || {}
+    const {
+      name,
+      email,
+      phone,
+      message: rawMessage,
+      type,
+      hp_field,
+      items,
+    } = body || {}
+    let message = rawMessage
 
     // Honeypot. Fältet är dolt för människor — är det ifyllt är det en bot.
     // Namnet får ALDRIG vara company/website/url/email: webbläsarnas autofyll
@@ -39,12 +57,30 @@ export async function POST(request) {
     if (!name || !email || !message) {
       return NextResponse.json(
         { error: "Namn, e-post och meddelande krävs" },
-        { status: 400 }
+        { status: 400 },
       )
     }
 
     if (!EMAIL_RE.test(String(email)) || String(message).length > MAX_MESSAGE) {
       return NextResponse.json({ error: "Ogiltiga uppgifter" }, { status: 400 })
+    }
+
+    if (
+      typeof name !== "string" ||
+      name.length > 120 ||
+      typeof email !== "string" ||
+      email.length > 254 ||
+      typeof message !== "string" ||
+      (phone != null && (typeof phone !== "string" || phone.length > 40))
+    ) {
+      return NextResponse.json({ error: "Ogiltiga uppgifter" }, { status: 400 })
+    }
+    if (items !== undefined) {
+      try {
+        message = `${quoteText(items)}\n\n${message}`
+      } catch (err) {
+        return NextResponse.json({ error: err.message }, { status: 400 })
+      }
     }
 
     // Nästan all formulärspam klistrar in länkar. Riktiga batterifrågor gör det inte.
@@ -55,7 +91,7 @@ export async function POST(request) {
       console.error("Missing RESEND_API_KEY or CONTACT_TO_EMAIL")
       return NextResponse.json(
         { error: "Server är inte konfigurerad" },
-        { status: 500 }
+        { status: 500 },
       )
     }
 
@@ -85,19 +121,26 @@ export async function POST(request) {
       </div>
     `
 
-    const [adminRes] = await Promise.all([
-      resend.emails.send({
-        from: FROM,
-        to: ADMIN_EMAIL,
-        replyTo: email,
-        subject: `Kontakt (${customerType}): ${name}`,
-        html: emailLayout({
-          title: `Nytt meddelande — ${name}`,
-          preheader: `${customerType} · ${email}`,
-          body: adminBody,
-        }),
+    const adminRes = await resend.emails.send({
+      from: FROM,
+      to: ADMIN_EMAIL,
+      replyTo: email,
+      subject: `Kontakt (${customerType}): ${name}`,
+      html: emailLayout({
+        title: `Nytt meddelande — ${name}`,
+        preheader: `${customerType} · ${email}`,
+        body: adminBody,
       }),
-      resend.emails.send({
+    })
+    if (adminRes?.error || !adminRes?.data?.id) {
+      console.error("Resend admin error:", adminRes?.error)
+      return NextResponse.json(
+        { error: "Kunde inte skicka meddelandet" },
+        { status: 502 },
+      )
+    }
+    try {
+      const customerRes = await resend.emails.send({
         from: FROM,
         to: email,
         replyTo: ADMIN_EMAIL,
@@ -107,25 +150,16 @@ export async function POST(request) {
           preheader: "Vi återkommer inom 24 timmar.",
           body: customerBody,
         }),
-      }).catch((err) => {
-        console.warn("Customer auto-reply failed (non-blocking):", err)
-      }),
-    ])
-
-    if (adminRes?.error) {
-      console.error("Resend admin error:", adminRes.error)
-      return NextResponse.json(
-        { error: "Kunde inte skicka meddelandet" },
-        { status: 502 }
-      )
+      })
+      if (customerRes?.error)
+        console.warn("Customer auto-reply rejected:", customerRes.error)
+    } catch (err) {
+      console.warn("Customer auto-reply failed (non-blocking):", err)
     }
 
     return NextResponse.json({ ok: true })
   } catch (err) {
     console.error("Contact route error:", err)
-    return NextResponse.json(
-      { error: "Något gick fel" },
-      { status: 500 }
-    )
+    return NextResponse.json({ error: "Något gick fel" }, { status: 500 })
   }
 }

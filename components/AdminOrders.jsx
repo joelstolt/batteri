@@ -77,7 +77,9 @@ export default function AdminOrders() {
         if (!res.ok) throw new Error("Kunde inte hämta ordrar")
 
         const data = await res.json()
-        setOrdrar((tidigare) => (efter ? [...tidigare, ...data.ordrar] : data.ordrar))
+        setOrdrar((tidigare) =>
+          efter ? [...tidigare, ...data.ordrar] : data.ordrar,
+        )
         setMerFinns(data.merFinns)
         setSistaId(data.sistaId)
       } catch (e) {
@@ -86,7 +88,7 @@ export default function AdminOrders() {
         setLaddar(false)
       }
     },
-    [token]
+    [token],
   )
 
   useEffect(() => {
@@ -119,8 +121,8 @@ export default function AdminOrders() {
       tidigare.map((o) =>
         o.id === id && o.status === "reserverad"
           ? { ...o, status: "betald", reservationsalder: null }
-          : o
-      )
+          : o,
+      ),
     )
   }
 
@@ -132,10 +134,14 @@ export default function AdminOrders() {
           ? {
               ...o,
               status: "skickad",
-              tracking: { number: tracking, carrier, shippedAt: Date.now() / 1000 },
+              tracking: {
+                number: tracking,
+                carrier,
+                shippedAt: Date.now() / 1000,
+              },
             }
-          : o
-      )
+          : o,
+      ),
     )
   }
 
@@ -146,7 +152,9 @@ export default function AdminOrders() {
           onSubmit={loggaIn}
           className="w-full rounded-2xl border border-border bg-white p-7"
         >
-          <h1 className="font-heading text-xl font-bold text-navy">Batteriproffs admin</h1>
+          <h1 className="font-heading text-xl font-bold text-navy">
+            Batteriproffs admin
+          </h1>
           <p className="mt-1.5 text-sm text-text-light">
             Klistra in admin-token för att se ordrarna.
           </p>
@@ -180,7 +188,8 @@ export default function AdminOrders() {
         <div>
           <h1 className="font-heading text-2xl font-bold text-navy">Ordrar</h1>
           <p className="mt-1 text-sm text-text-light">
-            {ordrar.length} {ordrar.length === 1 ? "order" : "ordrar"} · direkt ur Stripe
+            {ordrar.length} {ordrar.length === 1 ? "order" : "ordrar"} · direkt
+            ur Stripe
           </p>
         </div>
         <div className="flex gap-2">
@@ -235,70 +244,83 @@ export default function AdminOrders() {
 
       {flik === "ordrar" && (
         <>
-      {fel && (
-        <p className="mt-5 rounded-lg bg-red-50 px-4 py-3 text-sm text-red-700">{fel}</p>
-      )}
+          {fel && (
+            <p className="mt-5 rounded-lg bg-red-50 px-4 py-3 text-sm text-red-700">
+              {fel}
+            </p>
+          )}
 
-      {!laddar && ordrar.length === 0 && !fel && (
-        <p className="mt-8 rounded-xl border border-border bg-white px-5 py-8 text-center text-sm text-text-light">
-          Inga genomförda ordrar än.
-        </p>
-      )}
+          {!laddar && ordrar.length === 0 && !fel && (
+            <p className="mt-8 rounded-xl border border-border bg-white px-5 py-8 text-center text-sm text-text-light">
+              Inga genomförda ordrar än.
+            </p>
+          )}
 
-      <ul className="mt-6 space-y-3">
-        {ordrar.map((o) => (
-          <li key={o.id} className="overflow-hidden rounded-xl border border-border bg-white">
+          <ul className="mt-6 space-y-3">
+            {ordrar.map((o) => (
+              <li
+                key={o.id}
+                className="overflow-hidden rounded-xl border border-border bg-white"
+              >
+                <button
+                  onClick={() => setOppen(oppen === o.id ? null : o.id)}
+                  aria-expanded={oppen === o.id}
+                  className="flex w-full items-center gap-4 px-5 py-4 text-left"
+                >
+                  <div className="min-w-0 flex-1">
+                    <div className="flex flex-wrap items-center gap-2">
+                      <span className="font-mono text-sm font-bold text-navy">
+                        {o.orderId}
+                      </span>
+                      <StatusBadge status={o.status} />
+                    </div>
+                    <p className="mt-1 truncate text-sm text-text-mid">
+                      {o.company.name || o.customer.name || "Okänd köpare"} ·{" "}
+                      {datum(o.created)}
+                    </p>
+                  </div>
+                  <div className="shrink-0 text-right">
+                    <div className="font-heading text-sm font-bold text-navy">
+                      {kr(o.totalInclVat)}
+                    </div>
+                    <div className="text-xs text-text-light">
+                      {oppen === o.id ? "Dölj" : "Visa"}
+                    </div>
+                  </div>
+                </button>
+
+                {o.warnings?.length > 0 && (
+                  <div className="border-t border-amber-bg/30 bg-amber-bg/10 px-5 py-3 text-sm">
+                    <p className="font-bold">Behöver kontrolleras</p>
+                    <ul className="mt-2 list-disc space-y-1 pl-5">
+                      {o.warnings.map((w) => (
+                        <li key={w}>{w}</li>
+                      ))}
+                    </ul>
+                  </div>
+                )}
+
+                {oppen === o.id && (
+                  <OrderDetalj
+                    order={o}
+                    token={token}
+                    onSkickad={markeraSkickad}
+                    onDragen={markeraBetald}
+                  />
+                )}
+              </li>
+            ))}
+          </ul>
+
+          {merFinns && (
             <button
-              onClick={() => setOppen(oppen === o.id ? null : o.id)}
-              aria-expanded={oppen === o.id}
-              className="flex w-full items-center gap-4 px-5 py-4 text-left"
+              onClick={() => hamta(sistaId)}
+              disabled={laddar}
+              className="mt-6 w-full rounded-lg border border-border bg-white px-4 py-3 text-sm font-semibold text-navy disabled:opacity-50"
             >
-              <div className="min-w-0 flex-1">
-                <div className="flex flex-wrap items-center gap-2">
-                  <span className="font-mono text-sm font-bold text-navy">{o.orderId}</span>
-                  <StatusBadge status={o.status} />
-                </div>
-                <p className="mt-1 truncate text-sm text-text-mid">
-                  {o.company.name || o.customer.name || "Okänd köpare"} · {datum(o.created)}
-                </p>
-              </div>
-              <div className="shrink-0 text-right">
-                <div className="font-heading text-sm font-bold text-navy">
-                  {kr(o.totalInclVat)}
-                </div>
-                <div className="text-xs text-text-light">
-                  {oppen === o.id ? "Dölj" : "Visa"}
-                </div>
-              </div>
+              {laddar ? "Hämtar…" : "Ladda fler"}
             </button>
-
-            {o.status === "reserverad" && (
-              <div className="px-5 pb-1">
-                <ReservationsVarning alder={o.reservationsalder} />
-              </div>
-            )}
-
-            {oppen === o.id && (
-              <OrderDetalj
-                order={o}
-                token={token}
-                onSkickad={markeraSkickad}
-                onDragen={markeraBetald}
-              />
-            )}
-          </li>
-        ))}
-      </ul>
-
-      {merFinns && (
-        <button
-          onClick={() => hamta(sistaId)}
-          disabled={laddar}
-          className="mt-6 w-full rounded-lg border border-border bg-white px-4 py-3 text-sm font-semibold text-navy disabled:opacity-50"
-        >
-          {laddar ? "Hämtar…" : "Ladda fler"}
-        </button>
-      )}
+          )}
         </>
       )}
     </div>
@@ -314,7 +336,9 @@ const ORDER_ETIKETT = {
 function StatusBadge({ status }) {
   const e = ORDER_ETIKETT[status] || ORDER_ETIKETT.betald
   return (
-    <span className={`rounded-md px-2 py-0.5 text-[11px] font-bold uppercase tracking-wide ${e.klass}`}>
+    <span
+      className={`rounded-md px-2 py-0.5 text-[11px] font-bold uppercase tracking-wide ${e.klass}`}
+    >
       {e.text}
     </span>
   )
@@ -327,25 +351,6 @@ function StatusBadge({ status }) {
  * verkliga risken med att dra vid leverans i stället för vid köp, och den är
  * helt undvikbar så länge någon ser den i tid.
  */
-function ReservationsVarning({ alder }) {
-  if (alder === null || alder === undefined) return null
-  const kvar = 7 - alder
-  if (kvar > 3) return null
-
-  const akut = kvar <= 1
-  return (
-    <p
-      className={`mt-2 rounded-lg px-3 py-2 text-sm font-semibold ${
-        akut ? "bg-red-50 text-red-700" : "bg-amber-bg/15 text-amber-text"
-      }`}
-    >
-      {kvar <= 0
-        ? "Reservationen har gått ut. Pengarna är släppta — kontakta kunden för ny betalning."
-        : `Reservationen går ut om ${kvar} ${kvar === 1 ? "dygn" : "dygn"}. Skicka och dra betalningen nu, annars släpps pengarna.`}
-    </p>
-  )
-}
-
 function OrderDetalj({ order, token, onSkickad, onDragen }) {
   const [tracking, setTracking] = useState(order.tracking?.number || "")
   const [carrier, setCarrier] = useState(order.tracking?.carrier || "PostNord")
@@ -380,7 +385,7 @@ function OrderDetalj({ order, token, onSkickad, onDragen }) {
         data.varning ||
           (tyst
             ? "Leveransen registrerad och betalningen dragen. Inget mejl skickat, hör av dig till kunden själv."
-            : `Spårningsmejl skickat till ${order.customer.email}.`)
+            : `Spårningsmejl skickat till ${order.customer.email}.`),
       )
     } catch (e) {
       setFelmed(e.message || "Något gick fel")
@@ -412,7 +417,7 @@ function OrderDetalj({ order, token, onSkickad, onDragen }) {
       setResultat(
         data.redanDragen
           ? "Betalningen var redan dragen."
-          : `${kr(data.belopp)} draget. Kunden har inte fått något mejl.`
+          : `${kr(data.belopp)} draget. Kunden har inte fått något mejl.`,
       )
     } catch (e) {
       setFelmed(e.message || "Något gick fel")
@@ -441,14 +446,18 @@ function OrderDetalj({ order, token, onSkickad, onDragen }) {
           <Rad label="Adress" varde={order.delivery.line1} />
           <Rad
             label="Postort"
-            varde={[order.delivery.postalCode, order.delivery.city].filter(Boolean).join(" ")}
+            varde={[order.delivery.postalCode, order.delivery.city]
+              .filter(Boolean)
+              .join(" ")}
           />
           <Rad label="Telefon" varde={order.delivery.phone} />
           <Rad label="Lossning" varde={order.delivery.unloading} />
           <Rad
             label="Kort"
             varde={
-              order.card.brand ? `${order.card.brand} ···· ${order.card.last4}` : ""
+              order.card.brand
+                ? `${order.card.brand} ···· ${order.card.last4}`
+                : ""
             }
           />
         </Block>
@@ -479,15 +488,17 @@ function OrderDetalj({ order, token, onSkickad, onDragen }) {
                 <span className="text-text-dark">
                   {i.qty} × {i.name || i.slug}
                 </span>
-                <span className="shrink-0 font-semibold text-navy">{kr(i.price * i.qty)}</span>
+                <span className="shrink-0 font-semibold text-navy">
+                  {kr(i.price * i.qty)}
+                </span>
               </li>
             ))}
           </ul>
         )}
         {order.struknaRader > 0 && (
           <p className="mt-2 text-sm text-amber-text">
-            + {order.struknaRader} rader till som inte fick plats i orderdatan. Se
-            hela ordern i Stripe. Totalbeloppet nedan är räknat på allt.
+            + {order.struknaRader} rader till som inte fick plats i orderdatan.
+            Se hela ordern i Stripe. Totalbeloppet nedan är räknat på allt.
           </p>
         )}
         <div className="mt-3 space-y-1 border-t border-border pt-3 text-sm">
@@ -512,8 +523,8 @@ function OrderDetalj({ order, token, onSkickad, onDragen }) {
             Dra betalningen nu
           </h3>
           <p className="mt-1.5 text-sm text-text-mid">
-            När godset gått men fraktbolaget inte lämnat spårningsnumret än. Inget mejl
-            skickas till kunden.
+            När godset gått men fraktbolaget inte lämnat spårningsnumret än.
+            Inget mejl skickas till kunden.
           </p>
           <button
             type="button"
@@ -526,13 +537,19 @@ function OrderDetalj({ order, token, onSkickad, onDragen }) {
         </div>
       )}
 
-      <form onSubmit={skickaSparning} className="mt-5 border-t border-border pt-5">
+      <form
+        onSubmit={skickaSparning}
+        className="mt-5 border-t border-border pt-5"
+      >
         <h3 className="font-heading text-xs font-bold uppercase tracking-wide text-text-light">
-          {order.status === "skickad" ? "Skicka om spårningsmejl" : "Skicka spårningsmejl"}
+          {order.status === "skickad"
+            ? "Skicka om spårningsmejl"
+            : "Skicka spårningsmejl"}
         </h3>
         {order.tracking?.shippedAt && (
           <p className="mt-1.5 text-sm text-text-mid">
-            Skickad {datum(order.tracking.shippedAt)} med {order.tracking.carrier} ·{" "}
+            Skickad {datum(order.tracking.shippedAt)} med{" "}
+            {order.tracking.carrier} ·{" "}
             <span className="font-mono">{order.tracking.number}</span>
           </p>
         )}
@@ -576,8 +593,9 @@ function OrderDetalj({ order, token, onSkickad, onDragen }) {
             className="mt-0.5"
           />
           <span>
-            Skicka inget mejl. Leveransen registreras och betalningen dras, men kunden
-            hör inget från systemet. Använd när du mejlar personligen i stället.
+            Skicka inget mejl. Leveransen registreras och betalningen dras, men
+            kunden hör inget från systemet. Använd när du mejlar personligen i
+            stället.
           </span>
         </label>
         {resultat && <p className="mt-2.5 text-sm text-green">{resultat}</p>}
@@ -590,8 +608,8 @@ function OrderDetalj({ order, token, onSkickad, onDragen }) {
             <>
               {" "}
               <strong className="text-text-mid">
-                Betalningen dras i samma veva. Går dragningen inte igenom skickas
-                inget mejl.
+                Betalningen dras i samma veva. Går dragningen inte igenom
+                skickas inget mejl.
               </strong>
             </>
           )}

@@ -5,6 +5,7 @@ import Link from "next/link"
 import { useSearchParams } from "next/navigation"
 import { publicProducts } from "@/lib/products"
 import { useCart } from "@/lib/cart-context"
+import { trackingUrl } from "@/lib/customer-tools"
 import OmdomeFormular from "./OmdomeFormular"
 
 /**
@@ -43,7 +44,11 @@ function hittaProdukt(rad) {
     if (träff) return träff
   }
   if (!rad.name) return null
-  return publicProducts.find((p) => p.name === rad.name || p.shortName === rad.name) || null
+  return (
+    publicProducts.find(
+      (p) => p.name === rad.name || p.shortName === rad.name,
+    ) || null
+  )
 }
 
 export default function KontoContent() {
@@ -51,7 +56,11 @@ export default function KontoContent() {
   const [status, setStatus] = useState("laddar")
   const [epost, setEpost] = useState("")
   const [ordrar, setOrdrar] = useState([])
-  const [fel, setFel] = useState(params.get("fel") === "lank" ? "Länken var ogiltig eller har gått ut. Begär en ny." : "")
+  const [fel, setFel] = useState(
+    params.get("fel") === "lank"
+      ? "Länken var ogiltig eller har gått ut. Begär en ny."
+      : "",
+  )
 
   useEffect(() => {
     let avbruten = false
@@ -104,7 +113,9 @@ export default function KontoContent() {
     <section className="mx-auto max-w-3xl px-5 py-12 sm:py-16">
       <div className="flex flex-wrap items-start justify-between gap-4">
         <div>
-          <h1 className="font-heading text-3xl font-bold text-navy">Mina ordrar</h1>
+          <h1 className="font-heading text-3xl font-bold text-navy">
+            Mina ordrar
+          </h1>
           <p className="mt-1.5 text-sm text-text-light">Inloggad som {epost}</p>
         </div>
         <button
@@ -117,10 +128,12 @@ export default function KontoContent() {
 
       {ordrar.length === 0 ? (
         <div className="mt-10 rounded-xl border border-border bg-surface/60 px-6 py-12 text-center">
-          <p className="font-heading text-base font-bold text-navy">Inga ordrar än</p>
+          <p className="font-heading text-base font-bold text-navy">
+            Inga ordrar än
+          </p>
           <p className="mx-auto mt-2 max-w-sm text-sm text-text-light">
-            Har du precis lagt en order kan den dröja någon minut innan den dyker
-            upp här.
+            Har du precis lagt en order kan den dröja någon minut innan den
+            dyker upp här.
           </p>
           <Link
             href="/kategori/alla"
@@ -174,7 +187,9 @@ function Inloggning({ fel, forifylld }) {
     return (
       <section className="mx-auto max-w-md px-5 py-16 sm:py-24">
         <div className="rounded-2xl border border-border bg-white p-8 text-center">
-          <h1 className="font-heading text-2xl font-bold text-navy">Kolla mejlen</h1>
+          <h1 className="font-heading text-2xl font-bold text-navy">
+            Kolla mejlen
+          </h1>
           <p className="mt-3 text-sm leading-relaxed text-text-mid">
             Har du handlat hos oss med {epost} ligger det en inloggningslänk i
             inkorgen. Den gäller i 15 minuter.
@@ -190,7 +205,9 @@ function Inloggning({ fel, forifylld }) {
   return (
     <section className="mx-auto max-w-md px-5 py-16 sm:py-24">
       <div className="rounded-2xl border border-border bg-white p-8">
-        <h1 className="font-heading text-2xl font-bold text-navy">Mitt konto</h1>
+        <h1 className="font-heading text-2xl font-bold text-navy">
+          Mitt konto
+        </h1>
         <p className="mt-2 text-sm leading-relaxed text-text-mid">
           Skriv in mejladressen du beställde med, så skickar vi en
           inloggningslänk. Inget lösenord behövs.
@@ -203,7 +220,10 @@ function Inloggning({ fel, forifylld }) {
         )}
 
         <form onSubmit={skicka} className="mt-6">
-          <label htmlFor="konto-epost" className="font-heading text-sm font-semibold text-navy">
+          <label
+            htmlFor="konto-epost"
+            className="font-heading text-sm font-semibold text-navy"
+          >
             E-postadress
           </label>
           <input
@@ -265,10 +285,14 @@ function OrderKort({ order }) {
       <div className="flex flex-wrap items-center gap-x-4 gap-y-2 px-5 py-4">
         <div className="min-w-0 flex-1">
           <div className="flex flex-wrap items-center gap-2">
-            <span className="font-mono text-sm font-bold text-navy">{order.orderId}</span>
+            <span className="font-mono text-sm font-bold text-navy">
+              {order.orderId}
+            </span>
             <span
               className={`rounded-md px-2 py-0.5 text-[11px] font-bold uppercase tracking-wide ${
-                skickad ? "bg-green/10 text-green" : "bg-amber-bg/20 text-amber-text"
+                skickad
+                  ? "bg-green/10 text-green"
+                  : "bg-amber-bg/20 text-amber-text"
               }`}
             >
               {skickad ? "Skickad" : "Behandlas"}
@@ -300,7 +324,21 @@ function OrderKort({ order }) {
           <span className="text-text-mid">
             {order.tracking.carrier} ·{" "}
             <span className="font-mono font-semibold text-text-dark">
-              {order.tracking.number}
+              {trackingUrl(order.tracking.carrier, order.tracking.number) ? (
+                <a
+                  href={trackingUrl(
+                    order.tracking.carrier,
+                    order.tracking.number,
+                  )}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="underline"
+                >
+                  Spåra {order.tracking.number}
+                </a>
+              ) : (
+                order.tracking.number
+              )}
             </span>
           </span>
         </div>
@@ -310,19 +348,22 @@ function OrderKort({ order }) {
         <div className="border-t border-border bg-surface/50 px-5 py-5">
           {order.items.length === 0 ? (
             <p className="text-sm text-text-light">
-              Raderna finns inte sparade på den här ordern. Mejla oss så tar vi fram
-              dem.
+              Raderna finns inte sparade på den här ordern. Mejla oss så tar vi
+              fram dem.
             </p>
           ) : (
             <ul className="space-y-3">
               {order.items.map((rad, n) => {
-                const befintligt = order.omdomen?.find((o) => o.slug === rad.slug)
+                const befintligt = order.omdomen?.find(
+                  (o) => o.slug === rad.slug,
+                )
                 const nyss = nyaOmdomen[rad.slug]
                 return (
                   <li key={n} className="text-sm">
                     <div className="flex justify-between gap-4">
                       <span className="text-text-dark">
-                        {rad.qty} × {rad.name || hittaProdukt(rad)?.name || "Produkt"}
+                        {rad.qty} ×{" "}
+                        {rad.name || hittaProdukt(rad)?.name || "Produkt"}
                       </span>
                       <span className="shrink-0 font-semibold text-navy">
                         {kr(rad.price * rad.qty)}
@@ -341,7 +382,11 @@ function OrderKort({ order }) {
                                 : "Ditt omdöme granskas."}
                           </p>
                         ) : (
-                          <OmdomeFormular order={order} rad={rad} onKlar={omdomeSparat} />
+                          <OmdomeFormular
+                            order={order}
+                            rad={rad}
+                            onKlar={omdomeSparat}
+                          />
                         )}
                       </div>
                     )}
@@ -352,14 +397,17 @@ function OrderKort({ order }) {
           )}
           {order.struknaRader > 0 && (
             <p className="mt-2 text-sm text-text-light">
-              + {order.struknaRader} rader till. Mejla oss så läser vi upp hela ordern.
+              + {order.struknaRader} rader till. Mejla oss så läser vi upp hela
+              ordern.
             </p>
           )}
 
           <div className="mt-3 space-y-1 border-t border-border pt-3 text-sm">
             <div className="flex justify-between text-text-mid">
               <span>Frakt exkl. moms</span>
-              <span>{order.shipping === 0 ? "Fri frakt" : kr(order.shipping)}</span>
+              <span>
+                {order.shipping === 0 ? "Fri frakt" : kr(order.shipping)}
+              </span>
             </div>
             <div className="flex justify-between font-heading font-bold text-navy">
               <span>Totalt inkl. moms</span>
@@ -379,6 +427,21 @@ function OrderKort({ order }) {
             </div>
           )}
 
+          <div className="mt-5 flex flex-wrap gap-4 text-sm font-semibold">
+            <Link
+              className="underline"
+              href={`/konto/order/${encodeURIComponent(order.id)}`}
+            >
+              Visa och skriv ut orderunderlag
+            </Link>
+            <Link
+              className="underline"
+              href={`/kontakt?order=${encodeURIComponent(order.orderId)}`}
+            >
+              Fråga om ordern
+            </Link>
+            <ReturnRequest order={order} />
+          </div>
           {bestallbara.length > 0 && (
             <div className="mt-5 border-t border-border pt-4">
               <button
@@ -390,8 +453,9 @@ function OrderKort({ order }) {
               {bestallbara.length < order.items.length && (
                 <p className="mt-2 text-xs text-text-light">
                   Bara {bestallbara.length} av {order.items.length}{" "}
-                  {order.items.length === 1 ? "rad" : "rader"} går att beställa om.
-                  Resten finns inte kvar i sortimentet, mejla oss så löser vi det.
+                  {order.items.length === 1 ? "rad" : "rader"} går att beställa
+                  om. Resten finns inte kvar i sortimentet, mejla oss så löser
+                  vi det.
                 </p>
               )}
               <p className="mt-2 text-xs text-text-light">
@@ -402,5 +466,61 @@ function OrderKort({ order }) {
         </div>
       )}
     </li>
+  )
+}
+
+function ReturnRequest({ order }) {
+  const [index, setIndex] = useState(0)
+  const [reason, setReason] = useState("reklamation")
+  const item = order.items[index]
+  const params = new URLSearchParams({
+    order: order.orderId,
+    arende: "retur",
+    orsak: reason,
+  })
+  if (item) {
+    params.set("artikel", item.name || item.slug || "Artikel")
+    params.set("antal", String(item.qty))
+  }
+  return (
+    <details className="w-full rounded-lg border border-border p-3">
+      <summary className="cursor-pointer">Retur eller reklamation</summary>
+      <div className="mt-4 grid gap-4 sm:grid-cols-2">
+        <label className="text-sm font-normal">
+          Artikel
+          <select
+            value={index}
+            onChange={(e) => setIndex(Number(e.target.value))}
+            className="mt-1 w-full rounded-lg border border-border bg-white p-2"
+          >
+            {order.items.map((r, i) => (
+              <option key={i} value={i}>
+                {r.qty} st {r.name || r.slug}
+              </option>
+            ))}
+          </select>
+        </label>
+        <label className="text-sm font-normal">
+          Ärende
+          <select
+            value={reason}
+            onChange={(e) => setReason(e.target.value)}
+            className="mt-1 w-full rounded-lg border border-border bg-white p-2"
+          >
+            <option value="reklamation">Fel på produkten</option>
+            <option value="transportskada">Transportskada</option>
+            <option value="felartikel">Fel artikel levererad</option>
+            <option value="retur">Fråga om retur</option>
+          </select>
+        </label>
+      </div>
+      <p className="my-3 text-xs font-normal text-text-mid">
+        Vi tar med order och vald artikel till kontaktformuläret. Beskriv
+        ärendet där. En förfrågan innebär inte att en retur är godkänd.
+      </p>
+      <Link href={`/kontakt?${params}`} className="underline">
+        Fortsätt till förfrågan
+      </Link>
+    </details>
   )
 }

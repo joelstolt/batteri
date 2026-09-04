@@ -5,7 +5,14 @@ import { useVat } from "@/lib/vat-context"
 import { useState, useRef, useEffect, useId, useMemo } from "react"
 import { useRouter } from "next/navigation"
 import { track } from "@/lib/track"
-import { Search, Wrench, Package, RefreshCw, CornerDownLeft, LayoutGrid } from "lucide-react"
+import {
+  Search,
+  Wrench,
+  Package,
+  RefreshCw,
+  CornerDownLeft,
+  LayoutGrid,
+} from "lucide-react"
 import { sok, sokbar } from "@/lib/search-index"
 import { oppnaChatt } from "@/components/ChattKnapp"
 
@@ -48,7 +55,7 @@ export default function HeroSearch({ onForhandsvisning }) {
   // Samma villkor som sökningen använder — annars påstår rutan "ingen träff"
   // på en fråga som aldrig söktes.
   const kanSoka = sokbar(query)
-  const traffar = useMemo(() => kanSoka ? sok(query) : [], [kanSoka, query])
+  const traffar = useMemo(() => (kanSoka ? sok(query) : []), [kanSoka, query])
 
   // Rapportera upp den träff som är i fokus, så heron kan visa den. Utan det
   // står samma stillastående batteribild kvar oavsett vad besökaren skriver.
@@ -107,7 +114,10 @@ export default function HeroSearch({ onForhandsvisning }) {
 
   return (
     <div ref={boxRef} className="relative max-w-[560px]">
-      <label htmlFor="hero-sok" className="mb-2 block font-heading text-sm font-bold text-white">
+      <label
+        htmlFor="hero-sok"
+        className="mb-2 block font-heading text-sm font-bold text-white"
+      >
         Vilken maskin har du?
       </label>
 
@@ -151,7 +161,12 @@ export default function HeroSearch({ onForhandsvisning }) {
       {oppen && kanSoka && (
         <div className="absolute left-0 right-0 top-full z-40 mt-2 overflow-hidden rounded-xl border border-border bg-white shadow-[0_12px_40px_rgba(0,0,0,0.18)]">
           {traffar.length > 0 ? (
-            <ul id={listId} role="listbox" aria-label="Sökträffar" className="max-h-[340px] overflow-y-auto">
+            <ul
+              id={listId}
+              role="listbox"
+              aria-label="Sökträffar"
+              className="max-h-[340px] overflow-y-auto"
+            >
               {traffar.map((t, i) => {
                 const Ikon = IKON[t.typ]
                 return (
@@ -167,12 +182,19 @@ export default function HeroSearch({ onForhandsvisning }) {
                     }`}
                   >
                     <div className="flex h-9 w-9 flex-shrink-0 items-center justify-center rounded-lg bg-surface">
-                      <Ikon size={16} className="text-navy" aria-hidden="true" />
+                      <Ikon
+                        size={16}
+                        className="text-navy"
+                        aria-hidden="true"
+                      />
                     </div>
                     <div className="min-w-0 flex-1">
-                      <div className="truncate text-sm font-semibold text-text-dark">{t.titel}</div>
+                      <div className="truncate text-sm font-semibold text-text-dark">
+                        {t.titel}
+                      </div>
                       <div className="truncate text-xs text-text-mid">
-                        <span className="font-medium">{ETIKETT[t.typ]}</span> · {t.undertitel}
+                        <span className="font-medium">{ETIKETT[t.typ]}</span> ·{" "}
+                        {t.undertitel}
                       </div>
                     </div>
                     {t.pris && (
@@ -180,7 +202,9 @@ export default function HeroSearch({ onForhandsvisning }) {
                         <div className="font-heading text-sm font-bold text-text-dark">
                           {formatPris(displayPrice(t.pris))} kr
                         </div>
-                        <div className="text-[11px] text-text-light">{vatLabel}</div>
+                        <div className="text-[11px] text-text-light">
+                          {vatLabel}
+                        </div>
                       </div>
                     )}
                   </li>
@@ -189,11 +213,14 @@ export default function HeroSearch({ onForhandsvisning }) {
             </ul>
           ) : (
             <div className="px-4 py-5 text-sm text-text-mid">
-              Ingen träff på <strong className="text-text-dark">{query.trim()}</strong>. Vi har fler
-              batterier än vad som listas här —{" "}
+              Ingen träff på{" "}
+              <strong className="text-text-dark">{query.trim()}</strong>. Vi har
+              fler batterier än vad som listas här —{" "}
               <button
                 type="button"
-                onClick={() => oppnaChatt()}
+                onClick={() => {
+                  if (!oppnaChatt()) router.push("/kontakt")
+                }}
                 className="font-semibold text-navy hover:underline"
               >
                 chatta med oss

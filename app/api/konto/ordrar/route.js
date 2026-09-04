@@ -29,7 +29,7 @@ export async function GET(request) {
     // sträng och en oväntad apostrof skulle bryta ut ur den.
     const sokvarde = epost.replace(/'/g, "")
     const svar = await stripe.paymentIntents.search({
-      query: `status:'succeeded' AND metadata['buyer_email']:'${sokvarde}'`,
+      query: `metadata['buyer_email']:'${sokvarde}'`,
       limit: 100,
       expand: ["data.latest_charge"],
     })
@@ -38,6 +38,9 @@ export async function GET(request) {
     // Skulle sökningen någonsin matcha bredare än tänkt vill vi inte att någon
     // annans leveransadress dyker upp här.
     const ordrar = svar.data
+      .filter(
+        (pi) => pi.status === "succeeded" || pi.status === "requires_capture",
+      )
       .map((pi) => ({
         ...normaliseraOrder(pi),
         // Attributionen är vår affärsdata, inte kundens orderuppgift. Den ska
@@ -46,14 +49,23 @@ export async function GET(request) {
         // Vilka artiklar kunden redan recenserat, så formuläret bara visas där
         // det går att lämna ett omdöme. Statusen följer med så kunden ser att
         // omdömet ligger på granskning i stället för att undra vart det tog vägen.
-        omdomen: omdomenUrPI(pi).map((o) => ({ slug: o.slug, status: o.status })),
+        omdomen: omdomenUrPI(pi).map((o) => ({
+          slug: o.slug,
+          status: o.status,
+        })),
       }))
       .filter((o) => orderEpost(o) === epost)
       .sort((a, b) => b.created - a.created)
 
-    return NextResponse.json({ epost, ordrar })
+    return NextResponse.json(
+      { epost, ordrar },
+      { headers: { "Cache-Control": "private, no-store" } },
+    )
   } catch (err) {
     console.error("Konto orders error:", err)
-    return NextResponse.json({ error: "Kunde inte hämta ordrar" }, { status: 500 })
+    return NextResponse.json(
+      { error: "Kunde inte hämta ordrar" },
+      { status: 500 },
+    )
   }
 }

@@ -12,14 +12,16 @@ vi.mock("@/lib/track", () => ({ track: () => {} }))
 vi.mock("@/components/FadeIn", () => ({
   default: ({ children }) => <div>{children}</div>,
 }))
-vi.mock("next/image", () => ({ default: ({ fill, ...p }) => <img alt={p.alt || ""} {...p} /> }))
+vi.mock("next/image", () => ({
+  default: ({ fill, ...p }) => <img alt={p.alt || ""} {...p} />,
+}))
 vi.mock("next/link", () => ({
   default: ({ children, ...p }) => <a {...p}>{children}</a>,
 }))
 vi.mock("@stripe/stripe-js", () => ({ loadStripe: () => null }))
 vi.mock("@stripe/react-stripe-js", () => ({
   Elements: ({ children, options }) => (
-    <div data-testid="payment" data-secret={options.clientSecret}>
+    <div data-testid="payment" data-secret={options?.clientSecret}>
       {children}
     </div>
   ),
@@ -67,13 +69,13 @@ it("discards old responses arriving after a newer cart response", async () => {
       () =>
         new Promise((r) => {
           first = r
-        })
+        }),
     )
     .mockImplementationOnce(
       () =>
         new Promise((r) => {
           second = r
-        })
+        }),
     )
   const view = render(<CheckoutContent />)
   state.items = [{ ...item, qty: 2 }]
@@ -93,4 +95,32 @@ it("requires explicit acknowledgement of changed prices before rendering payment
   expect(document.body.textContent).toContain("815")
   fireEvent.click(accept)
   expect(screen.getByTestId("payment")).toBeTruthy()
+})
+it("uses the buyer email for accounting until the customer chooses another address", async () => {
+  fetch.mockResolvedValue(quote("form_secret", [item]))
+  render(<CheckoutContent />)
+  const email = await screen.findByLabelText(/^E-post \*/)
+  fireEvent.change(email, { target: { value: "buyer@example.invalid" } })
+  expect(screen.queryByLabelText(/^E-post för betalningsunderlag/)).toBeNull()
+  fireEvent.click(
+    screen.getByLabelText(
+      "Skicka betalningsunderlaget till en annan e-postadress",
+    ),
+  )
+  const accounting = screen.getByLabelText(/^E-post för betalningsunderlag/)
+  fireEvent.change(accounting, {
+    target: { value: "accounts@example.invalid" },
+  })
+  fireEvent.change(email, { target: { value: "newbuyer@example.invalid" } })
+  expect(accounting.value).toBe("accounts@example.invalid")
+  expect(email.id).toBeTruthy()
+})
+it("preview lets users inspect the form without creating a payment", async () => {
+  render(<CheckoutContent reviewPreview />)
+  expect(screen.getByText("Granska kassan")).toBeTruthy()
+  expect(screen.getByLabelText(/^Företagsnamn/)).toBeTruthy()
+  expect(fetch).not.toHaveBeenCalled()
+  expect(screen.getByRole("button", { name: /Slutför köp/ }).disabled).toBe(
+    true,
+  )
 })

@@ -1,3 +1,5 @@
+import { createHash } from "node:crypto"
+import { trackingUrl as trackingUrlFor } from "@/lib/customer-tools"
 import { NextResponse } from "next/server"
 import Stripe from "stripe"
 import { resend, FROM, ADMIN_EMAIL, escape, emailLayout } from "@/lib/emails"
@@ -34,12 +36,27 @@ export async function POST(request) {
   // tyst: true drar betalningen och registrerar leveransen, men skickar inget
   // systemmejl. Används när kunden får ett personligt mejl i stället, så att
   // hon inte får två utskick om samma leverans.
-  const { paymentIntentId, tracking, carrier = "PostNord", tyst = false } = body || {}
+  const {
+    paymentIntentId,
+    tracking,
+    carrier = "PostNord",
+    tyst = false,
+  } = body || {}
 
-  if (!paymentIntentId || !tracking) {
+  if (
+    typeof paymentIntentId !== "string" ||
+    !/^pi_[A-Za-z0-9]+$/.test(paymentIntentId) ||
+    typeof tracking !== "string" ||
+    !tracking.trim() ||
+    tracking.length > 200 ||
+    typeof carrier !== "string" ||
+    !carrier.trim() ||
+    carrier.length > 80 ||
+    typeof tyst !== "boolean"
+  ) {
     return NextResponse.json(
       { error: "paymentIntentId and tracking required" },
-      { status: 400 }
+      { status: 400 },
     )
   }
 
@@ -61,25 +78,39 @@ export async function POST(request) {
         return NextResponse.json(
           {
             error:
-              "Betalningen kunde inte dras. Reservationen kan ha gått ut (de gäller 7 dygn) eller kortet spärrats. Kontakta kunden innan du skickar.",
+              "Betalningen kunde inte dras. Reservationen kan ha gått ut eller kortet spärrats. Kontakta kunden innan du skickar.",
           },
-          { status: 402 }
+          { status: 402 },
         )
       }
     }
 
+    if (pi.status !== "succeeded") {
+      return NextResponse.json(
+        {
+          error:
+            "Ordern har ingen bekräftad debitering. Registrera inte leverans innan betalningen är klar.",
+        },
+        { status: 409 },
+      )
+    }
+    const alreadyShipped =
+      !!pi.metadata?.shipped_at &&
+      pi.metadata.tracking === tracking &&
+      pi.metadata.carrier === carrier
     const charges = await stripe.charges.list({
       payment_intent: pi.id,
       limit: 1,
     })
     const billing = charges.data[0]?.billing_details || {}
-    const customerEmail = billing.email || pi.receipt_email
+    const customerEmail =
+      pi.metadata?.buyer_email || billing.email || pi.receipt_email
     const customerName = billing.name || ""
 
     if (!customerEmail) {
       return NextResponse.json(
         { error: "No customer email on order" },
-        { status: 400 }
+        { status: 400 },
       )
     }
 
@@ -88,12 +119,7 @@ export async function POST(request) {
     // adressen (postnord.se/vara-verktyg/spara-brev-och-paket?shipmentId=)
     // ger 404, och den låg i det här mejlet fram till 2026-08-04. Verifierad
     // mot en skarp försändelse innan bytet.
-    const trackingUrl =
-      carrier.toLowerCase() === "postnord"
-        ? `https://tracking.postnord.com/se/tracking?id=${encodeURIComponent(tracking)}`
-        : carrier.toLowerCase() === "dhl"
-          ? `https://www.dhl.com/se-sv/home/tracking.html?tracking-id=${encodeURIComponent(tracking)}`
-          : null
+    const trackingUrl = trackingUrlFor(carrier, tracking)
 
     const emailBody = `
       <h1 style="margin:0 0 6px;font-size:22px;font-weight:800;letter-spacing:-0.01em;">
@@ -126,18 +152,35 @@ export async function POST(request) {
       </p>
     `
 
-    if (!tyst) {
-      await resend.emails.send({
-        from: FROM,
-        to: customerEmail,
-        replyTo: ADMIN_EMAIL,
-        subject: `Din order är skickad — ${orderId}`,
-        html: emailLayout({
-          title: `Din order är skickad — ${orderId}`,
-          preheader: `${carrier} · ${tracking}`,
-          body: emailBody,
-        }),
-      })
+    if (!tyst && !alreadyShipped) {
+      const sent = await resend.emails.send(
+        {
+          from: FROM,
+          to: customerEmail,
+          replyTo: ADMIN_EMAIL,
+          subject: `Din order är skickad — ${orderId}`,
+          html: emailLayout({
+            title: `Din order är skickad — ${orderId}`,
+            preheader: `${carrier} · ${tracking}`,
+            body: emailBody,
+          }),
+        },
+        {
+          idempotencyKey: `shipment-${createHash("sha256")
+            .update(JSON.stringify([pi.id, customerEmail, carrier, tracking]))
+            .digest("hex")}`,
+        },
+      )
+      if (sent?.error || !sent?.data?.id) {
+        console.error("Leveransmejl nekades av mejltjänsten:", sent?.error)
+        return NextResponse.json(
+          {
+            error:
+              "Betalningen är dragen, men leveransmejlet kunde inte skickas. Leveransen har inte registrerats. Kontrollera mejltjänsten före nytt försök.",
+          },
+          { status: 502 },
+        )
+      }
     }
 
     // Omdömesmejlet köas när ordern skickas — då räknar fördröjningen från
@@ -173,8 +216,11 @@ export async function POST(request) {
         metadata: {
           tracking,
           carrier,
-          shipped_at: String(Math.floor(Date.now() / 1000)),
-          ...(reviewKoad ? { review_email_at: String(Math.floor(Date.now() / 1000)) } : {}),
+          shipped_at:
+            pi.metadata?.shipped_at || String(Math.floor(Date.now() / 1000)),
+          ...(reviewKoad
+            ? { review_email_at: String(Math.floor(Date.now() / 1000)) }
+            : {}),
         },
       })
     } catch (err) {
@@ -199,7 +245,7 @@ export async function POST(request) {
     console.error("Ship route error:", err)
     return NextResponse.json(
       { error: err.message || "Något gick fel" },
-      { status: 500 }
+      { status: 500 },
     )
   }
 }

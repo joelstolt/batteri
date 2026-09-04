@@ -1,6 +1,7 @@
 "use client"
 
-import { useState, useEffect, useRef } from "react"
+import PreviousOrderDetails from "@/components/PreviousOrderDetails"
+import { useState, useEffect, useRef, useId } from "react"
 import Image from "next/image"
 import Link from "next/link"
 import { loadStripe } from "@stripe/stripe-js"
@@ -90,40 +91,74 @@ const stripeAppearance = {
 
 /* ───────────── Fältkomponenter ───────────── */
 function FormInput({ label, error, hint, optional = false, ...props }) {
+  const generatedId = useId()
+  const id = props.id || generatedId
   return (
     <div>
-      <label className="mb-1.5 block text-sm font-medium text-text-dark">
+      <label
+        htmlFor={id}
+        className="mb-1.5 block text-sm font-medium text-text-dark"
+      >
         {label}{" "}
         {optional ? <span className="text-text-light">(valfritt)</span> : "*"}
       </label>
       <input
         {...props}
+        id={id}
+        aria-invalid={!!error}
+        aria-describedby={error || hint ? `${id}-help` : undefined}
+        aria-required={!optional}
         className={`w-full rounded-xl border bg-white px-4 py-3 text-sm text-text-dark outline-none transition-colors placeholder:text-text-light focus:border-navy ${
           error ? "border-red-400" : "border-border"
         }`}
       />
-      {hint && !error && <p className="mt-1 text-xs text-text-light">{hint}</p>}
-      {error && <p className="mt-1 text-xs text-red-500">{error}</p>}
+      {hint && !error && (
+        <p id={`${id}-help`} className="mt-1 text-xs text-text-light">
+          {hint}
+        </p>
+      )}
+      {error && (
+        <p id={`${id}-help`} className="mt-1 text-xs text-red-500">
+          {error}
+        </p>
+      )}
     </div>
   )
 }
 
 function FormTextarea({ label, error, hint, optional = false, ...props }) {
+  const generatedId = useId()
+  const id = props.id || generatedId
   return (
     <div>
-      <label className="mb-1.5 block text-sm font-medium text-text-dark">
+      <label
+        htmlFor={id}
+        className="mb-1.5 block text-sm font-medium text-text-dark"
+      >
         {label}{" "}
         {optional ? <span className="text-text-light">(valfritt)</span> : "*"}
       </label>
       <textarea
         rows={3}
         {...props}
+        id={id}
+        aria-invalid={!!error}
+        aria-describedby={error || hint ? `${id}-help` : undefined}
+        aria-required={!optional}
         className={`w-full resize-y rounded-xl border bg-white px-4 py-3 text-sm text-text-dark outline-none transition-colors placeholder:text-text-light focus:border-navy ${
           error ? "border-red-400" : "border-border"
         }`}
       />
-      {hint && !error && <p className="mt-1 text-xs text-text-light">{hint}</p>}
-      {error && <p className="mt-1 text-xs text-red-500">{error}</p>}
+      {hint && !error && (
+        <p id={`${id}-help`} className="mt-1 text-xs text-text-light">
+          {hint}
+        </p>
+      )}
+      {error && (
+        <p id={`${id}-help`} className="mt-1 text-xs text-red-500">
+          {error}
+        </p>
+      )}
     </div>
   )
 }
@@ -149,6 +184,7 @@ function CheckoutForm({
   clientSecret,
   freeShipping,
   cartSnapshot,
+  reviewPreview = false,
 }) {
   const active = useRef(true)
   const submitting = useRef(false)
@@ -165,6 +201,9 @@ function CheckoutForm({
   const [paymentError, setPaymentError] = useState(null)
   // Så länge kunden inte själv rört momsnumret följer det organisationsnumret
   const [vatTouched, setVatTouched] = useState(false)
+  const [separateInvoiceEmail, setSeparateInvoiceEmail] = useState(
+    !!form.invoiceEmail && form.invoiceEmail !== form.email,
+  )
 
   const { totalInclVat } = priceBreakdown(totalPrice, freeShipping)
 
@@ -172,6 +211,7 @@ function CheckoutForm({
     const value = e.target.value
     setForm((prev) => {
       const next = { ...prev, [field]: value }
+      if (field === "email" && !separateInvoiceEmail) next.invoiceEmail = value
       if (field === "orgNr" && !vatTouched) {
         next.vatNr = isValidOrgNr(value) ? vatNrFromOrgNr(value) : ""
       }
@@ -220,7 +260,7 @@ function CheckoutForm({
     if (Object.keys(formErrors).length > 0) {
       setErrors(formErrors)
       const first = document.querySelector(
-        `[data-field="${Object.keys(formErrors)[0]}"]`
+        `[data-field="${Object.keys(formErrors)[0]}"]`,
       )
       first?.scrollIntoView({ block: "center" })
       /*
@@ -262,7 +302,7 @@ function CheckoutForm({
       if (!res.ok) {
         if (data.errors) setErrors(data.errors)
         setPaymentError(
-          data.error || "Kunde inte spara uppgifterna. Försök igen."
+          data.error || "Kunde inte spara uppgifterna. Försök igen.",
         )
         setLoading(false)
         submitting.current = false
@@ -286,7 +326,7 @@ function CheckoutForm({
       submitting.current = false
       setPaymentError(
         "Betalningen tar ovanligt lång tid. Ladda om sidan och försök igen — " +
-          "blir det samma sak, chatta med oss eller mejla info@batteriproffs.se så tar vi ordern manuellt."
+          "blir det samma sak, chatta med oss eller mejla info@batteriproffs.se så tar vi ordern manuellt.",
       )
     }, 45000)
 
@@ -294,7 +334,7 @@ function CheckoutForm({
       try {
         sessionStorage.setItem(
           `bp_pending_${clientSecret.split("_secret_")[0]}`,
-          JSON.stringify(cartSnapshot)
+          JSON.stringify(cartSnapshot),
         )
       } catch {}
       const { error } = await stripe.confirmPayment({
@@ -333,7 +373,7 @@ function CheckoutForm({
       console.error("Stripe confirmPayment kastade:", err)
       setPaymentError(
         err?.message ||
-          "Betalningen kunde inte genomföras. Försök igen, eller chatta med oss så hjälper vi dig."
+          "Betalningen kunde inte genomföras. Försök igen, eller chatta med oss så hjälper vi dig.",
       )
     } finally {
       clearTimeout(watchdog)
@@ -346,6 +386,14 @@ function CheckoutForm({
 
   return (
     <form onSubmit={handleSubmit} className="flex flex-col gap-10">
+      <PreviousOrderDetails
+        onSelect={(details) => {
+          setForm((prev) => ({ ...prev, ...details }))
+          setErrors({})
+          setVatTouched(false)
+          setSeparateInvoiceEmail(details.invoiceEmail !== details.email)
+        }}
+      />
       {/* Beställare först: mejlen fästs på betalningen så fort den är ifylld,
           och då kan en övergiven kassa följas upp. Med sektionen sist hann de
           flesta avhoppare aldrig dit. */}
@@ -468,17 +516,40 @@ function CheckoutForm({
               />
             </div>
           </div>
-          <div data-field="invoiceEmail">
-            <FormInput
-              label="Fakturaadress e-post"
-              type="email"
-              placeholder="faktura@exempelindustri.se"
-              hint="Dit skickar vi fakturan — ofta en annan adress än beställarens"
-              value={form.invoiceEmail}
-              onChange={handleChange("invoiceEmail")}
-              error={errors.invoiceEmail}
+          <label className="flex items-start gap-3 text-sm">
+            <input
+              type="checkbox"
+              className="mt-1"
+              checked={separateInvoiceEmail}
+              onChange={(e) => {
+                setSeparateInvoiceEmail(e.target.checked)
+                setForm((prev) => ({
+                  ...prev,
+                  invoiceEmail: e.target.checked ? "" : prev.email,
+                }))
+                setErrors((prev) => ({ ...prev, invoiceEmail: null }))
+              }}
             />
-          </div>
+            Skicka betalningsunderlaget till en annan e-postadress
+          </label>
+          {!separateInvoiceEmail && (
+            <p className="text-xs text-text-mid">
+              Betalningsunderlaget skickas till beställarens e-postadress.
+            </p>
+          )}
+          {separateInvoiceEmail && (
+            <div data-field="invoiceEmail">
+              <FormInput
+                label="E-post för betalningsunderlag"
+                type="email"
+                placeholder="faktura@exempelindustri.se"
+                hint="Till exempel företagets ekonomiavdelning"
+                value={form.invoiceEmail}
+                onChange={handleChange("invoiceEmail")}
+                error={errors.invoiceEmail}
+              />
+            </div>
+          )}
         </div>
       </div>
 
@@ -692,9 +763,15 @@ function CheckoutForm({
           Betalning
         </SectionHeading>
         <div className="rounded-xl border border-border bg-white p-5">
-          <PaymentElement
-            options={{ layout: "tabs", fields: { billingDetails: "never" } }}
-          />
+          {reviewPreview ? (
+            <p className="text-sm">
+              Kortbetalning är avstängd i förhandsvisningen.
+            </p>
+          ) : (
+            <PaymentElement
+              options={{ layout: "tabs", fields: { billingDetails: "never" } }}
+            />
+          )}
         </div>
         {paymentError && (
           <div className="mt-3 rounded-lg bg-red-50 px-4 py-3 text-sm text-red-600">
@@ -741,7 +818,7 @@ function OrderSummary({ items, totalPrice, freeShipping }) {
   const [expanded, setExpanded] = useState(true)
   const { productsExcl, shippingExcl, vat, totalInclVat } = priceBreakdown(
     totalPrice,
-    freeShipping
+    freeShipping,
   )
 
   return (
@@ -841,7 +918,7 @@ function OrderSummary({ items, totalPrice, freeShipping }) {
 }
 
 /* ───────────── Main CheckoutContent ───────────── */
-export default function CheckoutContent() {
+export default function CheckoutContent({ reviewPreview = false }) {
   const { items: cartItems } = useCart()
   const requestKey = cartFingerprint(cartItems)
   const attemptRef = useRef(null)
@@ -863,11 +940,11 @@ export default function CheckoutContent() {
     current &&
     (quoteHasChanged(cartItems, current.quote) ||
       cartItems.some(
-        (i) => i.previousPrice !== undefined && i.previousPrice !== i.price
+        (i) => i.previousPrice !== undefined && i.previousPrice !== i.price,
       ))
 
   useEffect(() => {
-    if (!cartItems.length) return
+    if (reviewPreview || !cartItems.length) return
     let active = true
     const controller = new AbortController()
     setError(null)
@@ -884,7 +961,7 @@ export default function CheckoutContent() {
       try {
         sessionStorage.setItem(
           "bp_checkout_attempt",
-          JSON.stringify(attemptRef.current)
+          JSON.stringify(attemptRef.current),
         )
       } catch {}
     }
@@ -911,7 +988,7 @@ export default function CheckoutContent() {
       active = false
       controller.abort()
     }
-  }, [requestKey, cartItems])
+  }, [requestKey, cartItems, reviewPreview])
 
   // Empty cart
   if (items.length === 0) {
@@ -957,6 +1034,43 @@ export default function CheckoutContent() {
   }
 
   // Hide previous Elements immediately when the cart changes.
+  if (reviewPreview)
+    return (
+      <section className="mx-auto max-w-[1200px] px-4 py-10 sm:px-6">
+        <h1 className="mb-4 font-heading text-3xl font-bold text-navy">
+          Granska kassan
+        </h1>
+        <p className="mb-8 rounded-xl border border-border bg-surface p-4 text-sm">
+          Förhandsvisning: du kan prova formuläret, men ingen betalning, kontakt
+          eller inloggning genomförs. Fyll inte i riktiga personuppgifter här.
+        </p>
+        <div className="grid gap-10 lg:grid-cols-[1fr_400px]">
+          <div className="lg:col-start-2 lg:row-start-1">
+            <OrderSummary
+              items={items}
+              totalPrice={totalPrice}
+              freeShipping={freeShipping}
+            />
+          </div>
+          <div className="lg:col-start-1 lg:row-start-1">
+            <Elements stripe={null}>
+              <CheckoutForm
+                form={form}
+                setForm={setForm}
+                errors={formErrors}
+                setErrors={setFormErrors}
+                totalPrice={totalPrice}
+                freeShipping={freeShipping}
+                clientSecret={null}
+                cartSnapshot={[]}
+                reviewPreview
+              />
+            </Elements>
+          </div>
+        </div>
+      </section>
+    )
+
   if (!clientSecret) {
     return (
       <div className="flex min-h-[50vh] items-center justify-center">
@@ -1024,8 +1138,18 @@ export default function CheckoutContent() {
 
       <div className="mx-auto max-w-[1200px] px-4 py-10 sm:px-6 sm:py-14">
         <div className="grid grid-cols-1 gap-10 lg:grid-cols-[1fr_400px]">
+          {/* Right: Order summary */}
+          <FadeIn delay={0.1} className="lg:col-start-2 lg:row-start-1">
+            <div className="lg:sticky lg:top-6 lg:self-start">
+              <OrderSummary
+                items={items}
+                totalPrice={totalPrice}
+                freeShipping={freeShipping}
+              />
+            </div>
+          </FadeIn>
           {/* Left: Form */}
-          <FadeIn>
+          <FadeIn className="lg:col-start-1 lg:row-start-1">
             {/* key={clientSecret} tvingar omstart av Elements när varukorgen
                 ändras i kassan — annars sitter betalfältet kvar på den gamla
                 betalningen och kunden hade debiterats fel belopp. */}
@@ -1053,17 +1177,6 @@ export default function CheckoutContent() {
                 }))}
               />
             </Elements>
-          </FadeIn>
-
-          {/* Right: Order summary */}
-          <FadeIn delay={0.1}>
-            <div className="lg:sticky lg:top-6 lg:self-start">
-              <OrderSummary
-                items={items}
-                totalPrice={totalPrice}
-                freeShipping={freeShipping}
-              />
-            </div>
           </FadeIn>
         </div>
       </div>

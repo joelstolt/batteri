@@ -1,3 +1,9 @@
+## 2026-09-05: B2B-funktioner och produktunderlag, endast granskningsversion
+
+Aktuellt arbete sammanfattas i B2B-RESULTAT.md. 93 tester godkända, lint utan varningar, bygge godkänt, beroendekontroll 0 fynd. Isolerad gren fix/order-integrity-20260904 och review https://batteriproffs-kodgranskning-2026090.vercel.app. Produktion och grafisk profil/design v3 orörda. Inga riktiga köp eller mejl testade. Ingen push till main.
+
+Nordmax och Exide GF-Y HAR publika datablad; äldre uppgifter längre ned är inaktuella. Dokument nu kopplade till alla 20 artiklar. Tolv originalbilder hämtade för granskning. Kommersiellt tillstånd för nya Nordmax-bilder inte bekräftat. NM875 ET/DC-variant och EV305A-totalhöjd behöver slutkontroll inför release. Detaljer och källor i ../../outputs/batteriproffs-produktunderlag-20260905.md.
+
 ## 2026-09-05: isolerad order- och designgranskning
 
 Se ORDER-FIX-STATUS.md. Kodrättningar och 49 regressionstester på fix/order-integrity-20260904. Separat reviewprojekt, ingen ändring av butikens produktion. Stripe-testköp och riktig mejlverifiering återstår före release.

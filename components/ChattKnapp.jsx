@@ -1,4 +1,5 @@
 "use client"
+import { useRouter } from "next/navigation"
 
 /**
  * Sajtens "Chatta med oss"-knapp. Ersätter de gamla ring-CTA:erna: telefonen
@@ -13,13 +14,21 @@ export function oppnaChatt() {
   const knapp = document
     .querySelector("chatbot-widget")
     ?.shadowRoot?.querySelector(".launcher")
-  if (knapp) knapp.click()
-  else window.location.href = "/kontakt"
+  if (!knapp) return false
+  knapp.click()
+  return true
 }
 
 export default function ChattKnapp({ className, children }) {
+  const router = useRouter()
   return (
-    <button type="button" onClick={oppnaChatt} className={`text-left ${className ?? ""}`}>
+    <button
+      type="button"
+      onClick={() => {
+        if (!oppnaChatt()) router.push("/kontakt")
+      }}
+      className={`text-left ${className ?? ""}`}
+    >
       {children ?? "Chatta med oss"}
     </button>
   )

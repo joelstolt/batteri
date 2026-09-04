@@ -1,15 +1,30 @@
 "use client"
 
+import { CompareButton } from "@/lib/compare-context"
+import { relatedProducts } from "@/lib/product-selection"
 import { useState } from "react"
 import { useParams } from "next/navigation"
 import Link from "next/link"
 import Image from "next/image"
-import { ShoppingCart, Truck, Shield, Phone, ChevronRight, RotateCcw } from "lucide-react"
-import { getProductBySlug, getProductsByCategory, getProductBrand, getProductChemistry } from "@/lib/products"
+import {
+  ShoppingCart,
+  Truck,
+  Shield,
+  Phone,
+  ChevronRight,
+  RotateCcw,
+} from "lucide-react"
+import {
+  getProductBySlug,
+  getProductsByCategory,
+  getProductBrand,
+  getProductChemistry,
+} from "@/lib/products"
 import { CATEGORIES } from "@/lib/constants"
 import { machinesForProduct } from "@/lib/machines"
 import { slugifyModel } from "@/lib/replacements"
 import { teknikFor } from "@/lib/teknik"
+import ProductDocuments from "@/components/ProductDocuments"
 import { useCart } from "@/lib/cart-context"
 import { useVat } from "@/lib/vat-context"
 import ProductCard from "@/components/ProductCard"
@@ -27,10 +42,12 @@ function ImageGallery({ images, alt }) {
     <div className="flex flex-col-reverse gap-3 sm:flex-row sm:gap-4">
       {/* Thumbnails */}
       {images.length > 1 && (
-        <div className="flex gap-2 overflow-x-auto sm:w-20 sm:flex-shrink-0 sm:flex-col sm:overflow-visible"
+        <div
+          className="flex gap-2 overflow-x-auto sm:w-20 sm:flex-shrink-0 sm:flex-col sm:overflow-visible"
           tabIndex={0}
           role="group"
-          aria-label="Produktbilder">
+          aria-label="Produktbilder"
+        >
           {images.map((img, i) => (
             <button
               key={i}
@@ -81,9 +98,11 @@ function ProductExtraInfo({ product, className = "" }) {
       {product.fitsTo && (
         <div className="rounded-xl border border-border bg-surface p-5">
           <h2 className="mb-2 font-heading text-sm font-bold uppercase tracking-wider text-text-dark">
-            Passar till
+            Användningsområden
           </h2>
-          <p className="text-sm leading-relaxed text-text-mid">{product.fitsTo}</p>
+          <p className="text-sm leading-relaxed text-text-mid">
+            {product.fitsTo}
+          </p>
 
           {/* Länkar till maskinsidorna — gör klustret dubbelriktat i stället för
               att bara peka nedåt från navet */}
@@ -129,7 +148,9 @@ function ProductExtraInfo({ product, className = "" }) {
           <h2 className="mb-2 font-heading text-sm font-bold uppercase tracking-wider text-text-dark">
             Rekommenderad laddare
           </h2>
-          <p className="text-sm leading-relaxed text-text-mid">{product.recommendedCharger}</p>
+          <p className="text-sm leading-relaxed text-text-mid">
+            {product.recommendedCharger}
+          </p>
           <Link
             href="/laddare"
             className="mt-3 inline-block text-sm font-semibold text-navy hover:underline"
@@ -184,8 +205,8 @@ function ProductExtraInfo({ product, className = "" }) {
             Underhåll
           </h2>
           <p className="text-sm leading-relaxed text-text-mid">
-            Det här är ett öppet blybatteri och behöver påfyllning av destillerat
-            vatten var fjärde till sjätte vecka vid daglig drift.
+            Det här är ett öppet blybatteri och behöver påfyllning av
+            destillerat vatten var fjärde till sjätte vecka vid daglig drift.
           </p>
           <Link
             href="/batterivatten"
@@ -205,8 +226,8 @@ function ExpandableDescription({ description }) {
   return (
     <div className="mb-6">
       <h2 className="mb-2 font-heading text-sm font-bold uppercase tracking-wider text-text-mid">
-            Beskrivning
-          </h2>
+        Beskrivning
+      </h2>
       <div className="relative">
         <div
           className={`text-sm leading-relaxed text-text-mid whitespace-pre-line overflow-hidden transition-[max-height] duration-300 ease-in-out ${expanded ? "max-h-[2000px]" : "max-h-[3.75em]"}`}
@@ -239,20 +260,33 @@ function BetygsRad({ betyg }) {
     >
       <span className="flex gap-0.5" aria-hidden="true">
         {[1, 2, 3, 4, 5].map((n) => (
-          <svg key={n} width="16" height="16" viewBox="0 0 20 20" fill="currentColor" className={n <= hela ? "text-amber-bg" : "text-border-dark"}>
+          <svg
+            key={n}
+            width="16"
+            height="16"
+            viewBox="0 0 20 20"
+            fill="currentColor"
+            className={n <= hela ? "text-amber-bg" : "text-border-dark"}
+          >
             <path d="M10 1.5l2.6 5.3 5.9.9-4.3 4.1 1 5.8-5.2-2.7-5.2 2.7 1-5.8L1.5 7.7l5.9-.9z" />
           </svg>
         ))}
       </span>
-      <span className="font-semibold text-text-dark">{betyg.snitt.toFixed(1)}</span>
+      <span className="font-semibold text-text-dark">
+        {betyg.snitt.toFixed(1)}
+      </span>
       <span className="underline underline-offset-2">
-        {betyg.antal} {betyg.antal === 1 ? "omdöme" : "omdömen"} · verifierade köp
+        {betyg.antal} {betyg.antal === 1 ? "omdöme" : "omdömen"} · verifierade
+        köp
       </span>
     </a>
   )
 }
 
-export default function ProductPageContent({ betyg = null, senasteKop = null }) {
+export default function ProductPageContent({
+  betyg = null,
+  senasteKop = null,
+}) {
   const params = useParams()
   const product = getProductBySlug(params.slug)
   const [qty, setQty] = useState(1)
@@ -275,9 +309,7 @@ export default function ProductPageContent({ betyg = null, senasteKop = null }) 
   }
 
   const category = CATEGORIES.find((c) => c.slug === product.category)
-  const related = getProductsByCategory(product.category)
-    .filter((p) => p.slug !== product.slug)
-    .slice(0, 4)
+  const related = relatedProducts(product)
 
   return (
     <div className="bg-white">
@@ -285,17 +317,24 @@ export default function ProductPageContent({ betyg = null, senasteKop = null }) 
       <div className="border-b border-border">
         <div className="mx-auto max-w-[1200px] px-4 py-3 sm:px-6">
           <nav className="flex items-center gap-2 text-sm text-text-mid">
-            <Link href="/" className="transition-colors hover:text-text-dark">Hem</Link>
+            <Link href="/" className="transition-colors hover:text-text-dark">
+              Hem
+            </Link>
             <ChevronRight size={12} className="text-border-dark" />
             {category && (
               <>
-                <Link href={`/kategori/${category.slug}`} className="transition-colors hover:text-text-dark">
+                <Link
+                  href={`/kategori/${category.slug}`}
+                  className="transition-colors hover:text-text-dark"
+                >
                   {category.title}
                 </Link>
                 <ChevronRight size={12} className="text-border-dark" />
               </>
             )}
-            <span className="font-medium text-text-dark">{product.shortName}</span>
+            <span className="font-medium text-text-dark">
+              {product.shortName}
+            </span>
           </nav>
         </div>
       </div>
@@ -309,15 +348,19 @@ export default function ProductPageContent({ betyg = null, senasteKop = null }) 
               <ImageGallery images={product.images} alt={product.name} />
             </div>
 
-            {/* Passar till & Rekommenderad laddare — desktop only */}
-            <ProductExtraInfo product={product} className="mt-8 hidden lg:block" />
+            {/* Användningsområden & Rekommenderad laddare — desktop only */}
+            <ProductExtraInfo
+              product={product}
+              className="mt-8 hidden lg:block"
+            />
           </FadeIn>
 
           {/* Right — Info */}
           <FadeIn delay={0.1}>
             <div>
               <div className="mb-3 text-sm font-medium text-text-mid">
-                {getProductBrand(product)} · {getProductChemistry(product)} · {product.voltage}
+                {getProductBrand(product)} · {getProductChemistry(product)} ·{" "}
+                {product.voltage}
               </div>
 
               <h1 className="mb-2 font-heading text-[clamp(24px,3.5vw,32px)] font-extrabold tracking-tight text-text-dark">
@@ -332,54 +375,100 @@ export default function ProductPageContent({ betyg = null, senasteKop = null }) 
                   <span className="font-heading text-3xl font-extrabold text-text-dark">
                     {formatPrice(displayPrice(product.price))}
                   </span>
-                  <span className="text-base font-medium text-text-mid">kr</span>
+                  <span className="text-base font-medium text-text-mid">
+                    kr
+                  </span>
                 </div>
                 <div className="mt-0.5 text-sm text-text-light">
                   {vatLabel}
                   {inclVat
                     ? ` · ${formatPrice(Math.round(product.price / 1.25))} kr exkl. moms`
-                    : ` · ${formatPrice(product.price)} kr inkl. moms`
-                  }
+                    : ` · ${formatPrice(product.price)} kr inkl. moms`}
                 </div>
                 {/* Frakten på produktsidan, inte som överraskning i kassan —
                     oväntade extrakostnader är e-handelns största avhoppsskäl.
                     Platt frakt gör dessutom flerköp till ett argument. */}
                 <div className="mt-1.5 text-sm text-text-mid">
-                  + frakt <span className="font-semibold text-text-dark">695 kr</span> per
-                  order, oavsett antal batterier
+                  + frakt{" "}
+                  <span className="font-semibold text-text-dark">
+                    {formatPrice(displayPrice(695))} kr {vatLabel.toLowerCase()}
+                  </span>{" "}
+                  per order, oavsett antal batterier
                 </div>
               </div>
 
+              <CompareButton product={product} />
+              <ProductDocuments product={product} />
               {/* Artnr */}
               <div className="mb-5 rounded-lg border border-border bg-surface px-4 py-2.5 text-sm">
                 <span className="text-text-mid">Artnr: </span>
-                <span className="font-semibold text-text-dark">{product.slug.toUpperCase()}</span>
+                <span className="font-semibold text-text-dark">
+                  {product.slug.toUpperCase()}
+                </span>
               </div>
 
               {/* In stock */}
               <div className="mb-5 flex items-center gap-2">
                 <svg width="20" height="20" viewBox="0 0 20 20" fill="none">
-                  <circle cx="10" cy="10" r="10" fill="#16a34a" opacity="0.15" />
-                  <path d="M6 10l2.5 2.5L14 7" stroke="#16a34a" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" />
+                  <circle
+                    cx="10"
+                    cy="10"
+                    r="10"
+                    fill="#16a34a"
+                    opacity="0.15"
+                  />
+                  <path
+                    d="M6 10l2.5 2.5L14 7"
+                    stroke="#16a34a"
+                    strokeWidth="2"
+                    strokeLinecap="round"
+                    strokeLinejoin="round"
+                  />
                 </svg>
-                <span className="text-sm font-semibold text-green">Skickas direkt från leverantör</span>
+                <span className="text-sm font-semibold text-green">
+                  {product.inStock === false
+                    ? "Ej beställningsbar just nu"
+                    : "Beställningsbar från leverantör"}
+                </span>
               </div>
 
               {/* Senaste riktiga köpet av just den här produkten, ur Stripe.
                   Datum och antal, aldrig vem — samma regel som startsidan. */}
               {senasteKop && (
                 <div className="-mt-2 mb-5 flex items-center gap-2 text-sm text-text-mid">
-                  <svg width="20" height="20" viewBox="0 0 20 20" fill="none" aria-hidden="true">
-                    <circle cx="10" cy="10" r="10" fill="#16a34a" opacity="0.15" />
-                    <path d="M6 10l2.5 2.5L14 7" stroke="#16a34a" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" />
+                  <svg
+                    width="20"
+                    height="20"
+                    viewBox="0 0 20 20"
+                    fill="none"
+                    aria-hidden="true"
+                  >
+                    <circle
+                      cx="10"
+                      cy="10"
+                      r="10"
+                      fill="#16a34a"
+                      opacity="0.15"
+                    />
+                    <path
+                      d="M6 10l2.5 2.5L14 7"
+                      stroke="#16a34a"
+                      strokeWidth="2"
+                      strokeLinecap="round"
+                      strokeLinejoin="round"
+                    />
                   </svg>
                   <span>
                     Senast köpt{" "}
                     <span className="font-semibold text-text-dark">
-                      {new Date(senasteKop.datum * 1000).toLocaleDateString("sv-SE", { day: "numeric", month: "long" })}
+                      {new Date(senasteKop.datum * 1000).toLocaleDateString(
+                        "sv-SE",
+                        { day: "numeric", month: "long" },
+                      )}
                     </span>
                     {senasteKop.antal > 1 && ` · ${senasteKop.antal} st`}
-                    {senasteKop.ordrar > 1 && ` · ${senasteKop.ordrar} verifierade köp`}
+                    {senasteKop.ordrar > 1 &&
+                      ` · ${senasteKop.ordrar} verifierade köp`}
                   </span>
                 </div>
               )}
@@ -405,6 +494,7 @@ export default function ProductPageContent({ betyg = null, senasteKop = null }) 
                 </div>
 
                 <button
+                  disabled={product.inStock === false}
                   onClick={() => addItem(product, qty)}
                   className="flex flex-1 items-center justify-center gap-3 rounded-xl bg-amber-bg py-3.5 font-heading text-base font-bold text-navy shadow-sm transition-all hover:-translate-y-px hover:shadow-md"
                 >
@@ -421,22 +511,34 @@ export default function ProductPageContent({ betyg = null, senasteKop = null }) 
               {/* Volume order */}
               <div className="mb-6">
                 <ChattKnapp className="text-sm font-semibold text-navy underline underline-offset-2 hover:text-amber-text">
-                  Beställa större mängd? Vi erbjuder offert på volymköp av högre värde.
+                  Beställa större mängd? Vi erbjuder offert på volymköp av högre
+                  värde.
                 </ChattKnapp>
               </div>
 
               {/* Trust items */}
               <div className="mb-6 flex flex-col gap-3 rounded-xl border border-border p-5">
                 {[
-                  { icon: <RotateCcw size={16} />, text: "Passar den inte din maskin byter vi" },
-                  { icon: <Truck size={16} />, text: "Leverans normalt 1–3 arbetsdagar" },
-                  { icon: <Shield size={16} />, text: "Garanti enligt tillverkare" },
+                  {
+                    icon: <RotateCcw size={16} />,
+                    text: "Passar den inte din maskin byter vi",
+                  },
+                  {
+                    icon: <Truck size={16} />,
+                    text: "Leverans normalt 1–3 arbetsdagar",
+                  },
+                  {
+                    icon: <Shield size={16} />,
+                    text: "Garanti enligt tillverkare",
+                  },
                 ].map((item, i) => (
                   <div key={i} className="flex items-center gap-3 text-sm">
                     <div className="flex h-8 w-8 flex-shrink-0 items-center justify-center rounded-lg bg-surface text-text-mid">
                       {item.icon}
                     </div>
-                    <span className="font-medium text-text-dark">{item.text}</span>
+                    <span className="font-medium text-text-dark">
+                      {item.text}
+                    </span>
                   </div>
                 ))}
               </div>
@@ -448,22 +550,26 @@ export default function ProductPageContent({ betyg = null, senasteKop = null }) 
               <div className="overflow-hidden rounded-xl border border-border">
                 <div className="border-b border-border bg-surface px-5 py-3">
                   <h2 className="font-heading text-sm font-bold text-text-dark">
-            Specifikationer
-          </h2>
+                    Specifikationer
+                  </h2>
                 </div>
                 <div className="divide-y divide-border">
                   {Object.entries(product.specs).map(([key, val]) => (
-                    <div key={key} className="flex items-center justify-between px-5 py-3">
+                    <div
+                      key={key}
+                      className="flex items-center justify-between px-5 py-3"
+                    >
                       <span className="text-sm text-text-mid">{key}</span>
-                      <span className="text-sm font-semibold text-text-dark">{val}</span>
+                      <span className="text-sm font-semibold text-text-dark">
+                        {val}
+                      </span>
                     </div>
                   ))}
                 </div>
               </div>
 
-              {/* Passar till & Rekommenderad laddare — mobile only */}
+              {/* Användningsområden & Rekommenderad laddare — mobile only */}
               <ProductExtraInfo product={product} className="mt-6 lg:hidden" />
-
             </div>
           </FadeIn>
         </div>
@@ -474,8 +580,12 @@ export default function ProductPageContent({ betyg = null, senasteKop = null }) 
         <div className="border-t border-border bg-surface py-14">
           <div className="mx-auto max-w-[1200px] px-4 sm:px-6">
             <h2 className="mb-6 font-heading text-2xl font-extrabold text-text-dark">
-              Relaterade produkter
+              Liknande specifikationer
             </h2>
+            <p className="mb-5 text-sm text-text-mid">
+              Samma spänning och batterityp. Jämför mått och anslutningar innan
+              du väljer. Detta är inte verifierade ersättare.
+            </p>
             <div className="grid grid-cols-2 gap-4 lg:grid-cols-4">
               {related.map((p) => (
                 <ProductCard key={p.slug} product={p} />

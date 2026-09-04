@@ -1,0 +1,86 @@
+[
+  {
+    "url": "https://batteriproffs-kodgranskning-2026090.vercel.app/produkt/nm125-6et",
+    "http": 200,
+    "noindex": true,
+    "contentVerified": [
+      "Datablad, mått och poler",
+      "195 Ah",
+      "801416.pdf"
+    ]
+  },
+  {
+    "url": "https://batteriproffs-kodgranskning-2026090.vercel.app/produkt/nm875-8et",
+    "http": 200,
+    "noindex": true,
+    "contentVerified": [
+      "170 Ah",
+      "Variantkontroll pågår",
+      "Ej beställningsbar"
+    ]
+  },
+  {
+    "url": "https://batteriproffs-kodgranskning-2026090.vercel.app/produkt/gf-12-063y",
+    "http": 200,
+    "noindex": true,
+    "contentVerified": [
+      "450 cykler",
+      "gf-y_datasheet"
+    ]
+  },
+  {
+    "url": "https://batteriproffs-kodgranskning-2026090.vercel.app/produkt/ev305a-a-am",
+    "http": 200,
+    "noindex": true,
+    "contentVerified": [
+      "Totalhöjden behöver bekräftas"
+    ]
+  },
+  {
+    "url": "https://batteriproffs-kodgranskning-2026090.vercel.app/batteri-till/nilfisk-sc401",
+    "http": 200,
+    "noindex": true,
+    "contentVerified": [
+      "350 × 350 × 260 mm",
+      "80564310"
+    ]
+  },
+  {
+    "url": "https://batteriproffs-kodgranskning-2026090.vercel.app/batteri-till/tennant-t3-t3-plus",
+    "http": 200,
+    "noindex": true,
+    "contentVerified": [
+      "994200",
+      "Dokumenterat batterival",
+      "9007692.pdf#page=85"
+    ]
+  },
+  {
+    "url": "https://batteriproffs-kodgranskning-2026090.vercel.app/offert",
+    "http": 200,
+    "noindex": true,
+    "contentVerified": [
+      "Begär offert på din varukorg"
+    ]
+  },
+  {
+    "url": "https://batteriproffs-kodgranskning-2026090.vercel.app/jamfor?produkter=nm125-6et,nm105-6et",
+    "http": 200,
+    "noindex": true,
+    "contentVerified": [
+      "Jämför batterier"
+    ]
+  },
+  {
+    "url": "https://batteriproffs-kodgranskning-2026090.vercel.app/api/konto/ordrar",
+    "http": 503
+  },
+  {
+    "url": "https://batteriproffs-kodgranskning-2026090.vercel.app/api/create-payment-intent",
+    "http": 503
+  },
+  {
+    "url": "https://batteriproffs-kodgranskning-2026090.vercel.app/studio",
+    "http": 503
+  }
+]

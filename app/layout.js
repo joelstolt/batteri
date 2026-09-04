@@ -59,7 +59,10 @@ export default async function RootLayout({ children }) {
   let betyg = {}
   let kop = {}
   try {
-    const [godkanda, kopPer] = await Promise.all([hamtaGodkandaCachat(), hamtaKopPerProduktCachat()])
+    const [godkanda, kopPer] = await Promise.all([
+      hamtaGodkandaCachat(),
+      hamtaKopPerProduktCachat(),
+    ])
     betyg = betygPerProdukt(godkanda)
     kop = kopPer
   } catch (err) {
@@ -105,40 +108,56 @@ export default async function RootLayout({ children }) {
           Hoppa till innehåll
         </a>
 
-        <Providers betyg={betyg} kop={kop}>{children}</Providers>
+        {process.env.BP_REVIEW_PREVIEW === "1" && (
+          <div
+            style={{
+              background: "#E8B931",
+              color: "#182421",
+              padding: 8,
+              textAlign: "center",
+              fontSize: 13,
+            }}
+          >
+            Förhandsvisning av kodrättningar. Betalning och kontaktformulär är
+            avstängda.
+          </div>
+        )}
+        <Providers betyg={betyg} kop={kop}>
+          {children}
+        </Providers>
         {process.env.BP_REVIEW_PREVIEW !== "1" && <CookieBanner />}
-        {process.env.BP_REVIEW_PREVIEW === "1" && <div style={{position:"fixed",bottom:0,left:0,right:0,zIndex:9999,background:"#E8B931",color:"#182421",padding:8,textAlign:"center",fontSize:13}}>Förhandsvisning av kodrättningar. Betalning och kontaktformulär är avstängda.</div>}
-        {process.env.BP_REVIEW_PREVIEW !== "1" && <>
-
-        {/* Umami är cookielöst och kräver inget samtycke */}
-        <Script
-          src="https://umami-analytics-tau-two.vercel.app/script.js"
-          data-website-id="99e7d795-e675-49e9-bdea-6499c9e29558"
-          strategy="afterInteractive"
-        />
-        <Script
-          src="https://www.googletagmanager.com/gtag/js?id=AW-17955953885"
-          strategy="afterInteractive"
-        />
-        <Script id="google-ads-gtag" strategy="afterInteractive">
-          {`
+        {process.env.BP_REVIEW_PREVIEW !== "1" && (
+          <>
+            {/* Umami är cookielöst och kräver inget samtycke */}
+            <Script
+              src="https://umami-analytics-tau-two.vercel.app/script.js"
+              data-website-id="99e7d795-e675-49e9-bdea-6499c9e29558"
+              strategy="afterInteractive"
+            />
+            <Script
+              src="https://www.googletagmanager.com/gtag/js?id=AW-17955953885"
+              strategy="afterInteractive"
+            />
+            <Script id="google-ads-gtag" strategy="afterInteractive">
+              {`
             gtag('js', new Date());
             gtag('config', 'AW-17955953885');
           `}
-        </Script>
+            </Script>
 
-        {/* Chatten är sajtens primära kontaktväg (telefonen är nedtonad tills
+            {/* Chatten är sajtens primära kontaktväg (telefonen är nedtonad tills
             verksamheten bemannas på heltid). Lazy så att Prestanda 96 står
             kvar — widgeten behövs inte för första målningen. */}
-        <Script
-          src="https://chatbot-widget.joel-d77.workers.dev/widget.js"
-          data-client="batteriproffs"
-          data-company="Batteriproffs"
-          data-primary="#0B1D3A"
-          data-accent="#FDB813"
-          strategy="lazyOnload"
-        />
-        </>}
+            <Script
+              src="https://chatbot-widget.joel-d77.workers.dev/widget.js"
+              data-client="batteriproffs"
+              data-company="Batteriproffs"
+              data-primary="#0B1D3A"
+              data-accent="#FDB813"
+              strategy="lazyOnload"
+            />
+          </>
+        )}
       </body>
     </html>
   )
