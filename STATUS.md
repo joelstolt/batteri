@@ -1,3 +1,13 @@
+## 2026-09-05: godkänd push och verifierat mejlförtest
+
+Joel har bett att allt färdigt arbete pushas till GitHub och uttryckligen valt att behålla offertförfrågan. Kort är fortfarande enda nya kassaflödet; offertförfrågan ger ingen kredit och skapar ingen faktura. Offertpris med egen kortbetalningslänk är inte implementerat.
+
+Ett märkt testmejl från noreply@batteriproffs.se till Joels befintliga testmottagare har verifierats som delivered i Resend. Återförsök med samma idempotensnyckel gav samma meddelande-ID. Kvitto: docs/payment-delivery-verification-20260905.json. Det är ett mejlförtest, inte ett genomfört Stripe-/orderflöde.
+
+Stripe-testköp, reservation, debitering, webhook och orderutskick återstår. Lokala och Vercel-nycklar är skarpa; webbläsaren är inloggad på Invox och behöver rätt Batteriproffs-inloggning. Ingen skarp transaktion har gjorts.
+
+Grenen fix/order-integrity-20260904 ska pushas separat. vercel.json spärrar automatisk Vercel-deploy för just denna gren eftersom butikens vanliga previewmiljö också har skarpa nycklar. Huvudgren, produktion och design v3 ändras inte. Den isolerade granskningslänken är redan deployad med tidigare programkod; denna runda ändrar endast dokumentation och Git-deployspärr, inget nytt sidinnehåll.
+
 ## 2026-09-05: B2B-funktioner och produktunderlag, endast granskningsversion
 
 Aktuellt arbete sammanfattas i B2B-RESULTAT.md. 93 tester godkända, lint utan varningar, bygge godkänt, beroendekontroll 0 fynd. Isolerad gren fix/order-integrity-20260904 och review https://batteriproffs-kodgranskning-2026090.vercel.app. Produktion och grafisk profil/design v3 orörda. Inga riktiga köp eller mejl testade. Ingen push till main.

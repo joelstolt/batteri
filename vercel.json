@@ -8,5 +8,10 @@
       "path": "/api/cron/kassa-paminnelse",
       "schedule": "*/15 * * * *"
     }
-  ]
+  ],
+  "git": {
+    "deploymentEnabled": {
+      "fix/order-integrity-20260904": false
+    }
+  }
 }

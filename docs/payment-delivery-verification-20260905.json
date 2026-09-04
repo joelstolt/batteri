@@ -1,0 +1,15 @@
+{
+  "verified_at": "2026-09-04T23:30:12.033596+00:00",
+  "test_type": "delivery preflight only; no checkout/Stripe payment",
+  "recipient": "joel@stoltmarketing.se",
+  "from": "Batteriproffs <noreply@batteriproffs.se>",
+  "email_id": "dae14522-5af1-4fc5-8fec-1ebea606aafd",
+  "delivery_status": "delivered",
+  "delivery_evidence": "Resend dashboard exact email detail shows sent and delivered at Sep 05, 1:29 AM",
+  "dashboard_url": "https://resend.com/emails/dae14522-5af1-4fc5-8fec-1ebea606aafd",
+  "idempotency_retry_same_id": true,
+  "stripe_account_required": "acct_1T5tkKJgSjx3vTDV",
+  "stripe_test_status": "blocked: no test keys; browser logged into Invox account",
+  "production_changed": false,
+  "review_changed": false
+}
