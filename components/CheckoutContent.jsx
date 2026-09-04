@@ -453,7 +453,7 @@ function CheckoutForm({
 
       {/* Företagsuppgifter */}
       <div data-field="companyName">
-        <SectionHeading note="Vi säljer till företag. Uppgifterna här hamnar på fakturan.">
+        <SectionHeading note="Vi säljer till företag. Uppgifterna här visas på betalningsunderlaget.">
           Företagsuppgifter
         </SectionHeading>
         <div className="flex flex-col gap-4">
@@ -498,7 +498,7 @@ function CheckoutForm({
                 type="text"
                 optional
                 placeholder="Anna Andersson"
-                hint="Namnet på beställaren, trycks på fakturan"
+                hint="Namnet på beställaren visas på betalningsunderlaget"
                 value={form.reference}
                 onChange={handleChange("reference")}
                 error={errors.reference}
@@ -542,7 +542,7 @@ function CheckoutForm({
               <FormInput
                 label="E-post för betalningsunderlag"
                 type="email"
-                placeholder="faktura@exempelindustri.se"
+                placeholder="ekonomi@exempelindustri.se"
                 hint="Till exempel företagets ekonomiavdelning"
                 value={form.invoiceEmail}
                 onChange={handleChange("invoiceEmail")}
@@ -678,7 +678,7 @@ function CheckoutForm({
 
       {/* Fakturaadress */}
       <div data-field="invoiceAddress">
-        <SectionHeading>Fakturaadress</SectionHeading>
+        <SectionHeading>Adress på betalningsunderlaget</SectionHeading>
         <label className="flex cursor-pointer items-center gap-3 rounded-xl border border-border bg-surface p-4">
           <input
             type="checkbox"
@@ -692,14 +692,14 @@ function CheckoutForm({
             className="h-4 w-4 accent-navy"
           />
           <span className="text-sm font-medium text-text-dark">
-            Fakturaadressen är samma som leveransadressen
+            Adressen är samma som leveransadressen
           </span>
         </label>
 
         {!invoiceSame && (
           <div className="mt-4 flex flex-col gap-4">
             <FormInput
-              label="Fakturaadress"
+              label="Adress på betalningsunderlaget"
               type="text"
               placeholder="Box 123"
               value={form.invoiceAddress}

@@ -1,0 +1,143 @@
+{
+  "verified_at": "2026-09-04T23:59:35.469351+00:00",
+  "application_commit_tested": "faf13f17f8fa89a06ec7c4b8d31f526815d423eb",
+  "stripe_account": "acct_1T5tkKJgSjx3vTDV",
+  "mode": "test",
+  "orders": [
+    {
+      "id": "pi_3UC6uZJgSjx3vTDV08pCwwXB",
+      "order_id": "BP-3UC6UZJGSJX",
+      "amount_sek": 5285,
+      "flow": "UI decline, UI retry, reservation, order email, admin capture, shipment",
+      "final_status": "succeeded",
+      "livemode": false
+    },
+    {
+      "id": "pi_3UC6yFJgSjx3vTDV0KKo7Pgk",
+      "order_id": "BP-3UC6YFJGSJX",
+      "amount_sek": 6485,
+      "flow": "UI multi-item order, 3DS challenge, reservation, shipment with capture",
+      "final_status": "succeeded",
+      "livemode": false,
+      "three_d_secure": {
+        "authentication_flow": "challenge",
+        "electronic_commerce_indicator": "05",
+        "exemption_indicator": null,
+        "result": "authenticated",
+        "result_reason": null,
+        "transaction_id": "5d1302af-df06-4259-af24-b3fd4827c58c",
+        "version": "2.1.0"
+      }
+    }
+  ],
+  "checks": {
+    "declined_card_recoverable": true,
+    "buyer_email_defaults_accounting_email": true,
+    "server_price_quantity_shipping_vat": true,
+    "three_ds_authenticated": true,
+    "thank_you_verified_against_stripe": true,
+    "purchased_cart_items_removed": true,
+    "same_checkout_attempt_idempotent": true,
+    "webhook_replay_no_duplicate_confirmation": true,
+    "repeat_capture_no_duplicate_charge": true,
+    "repeat_ship_no_duplicate_mail": true,
+    "invalid_signature_rejected": true,
+    "wrong_order_secret_rejected": true,
+    "unpaid_order_and_shipment_rejected": true,
+    "unknown_product_bad_quantities_wrong_origin_rejected": true
+  },
+  "actual_stripe_events": [
+    {
+      "id": "evt_3UC6yFJgSjx3vTDV0ehsBYvb",
+      "type": "payment_intent.amount_capturable_updated",
+      "payment_id": "pi_3UC6yFJgSjx3vTDV0KKo7Pgk",
+      "pending_webhooks": 0,
+      "livemode": false
+    },
+    {
+      "id": "evt_3UC6uZJgSjx3vTDV0RqOi3vW",
+      "type": "payment_intent.amount_capturable_updated",
+      "payment_id": "pi_3UC6uZJgSjx3vTDV08pCwwXB",
+      "pending_webhooks": 0,
+      "livemode": false
+    },
+    {
+      "id": "evt_3UC6yFJgSjx3vTDV0HeZ6aki",
+      "type": "payment_intent.succeeded",
+      "payment_id": "pi_3UC6yFJgSjx3vTDV0KKo7Pgk",
+      "pending_webhooks": 0,
+      "livemode": false
+    },
+    {
+      "id": "evt_3UC6uZJgSjx3vTDV0HEAb3RS",
+      "type": "payment_intent.succeeded",
+      "payment_id": "pi_3UC6uZJgSjx3vTDV08pCwwXB",
+      "pending_webhooks": 0,
+      "livemode": false
+    }
+  ],
+  "mail_delivery_log": [
+    {
+      "status": "delivered",
+      "url": "https://resend.com/emails/a79801ba-03a7-4be5-8c77-05123be905ff",
+      "summary": "joel@stoltmarketing.se Delivered [TEST] Hur gick det med din order, Joel? just now"
+    },
+    {
+      "status": "delivered",
+      "url": "https://resend.com/emails/fdae231e-3f66-4cb7-abb4-e36d5670d853",
+      "summary": "joel@stoltmarketing.se Delivered [TEST] Din order är skickad — BP-3UC6YFJGSJX just now"
+    },
+    {
+      "status": "delivered",
+      "url": "https://resend.com/emails/caefe315-fd66-400b-9686-4e2011dc9bd5",
+      "summary": "joel@stoltmarketing.se Delivered [TEST] Ny order 6 485 kr - TEST 3DS - SKICKA INTE VAROR just now"
+    },
+    {
+      "status": "delivered",
+      "url": "https://resend.com/emails/d74a9f1d-6eed-413e-ae73-04cee9df4569",
+      "summary": "joel@stoltmarketing.se Delivered [TEST] Orderbekräftelse - Batteriproffs (BP-3UC6YFJGSJX) just now"
+    },
+    {
+      "status": "delivered",
+      "url": "https://resend.com/emails/41ba08ce-d703-41fc-8070-69fca366064b",
+      "summary": "joel@stoltmarketing.se Delivered [TEST] Hur gick det med din order, Joel? 3min ago"
+    },
+    {
+      "status": "delivered",
+      "url": "https://resend.com/emails/219a46f5-9da8-46a6-8665-a0e112e84f1c",
+      "summary": "joel@stoltmarketing.se Delivered [TEST] Din order är skickad — BP-3UC6UZJGSJX 3min ago"
+    },
+    {
+      "status": "delivered",
+      "url": "https://resend.com/emails/b5ee1c4e-aced-42d9-b47f-559826e5b840",
+      "summary": "joel@stoltmarketing.se Delivered [TEST] Ny order 5 285 kr - TESTORDER - SKICKA INTE VAROR 4min ago"
+    },
+    {
+      "status": "delivered",
+      "url": "https://resend.com/emails/850e3d78-fbe5-4155-9dd2-def60eda327a",
+      "summary": "joel@stoltmarketing.se Delivered [TEST] Orderbekräftelse - Batteriproffs (BP-3UC6UZJGSJX) 4min ago"
+    }
+  ],
+  "test_environment": {
+    "project": "batteriproffs-betalningstest-20260905",
+    "separate_from_review_and_production": true,
+    "recipient_allowlist": "joel@stoltmarketing.se",
+    "mailer_test_subject_prefix": true,
+    "review_email_delay_days_for_test": 0,
+    "isolation_tests_passed": 5,
+    "cleanup": {
+      "project_id": "prj_221HUjjRQTqtR0wOUgyExnAYj0Ih",
+      "project_paused": true,
+      "webhook_id": "we_1UC6s1JgSjx3vTDV4Jk9JLz2",
+      "webhook_disabled": true,
+      "production_modified": false
+    }
+  },
+  "limitations": [
+    "Stripe test mode only; no real funds moved.",
+    "Resend delivered means accepted by recipient mail server, not guaranteed inbox placement.",
+    "One destination mailbox used for customer/admin/review notifications; separate accounting mailbox not exercised end-to-end.",
+    "Controlled replay tests do not simulate every network/provider failure.",
+    "No production deployment or changes to product variant/image approval status."
+  ]
+}

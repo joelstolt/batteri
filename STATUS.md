@@ -1,3 +1,9 @@
+## 2026-09-05: Stripe-test och ordermejl verifierade
+
+Betalningstestet är klart. Två köp genomförda i rätt Stripe-testkonto: nekat kort med lyckat återförsök, 3D Secure, flera artikelrader, reservation, debitering och leverans. Åtta orderrelaterade testmejl verifierade Delivered i Resend. Kontrollerade återförsök gav inga extra debiteringar eller utskick. Detaljer och begränsningar: docs/payment-e2e-20260905.md och JSON-kvittot bredvid.
+
+Testets egen webhook avstängd och separat testprojekt pausat. Ordinarie review fortfarande skyddad från betalningar och utskick. Offert kvar, kortbetalning kvar. Kassans äldre fakturatexter har ändrats till betalningsunderlag. Produktion och design v3 oförändrade. Den tidigare blockerande inloggningen och betalningsverifieringen längre ned är historik.
+
 ## 2026-09-05: godkänd push och verifierat mejlförtest
 
 Joel har bett att allt färdigt arbete pushas till GitHub och uttryckligen valt att behålla offertförfrågan. Kort är fortfarande enda nya kassaflödet; offertförfrågan ger ingen kredit och skapar ingen faktura. Offertpris med egen kortbetalningslänk är inte implementerat.
