@@ -106,7 +106,9 @@ export default async function RootLayout({ children }) {
         </a>
 
         <Providers betyg={betyg} kop={kop}>{children}</Providers>
-        <CookieBanner />
+        {process.env.BP_REVIEW_PREVIEW !== "1" && <CookieBanner />}
+        {process.env.BP_REVIEW_PREVIEW === "1" && <div style={{position:"fixed",bottom:0,left:0,right:0,zIndex:9999,background:"#E8B931",color:"#182421",padding:8,textAlign:"center",fontSize:13}}>Förhandsvisning av kodrättningar. Betalning och kontaktformulär är avstängda.</div>}
+        {process.env.BP_REVIEW_PREVIEW !== "1" && <>
 
         {/* Umami är cookielöst och kräver inget samtycke */}
         <Script
@@ -136,6 +138,7 @@ export default async function RootLayout({ children }) {
           data-accent="#FDB813"
           strategy="lazyOnload"
         />
+        </>}
       </body>
     </html>
   )

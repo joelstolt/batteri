@@ -1,4 +1,5 @@
 import Stripe from "stripe"
+import { assertMetadataFits, readOrderItems } from "@/lib/order-items"
 import { NextResponse } from "next/server"
 import {
   validateCheckout,
@@ -57,11 +58,15 @@ export async function POST(request) {
       return NextResponse.json({ error: "Ofullständiga uppgifter", errors }, { status: 400 })
     }
 
+    const parsed = readOrderItems(pi.metadata)
+    if (parsed.incomplete) return NextResponse.json({ error: "Orderraderna är ofullständiga. Öppna kassan igen innan du betalar." }, { status: 409 })
     const meta = buildOrderMetadata(form)
     // Källan är obekräftad indata från webbläsaren och saneras därför på samma
     // sätt som formuläret. Saknas den blir det ett tomt objekt, inte ett fel:
     // en order får aldrig falla för att mätningen strular.
     const kallmeta = buildSourceMetadata(body?.source)
+    try { assertMetadataFits({ ...pi.metadata, ...meta, ...kallmeta }) }
+    catch (error) { return NextResponse.json({ error: error.message }, { status: 422 }) }
     const company = meta.company_name
 
     // Leveransuppgifterna läggs på Stripes shipping-fält så att de syns i
@@ -83,7 +88,6 @@ export async function POST(request) {
       },
       metadata: {
         // Behåll radartiklarna och prisuppdelningen som skapades server-side
-        ...pi.metadata,
         ...meta,
         ...kallmeta,
       },

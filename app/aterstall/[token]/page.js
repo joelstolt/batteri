@@ -1,7 +1,7 @@
 import { notFound } from "next/navigation"
 import Stripe from "stripe"
 import { lasAterstallToken } from "@/lib/konto-auth"
-import { parsaItems } from "@/lib/orders"
+import { readOrderItems } from "@/lib/orders"
 import { publicProducts } from "@/lib/products"
 import AterstallContent from "@/components/AterstallContent"
 
@@ -32,17 +32,21 @@ export default async function AterstallPage({ params }) {
   if (!piId) notFound()
 
   let rader = []
+  let redanBetald = false
   try {
-    const stripe = new Stripe(process.env.STRIPE_SECRET_KEY, { maxNetworkRetries: 3 })
+    const stripe = new Stripe(process.env.STRIPE_SECRET_KEY, {
+      maxNetworkRetries: 3,
+    })
     const pi = await stripe.paymentIntents.retrieve(piId)
 
     // Redan betald: skicka ingen tillbaka till kassan med en dubblett.
     if (pi.status === "succeeded" || pi.status === "requires_capture") {
-      return <AterstallContent items={[]} redanBetald />
+      redanBetald = true
     }
 
-    rader = parsaItems(pi.metadata?.items)
-      .rader.map((r) => {
+    const parsed = readOrderItems(pi.metadata)
+    rader = (parsed.incomplete ? [] : parsed.rader)
+      .map((r) => {
         const produkt = publicProducts.find((p) => p.slug === r.slug)
         if (!produkt) return null
         return {
@@ -58,5 +62,10 @@ export default async function AterstallPage({ params }) {
     console.error("Kunde inte läsa den övergivna kassan:", err)
   }
 
-  return <AterstallContent items={rader} />
+  return (
+    <AterstallContent
+      items={redanBetald ? [] : rader}
+      redanBetald={redanBetald}
+    />
+  )
 }

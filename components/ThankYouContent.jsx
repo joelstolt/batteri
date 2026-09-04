@@ -3,8 +3,18 @@
 import { useEffect, useState } from "react"
 import { useSearchParams } from "next/navigation"
 import Link from "next/link"
-import { CheckCircle, Truck, Mail, CreditCard, MapPin, Package, Loader2, Building2 } from "lucide-react"
+import {
+  CheckCircle,
+  Truck,
+  Mail,
+  CreditCard,
+  MapPin,
+  Package,
+  Loader2,
+  Building2,
+} from "lucide-react"
 import { useCart } from "@/lib/cart-context"
+import { isConfirmedPayment } from "@/lib/payment-status"
 import { unloadingLabel } from "@/lib/checkout"
 
 function formatPrice(n) {
@@ -59,60 +69,95 @@ function reportPurchaseConversion(order) {
 }
 
 export default function ThankYouContent() {
-  const { clearCart } = useCart()
+  const { completeOrder } = useCart()
   const searchParams = useSearchParams()
   const [order, setOrder] = useState(null)
   const [loading, setLoading] = useState(true)
 
-  // Clear cart after successful payment
+  const [error, setError] = useState(null)
+  const [retry, setRetry] = useState(0)
+  const paymentIntent = searchParams.get("payment_intent")
+  const clientSecret = searchParams.get("payment_intent_client_secret")
   useEffect(() => {
-    clearCart()
-  }, [clearCart])
-
-  // Fetch order details
-  useEffect(() => {
-    const paymentIntent = searchParams.get("payment_intent")
-    const clientSecret = searchParams.get("payment_intent_client_secret")
+    let active = true
+    const controller = new AbortController()
+    setOrder(null)
+    setError(null)
     if (!paymentIntent || !clientSecret) {
+      setError(
+        "Ingen order kunde verifieras från den här länken. Din varukorg finns kvar."
+      )
       setLoading(false)
       return
     }
-
+    setLoading(true)
     fetch(
-      `/api/order?payment_intent=${encodeURIComponent(paymentIntent)}` +
-        `&payment_intent_client_secret=${encodeURIComponent(clientSecret)}`
+      `/api/order?payment_intent=${encodeURIComponent(paymentIntent)}&payment_intent_client_secret=${encodeURIComponent(clientSecret)}`,
+      { signal: controller.signal }
     )
-      .then((res) => res.json())
-      .then((data) => {
-        if (!data.error) {
-          setOrder(data)
-          reportPurchaseConversion(data)
-          // Köpet rapporterades tidigare bara till Google Ads. Utan det här
-          // steget i Umami går tratten inte att räkna hem.
-          if (typeof window !== "undefined" && window.umami && firstReport(data.id, "umami")) {
-            window.umami.track("kop", {
-              order: data.id,
-              varde: data.totalInclVat,
-              foretag: data.company?.name || null,
-            })
-          }
-        } else {
-          // /api/order strulade men betalningen ÄR genomförd — kunden står på
-          // tack-sidan. Utan den här grenen försvann köpet ur mätningen varje
-          // gång orderhämtningen felade (så missades den första skarpa ordern).
-          // Dedupa på betalnings-id:t i stället för ordernumret.
-          if (typeof window !== "undefined" && window.umami && firstReport(paymentIntent, "umami")) {
-            window.umami.track("kop", { order: paymentIntent })
-          }
-        }
+      .then(async (res) => {
+        const data = await res.json()
+        if (
+          !res.ok ||
+          !isConfirmedPayment(data.paymentStatus) ||
+          data.id !== paymentIntent
+        )
+          throw new Error(data.error || "Ordern kunde inte verifieras.")
+        if (active) setOrder(data)
       })
-      .catch(() => {
-        if (typeof window !== "undefined" && window.umami && firstReport(paymentIntent, "umami")) {
-          window.umami.track("kop", { order: paymentIntent })
-        }
+      .catch((err) => {
+        if (active)
+          setError(err.message || "Kunde inte verifiera ordern. Försök igen.")
       })
-      .finally(() => setLoading(false))
-  }, [searchParams])
+      .finally(() => {
+        if (active) setLoading(false)
+      })
+    return () => {
+      active = false
+      controller.abort()
+    }
+  }, [paymentIntent, clientSecret, retry])
+
+  useEffect(() => {
+    if (!order) return
+    completeOrder(order)
+    reportPurchaseConversion(order)
+    if (window.umami && firstReport(order.id, "umami")) {
+      window.umami.track("kop", { order: order.id, varde: order.totalInclVat })
+    }
+  }, [order, completeOrder])
+
+  if (loading)
+    return (
+      <div className="flex justify-center gap-3 px-4 py-20" role="status">
+        <Loader2 className="animate-spin" />
+        Verifierar din order...
+      </div>
+    )
+  if (!order)
+    return (
+      <div className="mx-auto max-w-xl px-4 py-16 text-center">
+        <h1 className="mb-4 text-2xl font-bold">
+          Ordern kunde inte verifieras
+        </h1>
+        <p role="alert">{error}</p>
+        <p className="mt-4">
+          Kontrollera ordern innan du gör ett nytt köp. Vi har inte tömt din
+          varukorg.
+        </p>
+        {paymentIntent && clientSecret && (
+          <button
+            className="mt-6 rounded-lg bg-navy px-6 py-3 text-white"
+            onClick={() => setRetry((n) => n + 1)}
+          >
+            Försök verifiera igen
+          </button>
+        )}
+        <Link href="/kontakt" className="ml-4 underline">
+          Kontakta oss
+        </Link>
+      </div>
+    )
 
   return (
     <div className="bg-white">
@@ -126,11 +171,21 @@ export default function ThankYouContent() {
             Tack för din beställning!
           </h1>
           <p className="text-base text-text-mid">
-            Din betalning har genomförts.
+            {order.paymentStatus === "requires_capture"
+              ? "Beloppet är reserverat på ditt kort och dras när ordern skickas."
+              : "Din betalning har genomförts."}
             {order?.customer?.email && (
-              <> En orderbekräftelse skickas till <span className="font-semibold text-text-dark">{order.customer.email}</span>.</>
+              <>
+                {" "}
+                En orderbekräftelse skickas till{" "}
+                <span className="font-semibold text-text-dark">
+                  {order.customer.email}
+                </span>
+                .
+              </>
             )}
-            {!order?.customer?.email && " Du får en orderbekräftelse via e-post inom kort."}
+            {!order?.customer?.email &&
+              " Du får en orderbekräftelse via e-post inom kort."}
           </p>
         </div>
 
@@ -141,8 +196,12 @@ export default function ThankYouContent() {
               <Mail size={18} className="text-navy" />
             </div>
             <div>
-              <div className="text-sm font-bold text-text-dark">Orderbekräftelse</div>
-              <div className="text-sm text-text-mid">Skickas till din e-post</div>
+              <div className="text-sm font-bold text-text-dark">
+                Orderbekräftelse
+              </div>
+              <div className="text-sm text-text-mid">
+                Skickas till din e-post
+              </div>
             </div>
           </div>
           <div className="flex items-start gap-3">
@@ -150,8 +209,12 @@ export default function ThankYouContent() {
               <Truck size={18} className="text-navy" />
             </div>
             <div>
-              <div className="text-sm font-bold text-text-dark">Leverans normalt 1–3 dagar</div>
-              <div className="text-sm text-text-mid">Spårningsnummer mejlas vid avsändning</div>
+              <div className="text-sm font-bold text-text-dark">
+                Leverans normalt 1–3 dagar
+              </div>
+              <div className="text-sm text-text-mid">
+                Spårningsnummer mejlas vid avsändning
+              </div>
             </div>
           </div>
         </div>
@@ -166,14 +229,20 @@ export default function ThankYouContent() {
             {/* Order header */}
             <div className="flex flex-wrap items-center justify-between gap-3 border-b border-border px-6 py-4">
               <div>
-                <div className="text-xs font-bold uppercase tracking-widest text-text-light">Ordernummer</div>
+                <div className="text-xs font-bold uppercase tracking-widest text-text-light">
+                  Ordernummer
+                </div>
                 <div className="font-heading text-sm font-bold text-text-dark">
                   {order.id.replace("pi_", "BP-").slice(0, 14).toUpperCase()}
                 </div>
               </div>
               <div className="text-right">
-                <div className="text-xs font-bold uppercase tracking-widest text-text-light">Datum</div>
-                <div className="text-sm font-medium text-text-dark">{formatDate(order.created)}</div>
+                <div className="text-xs font-bold uppercase tracking-widest text-text-light">
+                  Datum
+                </div>
+                <div className="text-sm font-medium text-text-dark">
+                  {formatDate(order.created)}
+                </div>
               </div>
             </div>
 
@@ -183,11 +252,22 @@ export default function ThankYouContent() {
                 <Package size={16} className="text-navy" />
                 Produkter
               </div>
+              {order.incompleteItems && (
+                <p className="mb-4 text-sm text-amber-text">
+                  Den äldre ordern har ofullständiga artikeluppgifter. Kontakta
+                  oss för att stämma av hela beställningen.
+                </p>
+              )}
               <div className="flex flex-col gap-3">
                 {order.items.map((item, i) => (
-                  <div key={i} className="flex items-center justify-between text-sm">
+                  <div
+                    key={i}
+                    className="flex items-center justify-between text-sm"
+                  >
                     <div>
-                      <span className="font-medium text-text-dark">{item.name}</span>
+                      <span className="font-medium text-text-dark">
+                        {item.name}
+                      </span>
                       <span className="ml-2 text-text-mid">× {item.qty}</span>
                     </div>
                     <span className="font-semibold text-text-dark">
@@ -203,22 +283,35 @@ export default function ThankYouContent() {
               <div className="flex flex-col gap-2 text-sm">
                 <div className="flex justify-between">
                   <span className="text-text-mid">Produkter exkl. moms</span>
-                  <span className="text-text-dark">{formatPrice(order.subtotal)} kr</span>
+                  <span className="text-text-dark">
+                    {formatPrice(order.subtotal)} kr
+                  </span>
                 </div>
                 <div className="flex justify-between">
                   <span className="text-text-mid">Frakt exkl. moms</span>
-                  <span className={order.shipping === 0 ? "font-medium text-green" : "text-text-dark"}>
+                  <span
+                    className={
+                      order.shipping === 0
+                        ? "font-medium text-green"
+                        : "text-text-dark"
+                    }
+                  >
                     {formatPrice(order.shipping)} kr
                   </span>
                 </div>
                 <div className="flex justify-between">
                   <span className="text-text-mid">Moms (25%)</span>
                   <span className="text-text-dark">
-                    {formatPrice(order.totalInclVat - order.subtotal - order.shipping)} kr
+                    {formatPrice(
+                      order.totalInclVat - order.subtotal - order.shipping
+                    )}{" "}
+                    kr
                   </span>
                 </div>
                 <div className="mt-2 flex justify-between border-t border-border pt-3">
-                  <span className="font-heading text-base font-bold text-text-dark">Totalt</span>
+                  <span className="font-heading text-base font-bold text-text-dark">
+                    Totalt
+                  </span>
                   <span className="font-heading text-xl font-extrabold text-text-dark">
                     {formatPrice(order.totalInclVat)} kr
                   </span>
@@ -235,12 +328,18 @@ export default function ThankYouContent() {
                 </div>
                 <div className="grid gap-x-6 gap-y-1 text-sm text-text-mid sm:grid-cols-2">
                   <div>{order.company.name}</div>
-                  {order.company.orgNr && <div>Orgnr {order.company.orgNr}</div>}
-                  {order.company.reference && <div>Er referens: {order.company.reference}</div>}
-                  {order.company.poNumber && <div>Inköpsordernr: {order.company.poNumber}</div>}
+                  {order.company.orgNr && (
+                    <div>Orgnr {order.company.orgNr}</div>
+                  )}
+                  {order.company.reference && (
+                    <div>Er referens: {order.company.reference}</div>
+                  )}
+                  {order.company.poNumber && (
+                    <div>Inköpsordernr: {order.company.poNumber}</div>
+                  )}
                   {order.company.invoiceEmail && (
                     <div className="sm:col-span-2">
-                      Faktura skickas till {order.company.invoiceEmail}
+                      Kvitto till bokföringen: {order.company.invoiceEmail}
                     </div>
                   )}
                 </div>
@@ -257,7 +356,11 @@ export default function ThankYouContent() {
                     Leveransadress
                   </div>
                   <div className="text-sm leading-relaxed text-text-mid">
-                    <div>{order.delivery?.name || order.company?.name || order.customer.name}</div>
+                    <div>
+                      {order.delivery?.name ||
+                        order.company?.name ||
+                        order.customer.name}
+                    </div>
                     {order.delivery?.line1 && <div>{order.delivery.line1}</div>}
                     {(order.delivery?.postalCode || order.delivery?.city) && (
                       <div>
@@ -265,9 +368,13 @@ export default function ThankYouContent() {
                       </div>
                     )}
                     {order.delivery?.unloading && (
-                      <div className="mt-1">Lossning: {unloadingLabel(order.delivery.unloading)}</div>
+                      <div className="mt-1">
+                        Lossning: {unloadingLabel(order.delivery.unloading)}
+                      </div>
                     )}
-                    {order.delivery?.phone && <div className="mt-1">{order.delivery.phone}</div>}
+                    {order.delivery?.phone && (
+                      <div className="mt-1">{order.delivery.phone}</div>
+                    )}
                   </div>
                 </div>
               )}

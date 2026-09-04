@@ -1,11 +1,26 @@
 "use client"
 
-import { useState, useEffect } from "react"
+import { useState, useEffect, useRef } from "react"
 import Image from "next/image"
 import Link from "next/link"
 import { loadStripe } from "@stripe/stripe-js"
-import { Elements, PaymentElement, useStripe, useElements } from "@stripe/react-stripe-js"
-import { ShoppingCart, Loader2, Lock, Truck, ChevronDown, ChevronUp, Building2 } from "lucide-react"
+import {
+  Elements,
+  PaymentElement,
+  useStripe,
+  useElements,
+} from "@stripe/react-stripe-js"
+import {
+  ShoppingCart,
+  Loader2,
+  Lock,
+  Truck,
+  ChevronDown,
+  ChevronUp,
+  Building2,
+} from "lucide-react"
+import { cartFingerprint, quoteHasChanged } from "@/lib/cart-integrity"
+import { isConfirmedPayment } from "@/lib/payment-status"
 import { useCart } from "@/lib/cart-context"
 import { useAttribution } from "@/lib/attribution-context"
 import { track } from "@/lib/track"
@@ -18,7 +33,9 @@ import {
   isValidOrgNr,
 } from "@/lib/checkout"
 
-const stripePromise = loadStripe(process.env.NEXT_PUBLIC_STRIPE)
+const stripePromise = process.env.NEXT_PUBLIC_STRIPE
+  ? loadStripe(process.env.NEXT_PUBLIC_STRIPE)
+  : null
 
 const SHIPPING_COST = 556 // exkl. moms
 const VAT_RATE = 1.25
@@ -76,7 +93,8 @@ function FormInput({ label, error, hint, optional = false, ...props }) {
   return (
     <div>
       <label className="mb-1.5 block text-sm font-medium text-text-dark">
-        {label} {optional ? <span className="text-text-light">(valfritt)</span> : "*"}
+        {label}{" "}
+        {optional ? <span className="text-text-light">(valfritt)</span> : "*"}
       </label>
       <input
         {...props}
@@ -94,7 +112,8 @@ function FormTextarea({ label, error, hint, optional = false, ...props }) {
   return (
     <div>
       <label className="mb-1.5 block text-sm font-medium text-text-dark">
-        {label} {optional ? <span className="text-text-light">(valfritt)</span> : "*"}
+        {label}{" "}
+        {optional ? <span className="text-text-light">(valfritt)</span> : "*"}
       </label>
       <textarea
         rows={3}
@@ -112,14 +131,33 @@ function FormTextarea({ label, error, hint, optional = false, ...props }) {
 function SectionHeading({ children, note }) {
   return (
     <div className="mb-5">
-      <h2 className="font-heading text-xl font-bold text-text-dark">{children}</h2>
+      <h2 className="font-heading text-xl font-bold text-text-dark">
+        {children}
+      </h2>
       {note && <p className="mt-1 text-sm text-text-mid">{note}</p>}
     </div>
   )
 }
 
 /* ───────────── Checkout form (inside Elements provider) ───────────── */
-function CheckoutForm({ form, setForm, errors, setErrors, totalPrice, clientSecret, freeShipping }) {
+function CheckoutForm({
+  form,
+  setForm,
+  errors,
+  setErrors,
+  totalPrice,
+  clientSecret,
+  freeShipping,
+  cartSnapshot,
+}) {
+  const active = useRef(true)
+  const submitting = useRef(false)
+  useEffect(() => {
+    active.current = true
+    return () => {
+      active.current = false
+    }
+  }, [])
   const stripe = useStripe()
   const elements = useElements()
   const hamtaKallan = useAttribution()
@@ -166,7 +204,13 @@ function CheckoutForm({ form, setForm, errors, setErrors, totalPrice, clientSecr
     return () => clearTimeout(t)
     // Namn och företag är med i beroendelistan så en adress som fylldes i
     // före namnet ändå kompletteras när namnet skrivs.
-  }, [form.email, form.firstName, form.lastName, form.companyName, clientSecret])
+  }, [
+    form.email,
+    form.firstName,
+    form.lastName,
+    form.companyName,
+    clientSecret,
+  ])
 
   const handleSubmit = async (e) => {
     e.preventDefault()
@@ -175,7 +219,9 @@ function CheckoutForm({ form, setForm, errors, setErrors, totalPrice, clientSecr
     const formErrors = validateCheckout(form)
     if (Object.keys(formErrors).length > 0) {
       setErrors(formErrors)
-      const first = document.querySelector(`[data-field="${Object.keys(formErrors)[0]}"]`)
+      const first = document.querySelector(
+        `[data-field="${Object.keys(formErrors)[0]}"]`
+      )
       first?.scrollIntoView({ block: "center" })
       /*
        * Var kunden fastnar i kassan.
@@ -193,7 +239,8 @@ function CheckoutForm({ form, setForm, errors, setErrors, totalPrice, clientSecr
       return
     }
 
-    if (!stripe || !elements) return
+    if (!stripe || !elements || submitting.current) return
+    submitting.current = true
 
     setLoading(true)
 
@@ -214,16 +261,21 @@ function CheckoutForm({ form, setForm, errors, setErrors, totalPrice, clientSecr
       const data = await res.json()
       if (!res.ok) {
         if (data.errors) setErrors(data.errors)
-        setPaymentError(data.error || "Kunde inte spara uppgifterna. Försök igen.")
+        setPaymentError(
+          data.error || "Kunde inte spara uppgifterna. Försök igen."
+        )
         setLoading(false)
+        submitting.current = false
         return
       }
     } catch {
       setPaymentError("Kunde inte nå servern. Försök igen.")
       setLoading(false)
+      submitting.current = false
       return
     }
 
+    if (!active.current) return
     const invoiceSame = form.invoiceSameAsDelivery !== false
 
     // Vakthund: confirmPayment kan bli hängande om Stripe öppnar ett steg som
@@ -231,6 +283,7 @@ function CheckoutForm({ form, setForm, errors, setErrors, totalPrice, clientSecr
     // här snurrar knappen för alltid och kunden får aldrig veta varför.
     const watchdog = setTimeout(() => {
       setLoading(false)
+      submitting.current = false
       setPaymentError(
         "Betalningen tar ovanligt lång tid. Ladda om sidan och försök igen — " +
           "blir det samma sak, chatta med oss eller mejla info@batteriproffs.se så tar vi ordern manuellt."
@@ -238,6 +291,12 @@ function CheckoutForm({ form, setForm, errors, setErrors, totalPrice, clientSecr
     }, 45000)
 
     try {
+      try {
+        sessionStorage.setItem(
+          `bp_pending_${clientSecret.split("_secret_")[0]}`,
+          JSON.stringify(cartSnapshot)
+        )
+      } catch {}
       const { error } = await stripe.confirmPayment({
         elements,
         confirmParams: {
@@ -251,7 +310,10 @@ function CheckoutForm({ form, setForm, errors, setErrors, totalPrice, clientSecr
               address: {
                 line1: invoiceSame ? form.address : form.invoiceAddress,
                 line2: "",
-                postal_code: (invoiceSame ? form.postalCode : form.invoicePostalCode).replace(/\s/g, ""),
+                postal_code: (invoiceSame
+                  ? form.postalCode
+                  : form.invoicePostalCode
+                ).replace(/\s/g, ""),
                 city: invoiceSame ? form.city : form.invoiceCity,
                 state: "",
                 country: "SE",
@@ -270,11 +332,13 @@ function CheckoutForm({ form, setForm, errors, setErrors, totalPrice, clientSecr
       // Utan den här grenen dog knappen tyst i "Bearbetar betalning...".
       console.error("Stripe confirmPayment kastade:", err)
       setPaymentError(
-        err?.message || "Betalningen kunde inte genomföras. Försök igen, eller chatta med oss så hjälper vi dig."
+        err?.message ||
+          "Betalningen kunde inte genomföras. Försök igen, eller chatta med oss så hjälper vi dig."
       )
     } finally {
       clearTimeout(watchdog)
       setLoading(false)
+      submitting.current = false
     }
   }
 
@@ -501,7 +565,10 @@ function CheckoutForm({ form, setForm, errors, setErrors, totalPrice, clientSecr
       {/* Lossning — batterierna går som pallgods */}
       <div data-field="unloading">
         <SectionHeading note="Batterierna skickas på pall. Vet du hur de kan lossas hos er går leveransen snabbare — annars ringer vi och stämmer av.">
-          Lossning vid leverans <span className="text-base font-normal text-text-light">(valfritt)</span>
+          Lossning vid leverans{" "}
+          <span className="text-base font-normal text-text-light">
+            (valfritt)
+          </span>
         </SectionHeading>
         <div className="grid gap-3 sm:grid-cols-3">
           {UNLOADING_OPTIONS.map((opt) => {
@@ -510,7 +577,9 @@ function CheckoutForm({ form, setForm, errors, setErrors, totalPrice, clientSecr
               <label
                 key={opt.value}
                 className={`cursor-pointer rounded-xl border p-4 transition-colors ${
-                  active ? "border-navy bg-surface" : "border-border bg-white hover:border-navy/40"
+                  active
+                    ? "border-navy bg-surface"
+                    : "border-border bg-white hover:border-navy/40"
                 }`}
               >
                 <input
@@ -521,13 +590,19 @@ function CheckoutForm({ form, setForm, errors, setErrors, totalPrice, clientSecr
                   onChange={handleChange("unloading")}
                   className="sr-only"
                 />
-                <span className="block text-sm font-semibold text-text-dark">{opt.label}</span>
-                <span className="mt-1 block text-xs text-text-mid">{opt.hint}</span>
+                <span className="block text-sm font-semibold text-text-dark">
+                  {opt.label}
+                </span>
+                <span className="mt-1 block text-xs text-text-mid">
+                  {opt.hint}
+                </span>
               </label>
             )
           })}
         </div>
-        {errors.unloading && <p className="mt-2 text-xs text-red-500">{errors.unloading}</p>}
+        {errors.unloading && (
+          <p className="mt-2 text-xs text-red-500">{errors.unloading}</p>
+        )}
       </div>
 
       {/* Fakturaadress */}
@@ -538,7 +613,10 @@ function CheckoutForm({ form, setForm, errors, setErrors, totalPrice, clientSecr
             type="checkbox"
             checked={invoiceSame}
             onChange={(e) =>
-              setForm((prev) => ({ ...prev, invoiceSameAsDelivery: e.target.checked }))
+              setForm((prev) => ({
+                ...prev,
+                invoiceSameAsDelivery: e.target.checked,
+              }))
             }
             className="h-4 w-4 accent-navy"
           />
@@ -593,24 +671,30 @@ function CheckoutForm({ form, setForm, errors, setErrors, totalPrice, clientSecr
             <div className="text-sm font-semibold text-text-dark">
               PostNord — Företagsleverans (normalt 1–3 dagar)
             </div>
-            <div className="text-xs text-text-mid">Spårningsnummer mejlas när ordern skickats</div>
+            <div className="text-xs text-text-mid">
+              Spårningsnummer mejlas när ordern skickats
+            </div>
           </div>
           <span className="font-heading text-sm font-bold text-text-dark">
             {freeShipping ? "Fri frakt" : `${formatPrice(SHIPPING_COST)} kr`}
           </span>
         </div>
         {!freeShipping && (
-          <p className="mt-2 text-xs text-text-light">Fraktpris angivet exkl. moms.</p>
+          <p className="mt-2 text-xs text-text-light">
+            Fraktpris angivet exkl. moms.
+          </p>
         )}
       </div>
 
       {/* Stripe Payment Element */}
       <div>
-        <SectionHeading note="Vi tar emot kortbetalning. Kvitto och faktura skickas till fakturaadressen ovan.">
+        <SectionHeading note="Vi tar emot kortbetalning. Orderbekräftelsen skickas till dig och till e-postadressen för bokföring.">
           Betalning
         </SectionHeading>
         <div className="rounded-xl border border-border bg-white p-5">
-          <PaymentElement options={{ layout: "tabs", fields: { billingDetails: "never" } }} />
+          <PaymentElement
+            options={{ layout: "tabs", fields: { billingDetails: "never" } }}
+          />
         </div>
         {paymentError && (
           <div className="mt-3 rounded-lg bg-red-50 px-4 py-3 text-sm text-red-600">
@@ -640,7 +724,10 @@ function CheckoutForm({ form, setForm, errors, setErrors, totalPrice, clientSecr
 
       <div className="flex items-center justify-center gap-3">
         {["Visa", "Mastercard", "PostNord"].map((m) => (
-          <span key={m} className="text-[10px] font-semibold uppercase tracking-wider text-text-mid/60">
+          <span
+            key={m}
+            className="text-[10px] font-semibold uppercase tracking-wider text-text-mid/60"
+          >
             {m}
           </span>
         ))}
@@ -652,7 +739,10 @@ function CheckoutForm({ form, setForm, errors, setErrors, totalPrice, clientSecr
 /* ───────────── Order summary sidebar ───────────── */
 function OrderSummary({ items, totalPrice, freeShipping }) {
   const [expanded, setExpanded] = useState(true)
-  const { productsExcl, shippingExcl, vat, totalInclVat } = priceBreakdown(totalPrice, freeShipping)
+  const { productsExcl, shippingExcl, vat, totalInclVat } = priceBreakdown(
+    totalPrice,
+    freeShipping
+  )
 
   return (
     <div className="rounded-2xl border border-border bg-surface">
@@ -675,7 +765,9 @@ function OrderSummary({ items, totalPrice, freeShipping }) {
 
       {/* Desktop heading */}
       <div className="hidden border-b border-border p-5 lg:block">
-        <h2 className="font-heading text-lg font-bold text-text-dark">Din beställning</h2>
+        <h2 className="font-heading text-lg font-bold text-text-dark">
+          Din beställning
+        </h2>
       </div>
 
       {/* Collapsible content */}
@@ -685,10 +777,17 @@ function OrderSummary({ items, totalPrice, freeShipping }) {
           {items.map((item) => (
             <div key={item.slug} className="flex gap-3">
               <div className="relative h-14 w-14 flex-shrink-0 overflow-hidden rounded-lg bg-white">
-                <Image src={item.images[0]} alt={item.shortName} fill className="object-contain p-1" />
+                <Image
+                  src={item.images[0]}
+                  alt={item.shortName}
+                  fill
+                  className="object-contain p-1"
+                />
               </div>
               <div className="flex-1 min-w-0">
-                <div className="truncate text-sm font-semibold text-text-dark">{item.shortName}</div>
+                <div className="truncate text-sm font-semibold text-text-dark">
+                  {item.shortName}
+                </div>
                 <div className="text-xs text-text-mid">
                   {item.capacity} · Antal: {item.qty}
                 </div>
@@ -704,7 +803,9 @@ function OrderSummary({ items, totalPrice, freeShipping }) {
         <div className="border-t border-border p-5">
           <div className="mb-2 flex items-center justify-between text-sm">
             <span className="text-text-mid">Produkter exkl. moms</span>
-            <span className="font-medium text-text-dark">{formatPrice(productsExcl)} kr</span>
+            <span className="font-medium text-text-dark">
+              {formatPrice(productsExcl)} kr
+            </span>
           </div>
 
           <div className="mb-2 flex items-center justify-between text-sm">
@@ -716,17 +817,23 @@ function OrderSummary({ items, totalPrice, freeShipping }) {
 
           <div className="mb-2 flex items-center justify-between text-sm">
             <span className="text-text-mid">Moms (25%)</span>
-            <span className="font-medium text-text-dark">{formatPrice(vat)} kr</span>
+            <span className="font-medium text-text-dark">
+              {formatPrice(vat)} kr
+            </span>
           </div>
 
           <div className="mt-3 flex items-center justify-between border-t border-border pt-3">
-            <span className="font-heading text-base font-bold text-text-dark">Att betala</span>
+            <span className="font-heading text-base font-bold text-text-dark">
+              Att betala
+            </span>
             <span className="font-heading text-xl font-extrabold text-text-dark">
               {formatPrice(totalInclVat)} kr
             </span>
           </div>
 
-          <div className="mt-1 text-right text-[11px] text-text-light">Inkl. moms</div>
+          <div className="mt-1 text-right text-[11px] text-text-light">
+            Inkl. moms
+          </div>
         </div>
       </div>
     </div>
@@ -735,55 +842,92 @@ function OrderSummary({ items, totalPrice, freeShipping }) {
 
 /* ───────────── Main CheckoutContent ───────────── */
 export default function CheckoutContent() {
-  const { items, totalPrice } = useCart()
-  // Serverns beräkning är den som gäller — det här styr bara vad kassan visar
-  const freeShipping = items.length > 0 && items.every((i) => i.freeShipping)
-  const [clientSecret, setClientSecret] = useState(null)
+  const { items: cartItems } = useCart()
+  const requestKey = cartFingerprint(cartItems)
+  const attemptRef = useRef(null)
+  const [checkout, setCheckout] = useState(null)
   const [error, setError] = useState(null)
+  const [acceptedKey, setAcceptedKey] = useState(null)
   const [form, setForm] = useState(EMPTY_FORM)
   const [formErrors, setFormErrors] = useState({})
+  const current = checkout?.key === requestKey ? checkout : null
+  const clientSecret = current?.clientSecret
+  const items = current?.quote.items || cartItems
+  const totalPrice =
+    current?.quote.subtotalInclVat ??
+    cartItems.reduce((n, r) => n + r.price * r.qty, 0)
+  const freeShipping = current
+    ? current.quote.shippingInclVat === 0
+    : cartItems.every((i) => i.freeShipping)
+  const priceChanged =
+    current &&
+    (quoteHasChanged(cartItems, current.quote) ||
+      cartItems.some(
+        (i) => i.previousPrice !== undefined && i.previousPrice !== i.price
+      ))
 
-  // Påbörjad kassa — mäts en gång när kassan öppnas med varor i korgen
   useEffect(() => {
-    if (items.length === 0) return
-    if (typeof window !== "undefined" && window.umami) {
-      window.umami.track("paborjad-kassa", { rader: items.length, varde: totalPrice })
+    if (!cartItems.length) return
+    let active = true
+    const controller = new AbortController()
+    setError(null)
+    if (attemptRef.current?.key !== requestKey) {
+      let previous
+      try {
+        previous = JSON.parse(sessionStorage.getItem("bp_checkout_attempt"))
+      } catch {}
+      attemptRef.current =
+        previous?.key === requestKey &&
+        Date.now() - previous.at < 20 * 60 * 60 * 1000
+          ? previous
+          : { key: requestKey, id: crypto.randomUUID(), at: Date.now() }
+      try {
+        sessionStorage.setItem(
+          "bp_checkout_attempt",
+          JSON.stringify(attemptRef.current)
+        )
+      } catch {}
     }
-    // Avsiktligt bara vid montering; korgändringar ska inte räknas som ny kassa
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [])
-
-  // Create PaymentIntent on mount
-  useEffect(() => {
-    if (items.length === 0) return
-
     fetch("/api/create-payment-intent", {
       method: "POST",
+      signal: controller.signal,
       headers: { "Content-Type": "application/json" },
       body: JSON.stringify({
-        items: items.map((i) => ({ slug: i.slug, qty: i.qty })),
+        items: cartItems.map(({ slug, qty }) => ({ slug, qty })),
+        attemptId: attemptRef.current.id,
       }),
     })
-      .then((res) => res.json())
-      .then((data) => {
-        if (data.clientSecret) {
-          setClientSecret(data.clientSecret)
-        } else {
-          setError(data.error || "Kunde inte skapa betalning")
-        }
+      .then(async (res) => {
+        const data = await res.json()
+        if (!res.ok || !data.clientSecret || !data.quote)
+          throw new Error(data.error || "Kunde inte förbereda betalningen.")
+        if (active) setCheckout({ ...data, key: requestKey })
       })
-      .catch(() => setError("Kunde inte nå servern. Försök igen."))
-  }, [items])
+      .catch((err) => {
+        if (active)
+          setError(err.message || "Kunde inte nå servern. Försök igen.")
+      })
+    return () => {
+      active = false
+      controller.abort()
+    }
+  }, [requestKey, cartItems])
 
   // Empty cart
   if (items.length === 0) {
     return (
       <div className="flex min-h-[50vh] flex-col items-center justify-center px-4 py-16 text-center">
-        <ShoppingCart size={48} className="mb-4 text-border" strokeWidth={1.5} />
+        <ShoppingCart
+          size={48}
+          className="mb-4 text-border"
+          strokeWidth={1.5}
+        />
         <h1 className="mb-2 font-heading text-2xl font-extrabold text-text-dark">
           Varukorgen är tom
         </h1>
-        <p className="mb-6 text-text-mid">Lägg till produkter för att gå till kassan.</p>
+        <p className="mb-6 text-text-mid">
+          Lägg till produkter för att gå till kassan.
+        </p>
         <Link
           href="/"
           className="rounded-xl bg-navy px-6 py-3 font-heading text-sm font-bold text-white transition-colors hover:bg-navy-light"
@@ -798,7 +942,9 @@ export default function CheckoutContent() {
   if (error) {
     return (
       <div className="flex min-h-[50vh] flex-col items-center justify-center px-4 py-16 text-center">
-        <h1 className="mb-2 font-heading text-2xl font-extrabold text-text-dark">Något gick fel</h1>
+        <h1 className="mb-2 font-heading text-2xl font-extrabold text-text-dark">
+          Något gick fel
+        </h1>
         <p className="mb-6 text-text-mid">{error}</p>
         <button
           onClick={() => window.location.reload()}
@@ -810,7 +956,7 @@ export default function CheckoutContent() {
     )
   }
 
-  // Loading state
+  // Hide previous Elements immediately when the cart changes.
   if (!clientSecret) {
     return (
       <div className="flex min-h-[50vh] items-center justify-center">
@@ -819,13 +965,50 @@ export default function CheckoutContent() {
     )
   }
 
+  if (isConfirmedPayment(current.paymentStatus))
+    return (
+      <div className="mx-auto max-w-xl px-4 py-16 text-center">
+        <h1 className="text-2xl font-bold">Beställningen är redan mottagen</h1>
+        <Link
+          className="mt-6 inline-block underline"
+          href={`/tack?payment_intent=${clientSecret.split("_secret_")[0]}&payment_intent_client_secret=${encodeURIComponent(clientSecret)}`}
+        >
+          Visa din order
+        </Link>
+      </div>
+    )
+  if (priceChanged && acceptedKey !== clientSecret)
+    return (
+      <div className="mx-auto max-w-2xl px-4 py-12">
+        <h1 className="mb-4 text-2xl font-bold">
+          Priset i din varukorg har uppdaterats
+        </h1>
+        <p className="mb-6">
+          Kontrollera aktuella priser innan du fortsätter till betalningen.
+        </p>
+        <OrderSummary
+          items={items}
+          totalPrice={totalPrice}
+          freeShipping={freeShipping}
+        />
+        <button
+          className="mt-6 rounded-lg bg-navy px-6 py-3 text-white"
+          onClick={() => setAcceptedKey(clientSecret)}
+        >
+          Godkänn aktuellt pris och fortsätt
+        </button>
+      </div>
+    )
+
   return (
     <div className="bg-white">
       {/* Page header */}
       <div className="border-b border-border bg-surface">
         <div className="mx-auto max-w-[1200px] px-4 pb-8 pt-10 sm:px-6">
           <FadeIn>
-            <div className="mb-2 text-xs font-bold uppercase tracking-widest text-amber-text">Kassa</div>
+            <div className="mb-2 text-xs font-bold uppercase tracking-widest text-amber-text">
+              Kassa
+            </div>
             <h1 className="font-heading text-[clamp(28px,4vw,40px)] font-extrabold tracking-tight text-text-dark">
               Slutför din beställning
             </h1>
@@ -863,6 +1046,11 @@ export default function CheckoutContent() {
                 totalPrice={totalPrice}
                 clientSecret={clientSecret}
                 freeShipping={freeShipping}
+                cartSnapshot={cartItems.map(({ slug, qty, lineId }) => ({
+                  slug,
+                  qty,
+                  lineId,
+                }))}
               />
             </Elements>
           </FadeIn>
@@ -870,7 +1058,11 @@ export default function CheckoutContent() {
           {/* Right: Order summary */}
           <FadeIn delay={0.1}>
             <div className="lg:sticky lg:top-6 lg:self-start">
-              <OrderSummary items={items} totalPrice={totalPrice} freeShipping={freeShipping} />
+              <OrderSummary
+                items={items}
+                totalPrice={totalPrice}
+                freeShipping={freeShipping}
+              />
             </div>
           </FadeIn>
         </div>

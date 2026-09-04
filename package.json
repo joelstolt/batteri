@@ -7,27 +7,44 @@
     "dev": "next dev",
     "build": "next build",
     "start": "next start",
-    "lint": "next lint"
+    "lint": "eslint .",
+    "test": "vitest run"
   },
   "keywords": [],
   "author": "",
   "license": "ISC",
   "dependencies": {
-    "@sanity/image-url": "^2.0.3",
+    "@sanity/image-url": "^2.1.1",
     "@stripe/react-stripe-js": "^5.6.1",
     "@stripe/stripe-js": "^8.11.0",
-    "@tailwindcss/postcss": "^4.2.1",
-    "framer-motion": "^12.35.2",
+    "@tailwindcss/postcss": "^4.3.3",
+    "framer-motion": "^12.43.0",
     "lucide-react": "^0.577.0",
-    "next": "^16.1.6",
-    "next-sanity": "^12.1.1",
-    "postcss": "^8.5.8",
-    "react": "^19.2.4",
-    "react-dom": "^19.2.4",
-    "resend": "^6.12.2",
-    "sanity": "^5.14.1",
+    "next": "16.3.4",
+    "next-sanity": "^12.4.5",
+    "postcss": "^8.5.28",
+    "react": "19.2.8",
+    "react-dom": "19.2.8",
+    "resend": "^6.26.0",
+    "sanity": "^5.31.2",
     "stripe": "^20.4.1",
-    "styled-components": "^6.3.11",
-    "tailwindcss": "^4.2.1"
+    "styled-components": "^6.5.3",
+    "tailwindcss": "^4.3.3",
+    "@sanity/client": "^7.27.0"
+  },
+  "devDependencies": {
+    "@testing-library/react": "^16.3.3",
+    "@vitejs/plugin-react": "^5.2.0",
+    "eslint": "^9.39.5",
+    "eslint-config-next": "16.3.4",
+    "jsdom": "^27.4.0",
+    "vitest": "^4.1.11"
+  },
+  "pnpm": {
+    "overrides": {
+      "@vercel/frameworks>js-yaml": "3.15.1",
+      "@sanity/runtime-cli>adm-zip": "0.6.0",
+      "typeid-js>uuid": "11.1.1"
+    }
   }
 }

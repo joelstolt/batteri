@@ -1,6 +1,8 @@
 "use client"
 
-import { useState, useRef, useEffect, useId } from "react"
+import { useVat } from "@/lib/vat-context"
+
+import { useState, useRef, useEffect, useId, useMemo } from "react"
 import { useRouter } from "next/navigation"
 import { track } from "@/lib/track"
 import { Search, Wrench, Package, RefreshCw, CornerDownLeft, LayoutGrid } from "lucide-react"
@@ -34,6 +36,7 @@ function formatPris(n) {
  * skärmläsare, och sajten ligger på 100 i tillgänglighet.
  */
 export default function HeroSearch({ onForhandsvisning }) {
+  const { displayPrice, vatLabel } = useVat()
   const [query, setQuery] = useState("")
   const [oppen, setOppen] = useState(false)
   const [aktiv, setAktiv] = useState(-1)
@@ -45,14 +48,14 @@ export default function HeroSearch({ onForhandsvisning }) {
   // Samma villkor som sökningen använder — annars påstår rutan "ingen träff"
   // på en fråga som aldrig söktes.
   const kanSoka = sokbar(query)
-  const traffar = kanSoka ? sok(query) : []
+  const traffar = useMemo(() => kanSoka ? sok(query) : [], [kanSoka, query])
 
   // Rapportera upp den träff som är i fokus, så heron kan visa den. Utan det
   // står samma stillastående batteribild kvar oavsett vad besökaren skriver.
   const forhandsvisad = traffar.length ? traffar[aktiv >= 0 ? aktiv : 0] : null
   useEffect(() => {
     onForhandsvisning?.(forhandsvisad || null)
-  }, [forhandsvisad?.href, onForhandsvisning])
+  }, [forhandsvisad, onForhandsvisning])
 
   // Stäng när man klickar utanför
   useEffect(() => {
@@ -175,9 +178,9 @@ export default function HeroSearch({ onForhandsvisning }) {
                     {t.pris && (
                       <div className="flex-shrink-0 text-right">
                         <div className="font-heading text-sm font-bold text-text-dark">
-                          {formatPris(t.pris)} kr
+                          {formatPris(displayPrice(t.pris))} kr
                         </div>
-                        <div className="text-[11px] text-text-light">inkl. moms</div>
+                        <div className="text-[11px] text-text-light">{vatLabel}</div>
                       </div>
                     )}
                   </li>

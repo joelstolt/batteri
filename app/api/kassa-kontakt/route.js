@@ -1,3 +1,4 @@
+import { readOrderItems } from "@/lib/order-items"
 import Stripe from "stripe"
 import { NextResponse } from "next/server"
 import { giltigEpost } from "@/lib/konto-auth"
@@ -78,8 +79,7 @@ export async function POST(request) {
     if (!redan && ADMIN_EMAIL) {
       let rader = []
       try {
-        rader = JSON.parse(pi.metadata?.items || "[]")
-          .filter((r) => r && r.o === undefined)
+        rader = readOrderItems(pi.metadata).rader
           .map((r) => `${r.q ?? r.qty ?? 1} st ${r.n ?? r.name ?? "?"}`)
       } catch {}
       resend.emails

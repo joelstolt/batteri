@@ -9,8 +9,9 @@ import {
   formatPriceKr,
   emailLayout,
 } from "@/lib/emails"
-import { parsaItems } from "@/lib/orders"
+import { readOrderItems } from "@/lib/orders"
 import { unloadingLabel } from "@/lib/checkout"
+import { sendOrderMail } from "@/lib/order-mail"
 import { SELJARE } from "@/lib/constants"
 
 const stripe = new Stripe(process.env.STRIPE_SECRET_KEY)
@@ -33,7 +34,18 @@ function infoBlock(title, rows) {
     </div>`
 }
 
-function buildOrderBody({ orderId, items, subtotal, shipping, total, customer, meta, intro, strukna = 0 }) {
+function buildOrderBody({
+  orderId,
+  items,
+  shipping,
+  total,
+  customer,
+  meta,
+  intro,
+  reserved = false,
+  strukna = 0,
+  incomplete = false,
+}) {
   // Antal och artikelnummer visas ALLTID. Kvittot är det enda dokument som
   // följer med ordern, och utan dem går det inte att se vad som ska plockas.
   const rows = items
@@ -56,9 +68,9 @@ function buildOrderBody({ orderId, items, subtotal, shipping, total, customer, m
   // Ryms inte alla rader i Stripes metadata lagras en {o:N}-markör. Säg det
   // rakt ut i stället för att tyst skicka ett kvitto som saknar rader.
   const struknaRad =
-    strukna > 0
+    strukna > 0 || incomplete
       ? `<tr><td colspan="2" style="padding:10px 0;border-bottom:1px solid #F0F1F4;font-size:13px;color:#B45309;">
-           + ${strukna} ytterligare ${strukna === 1 ? "rad" : "rader"} som inte fick plats i kvittot. Kontakta oss så bekräftar vi hela ordern.
+           Orderunderlaget är ofullständigt. Kontakta oss så bekräftar vi alla artiklar i beställningen.
          </td></tr>`
       : ""
 
@@ -100,7 +112,12 @@ function buildOrderBody({ orderId, items, subtotal, shipping, total, customer, m
       // Ingen faktura skickas, betalningen är gjord med kort. Etiketten hette
       // "Faktura skickas till" och motsade därmed stycket längst ner i samma mejl.
       ["Kvitto till bokföringen", meta.invoice_email],
-      ["Fakturaadress", meta.invoice_address === "samma som leverans" ? "" : meta.invoice_address],
+      [
+        "Fakturaadress",
+        meta.invoice_address === "samma som leverans"
+          ? ""
+          : meta.invoice_address,
+      ],
     ])}
 
     ${
@@ -132,10 +149,8 @@ function buildOrderBody({ orderId, items, subtotal, shipping, total, customer, m
     </div>
 
     <p style="margin-top:24px;font-size:14px;line-height:1.6;color:#374151;">
-      Vi skickar ordern så snart som möjligt, normalt inom 1–3 arbetsdagar.
-      <strong>Det här mejlet är ditt kvitto</strong> och innehåller de uppgifter din
-      bokföring behöver. Någon separat faktura skickas inte, eftersom betalningen
-      redan är gjord med kort.
+      ${reserved ? "Beloppet är reserverat på ditt kort och dras när ordern skickas. Det här mejlet bekräftar din beställning." : "Betalningen är genomförd. Det här mejlet är ditt kvitto."}
+      Normal leveranstid är 1-3 arbetsdagar.
     </p>
   `
 }
@@ -145,7 +160,10 @@ export async function POST(request) {
   const secret = process.env.STRIPE_WEBHOOK_SECRET
 
   if (!sig || !secret) {
-    return NextResponse.json({ error: "Missing signature or secret" }, { status: 400 })
+    return NextResponse.json(
+      { error: "Missing signature or secret" },
+      { status: 400 }
+    )
   }
 
   const rawBody = await request.text()
@@ -158,22 +176,9 @@ export async function POST(request) {
     return NextResponse.json({ error: "Invalid signature" }, { status: 400 })
   }
 
-  /**
-   * Orderbekräftelsen ska gå ut när KUNDEN BETALAR, inte när vi drar pengarna.
-   *
-   * Med manuell capture är det två skilda ögonblick. Reservationen lyckas direkt
-   * i kassan och ger `payment_intent.amount_capturable_updated`. Först när vi
-   * skickar batteriet görs dragningen, och då kommer `payment_intent.succeeded`.
-   *
-   * Lyssnade vi bara på succeeded, som förut, hade kunden inte fått någon
-   * orderbekräftelse förrän paketet gick iväg. Lyssnar vi på båda utan att
-   * skilja dem åt får hon två.
-   *
-   * Därför: manuella betalningar hanteras på reservationen, automatiska på
-   * dragningen. Exakt en bekräftelse per order, oavsett läge.
-   */
-  const pi = event.data.object
-  const manuell = pi?.capture_method === "manual"
+  // Use the reservation event for manual capture and payment for automatic capture.
+  const eventPi = event.data.object
+  const manuell = eventPi?.capture_method === "manual"
 
   const rattHandelse = manuell
     ? event.type === "payment_intent.amount_capturable_updated"
@@ -184,19 +189,22 @@ export async function POST(request) {
   }
 
   try {
+    const pi = await stripe.paymentIntents.retrieve(eventPi.id)
     // Metadatan lagrar raderna kompakt ({s,n,q,p}) för att rymmas i Stripes
-    // teckengräns. parsaItems är enda översättningen och används av /konto och
+    // teckengräns. readOrderItems är enda översättningen och används av /konto och
     // /admin. Läs ALDRIG i.name/i.qty/i.price rakt ur metadatan, de heter
     // n/q/p där och ger tomma rader i kvittot.
-    const { rader: items, strukna } = parsaItems(pi.metadata.items)
-    const subtotal = Number(pi.metadata.subtotal) || 0
+    const { rader: items, strukna, incomplete } = readOrderItems(pi.metadata)
     const shipping = Math.round((Number(pi.metadata.shipping) || 0) * 1.25) // visa frakt inkl. moms i kvittot
     const total = pi.amount / 100
     const meta = pi.metadata || {}
 
     // Leveransadressen ligger på Stripes shipping-fält (satt av /api/order-details).
     // Faller tillbaka på kortets billing_details för ordrar lagda före B2B-kassan.
-    const charges = await stripe.charges.list({ payment_intent: pi.id, limit: 1 })
+    const charges = await stripe.charges.list({
+      payment_intent: pi.id,
+      limit: 1,
+    })
     const billing = charges.data[0]?.billing_details || {}
     const ship = pi.shipping || {}
     const customer = {
@@ -210,6 +218,7 @@ export async function POST(request) {
 
     const orderId = pi.id.replace("pi_", "BP-").slice(0, 14).toUpperCase()
     const sends = []
+    const reserved = manuell
 
     /*
      * Kvittot går till beställaren, med kundens ekonomiadress som kopia.
@@ -223,61 +232,107 @@ export async function POST(request) {
      */
     const ekonomiKopia =
       meta.invoice_email &&
-      meta.invoice_email.trim().toLowerCase() !== (customer.email || "").trim().toLowerCase()
+      meta.invoice_email.trim().toLowerCase() !==
+        (customer.email || "").trim().toLowerCase()
         ? [meta.invoice_email.trim()]
         : undefined
 
     // Customer confirmation
     if (customer.email) {
-      sends.push(
-        resend.emails.send({
-          from: FROM,
-          to: customer.email,
-          cc: ekonomiKopia,
-          replyTo: ADMIN_EMAIL,
-          subject: `Orderbekräftelse — Batteriproffs (${orderId})`,
-          html: emailLayout({
-            title: `Orderbekräftelse ${orderId}`,
-            preheader: `Ordernr ${orderId} · ${formatPriceKr(total)} kr`,
-            body: buildOrderBody({
-              orderId,
-              items,
-              strukna,
-              subtotal,
-              shipping,
-              total,
-              customer,
-              meta,
+      sends.push(() =>
+        sendOrderMail({
+          stripe,
+          resend,
+          paymentId: pi.id,
+          role: "customer",
+          message: {
+            from: FROM,
+            to: customer.email,
+            replyTo: ADMIN_EMAIL,
+            subject: `Orderbekräftelse - Batteriproffs (${orderId})`,
+            html: emailLayout({
+              title: `Orderbekräftelse ${orderId}`,
+              preheader: `Ordernr ${orderId} · ${formatPriceKr(total)} kr`,
+              body: buildOrderBody({
+                orderId,
+                items,
+                strukna,
+                reserved,
+                incomplete,
+                shipping,
+                total,
+                customer,
+                meta,
+              }),
             }),
-          }),
+          },
         })
       )
+      if (ekonomiKopia)
+        sends.push(() =>
+          sendOrderMail({
+            stripe,
+            resend,
+            paymentId: pi.id,
+            role: "accounting",
+            message: {
+              from: FROM,
+              to: ekonomiKopia[0],
+              replyTo: ADMIN_EMAIL,
+              subject: `Orderbekräftelse - Batteriproffs (${orderId})`,
+              html: emailLayout({
+                title: `Orderbekräftelse ${orderId}`,
+                preheader: `Ordernr ${orderId}`,
+                body: buildOrderBody({
+                  orderId,
+                  items,
+                  strukna,
+                  incomplete,
+                  shipping,
+                  total,
+                  customer,
+                  meta,
+                  reserved,
+                }),
+              }),
+            },
+          })
+        )
+    } else {
+      throw new Error("Order lacks customer email; reconcile before retry")
     }
 
     // Admin notification
     const companyLabel = meta.company_name || customer.name || "kund"
     if (ADMIN_EMAIL) {
-      sends.push(
-        resend.emails.send({
-          from: FROM,
-          to: ADMIN_EMAIL,
-          replyTo: customer.email,
-          subject: `Ny order ${formatPriceKr(total)} kr — ${companyLabel}`,
-          html: emailLayout({
-            title: `Ny order ${orderId}`,
-            preheader: `${companyLabel} · ${formatPriceKr(total)} kr`,
-            body: buildOrderBody({
-              orderId,
-              items,
-              strukna,
-              subtotal,
-              shipping,
-              total,
-              customer,
-              meta,
-              intro: `Ny order: ${companyLabel}`,
+      sends.push(() =>
+        sendOrderMail({
+          stripe,
+          resend,
+          paymentId: pi.id,
+          role: "admin",
+          message: {
+            from: FROM,
+            to: ADMIN_EMAIL,
+            replyTo: customer.email,
+            subject: `Ny order ${formatPriceKr(total)} kr - ${companyLabel}`,
+            html: emailLayout({
+              title: `Ny order ${orderId}`,
+              preheader: `${companyLabel} · ${formatPriceKr(total)} kr`,
+              body: buildOrderBody({
+                orderId,
+                items,
+                strukna,
+                reserved,
+                incomplete,
+                shipping,
+                total,
+                customer,
+                meta,
+                intro: `Ny order: ${companyLabel}`,
+              }),
             }),
-          }),
+          },
         })
       )
     }
@@ -287,7 +342,8 @@ export async function POST(request) {
     try {
       revalidateTag("kop")
       revalidatePath("/")
-      for (const rad of items) if (rad.slug) revalidatePath(`/produkt/${rad.slug}`)
+      for (const rad of items)
+        if (rad.slug) revalidatePath(`/produkt/${rad.slug}`)
     } catch (err) {
       console.error("Kunde inte revalidera senaste köp:", err)
     }
@@ -296,9 +352,15 @@ export async function POST(request) {
     // när ordern faktiskt skickas — annars räknar det sju dygn från
     // orderläggningen och landar hos kunden innan pallgodset gjort det.
 
-    await Promise.allSettled(sends)
+    const results = await Promise.allSettled(sends.map((send) => send()))
+    const failure = results.find((r) => r.status === "rejected")
+    if (failure) throw failure.reason
   } catch (err) {
-    console.error("Order email failed:", err)
+    console.error("Order email failed:", err.message)
+    return NextResponse.json(
+      { error: "Order confirmation pending; retry required" },
+      { status: 500 }
+    )
   }
 
   return NextResponse.json({ received: true })

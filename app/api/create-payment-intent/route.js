@@ -1,4 +1,6 @@
 import Stripe from "stripe"
+import { createHash, randomUUID } from "node:crypto"
+import { serializeOrderItems } from "@/lib/order-items"
 import { NextResponse } from "next/server"
 // Priset slås upp i lib/products.js, aldrig via Sanity. Sanity-datasetet är
 // tomt, så varje orderrad kostade ett nätverksanrop som ändå föll tillbaka hit.
@@ -7,7 +9,12 @@ import { NextResponse } from "next/server"
 // annat. getProductBySlug slår mot hela `products`, inte publicProducts, så
 // dolda testartiklar går fortfarande att provköpa precis som förut.
 import { getProductBySlug } from "@/lib/products"
-import { rateLimit, clientIp, isOwnOrigin, ALLOWED_ORIGINS } from "@/lib/rate-limit"
+import {
+  rateLimit,
+  clientIp,
+  isOwnOrigin,
+  ALLOWED_ORIGINS,
+} from "@/lib/rate-limit"
 
 const stripe = new Stripe(process.env.STRIPE_SECRET_KEY)
 
@@ -16,26 +23,6 @@ const VAT_RATE = 1.25
 const SLUG_RE = /^[a-z0-9-]{1,80}$/i
 const MAX_QTY = 99
 const MAX_LINE_ITEMS = 50
-const META_TAK = 500
-
-/**
- * Packar så många rader som får plats och lägger till hur många som ströks.
- *
- * Utan den här föll en order med fler än ett tiotal rader tillbaka på en tom
- * lista, alltså ingen orderhistorik alls för den kunden. Nu behålls det som
- * ryms, och {o: N} på slutet gör att vyerna kan säga att det finns fler rader
- * i stället för att låtsas att ordern var mindre än den var. Beloppet räknas
- * ändå ut på hela varukorgen, inte på det här.
- */
-function packaRader(rader) {
-  for (let n = rader.length - 1; n > 0; n--) {
-    const kandidat = JSON.stringify([...rader.slice(0, n), { o: rader.length - n }])
-    if (kandidat.length <= META_TAK) return kandidat
-  }
-  console.warn("Orderrader fick inte plats i metadata:", rader.length, "rader")
-  return JSON.stringify([{ o: rader.length }])
-}
-
 export const runtime = "nodejs"
 
 export async function POST(request) {
@@ -56,6 +43,7 @@ export async function POST(request) {
       return NextResponse.json({ error: "Ogiltigt anrop" }, { status: 400 })
     }
 
+    // Merge repeated slugs before quantity validation so the per-product cap holds.
     const incoming = body.items
     if (incoming.length === 0 || incoming.length > MAX_LINE_ITEMS) {
       return NextResponse.json({ error: "Varukorgen är tom" }, { status: 400 })
@@ -72,17 +60,33 @@ export async function POST(request) {
       }
     }
 
+    const counts = new Map()
+    for (const row of incoming)
+      counts.set(row.slug, (counts.get(row.slug) || 0) + Number(row.qty))
+    if ([...counts.values()].some((qty) => qty > MAX_QTY))
+      return NextResponse.json(
+        { error: "För många av samma artikel" },
+        { status: 400 }
+      )
+
     // Priset avgörs på servern. Klientens pris läses aldrig.
-    const resolved = incoming.map((i) => {
+    const resolved = [...counts].map(([slug, qty]) => {
+      const i = { slug, qty }
       const p = getProductBySlug(i.slug)
       return p ? { product: p, qty: Number(i.qty) } : null
     })
 
     if (resolved.some((r) => !r)) {
-      return NextResponse.json({ error: "Produkt hittades inte" }, { status: 400 })
+      return NextResponse.json(
+        { error: "Produkt hittades inte" },
+        { status: 400 }
+      )
     }
     if (resolved.some((r) => r.product.inStock === false)) {
-      return NextResponse.json({ error: "Produkten är slut i lager" }, { status: 400 })
+      return NextResponse.json(
+        { error: "Produkten är slut i lager" },
+        { status: 400 }
+      )
     }
 
     // Authoritative line items — server-side prices only
@@ -97,54 +101,79 @@ export async function POST(request) {
     const subtotalInclVat = itemSummary.reduce((s, i) => s + i.price * i.qty, 0)
     // Fraktfritt bara när varenda rad är fraktfri — annars full frakt.
     // Avgörs på servern, aldrig av det klienten skickar in.
-    const shipping = resolved.every(({ product }) => product.freeShipping) ? 0 : SHIPPING_COST
+    const shipping = resolved.every(({ product }) => product.freeShipping)
+      ? 0
+      : SHIPPING_COST
     const totalInclVat = subtotalInclVat + Math.round(shipping * VAT_RATE)
-    const amountInOre = totalInclVat * 100
+    const amountInOre = Math.round(totalInclVat * 100)
 
-    // Stripe kapar varje metadatavärde vid 500 tecken.
-    //
-    // Raderna sparas därför med korta nycklar: s=slug, n=namn, q=antal, p=pris.
-    // Sluggen är det som gör "beställ igen" i kundkontot möjlig, så den ryker
-    // aldrig. Blir det ändå för långt faller vi tillbaka på slug utan namn —
-    // namnet går att slå upp ur lib/products.js, det gör inte sluggen.
-    // lib/orders.js läser både det här och det gamla {name,qty,price}-formatet.
-    const kompakt = itemSummary.map((i) => ({ s: i.slug, n: i.name, q: i.qty, p: i.price }))
-    let itemsMeta = JSON.stringify(kompakt)
-    if (itemsMeta.length > META_TAK) {
-      itemsMeta = JSON.stringify(kompakt.map(({ s, q, p }) => ({ s, q, p })))
+    let itemsMetadata
+    try {
+      itemsMetadata = serializeOrderItems(itemSummary)
+    } catch (error) {
+      return NextResponse.json({ error: error.message }, { status: 422 })
     }
-    if (itemsMeta.length > META_TAK) {
-      itemsMeta = packaRader(kompakt.map(({ s, q, p }) => ({ s, q, p })))
-    }
+    const attempt =
+      typeof body.attemptId === "string" &&
+      /^[a-z0-9-]{20,80}$/i.test(body.attemptId)
+        ? body.attemptId
+        : randomUUID()
+    const fingerprint = createHash("sha256")
+      .update(JSON.stringify({ attempt, itemSummary, shipping }))
+      .digest("hex")
 
-    const paymentIntent = await stripe.paymentIntents.create({
-      amount: amountInOre,
-      currency: "sek",
-      // Endast kortbetalning. Explicit lista slår Dashboard-inställningarna,
-      // så Klarna/Link/Amazon Pay kan inte dyka upp i kassan även om de är
-      // påslagna på Stripe-kontot.
-      payment_method_types: ["card"],
-      /*
-       * Pengarna reserveras nu och dras när batteriet skickas.
-       *
-       * Det är vad köpvillkoren alltid har lovat, och det är rimligare mot
-       * kunden: hon betalar för en vara som är på väg, inte för ett löfte.
-       *
-       * VIKTIGT: en kortreservation dör efter sju dygn. Görs ingen capture
-       * innan dess släpps pengarna och kunden måste betala om. Dra därför
-       * senast dag fem, även om paketet inte hunnit iväg. Adminvyn varnar.
-       */
-      capture_method: "manual",
-      metadata: {
-        order_source: "batteriproffs.se",
-        items: itemsMeta,
-        subtotal: String(Math.round(subtotalInclVat / VAT_RATE)),
-        shipping: String(shipping),
-        total_incl_vat: String(totalInclVat),
+    const paymentIntent = await stripe.paymentIntents.create(
+      {
+        amount: amountInOre,
+        currency: "sek",
+        // Endast kortbetalning. Explicit lista slår Dashboard-inställningarna,
+        // så Klarna/Link/Amazon Pay kan inte dyka upp i kassan även om de är
+        // påslagna på Stripe-kontot.
+        payment_method_types: ["card"],
+        /*
+         * Pengarna reserveras nu och dras när batteriet skickas.
+         *
+         * Det är vad köpvillkoren alltid har lovat, och det är rimligare mot
+         * kunden: hon betalar för en vara som är på väg, inte för ett löfte.
+         *
+         * VIKTIGT: en kortreservation dör efter sju dygn. Görs ingen capture
+         * innan dess släpps pengarna och kunden måste betala om. Dra därför
+         * senast dag fem, även om paketet inte hunnit iväg. Adminvyn varnar.
+         */
+        capture_method: "manual",
+        metadata: {
+          order_source: "batteriproffs.se",
+          ...itemsMetadata,
+          subtotal: String(Math.round(subtotalInclVat / VAT_RATE)),
+          shipping: String(shipping),
+          total_incl_vat: String(totalInclVat),
+        },
+      },
+      { idempotencyKey: `checkout-${fingerprint}` }
+    )
+
+    const currentPayment = await stripe.paymentIntents.retrieve(
+      paymentIntent.id
+    )
+    return NextResponse.json({
+      clientSecret: currentPayment.client_secret,
+      paymentStatus: currentPayment.status,
+      quote: {
+        items: resolved.map(({ product, qty }) => ({
+          slug: product.slug,
+          name: product.name,
+          shortName: product.shortName,
+          price: product.price,
+          images: product.images,
+          capacity: product.capacity,
+          freeShipping: !!product.freeShipping,
+          qty,
+        })),
+        subtotalInclVat,
+        shippingInclVat: Math.round(shipping * VAT_RATE),
+        totalInclVat,
       },
     })
-
-    return NextResponse.json({ clientSecret: paymentIntent.client_secret })
   } catch (error) {
     console.error("Stripe PaymentIntent error:", error)
     return NextResponse.json({ error: "Något gick fel" }, { status: 500 })

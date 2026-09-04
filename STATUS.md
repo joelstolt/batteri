@@ -1,3 +1,7 @@
+## 2026-09-05: isolerad order- och designgranskning
+
+Se ORDER-FIX-STATUS.md. Kodrättningar och 49 regressionstester på fix/order-integrity-20260904. Separat reviewprojekt, ingen ändring av butikens produktion. Stripe-testköp och riktig mejlverifiering återstår före release.
+
 # Batteriproffs — läge 2026-07-29
 
 Skrivet som överlämning. En ny session ska kunna läsa den här filen och fortsätta

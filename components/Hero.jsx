@@ -1,5 +1,7 @@
 "use client"
 
+import { useVat } from "@/lib/vat-context"
+
 import { useState, useCallback } from "react"
 import { motion, AnimatePresence } from "framer-motion"
 import Image from "next/image"
@@ -26,6 +28,7 @@ function formatPris(n) {
  * sortimentet och att priserna står öppet.
  */
 export default function Hero() {
+  const { displayPrice, vatLabel } = useVat()
   const [visad, setVisad] = useState(null)
   const onForhandsvisning = useCallback((t) => setVisad(t), [])
 
@@ -136,9 +139,9 @@ export default function Hero() {
                       <div className="mt-3 flex items-end justify-between">
                         <div>
                           <div className="font-heading text-2xl font-extrabold text-text-dark">
-                            {formatPris(kort.pris)} kr
+                            {formatPris(displayPrice(kort.pris))} kr
                           </div>
-                          <div className="text-[11px] text-text-light">inkl. moms</div>
+                          <div className="text-[11px] text-text-light">{vatLabel}</div>
                         </div>
                         <span className="flex items-center gap-1 text-sm font-bold text-navy group-hover:underline">
                           Se batteriet
