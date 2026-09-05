@@ -108,7 +108,7 @@ export default async function RootLayout({ children }) {
           Hoppa till innehåll
         </a>
 
-        {process.env.BP_REVIEW_PREVIEW === "1" && (
+        {(process.env.BP_REVIEW_PREVIEW === "1" || process.env.BP_PAYMENT_TEST === "1") && (
           <div
             style={{
               background: "#E8B931",
@@ -118,15 +118,14 @@ export default async function RootLayout({ children }) {
               fontSize: 13,
             }}
           >
-            Förhandsvisning av kodrättningar. Betalning och kontaktformulär är
-            avstängda.
+            Skyddat betalningstest. Endast testkort. Ingen riktig beställning.
           </div>
         )}
         <Providers betyg={betyg} kop={kop}>
           {children}
         </Providers>
-        {process.env.BP_REVIEW_PREVIEW !== "1" && <CookieBanner />}
-        {process.env.BP_REVIEW_PREVIEW !== "1" && (
+        {(process.env.BP_REVIEW_PREVIEW !== "1" && process.env.BP_PAYMENT_TEST !== "1") && <CookieBanner />}
+        {(process.env.BP_REVIEW_PREVIEW !== "1" && process.env.BP_PAYMENT_TEST !== "1") && (
           <>
             {/* Umami är cookielöst och kräver inget samtycke */}
             <Script
