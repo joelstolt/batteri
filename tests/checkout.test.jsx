@@ -1,14 +1,14 @@
 // @vitest-environment jsdom
 import { vi, it, expect, beforeEach, afterEach } from "vitest"
 import { render, screen, cleanup, act, fireEvent } from "@testing-library/react"
-const state = vi.hoisted(() => ({ items: [] }))
+const state = vi.hoisted(() => ({ items: [], track: vi.fn() }))
 vi.mock("@/lib/cart-context", () => ({
   useCart: () => ({ items: state.items }),
 }))
 vi.mock("@/lib/attribution-context", () => ({
   useAttribution: () => () => ({}),
 }))
-vi.mock("@/lib/track", () => ({ track: () => {} }))
+vi.mock("@/lib/track", () => ({ track: (...a) => state.track(...a) }))
 vi.mock("@/components/FadeIn", () => ({
   default: ({ children }) => <div>{children}</div>,
 }))
@@ -55,6 +55,7 @@ const quote = (secret, rows) => ({
 })
 beforeEach(() => {
   state.items = [item]
+  state.track.mockClear()
   sessionStorage.clear()
   vi.stubGlobal("fetch", vi.fn())
 })
@@ -123,4 +124,22 @@ it("preview lets users inspect the form without creating a payment", async () =>
   expect(screen.getByRole("button", { name: /Slutför köp/ }).disabled).toBe(
     true,
   )
+})
+it("tracks a started checkout once, also when the cart loads after mount", async () => {
+  fetch.mockReturnValue(new Promise(() => {}))
+  vi.stubGlobal("umami", { track: () => {} })
+  state.items = []
+  const view = render(<CheckoutContent />)
+  expect(state.track).not.toHaveBeenCalled()
+  state.items = [item]
+  view.rerender(<CheckoutContent />)
+  state.items = [{ ...item, qty: 2 }]
+  view.rerender(<CheckoutContent />)
+  const started = state.track.mock.calls.filter(([n]) => n === "paborjad-kassa")
+  expect(started).toEqual([["paborjad-kassa", { rader: 1, varde: 100 }]])
+})
+it("does not track a started checkout in the review preview", () => {
+  vi.stubGlobal("umami", { track: () => {} })
+  render(<CheckoutContent reviewPreview />)
+  expect(state.track).not.toHaveBeenCalled()
 })

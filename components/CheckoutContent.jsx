@@ -943,6 +943,25 @@ export default function CheckoutContent({ reviewPreview = false }) {
         (i) => i.previousPrice !== undefined && i.previousPrice !== i.price,
       ))
 
+  // Påbörjad kassa, en gång per besök i kassan. Korgen läses in från
+  // localStorage efter montering och Umami laddas afterInteractive, så vänta
+  // in båda. Vid direktladdning av /kassa tappades eventet annars.
+  const startedRef = useRef(false)
+  useEffect(() => {
+    if (reviewPreview || startedRef.current || !cartItems.length) return
+    startedRef.current = true
+    const data = {
+      rader: cartItems.length,
+      varde: cartItems.reduce((n, r) => n + r.price * r.qty, 0),
+    }
+    let tries = 0
+    const send = () => {
+      if (window.umami?.track) track("paborjad-kassa", data)
+      else if (++tries < 20) setTimeout(send, 250)
+    }
+    send()
+  }, [cartItems, reviewPreview])
+
   useEffect(() => {
     if (reviewPreview || !cartItems.length) return
     let active = true
