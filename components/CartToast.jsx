@@ -5,6 +5,7 @@ import Image from "next/image"
 import { motion, AnimatePresence } from "framer-motion"
 import { Check, X } from "lucide-react"
 import { useCart } from "@/lib/cart-context"
+import { useVat } from "@/lib/vat-context"
 
 function formatPrice(n) {
   return new Intl.NumberFormat("sv-SE").format(n)
@@ -12,6 +13,7 @@ function formatPrice(n) {
 
 export default function CartToast() {
   const { toast, setToast, setIsOpen } = useCart()
+  const { displayPrice, vatLabel } = useVat()
 
   useEffect(() => {
     if (toast) {
@@ -24,6 +26,8 @@ export default function CartToast() {
     <AnimatePresence>
       {toast && (
         <motion.div
+          role="status"
+          aria-live="polite"
           initial={{ opacity: 0, y: -20, x: "-50%" }}
           animate={{ opacity: 1, y: 0, x: "-50%" }}
           exit={{ opacity: 0, y: -20, x: "-50%" }}
@@ -52,7 +56,7 @@ export default function CartToast() {
                   {toast.shortName} tillagd
                 </p>
                 <p className="text-xs text-text-mid">
-                  {toast.qty}x · {formatPrice(toast.price * toast.qty)} kr
+                  {toast.qty} st · {formatPrice(displayPrice(toast.price * toast.qty))} kr {vatLabel.toLowerCase()}
                 </p>
               </div>
             </div>
@@ -66,6 +70,7 @@ export default function CartToast() {
                 Visa
               </button>
               <button
+                aria-label="Stäng meddelandet"
                 onClick={() => setToast(null)}
                 className="flex h-8 w-8 items-center justify-center rounded-lg text-text-light transition-colors hover:bg-surface hover:text-text-dark"
               >

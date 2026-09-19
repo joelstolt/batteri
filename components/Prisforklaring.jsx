@@ -1,4 +1,5 @@
 import Link from "next/link"
+import { getProductBrand } from "@/lib/products"
 import ChattKnapp from "@/components/ChattKnapp"
 
 /**
@@ -43,26 +44,30 @@ const SKAL = [
 ]
 
 /** Kort version, för produktsidan där tvivlet uppstår. */
-export function PrisforklaringKort() {
+export function PrisforklaringKort({ product }) {
+  const brand = getProductBrand(product)
+  const comparison = product.specs?.Ersätter
   return (
     <section className="mx-auto max-w-3xl px-5 py-8" aria-labelledby="varfor-billigt">
       <div className="rounded-2xl border border-border bg-surface/60 p-6">
         <h2 id="varfor-billigt" className="font-heading text-lg font-bold text-navy">
-          Varför är det billigare än Trojan?
+          Det här köper du från {brand}
         </h2>
         <p className="mt-2.5 leading-relaxed text-text-dark">
-          För att det inte är ett Trojan. Det här är ett likvärdigt batteri med samma
-          mått, spänning och kapacitet, byggt för samma användning. Trojan är ett
-          amerikanskt premiumvarumärke och en stor del av prisskillnaden är namnet,
-          inte batteriet.
+          Du köper {product.specs?.Artikelnummer || product.shortName} från {brand}.
+          Vi säljer på nätet och håller nere våra omkostnader.
+          Produktens egna specifikationer och datablad är underlaget för ditt val.
         </p>
-        <p className="mt-2.5 leading-relaxed text-text-dark">
-          Passar det inte i din maskin byter vi det utan returavdrag, så länge
-          förpackningen är obruten och du hör av dig inom 14 dagar.
-        </p>
+        {comparison && (
+          <p className="mt-2.5 leading-relaxed text-text-dark">
+            {comparison} är en jämförelsemodell.
+            Kontrollera exakt modell, mått, poler och laddningskrav före byte.
+            {product.inStock === false && " Beställning är pausad i väntan på variantkontroll. Direktpassform är inte bekräftad."}
+          </p>
+        )}
         <p className="mt-3.5 text-sm">
-          <Link href="/om-oss" className="font-heading font-bold text-accent hover:underline">
-            Hela förklaringen till våra priser →
+          <Link href="/villkor#6-passformsgaranti" className="font-heading font-bold text-navy hover:underline">
+            Villkor för passformsgarantin
           </Link>
         </p>
       </div>

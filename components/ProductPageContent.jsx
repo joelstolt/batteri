@@ -7,33 +7,26 @@ import { useParams } from "next/navigation"
 import Link from "next/link"
 import Image from "next/image"
 import {
-  ShoppingCart,
   Truck,
   Shield,
-  Phone,
   ChevronRight,
-  RotateCcw,
 } from "lucide-react"
 import {
   getProductBySlug,
-  getProductsByCategory,
   getProductBrand,
   getProductChemistry,
 } from "@/lib/products"
 import { CATEGORIES } from "@/lib/constants"
-import { machinesForProduct } from "@/lib/machines"
+import { machineBySlug, machinesForProduct } from "@/lib/machines"
 import { slugifyModel } from "@/lib/replacements"
 import { teknikFor } from "@/lib/teknik"
 import ProductDocuments from "@/components/ProductDocuments"
-import { useCart } from "@/lib/cart-context"
-import { useVat } from "@/lib/vat-context"
+import ProductPurchase from "@/components/ProductPurchase"
+import VerifiedBatteryPackage from "@/components/VerifiedBatteryPackage"
+import { evidenceFor } from "@/lib/product-evidence"
 import ProductCard from "@/components/ProductCard"
 import FadeIn from "@/components/FadeIn"
 import ChattKnapp from "@/components/ChattKnapp"
-
-function formatPrice(n) {
-  return new Intl.NumberFormat("sv-SE").format(n)
-}
 
 function ImageGallery({ images, alt }) {
   const [active, setActive] = useState(0)
@@ -52,7 +45,9 @@ function ImageGallery({ images, alt }) {
             <button
               key={i}
               onClick={() => setActive(i)}
-              className={`relative aspect-square overflow-hidden rounded-lg border-2 bg-white transition-all ${
+              aria-label={`Visa produktbild ${i + 1}`}
+              aria-pressed={active === i}
+              className={`relative h-16 w-16 shrink-0 sm:h-20 sm:w-20 overflow-hidden rounded-lg border-2 bg-white transition-all ${
                 active === i
                   ? "border-navy shadow-sm"
                   : "border-border hover:border-border-dark"
@@ -71,8 +66,8 @@ function ImageGallery({ images, alt }) {
       )}
 
       {/* Main image */}
-      <div className="relative flex-1 aspect-square overflow-hidden rounded-2xl border border-border bg-white">
-        <div className="flex h-full items-center justify-center p-8">
+      <div className="relative h-[210px] sm:h-auto sm:aspect-square flex-none sm:flex-1 overflow-hidden rounded-2xl border border-border bg-white">
+        <div className="flex h-full items-center justify-center p-4 sm:p-8">
           <div className="relative h-full w-full">
             <Image
               src={images[active]}
@@ -86,6 +81,32 @@ function ImageGallery({ images, alt }) {
         </div>
       </div>
     </div>
+  )
+}
+
+export function ProductQuickFacts({ product }) {
+  const specs = product.specs || {}
+  const evidence = evidenceFor(product)
+  const facts = [
+    ["Batterityp", getProductChemistry(product)],
+    ["Spänning", specs.Spänning || product.voltage],
+    ["Kapacitet C5", specs["Kapacitet (C5)"]],
+    ["Kapacitet C20", specs["Kapacitet (C20)"]],
+    ...(!specs["Kapacitet (C5)"] && !specs["Kapacitet (C20)"] ? [["Kapacitet", product.capacity]] : []),
+    [product.totalHeightUnverified ? "Angivna mått, totalhöjd ej bekräftad" : "Mått, L × B × H", specs.Mått],
+    ["Poltyp", specs.Poltyp || "Kontrollera exakt utförande"],
+  ].filter(([, value]) => value)
+  return (
+    <section className="my-4" aria-label="Snabbfakta">
+      <dl className="grid grid-cols-2 gap-x-4 gap-y-2 text-xs">
+        {facts.map(([label, value]) => (
+          <div key={label}><dt className="text-text-mid">{label}</dt><dd className="mt-0.5 font-semibold text-text-dark">{value}</dd></div>
+        ))}
+      </dl>
+      {product.totalHeightUnverified && <p className="mt-2 text-xs font-semibold text-amber-text">Totalhöjd inklusive poler måste bekräftas före passformsval.</p>}
+      {evidence && <p className="mt-2 text-xs leading-relaxed text-text-mid">{evidence.note}</p>}
+      <p className="mt-2 text-xs text-text-mid">C5 och C20 anger olika urladdningstider. Jämför kapacitet vid samma C-värde.</p>
+    </section>
   )
 }
 
@@ -129,17 +150,18 @@ function ProductExtraInfo({ product, className = "" }) {
       {product.specs?.["Ersätter"] && (
         <div className="rounded-xl border border-border bg-surface p-5">
           <h2 className="mb-2 font-heading text-sm font-bold uppercase tracking-wider text-text-dark">
-            Ersätter
+            Jämförelsemodell
           </h2>
           <p className="text-sm leading-relaxed text-text-mid">
-            Batteriet är en direkt ersättare för{" "}
+            Jämför med{" "}
             <Link
               href={`/ersatter/${slugifyModel(product.specs["Ersätter"])}`}
               className="font-semibold text-navy hover:underline"
             >
               {product.specs["Ersätter"]}
             </Link>
-            .
+            . Kontrollera exakt modell, mått, poler och laddning innan du byter.
+            {product.inStock === false && " Beställning är pausad i väntan på variantkontroll. Ingen direktpassform är bekräftad."}
           </p>
         </div>
       )}
@@ -155,7 +177,7 @@ function ProductExtraInfo({ product, className = "" }) {
             href="/laddare"
             className="mt-3 inline-block text-sm font-semibold text-navy hover:underline"
           >
-            Så väljer du rätt laddare →
+            Så väljer du rätt laddare
           </Link>
         </div>
       )}
@@ -212,7 +234,7 @@ function ProductExtraInfo({ product, className = "" }) {
             href="/batterivatten"
             className="mt-3 inline-block text-sm font-semibold text-navy hover:underline"
           >
-            Guide till batterivatten →
+            Guide till batterivatten
           </Link>
         </div>
       )}
@@ -289,9 +311,6 @@ export default function ProductPageContent({
 }) {
   const params = useParams()
   const product = getProductBySlug(params.slug)
-  const [qty, setQty] = useState(1)
-  const { addItem } = useCart()
-  const { displayPrice, vatLabel, inclVat } = useVat()
 
   if (!product) {
     return (
@@ -341,7 +360,7 @@ export default function ProductPageContent({
 
       {/* Main product section */}
       <div className="mx-auto max-w-[1200px] px-4 py-6 sm:px-6 sm:py-10">
-        <div className="grid gap-10 lg:grid-cols-2">
+        <div className="grid gap-5 sm:gap-10 lg:grid-cols-2">
           {/* Left — Image Gallery */}
           <FadeIn>
             <div className="relative">
@@ -369,68 +388,12 @@ export default function ProductPageContent({
 
               <BetygsRad betyg={betyg} />
 
-              {/* Price */}
-              <div className="mb-5">
-                <div className="flex items-baseline gap-2">
-                  <span className="font-heading text-3xl font-extrabold text-text-dark">
-                    {formatPrice(displayPrice(product.price))}
-                  </span>
-                  <span className="text-base font-medium text-text-mid">
-                    kr
-                  </span>
-                </div>
-                <div className="mt-0.5 text-sm text-text-light">
-                  {vatLabel}
-                  {inclVat
-                    ? ` · ${formatPrice(Math.round(product.price / 1.25))} kr exkl. moms`
-                    : ` · ${formatPrice(product.price)} kr inkl. moms`}
-                </div>
-                {/* Frakten på produktsidan, inte som överraskning i kassan —
-                    oväntade extrakostnader är e-handelns största avhoppsskäl.
-                    Platt frakt gör dessutom flerköp till ett argument. */}
-                <div className="mt-1.5 text-sm text-text-mid">
-                  + frakt{" "}
-                  <span className="font-semibold text-text-dark">
-                    {formatPrice(displayPrice(695))} kr {vatLabel.toLowerCase()}
-                  </span>{" "}
-                  per order, oavsett antal batterier
-                </div>
-              </div>
-
-              <CompareButton product={product} />
-              <ProductDocuments product={product} />
-              {/* Artnr */}
-              <div className="mb-5 rounded-lg border border-border bg-surface px-4 py-2.5 text-sm">
-                <span className="text-text-mid">Artnr: </span>
-                <span className="font-semibold text-text-dark">
-                  {product.slug.toUpperCase()}
-                </span>
-              </div>
-
-              {/* In stock */}
-              <div className="mb-5 flex items-center gap-2">
-                <svg width="20" height="20" viewBox="0 0 20 20" fill="none">
-                  <circle
-                    cx="10"
-                    cy="10"
-                    r="10"
-                    fill="#16a34a"
-                    opacity="0.15"
-                  />
-                  <path
-                    d="M6 10l2.5 2.5L14 7"
-                    stroke="#16a34a"
-                    strokeWidth="2"
-                    strokeLinecap="round"
-                    strokeLinejoin="round"
-                  />
-                </svg>
-                <span className="text-sm font-semibold text-green">
-                  {product.inStock === false
-                    ? "Ej beställningsbar just nu"
-                    : "Beställningsbar från leverantör"}
-                </span>
-              </div>
+              <ProductQuickFacts product={product} />
+              <ProductPurchase key={product.slug} product={product} />
+              <p className="mb-4 text-xs text-text-light">
+                Försäljning till företag. Organisationsnummer anges i kassan,
+                enskild firma går bra.
+              </p>
 
               {/* Senaste riktiga köpet av just den här produkten, ur Stripe.
                   Datum och antal, aldrig vem — samma regel som startsidan. */}
@@ -473,39 +436,14 @@ export default function ProductPageContent({
                 </div>
               )}
 
-              {/* Qty + Add to cart */}
-              <div className="mb-5 flex items-center gap-3">
-                <div className="flex items-center rounded-xl border border-border bg-white">
-                  <button
-                    onClick={() => setQty(Math.max(1, qty - 1))}
-                    className="flex h-12 w-12 items-center justify-center rounded-l-xl text-text-mid transition-colors hover:bg-surface hover:text-text-dark"
-                  >
-                    <span className="text-lg font-bold">−</span>
-                  </button>
-                  <span className="w-10 text-center font-heading text-lg font-bold text-text-dark">
-                    {qty}
-                  </span>
-                  <button
-                    onClick={() => setQty(Math.min(99, qty + 1))}
-                    className="flex h-12 w-12 items-center justify-center rounded-r-xl text-text-mid transition-colors hover:bg-surface hover:text-text-dark"
-                  >
-                    <span className="text-lg font-bold">+</span>
-                  </button>
-                </div>
-
-                <button
-                  disabled={product.inStock === false}
-                  onClick={() => addItem(product, qty)}
-                  className="flex flex-1 items-center justify-center gap-3 rounded-xl bg-amber-bg py-3.5 font-heading text-base font-bold text-navy shadow-sm transition-all hover:-translate-y-px hover:shadow-md"
-                >
-                  <ShoppingCart size={18} strokeWidth={2.5} />
-                  LÄGG I VARUKORG
-                </button>
-              </div>
-
-              <p className="mb-4 -mt-1 text-xs text-text-light">
-                Försäljning till företag. Organisationsnummer anges i kassan,
-                enskild firma går bra.
+              <VerifiedBatteryPackage
+                machine={machineBySlug("tennant-t3-t3-plus")}
+                product={product}
+              />
+              <CompareButton product={product} />
+              <ProductDocuments product={product} />
+              <p className="mb-5 text-xs text-text-mid">
+                Artnr: {product.specs?.Artikelnummer || product.slug.toUpperCase()}
               </p>
 
               {/* Volume order */}
@@ -520,12 +458,8 @@ export default function ProductPageContent({
               <div className="mb-6 flex flex-col gap-3 rounded-xl border border-border p-5">
                 {[
                   {
-                    icon: <RotateCcw size={16} />,
-                    text: "Passar den inte din maskin byter vi",
-                  },
-                  {
                     icon: <Truck size={16} />,
-                    text: "Leverans normalt 1–3 arbetsdagar",
+                    text: "Leverans normalt 1 till 3 arbetsdagar",
                   },
                   {
                     icon: <Shield size={16} />,
@@ -559,9 +493,9 @@ export default function ProductPageContent({
                       key={key}
                       className="flex items-center justify-between px-5 py-3"
                     >
-                      <span className="text-sm text-text-mid">{key}</span>
+                      <span className="text-sm text-text-mid">{key === "Ersätter" ? "Jämförelsemodell" : key}</span>
                       <span className="text-sm font-semibold text-text-dark">
-                        {val}
+                        {key === "Mått" && product.totalHeightUnverified ? `${val} (totalhöjd behöver bekräftas)` : val}
                       </span>
                     </div>
                   ))}

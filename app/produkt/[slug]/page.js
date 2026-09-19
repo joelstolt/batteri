@@ -3,6 +3,7 @@ import { products, getProductImage, getProductBrand } from "@/lib/products"
 import { breadcrumbJsonLd, jsonLdProps } from "@/lib/schema"
 import { hamtaGodkandaCachat, sammanfatta } from "@/lib/omdomen"
 import { hamtaKopPerProduktCachat } from "@/lib/orders"
+import { productSeoType } from "@/lib/product-purchase"
 import { CATEGORIES } from "@/lib/constants"
 import TopBar from "@/components/TopBar"
 import Header from "@/components/Header"
@@ -26,13 +27,6 @@ export async function generateStaticParams() {
  */
 export const revalidate = 3600
 
-const CATEGORY_PREFIX = {
-  "traktion-industri": "Traktionsbatteri",
-  stadmaskiner: "Gelbatteri städmaskin",
-  stationara: "UPS batteri",
-  "fritid-solenergi": "Fritidsbatteri",
-}
-
 /**
  * Titeln på en produktsida.
  *
@@ -50,7 +44,7 @@ const CATEGORY_PREFIX = {
  * de generiska sökningarna ("traktionsbatteri 12V").
  */
 function buildSeoTitle(product) {
-  const prefix = CATEGORY_PREFIX[product.category] || "Batteri"
+  const prefix = productSeoType(product)
   const v = product.voltage || ""
   const ah = (product.capacity || "").match(/(\d+)\s*Ah/i)?.[0] || ""
   // Medvetet INTE getProductBrand här: den faller tillbaka på "Batteriproffs",
@@ -78,7 +72,9 @@ export async function generateMetadata({ params }) {
     }
   }
 
-  const metaDesc = product.metaDescription || product.description?.slice(0, 160)
+  const metaDesc = product.slug === "nm875-8et"
+    ? "Nordmax NM875-8ET, öppet blybatteri 8V 170 Ah (C20). Beställning pausad tills levererad variant har bekräftats. Kontakta oss för variantkontroll."
+    : product.metaDescription || product.description?.slice(0, 160)
   const seoTitle = buildSeoTitle(product)
 
   return {
@@ -144,7 +140,7 @@ function buildProductJsonLd(product, omdomen = []) {
         "@type": "OfferShippingDetails",
         shippingRate: {
           "@type": "MonetaryAmount",
-          value: 695,
+          value: product.freeShipping ? 0 : 695,
           currency: "SEK",
         },
         shippingDestination: {
@@ -234,7 +230,7 @@ export default async function ProductRoute({ params }) {
             tas); hela listan ligger som egen sektion direkt under köpboxen. */}
         <ProductPageContent betyg={sammanfatta(omdomen)} senasteKop={senasteKop} />
         <ProduktOmdomen omdomen={omdomen} />
-        <PrisforklaringKort />
+        <PrisforklaringKort product={product} />
         <CtaBanner />
       </main>
       <Footer />

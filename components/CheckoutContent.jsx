@@ -1,6 +1,7 @@
 "use client"
 
 import PreviousOrderDetails from "@/components/PreviousOrderDetails"
+import OptionalCheckoutFields from "@/components/OptionalCheckoutFields"
 import { useState, useEffect, useRef, useId } from "react"
 import Image from "next/image"
 import Link from "next/link"
@@ -205,6 +206,25 @@ function CheckoutForm({
     !!form.invoiceEmail && form.invoiceEmail !== form.email,
   )
 
+  const formRef = useRef(null)
+  const errorFocusRequested = useRef(false)
+  useEffect(() => {
+    if (!errorFocusRequested.current) return
+    errorFocusRequested.current = false
+    const invalid = formRef.current?.querySelector('[aria-invalid="true"]')
+    if (!invalid) return
+    let section = invalid.closest("details")
+    while (section) {
+      section.open = true
+      section = section.parentElement?.closest("details")
+    }
+    const frame = requestAnimationFrame(() => {
+      invalid.focus({ preventScroll: true })
+      invalid.scrollIntoView?.({ block: "center" })
+    })
+    return () => cancelAnimationFrame(frame)
+  }, [errors])
+
   const { totalInclVat } = priceBreakdown(totalPrice, freeShipping)
 
   const handleChange = (field) => (e) => {
@@ -258,11 +278,8 @@ function CheckoutForm({
 
     const formErrors = validateCheckout(form)
     if (Object.keys(formErrors).length > 0) {
+      errorFocusRequested.current = true
       setErrors(formErrors)
-      const first = document.querySelector(
-        `[data-field="${Object.keys(formErrors)[0]}"]`,
-      )
-      first?.scrollIntoView({ block: "center" })
       /*
        * Var kunden fastnar i kassan.
        *
@@ -300,7 +317,10 @@ function CheckoutForm({
       })
       const data = await res.json()
       if (!res.ok) {
-        if (data.errors) setErrors(data.errors)
+        if (data.errors) {
+          errorFocusRequested.current = true
+          setErrors(data.errors)
+        }
         setPaymentError(
           data.error || "Kunde inte spara uppgifterna. Försök igen.",
         )
@@ -385,7 +405,7 @@ function CheckoutForm({
   const invoiceSame = form.invoiceSameAsDelivery !== false
 
   return (
-    <form onSubmit={handleSubmit} className="flex flex-col gap-10">
+    <form ref={formRef} noValidate onSubmit={handleSubmit} className="flex flex-col gap-7 sm:gap-9">
       <PreviousOrderDetails
         onSelect={(details) => {
           setForm((prev) => ({ ...prev, ...details }))
@@ -453,7 +473,7 @@ function CheckoutForm({
 
       {/* Företagsuppgifter */}
       <div data-field="companyName">
-        <SectionHeading note="Vi säljer till företag. Uppgifterna här visas på betalningsunderlaget.">
+        <SectionHeading note="Vi säljer till företag. Enskild firma går bra.">
           Företagsuppgifter
         </SectionHeading>
         <div className="flex flex-col gap-4">
@@ -466,18 +486,32 @@ function CheckoutForm({
             onChange={handleChange("companyName")}
             error={errors.companyName}
           />
-          <div className="grid gap-4 sm:grid-cols-2">
-            <div data-field="orgNr">
-              <FormInput
-                label="Organisationsnummer"
-                type="text"
-                inputMode="numeric"
-                placeholder="556677-8899"
-                value={form.orgNr}
-                onChange={handleChange("orgNr")}
-                error={errors.orgNr}
-              />
-            </div>
+          <div data-field="orgNr">
+            <FormInput
+              label="Organisationsnummer"
+              type="text"
+              inputMode="numeric"
+              placeholder="556677-8899"
+              hint="Enskild firma: ange ditt organisationsnummer med 10 siffror."
+              value={form.orgNr}
+              onChange={handleChange("orgNr")}
+              error={errors.orgNr}
+            />
+          </div>
+          <p className="text-xs text-text-mid">
+            Betalningsunderlaget skickas till beställarens e-postadress.
+            Du kan lägga till en annan mottagare nedan.
+          </p>
+          <OptionalCheckoutFields
+            title="Fler bokföringsuppgifter"
+            hint="Lägg till referens, kostnadsställe eller en annan adress för betalningsunderlaget."
+            reveal={Boolean(
+              form.reference || form.poNumber || separateInvoiceEmail ||
+              form.invoiceSameAsDelivery === false || vatTouched ||
+              (form.vatNr && form.vatNr !== vatNrFromOrgNr(form.orgNr)) ||
+              ["vatNr", "reference", "poNumber", "invoiceEmail", "invoiceAddress", "invoicePostalCode", "invoiceCity"].some((key) => errors[key])
+            )}
+          >
             <div data-field="vatNr">
               <FormInput
                 label="Momsregistreringsnummer"
@@ -490,66 +524,112 @@ function CheckoutForm({
                 error={errors.vatNr}
               />
             </div>
-          </div>
-          <div className="grid gap-4 sm:grid-cols-2">
-            <div data-field="reference">
-              <FormInput
-                label="Er referens"
-                type="text"
-                optional
-                placeholder="Anna Andersson"
-                hint="Namnet på beställaren visas på betalningsunderlaget"
-                value={form.reference}
-                onChange={handleChange("reference")}
-                error={errors.reference}
-              />
+            <div className="grid gap-4 sm:grid-cols-2">
+              <div data-field="reference">
+                <FormInput
+                  label="Er referens"
+                  type="text"
+                  optional
+                  placeholder="Anna Andersson"
+                  value={form.reference}
+                  onChange={handleChange("reference")}
+                  error={errors.reference}
+                />
+              </div>
+              <div data-field="poNumber">
+                <FormInput
+                  label="Inköpsordernr / kostnadsställe"
+                  type="text"
+                  optional
+                  placeholder="PO-12345"
+                  value={form.poNumber}
+                  onChange={handleChange("poNumber")}
+                  error={errors.poNumber}
+                />
+              </div>
             </div>
-            <div data-field="poNumber">
-              <FormInput
-                label="Inköpsordernr / kostnadsställe"
-                type="text"
-                optional
-                placeholder="PO-12345"
-                value={form.poNumber}
-                onChange={handleChange("poNumber")}
-                error={errors.poNumber}
+            <label className="flex min-h-11 cursor-pointer items-center gap-3 text-sm">
+              <input
+                type="checkbox"
+                className="h-4 w-4 shrink-0 accent-navy"
+                checked={separateInvoiceEmail}
+                onChange={(e) => {
+                  setSeparateInvoiceEmail(e.target.checked)
+                  setForm((prev) => ({
+                    ...prev,
+                    invoiceEmail: e.target.checked ? "" : prev.email,
+                  }))
+                  setErrors((prev) => ({ ...prev, invoiceEmail: null }))
+                }}
               />
+              Skicka betalningsunderlaget till en annan e-postadress
+            </label>
+            {separateInvoiceEmail && (
+              <div data-field="invoiceEmail">
+                <FormInput
+                  label="E-post för betalningsunderlag"
+                  type="email"
+                  autoComplete="section-accounting email"
+                  placeholder="ekonomi@exempelindustri.se"
+                  hint="Till exempel företagets ekonomiavdelning"
+                  value={form.invoiceEmail}
+                  onChange={handleChange("invoiceEmail")}
+                  error={errors.invoiceEmail}
+                />
+              </div>
+            )}
+            <div data-field="invoiceAddress">
+              <label className="flex min-h-11 cursor-pointer items-center gap-3 text-sm">
+                <input
+                  type="checkbox"
+                  checked={invoiceSame}
+                  onChange={(e) => setForm((prev) => ({
+                    ...prev, invoiceSameAsDelivery: e.target.checked,
+                  }))}
+                  className="h-4 w-4 shrink-0 accent-navy"
+                />
+                Adressen på betalningsunderlaget är samma som leveransadressen
+              </label>
+              {!invoiceSame && (
+                <div className="mt-4 flex flex-col gap-4">
+                  <FormInput
+                    label="Adress på betalningsunderlaget"
+                    type="text"
+                    autoComplete="billing street-address"
+                    placeholder="Box 123"
+                    value={form.invoiceAddress}
+                    onChange={handleChange("invoiceAddress")}
+                    error={errors.invoiceAddress}
+                  />
+                  <div className="grid gap-4 sm:grid-cols-2">
+                    <div data-field="invoicePostalCode">
+                      <FormInput
+                        label="Postnummer för betalningsunderlag"
+                        type="text"
+                        inputMode="numeric"
+                        autoComplete="billing postal-code"
+                        placeholder="123 45"
+                        value={form.invoicePostalCode}
+                        onChange={handleChange("invoicePostalCode")}
+                        error={errors.invoicePostalCode}
+                      />
+                    </div>
+                    <div data-field="invoiceCity">
+                      <FormInput
+                        label="Ort för betalningsunderlag"
+                        type="text"
+                        autoComplete="billing address-level2"
+                        placeholder="Stockholm"
+                        value={form.invoiceCity}
+                        onChange={handleChange("invoiceCity")}
+                        error={errors.invoiceCity}
+                      />
+                    </div>
+                  </div>
+                </div>
+              )}
             </div>
-          </div>
-          <label className="flex items-start gap-3 text-sm">
-            <input
-              type="checkbox"
-              className="mt-1"
-              checked={separateInvoiceEmail}
-              onChange={(e) => {
-                setSeparateInvoiceEmail(e.target.checked)
-                setForm((prev) => ({
-                  ...prev,
-                  invoiceEmail: e.target.checked ? "" : prev.email,
-                }))
-                setErrors((prev) => ({ ...prev, invoiceEmail: null }))
-              }}
-            />
-            Skicka betalningsunderlaget till en annan e-postadress
-          </label>
-          {!separateInvoiceEmail && (
-            <p className="text-xs text-text-mid">
-              Betalningsunderlaget skickas till beställarens e-postadress.
-            </p>
-          )}
-          {separateInvoiceEmail && (
-            <div data-field="invoiceEmail">
-              <FormInput
-                label="E-post för betalningsunderlag"
-                type="email"
-                placeholder="ekonomi@exempelindustri.se"
-                hint="Till exempel företagets ekonomiavdelning"
-                value={form.invoiceEmail}
-                onChange={handleChange("invoiceEmail")}
-                error={errors.invoiceEmail}
-              />
-            </div>
-          )}
+          </OptionalCheckoutFields>
         </div>
       </div>
 
@@ -560,6 +640,7 @@ function CheckoutForm({
           <FormInput
             label="Gatuadress"
             type="text"
+            autoComplete="shipping street-address"
             placeholder="Industrivägen 12"
             value={form.address}
             onChange={handleChange("address")}
@@ -571,6 +652,7 @@ function CheckoutForm({
                 label="Postnummer"
                 type="text"
                 inputMode="numeric"
+                autoComplete="shipping postal-code"
                 placeholder="123 45"
                 value={form.postalCode}
                 onChange={handleChange("postalCode")}
@@ -581,6 +663,7 @@ function CheckoutForm({
               <FormInput
                 label="Ort"
                 type="text"
+                autoComplete="shipping address-level2"
                 placeholder="Stockholm"
                 value={form.city}
                 onChange={handleChange("city")}
@@ -588,54 +671,64 @@ function CheckoutForm({
               />
             </div>
           </div>
-          <div className="grid gap-4 sm:grid-cols-2">
-            <FormInput
-              label="Godsmottagare / att"
-              type="text"
-              optional
-              placeholder="Lagret, Erik Svensson"
-              value={form.goodsRecipient}
-              onChange={handleChange("goodsRecipient")}
-              error={errors.goodsRecipient}
-            />
-            <FormInput
-              label="Portkod"
-              type="text"
-              optional
-              placeholder="1234"
-              value={form.doorCode}
-              onChange={handleChange("doorCode")}
-              error={errors.doorCode}
-            />
-          </div>
-          <div data-field="deliveryPhone">
-            <FormInput
-              label="Telefon till godsmottagningen"
-              type="tel"
-              optional
-              placeholder="Om annat än beställarens nummer"
-              hint="Chauffören ringer hit före leverans"
-              value={form.deliveryPhone}
-              onChange={handleChange("deliveryPhone")}
-              error={errors.deliveryPhone}
-            />
-          </div>
-          <div data-field="deliveryNote">
-            <FormTextarea
-              label="Leveransinstruktioner"
-              optional
-              placeholder="Infart från baksidan, ring vid grinden."
-              value={form.deliveryNote}
-              onChange={handleChange("deliveryNote")}
-              error={errors.deliveryNote}
-            />
-          </div>
+          <OptionalCheckoutFields
+            title="Lägg till leveransinstruktioner"
+            hint="Ange till exempel portkod eller en annan kontakt vid leverans."
+            reveal={Boolean(
+              form.goodsRecipient || form.doorCode || form.deliveryPhone || form.deliveryNote ||
+              ["goodsRecipient", "doorCode", "deliveryPhone", "deliveryNote"].some((key) => errors[key])
+            )}
+          >
+            <div className="grid gap-4 sm:grid-cols-2">
+              <FormInput
+                label="Godsmottagare / att"
+                type="text"
+                optional
+                placeholder="Lagret, Erik Svensson"
+                value={form.goodsRecipient}
+                onChange={handleChange("goodsRecipient")}
+                error={errors.goodsRecipient}
+              />
+              <FormInput
+                label="Portkod"
+                type="text"
+                optional
+                placeholder="1234"
+                value={form.doorCode}
+                onChange={handleChange("doorCode")}
+                error={errors.doorCode}
+              />
+            </div>
+            <div data-field="deliveryPhone">
+              <FormInput
+                label="Telefon till godsmottagningen"
+                type="tel"
+                optional
+                autoComplete="shipping tel"
+                placeholder="Om annat än beställarens nummer"
+                hint="Chauffören ringer hit före leverans"
+                value={form.deliveryPhone}
+                onChange={handleChange("deliveryPhone")}
+                error={errors.deliveryPhone}
+              />
+            </div>
+            <div data-field="deliveryNote">
+              <FormTextarea
+                label="Leveransinstruktioner"
+                optional
+                placeholder="Infart från baksidan, ring vid grinden."
+                value={form.deliveryNote}
+                onChange={handleChange("deliveryNote")}
+                error={errors.deliveryNote}
+              />
+            </div>
+          </OptionalCheckoutFields>
         </div>
       </div>
 
       {/* Lossning — batterierna går som pallgods */}
       <div data-field="unloading">
-        <SectionHeading note="Batterierna skickas på pall. Vet du hur de kan lossas hos er går leveransen snabbare — annars ringer vi och stämmer av.">
+        <SectionHeading note="Batterierna skickas på pall. Välj det som passar hos er, annars kontaktar vi er inför leveransen.">
           Lossning vid leverans{" "}
           <span className="text-base font-normal text-text-light">
             (valfritt)
@@ -676,63 +769,6 @@ function CheckoutForm({
         )}
       </div>
 
-      {/* Fakturaadress */}
-      <div data-field="invoiceAddress">
-        <SectionHeading>Adress på betalningsunderlaget</SectionHeading>
-        <label className="flex cursor-pointer items-center gap-3 rounded-xl border border-border bg-surface p-4">
-          <input
-            type="checkbox"
-            checked={invoiceSame}
-            onChange={(e) =>
-              setForm((prev) => ({
-                ...prev,
-                invoiceSameAsDelivery: e.target.checked,
-              }))
-            }
-            className="h-4 w-4 accent-navy"
-          />
-          <span className="text-sm font-medium text-text-dark">
-            Adressen är samma som leveransadressen
-          </span>
-        </label>
-
-        {!invoiceSame && (
-          <div className="mt-4 flex flex-col gap-4">
-            <FormInput
-              label="Adress på betalningsunderlaget"
-              type="text"
-              placeholder="Box 123"
-              value={form.invoiceAddress}
-              onChange={handleChange("invoiceAddress")}
-              error={errors.invoiceAddress}
-            />
-            <div className="grid gap-4 sm:grid-cols-2">
-              <div data-field="invoicePostalCode">
-                <FormInput
-                  label="Postnummer"
-                  type="text"
-                  inputMode="numeric"
-                  placeholder="123 45"
-                  value={form.invoicePostalCode}
-                  onChange={handleChange("invoicePostalCode")}
-                  error={errors.invoicePostalCode}
-                />
-              </div>
-              <div data-field="invoiceCity">
-                <FormInput
-                  label="Ort"
-                  type="text"
-                  placeholder="Stockholm"
-                  value={form.invoiceCity}
-                  onChange={handleChange("invoiceCity")}
-                  error={errors.invoiceCity}
-                />
-              </div>
-            </div>
-          </div>
-        )}
-      </div>
-
       {/* Leveranssätt */}
       <div>
         <SectionHeading>Leveranssätt</SectionHeading>
@@ -740,7 +776,7 @@ function CheckoutForm({
           <Truck size={20} className="text-text-mid" />
           <div className="flex-1">
             <div className="text-sm font-semibold text-text-dark">
-              PostNord — Företagsleverans (normalt 1–3 dagar)
+              PostNord, företagsleverans (normalt 1-3 dagar)
             </div>
             <div className="text-xs text-text-mid">
               Spårningsnummer mejlas när ordern skickats
@@ -780,6 +816,18 @@ function CheckoutForm({
         )}
       </div>
 
+      <div className="rounded-xl border border-border bg-surface p-4 text-sm text-text-mid">
+        <p className="font-semibold text-text-dark">
+          Beloppet reserveras nu och dras när ordern skickas.
+        </p>
+        <p className="mt-2">
+          Genom att slutföra köpet godkänner du våra{" "}
+          <Link href="/villkor" target="_blank" rel="noopener noreferrer" className="font-semibold text-navy underline">
+            köpvillkor
+          </Link>.
+        </p>
+      </div>
+
       {/* Submit */}
       <button
         type="submit"
@@ -794,10 +842,17 @@ function CheckoutForm({
         ) : (
           <>
             <Lock size={16} />
-            Slutför köp — {formatPrice(totalInclVat)} kr
+            Slutför köp - {formatPrice(totalInclVat)} kr
           </>
         )}
       </button>
+
+      <p className="-mt-3 text-center text-sm text-text-mid">
+        Behöver ni en offert eller stämma av betalningen?{" "}
+        <Link href="/offert" className="font-semibold text-navy underline underline-offset-2">
+          Begär offert på varukorgen
+        </Link>
+      </p>
 
       <div className="flex items-center justify-center gap-3">
         {["Visa", "Mastercard", "PostNord"].map((m) => (
@@ -815,7 +870,10 @@ function CheckoutForm({
 
 /* ───────────── Order summary sidebar ───────────── */
 function OrderSummary({ items, totalPrice, freeShipping }) {
-  const [expanded, setExpanded] = useState(true)
+  const [expanded, setExpanded] = useState(false)
+  const summaryId = useId()
+  const quantity = items.reduce((n, item) => n + item.qty, 0)
+  const { setIsOpen } = useCart()
   const { productsExcl, shippingExcl, vat, totalInclVat } = priceBreakdown(
     totalPrice,
     freeShipping,
@@ -827,16 +885,21 @@ function OrderSummary({ items, totalPrice, freeShipping }) {
       <button
         type="button"
         onClick={() => setExpanded(!expanded)}
+        aria-expanded={expanded}
+        aria-controls={summaryId}
         className="flex w-full items-center justify-between p-5 lg:hidden"
       >
         <span className="font-heading text-base font-bold text-text-dark">
-          Ordersammanfattning ({items.length})
+          {quantity} {quantity === 1 ? "batteri" : "batterier"}
         </span>
         <div className="flex items-center gap-2">
-          <span className="font-heading text-base font-extrabold text-text-dark">
-            {formatPrice(totalInclVat)} kr
+          <span className="text-right">
+            <span className="block font-heading text-base font-extrabold text-text-dark">
+              {formatPrice(totalInclVat)} kr
+            </span>
+            <span className="block text-xs text-text-mid">inkl. moms och frakt</span>
           </span>
-          {expanded ? <ChevronUp size={18} /> : <ChevronDown size={18} />}
+          {expanded ? <ChevronUp aria-hidden size={18} /> : <ChevronDown aria-hidden size={18} />}
         </div>
       </button>
 
@@ -848,7 +911,7 @@ function OrderSummary({ items, totalPrice, freeShipping }) {
       </div>
 
       {/* Collapsible content */}
-      <div className={`${expanded ? "block" : "hidden"} lg:block`}>
+      <div id={summaryId} className={`${expanded ? "block" : "hidden"} lg:block`}>
         {/* Products */}
         <div className="flex flex-col gap-3 p-5">
           {items.map((item) => (
@@ -875,6 +938,14 @@ function OrderSummary({ items, totalPrice, freeShipping }) {
             </div>
           ))}
         </div>
+
+        <button
+          type="button"
+          onClick={() => setIsOpen(true)}
+          className="mx-5 mb-4 min-h-11 text-sm font-semibold text-navy underline underline-offset-2"
+        >
+          Ändra antal i varukorgen
+        </button>
 
         {/* Totals — B2B: netto, moms, brutto */}
         <div className="border-t border-border p-5">
@@ -1137,7 +1208,7 @@ export default function CheckoutContent({ reviewPreview = false }) {
     <div className="bg-white">
       {/* Page header */}
       <div className="border-b border-border bg-surface">
-        <div className="mx-auto max-w-[1200px] px-4 pb-8 pt-10 sm:px-6">
+        <div className="mx-auto max-w-[1200px] px-4 py-5 sm:px-6 sm:py-8">
           <FadeIn>
             <div className="mb-2 text-xs font-bold uppercase tracking-widest text-amber-text">
               Kassa
@@ -1148,15 +1219,15 @@ export default function CheckoutContent({ reviewPreview = false }) {
             <div className="mt-4 inline-flex items-center gap-2 rounded-full border border-border bg-white px-4 py-2">
               <Building2 size={15} className="text-navy" />
               <span className="text-sm font-medium text-text-dark">
-                Företagsbeställning — alla priser visas exkl. moms
+                Företagsköp. Moms och frakt redovisas separat.
               </span>
             </div>
           </FadeIn>
         </div>
       </div>
 
-      <div className="mx-auto max-w-[1200px] px-4 py-10 sm:px-6 sm:py-14">
-        <div className="grid grid-cols-1 gap-10 lg:grid-cols-[1fr_400px]">
+      <div className="mx-auto max-w-[1200px] px-4 py-6 sm:px-6 sm:py-10">
+        <div className="grid grid-cols-1 gap-6 lg:grid-cols-[1fr_400px] lg:gap-10">
           {/* Right: Order summary */}
           <FadeIn delay={0.1} className="lg:col-start-2 lg:row-start-1">
             <div className="lg:sticky lg:top-6 lg:self-start">

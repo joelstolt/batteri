@@ -8,6 +8,7 @@ import {
   HelpCircle,
   MessageCircle,
 } from "lucide-react"
+import VerifiedBatteryPackage from "@/components/VerifiedBatteryPackage"
 import ProductCard from "@/components/ProductCard"
 import FadeIn from "@/components/FadeIn"
 import ChattKnapp from "@/components/ChattKnapp"
@@ -50,6 +51,7 @@ export default function MachinePageContent({ machine, products }) {
       </div>
 
       <div className="mx-auto max-w-[1200px] px-4 py-12 sm:px-6">
+        <VerifiedBatteryPackage machine={machine} product={products.find((product) => product.slug === "gf-12-076v")} />
         {machine.batteryEvidence && (
           <section className="mb-10 max-w-3xl rounded-2xl border border-border bg-surface p-6">
             <h2 className="font-heading text-xl font-bold text-navy">
@@ -187,7 +189,7 @@ export default function MachinePageContent({ machine, products }) {
                 Har vi rekommenderat batteriet står vi för bytet och frakten åt
                 båda hållen, utan returavdrag. Förpackningen ska vara obruten
                 och batteriet får inte ha kopplats in. Villkoren står under{" "}
-                <Link href="/villkor" className="text-navy underline">
+                <Link href="/villkor#6-passformsgaranti" className="text-navy underline">
                   passformsgarantin
                 </Link>
                 .

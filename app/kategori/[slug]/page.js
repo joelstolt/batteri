@@ -25,12 +25,12 @@ const CATEGORY_SEO = {
       "Truckbatteri 24V/48V och traktionsbatteri 6V/12V från Nordmax och Discover. Passformsgaranti.",
   },
   stadmaskiner: {
-    title: "Gelbatteri städmaskin & skurmaskin 12V — Batteriproffs",
+    title: "Batteri till städmaskin och skurmaskin | Batteriproffs",
     description:
-      "Gelbatterier för städmaskiner, skurmaskiner och poleringsmaskiner. Sonnenschein GF 6V/12V. Underhållsfria, snabb leverans.",
-    ogTitle: "Gelbatteri städmaskin & skurmaskin — Batteriproffs",
+      "Batterier till städmaskiner och skurmaskiner. Gel från Sonnenschein och öppna blybatterier från Nordmax. Jämför spänning, kapacitet, mått och poler.",
+    ogTitle: "Batteri till städmaskin och skurmaskin | Batteriproffs",
     ogDescription:
-      "Sonnenschein GF gelbatteri 6V/12V för städmaskiner och skurmaskiner. Underhållsfria med snabb leverans.",
+      "Gelbatterier och öppna blybatterier för städmaskiner. Kontrollera maskinvariant och laddare före köp.",
   },
   stationara: {
     title: "UPS batteri & backup batteri — Batteriproffs",

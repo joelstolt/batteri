@@ -1,0 +1,3015 @@
+{
+  "date": "2026-09-19",
+  "model": "gpt-6-astra",
+  "method": "public HTML only; pre-deploy snapshot",
+  "pages": [
+    {
+      "url": "https://www.batteriproffs.se/",
+      "status": 200,
+      "title": [
+        "Truckbatteri, traktionsbatteri & batteri till städmaskin | Batteriproffs"
+      ],
+      "meta": {
+        "": null,
+        "viewport": "width=device-width, initial-scale=1",
+        "description": "Traktionsbatterier och gelbatterier till truck, lift, pallyftare och städmaskin. Priser öppet på sajten, normalt 1–3 dagars leverans och offert på volym. Svar direkt i chatten, dygnet runt.",
+        "google-site-verification": "1vKK5ivGl-0FRnfRNTsD7sAW6TLncah2EOMI6yvKINs",
+        "og:title": "Batteriproffs — Fritidsbatteri, traktionsbatteri & truckbatteri",
+        "og:description": "Fritidsbatteri, traktionsbatteri, truckbatteri och gelbatteri för städmaskiner. Snabb leverans i hela Sverige.",
+        "og:url": "https://www.batteriproffs.se",
+        "og:site_name": "Batteriproffs",
+        "og:locale": "sv_SE",
+        "og:type": "website",
+        "twitter:card": "summary",
+        "twitter:title": "Batteriproffs — Fritidsbatteri, traktionsbatteri & truckbatteri",
+        "twitter:description": "Fritidsbatteri, traktionsbatteri, truckbatteri och gelbatteri för städmaskiner. Snabb leverans i hela Sverige.",
+        "next-size-adjust": ""
+      },
+      "canonical": "https://www.batteriproffs.se",
+      "lang": "sv",
+      "headings": [
+        [
+          "h1",
+          "Batteri till truck, lift och städmaskinbeställ före 14, skickas normalt samma dag"
+        ],
+        [
+          "h2",
+          "Traktionsbatterier och gelbatterier"
+        ],
+        [
+          "h2",
+          "Varför våra priser ser för bra ut"
+        ],
+        [
+          "h3",
+          "Det är inte ett Trojan"
+        ],
+        [
+          "h3",
+          "Vi har köpt från samma leverantör i över tjugo år"
+        ],
+        [
+          "h3",
+          "Vi säljer bara på nätet"
+        ],
+        [
+          "h3",
+          "Vi är nya och vill bli hittade"
+        ],
+        [
+          "h2",
+          "Senaste köp och omdömen"
+        ],
+        [
+          "h2",
+          "Två frågor, så vet du vilket batteri som passar"
+        ],
+        [
+          "h3",
+          "Hitta rätt batteri"
+        ],
+        [
+          "h2",
+          "Batterier till truck, städmaskin och UPS"
+        ],
+        [
+          "h3",
+          "Truckbatteri & Traktionsbatteri"
+        ],
+        [
+          "h3",
+          "Gelbatteri städmaskin"
+        ],
+        [
+          "h3",
+          "UPS batteri & backup"
+        ],
+        [
+          "h3",
+          "Fritidsbatteri & Husvagnsbatteri"
+        ],
+        [
+          "h2",
+          "Öppna priser. Smalt sortiment.Kompetens på riktigt."
+        ],
+        [
+          "h2",
+          "Osäker på vilket batteri maskinen tar?"
+        ],
+        [
+          "h3",
+          "Vet du inte vilket batteri som passar?"
+        ]
+      ],
+      "body_words_approx": 1149,
+      "links": [
+        "#innehall",
+        "/",
+        "/#kunder-rubrik",
+        "/atervinning",
+        "/batteri-till",
+        "/batterivatten",
+        "/faq",
+        "/foretagskund",
+        "/golfbilsbatteri",
+        "/husbilsbatteri",
+        "/husvagnsbatteri",
+        "/integritet",
+        "/kategori/alla",
+        "/kategori/fritid-solenergi",
+        "/kategori/stadmaskiner",
+        "/kategori/stationara",
+        "/kategori/traktion-industri",
+        "/kontakt",
+        "/konto",
+        "/kunskap",
+        "/laddare",
+        "/marinbatteri",
+        "/om-oss",
+        "/produkt/ev305a-a-am",
+        "/produkt/evgc6a-a-m8",
+        "/produkt/gf-06-180v",
+        "/produkt/gf-12-076v",
+        "/produkt/gf-12-105v",
+        "/produkt/gf-12-160v",
+        "/produkt/nm105-6et",
+        "/produkt/nm125-6et",
+        "/produkt/nml16h-et",
+        "/skotsel",
+        "/solcellsbatteri-12v",
+        "/vilket-batteri",
+        "/villkor",
+        "/villkor#3-frakt-och-leverans",
+        "/villkor#6-passformsgaranti",
+        "mailto:info@batteriproffs.se"
+      ],
+      "images_count": 12,
+      "images_missing_alt": 0,
+      "schema": [
+        {
+          "@context": "https://schema.org",
+          "@type": "Organization",
+          "@id": "https://www.batteriproffs.se/#organization",
+          "name": "Batteriproffs",
+          "url": "https://www.batteriproffs.se",
+          "logo": "https://www.batteriproffs.se/icon.svg",
+          "description": "Professionella batterilösningar för företag i hela Sverige — traktionsbatterier, gelbatterier och batterier till städmaskiner, liftar och truckar.",
+          "email": "info@batteriproffs.se",
+          "telephone": "+46766867752",
+          "areaServed": {
+            "@type": "Country",
+            "name": "Sverige"
+          },
+          "address": {
+            "@type": "PostalAddress",
+            "streetAddress": "Väringavägen 10",
+            "postalCode": "281 42",
+            "addressLocality": "Hässleholm",
+            "addressCountry": "SE"
+          },
+          "contactPoint": {
+            "@type": "ContactPoint",
+            "telephone": "+46766867752",
+            "email": "info@batteriproffs.se",
+            "contactType": "customer service",
+            "availableLanguage": [
+              "Swedish"
+            ],
+            "hoursAvailable": {
+              "@type": "OpeningHoursSpecification",
+              "dayOfWeek": [
+                "Monday",
+                "Tuesday",
+                "Wednesday",
+                "Thursday",
+                "Friday"
+              ],
+              "opens": "08:00",
+              "closes": "17:00"
+            }
+          }
+        },
+        {
+          "@context": "https://schema.org",
+          "@type": "WebSite",
+          "@id": "https://www.batteriproffs.se/#website",
+          "url": "https://www.batteriproffs.se",
+          "name": "Batteriproffs",
+          "inLanguage": "sv-SE",
+          "publisher": {
+            "@id": "https://www.batteriproffs.se/#organization"
+          }
+        }
+      ],
+      "headers": {
+        "Age": "1325",
+        "Cache-Control": "public, max-age=0, must-revalidate",
+        "Content-Length": "163225",
+        "Content-Type": "text/html; charset=utf-8",
+        "Date": "Sat, 19 Sep 2026 15:04:53 GMT",
+        "Etag": "\"2q0gtrnwx23hf4\"",
+        "Permissions-Policy": "camera=(), microphone=(), geolocation=(), interest-cohort=()",
+        "Referrer-Policy": "strict-origin-when-cross-origin",
+        "Server": "Vercel",
+        "Strict-Transport-Security": "max-age=63072000",
+        "Vary": "rsc, next-router-state-tree, next-router-prefetch, next-router-segment-prefetch",
+        "X-Content-Type-Options": "nosniff",
+        "X-Frame-Options": "SAMEORIGIN",
+        "X-Matched-Path": "/",
+        "X-Nextjs-Prerender": "1",
+        "X-Nextjs-Stale-Time": "300",
+        "X-Powered-By": "Next.js",
+        "X-Vercel-Cache": "HIT",
+        "X-Vercel-Id": "arn1::iad1::8kdwl-1789844003448-b609f8e9421d",
+        "Connection": "close"
+      },
+      "in_sitemap": true,
+      "text_excerpt": "Truckbatteri, traktionsbatteri & batteri till städmaskin | Batteriproffs Hoppa till innehåll Passformsgaranti Leverans normalt 1–3 arbetsdagar Verifierade omdömen Mitt konto Kundservice Inkl. moms / Exkl. moms (privat) ⚡ Batteri proffs Professionella batterilösningar Sök batteri, modellnr eller användningsområde... Chatta med oss Svar direkt, dygnet runt Varukorg Alla batterier Truck & Traktion Städmaskiner UPS & Backup Fritid & Husvagn Batteri till din maskin Öppna priser · verifierade köp Batteri till truck, lift och städmaskin beställ före 14, skickas normalt samma dag Traktionsbatterier och gelbatterier till truckar, saxliftar, städmaskiner och UPS. Priserna står öppet, leverans normalt 1–3 arbetsdagar, och chatten hjälper dig välja rätt. Vilken maskin har du? Priset står på varje produkt. Inga offertformulär. Frågor? Chatta med oss NM 6V 240Ah 6V · 240 Ah (C20) 2 295  kr Inkl. moms Se batteriet Mest sålda Traktionsbatterier och gelbatterier Visa alla produkter 6V Nordmax  ·  Öppet blybatteri  ·   6V NM 6V 240Ah 240 Ah (C20) 2 295 kr Inkl. moms Beställningsbar från leverantör Senast köpt   2 sep.  · 4 st Köp Jämför 6V Nordmax  ·  Öppet blybatteri  ·   6V NM 6V 420Ah 420 Ah (C20) 3 995 kr Inkl. moms Beställningsbar från leverantör Köp Jämför 6V Discover  ·  AGM / Dry Cell  ·   6V Dry Cell 6V 330Ah 330 Ah (C20) 5 195 kr Inkl. moms Beställningsbar från leverantör Köp Jämför 6V Nordmax  ·  Öppet blybatteri  ·   6V NM 6V 225Ah 225 Ah (C20) 2 195 kr Inkl. moms Beställningsbar från leverantör Senast köpt   19 sep.  · 4 st Köp Jämför 12V Sonnenschein  ·  Gelbatteri  ·   12V GF 12V 105Ah 105 Ah (C5) / 120 Ah (C20) 4 495 kr Inkl. moms Beställningsbar från leverantör Köp Jämför 12V Sonnenschein  ·  Gelbatteri  ·   12V GF 12V 160Ah 160 Ah (C5) / 196 Ah (C20) 6 595 kr Inkl. moms Beställningsbar från leverantör Köp Jämför 6V Discover  ·  AGM / Dry Cell  ·   6V Dry Cell 6V 220Ah 220 Ah (C20) 3 295 kr Inkl. moms Beställningsbar från leverantör Köp Jämför Varför våra priser ser för bra ut Ett Trojan T-105 kostar runt 4 700 kr hos de flesta svenska återförsäljare. Vår motsvarighet kostar 2 195 kr. Det är en tillräckligt stor skillnad för att man ska undra var haken sitter, så vi förklarar den. Det är inte ett Trojan Vi säljer likvärdiga batterier från Nordmax, Discover och Sonnenschein. Samma mått, samma spänning, samma kapacitet, byggda för samma användning. Trojan är ett amerikanskt varumärke med lång historia i branschen, och en stor del av prisskillnaden är det namnet snarare än batteriet. Vi har köpt från samma leverantör i över tjugo år Den relationen ger inköpspriser som en ny aktör inte kommer i närheten av. Vi låter skillnaden gå vidare till dig i stället för att lägga den på marginalen. Vi säljer bara på nätet Ingen butikslokal, inga säljare ute på vägarna. Det är kostnader som annars hamnar i priset på batteriet. Vi är nya och vill bli hittade Vi nöjer oss med mindre per batteri för att fler ska upptäcka oss. Det är ett medvetet val, inte ett tecken på att något är fel med produkten. Vad du får är ett batteri som passar i samma utrymme, i samma maskin, med samma spänning och kapacitet, till ungefär halva priset. Vad du inte får är namnet Trojan på etiketten. Tycker du att namnet är värt mellanskillnaden ska du köpa Trojan. Är du osäker på om ett likvärdigt batteri passar just din maskin, chatta med oss med maskinens fabrikat och modell. Vi svarar själva. Chatta med oss Verifierade köp Senaste köp och omdömen Senaste köp NM 6V 225Ah  ·  4  st 19 september Verifierat NM 6V 240Ah  ·  4  st 2 september Verifierat GF 6V 180Ah  ·  4  st 1 september Verifierat Hämtas ur vårt ordersystem. Visas utan namn och belopp. Verifierat köp 5  av 5 stjärnor, utan kommentar. Christer Hedlund  ·  september 2026 GF 12V 76Ah Bara verifierade köpare kan lämna omdöme. Alla granskas innan de publiceras, texterna ändras aldrig. Osäker på vilket batteri? Två frågor, så vet du vilket batteri som passar Välj vad batteriet ska driva och vilken spänning maskinen kräver, så visar vi vad vi har som passar. Vet du inte spänningen ringer du oss, då reder vi ut det på en minut. Eller sök direkt på din maskin → Hitta rätt batteri Steg 1 av 2 — Välj användningsområde 🏗️ Traktion & Industri Truckar · Golfbilar · Bygg 🧹 Städmaskiner Skurmaskiner · Poleringsmaskiner 🔋 Stationära Permobiler · Hissar · Larm ☀️ Fritid & Solenergi Husbil · Båt · Solceller Våra kategorier Batterier till truck, städmaskin och UPS 9  produkter Truckbatteri & Traktionsbatteri Truckar · Golfbilar · Entreprenad · Bygg Visa produkter 5  produkter Gelbatteri städmaskin Skurmaskiner · Poleringsmaskiner · Sopbilar Visa produkter 2  produkter UPS batteri & backup Reservkraft · Hissar · Larm · Sprinklersystem Visa produkter 4  produkter Fritidsbatteri & Husvagnsbatteri Husvagn · Husbil · Båt · 12V AGM och gel Visa produkter Varför Batteriproffs? Öppna priser. Smalt sortiment. Kompetens på riktigt. Vi säljer inte tusen olika produkter, vi säljer industribatterier och sätter ut priset direkt på sajten. Tysktillverkade gel-batterier från Sonnenschein, underhållsfria och byggda för daglig drift. Normalt 1–3 dagars leverans Order lagd före 14:00 skickas normalt samma dag och är oftast framme inom 1–3 arbetsdagar. Vid restnotering eller pallbokning kan det ta längre — vi hör av oss om något drar ut. Öppna priser, långt under märkespriset Priset står på varje produkt, inga offertformulär. Ett likvärdigt batteri till Trojan T-105 kostar 2 195 kr hos oss — jämför gärna med vad märkesåterförsäljarna tar. Svar direkt, dygnet runt Chatten kan hela sortimentet: pris, passform, frakt. Behövs en människa tar vi över i chatten eller svarar per mejl inom några timmar på vardagar. Byggt för företagsköp Pris exkl. moms med ett klick, orgnr och referens på kvittot, lossningsval för pallgods. Större beställning? Chatta med oss för volympriser. Tre löften 01 Öppna priser Står på varje produkt, långt under märkespriset 02 Snabbast ut Skickas normalt samma dag vid order före kl. 14 03 Svar direkt Chatten svarar dygnet runt, en människa tar över vid behov Hjälp att välja Osäker på vilket batteri maskinen tar? Skriv maskinens modellbeteckning och märkspänning i chatten, eller mejla en bild på etiketten på batteriet som sitter i nu. Vi säljer bara batterier, inga mellanhänder. Chatta med oss Svar direkt, dygnet runt. Vi reder ut spänning, mått och passform medan du har maskinen framför dig. Öppna chatten → Offert och faktura Större volym eller återkommande behov? Vi tar fram offert. Fakturaköp går via oss — hör av dig så löser vi det. Begär offert → Sök på din maskin Nilfisk, Hako, Kärcher, JLG, Genie, Club Car och fler. Saxliftar, pallyftare och golfbilar med batteriet som passar. Se alla maskiner → Hellre skriva?  info@batteriproffs.se Vet du inte vilket batteri som passar? Berätta vilken maskin du har så hjälper vi dig hitta rätt — snabbt, enkelt och utan kostnad. Vi finns här mån–fre 08:00–17:00. Chatta med oss Skicka mejl"
+    },
+    {
+      "url": "https://www.batteriproffs.se/kategori/traktion-industri",
+      "status": 200,
+      "title": [
+        "Truckbatteri & Traktionsbatteri 6V/12V — Batteriproffs"
+      ],
+      "meta": {
+        "": null,
+        "viewport": "width=device-width, initial-scale=1",
+        "description": "Köp truckbatteri och traktionsbatteri 6V/12V från 120–420 Ah. Nordmax, Discover Dry Cell. Snabb leverans i hela Sverige.",
+        "google-site-verification": "1vKK5ivGl-0FRnfRNTsD7sAW6TLncah2EOMI6yvKINs",
+        "og:title": "Truckbatteri & Traktionsbatteri — Batteriproffs",
+        "og:description": "Truckbatteri 24V/48V och traktionsbatteri 6V/12V från Nordmax och Discover. Passformsgaranti.",
+        "twitter:card": "summary",
+        "twitter:title": "Truckbatteri & Traktionsbatteri — Batteriproffs",
+        "twitter:description": "Truckbatteri 24V/48V och traktionsbatteri 6V/12V från Nordmax och Discover. Passformsgaranti.",
+        "next-size-adjust": ""
+      },
+      "canonical": "https://www.batteriproffs.se/kategori/traktion-industri",
+      "lang": "sv",
+      "headings": [
+        [
+          "h2",
+          "Vet du vad batteriet ska sitta i?"
+        ],
+        [
+          "h3",
+          "Vet du inte vilket batteri som passar?"
+        ]
+      ],
+      "body_words_approx": 134,
+      "links": [
+        "#innehall",
+        "/",
+        "/#kunder-rubrik",
+        "/atervinning",
+        "/batteri-till",
+        "/batterivatten",
+        "/faq",
+        "/foretagskund",
+        "/golfbilsbatteri",
+        "/husbilsbatteri",
+        "/husvagnsbatteri",
+        "/integritet",
+        "/kategori/alla",
+        "/kategori/fritid-solenergi",
+        "/kategori/stadmaskiner",
+        "/kategori/stationara",
+        "/kategori/traktion-industri",
+        "/kontakt",
+        "/konto",
+        "/kunskap",
+        "/laddare",
+        "/marinbatteri",
+        "/om-oss",
+        "/skotsel",
+        "/solcellsbatteri-12v",
+        "/vilket-batteri",
+        "/villkor",
+        "/villkor#3-frakt-och-leverans",
+        "/villkor#6-passformsgaranti",
+        "mailto:info@batteriproffs.se"
+      ],
+      "images_count": 0,
+      "images_missing_alt": 0,
+      "schema": [
+        {
+          "@context": "https://schema.org",
+          "@type": "BreadcrumbList",
+          "itemListElement": [
+            {
+              "@type": "ListItem",
+              "position": 1,
+              "name": "Hem",
+              "item": "https://www.batteriproffs.se/"
+            },
+            {
+              "@type": "ListItem",
+              "position": 2,
+              "name": "Truckbatteri & Traktionsbatteri",
+              "item": "https://www.batteriproffs.se/kategori/traktion-industri"
+            }
+          ]
+        }
+      ],
+      "headers": {
+        "Age": "1325",
+        "Cache-Control": "public, max-age=0, must-revalidate",
+        "Content-Length": "77189",
+        "Content-Type": "text/html; charset=utf-8",
+        "Date": "Sat, 19 Sep 2026 05:39:49 GMT",
+        "Etag": "\"jha4jofqud1neo\"",
+        "Permissions-Policy": "camera=(), microphone=(), geolocation=(), interest-cohort=()",
+        "Referrer-Policy": "strict-origin-when-cross-origin",
+        "Server": "Vercel",
+        "Strict-Transport-Security": "max-age=63072000",
+        "Vary": "rsc, next-router-state-tree, next-router-prefetch, next-router-segment-prefetch",
+        "X-Content-Type-Options": "nosniff",
+        "X-Frame-Options": "SAMEORIGIN",
+        "X-Matched-Path": "/kategori/traktion-industri",
+        "X-Nextjs-Prerender": "1",
+        "X-Nextjs-Stale-Time": "300",
+        "X-Powered-By": "Next.js",
+        "X-Vercel-Cache": "HIT",
+        "X-Vercel-Id": "arn1::iad1::755qr-1789844003768-4c33a5474bcb",
+        "Connection": "close"
+      },
+      "in_sitemap": true,
+      "text_excerpt": "Truckbatteri & Traktionsbatteri 6V/12V — Batteriproffs Hoppa till innehåll Passformsgaranti Leverans normalt 1–3 arbetsdagar Verifierade omdömen Mitt konto Kundservice Inkl. moms / Exkl. moms (privat) ⚡ Batteri proffs Professionella batterilösningar Sök batteri, modellnr eller användningsområde... Chatta med oss Svar direkt, dygnet runt Varukorg Alla batterier Truck & Traktion Städmaskiner UPS & Backup Fritid & Husvagn Batteri till din maskin          Vet du vad batteriet ska sitta i? Då är det oftast snabbare att utgå från användningen än från kategorin. Sidorna nedan visar bara de batterier som passar, med råd om kapacitet och montering. Golfbilsbatteri till 36V och 48V Golfbilar och utilityfordon Vet du inte vilket batteri som passar? Berätta vilken maskin du har så hjälper vi dig hitta rätt — snabbt, enkelt och utan kostnad. Vi finns här mån–fre 08:00–17:00. Chatta med oss Skicka mejl"
+    },
+    {
+      "url": "https://www.batteriproffs.se/kategori/stadmaskiner",
+      "status": 200,
+      "title": [
+        "Gelbatteri städmaskin & skurmaskin 12V — Batteriproffs"
+      ],
+      "meta": {
+        "": null,
+        "viewport": "width=device-width, initial-scale=1",
+        "description": "Gelbatterier för städmaskiner, skurmaskiner och poleringsmaskiner. Sonnenschein GF 6V/12V. Underhållsfria, snabb leverans.",
+        "google-site-verification": "1vKK5ivGl-0FRnfRNTsD7sAW6TLncah2EOMI6yvKINs",
+        "og:title": "Gelbatteri städmaskin & skurmaskin — Batteriproffs",
+        "og:description": "Sonnenschein GF gelbatteri 6V/12V för städmaskiner och skurmaskiner. Underhållsfria med snabb leverans.",
+        "twitter:card": "summary",
+        "twitter:title": "Gelbatteri städmaskin & skurmaskin — Batteriproffs",
+        "twitter:description": "Sonnenschein GF gelbatteri 6V/12V för städmaskiner och skurmaskiner. Underhållsfria med snabb leverans.",
+        "next-size-adjust": ""
+      },
+      "canonical": "https://www.batteriproffs.se/kategori/stadmaskiner",
+      "lang": "sv",
+      "headings": [
+        [
+          "h3",
+          "Vet du inte vilket batteri som passar?"
+        ]
+      ],
+      "body_words_approx": 94,
+      "links": [
+        "#innehall",
+        "/",
+        "/#kunder-rubrik",
+        "/atervinning",
+        "/batteri-till",
+        "/batterivatten",
+        "/faq",
+        "/foretagskund",
+        "/golfbilsbatteri",
+        "/husbilsbatteri",
+        "/husvagnsbatteri",
+        "/integritet",
+        "/kategori/alla",
+        "/kategori/fritid-solenergi",
+        "/kategori/stadmaskiner",
+        "/kategori/stationara",
+        "/kategori/traktion-industri",
+        "/kontakt",
+        "/konto",
+        "/kunskap",
+        "/laddare",
+        "/marinbatteri",
+        "/om-oss",
+        "/skotsel",
+        "/solcellsbatteri-12v",
+        "/vilket-batteri",
+        "/villkor",
+        "/villkor#3-frakt-och-leverans",
+        "/villkor#6-passformsgaranti",
+        "mailto:info@batteriproffs.se"
+      ],
+      "images_count": 0,
+      "images_missing_alt": 0,
+      "schema": [
+        {
+          "@context": "https://schema.org",
+          "@type": "BreadcrumbList",
+          "itemListElement": [
+            {
+              "@type": "ListItem",
+              "position": 1,
+              "name": "Hem",
+              "item": "https://www.batteriproffs.se/"
+            },
+            {
+              "@type": "ListItem",
+              "position": 2,
+              "name": "Gelbatteri städmaskin",
+              "item": "https://www.batteriproffs.se/kategori/stadmaskiner"
+            }
+          ]
+        }
+      ],
+      "headers": {
+        "Age": "1325",
+        "Cache-Control": "public, max-age=0, must-revalidate",
+        "Content-Length": "74223",
+        "Content-Type": "text/html; charset=utf-8",
+        "Date": "Sat, 19 Sep 2026 05:39:48 GMT",
+        "Etag": "\"qtorm69z7o1l4c\"",
+        "Permissions-Policy": "camera=(), microphone=(), geolocation=(), interest-cohort=()",
+        "Referrer-Policy": "strict-origin-when-cross-origin",
+        "Server": "Vercel",
+        "Strict-Transport-Security": "max-age=63072000",
+        "Vary": "rsc, next-router-state-tree, next-router-prefetch, next-router-segment-prefetch",
+        "X-Content-Type-Options": "nosniff",
+        "X-Frame-Options": "SAMEORIGIN",
+        "X-Matched-Path": "/kategori/stadmaskiner",
+        "X-Nextjs-Prerender": "1",
+        "X-Nextjs-Stale-Time": "300",
+        "X-Powered-By": "Next.js",
+        "X-Vercel-Cache": "HIT",
+        "X-Vercel-Id": "arn1::iad1::snb6d-1789844004128-fe185e1d6611",
+        "Connection": "close"
+      },
+      "in_sitemap": true,
+      "text_excerpt": "Gelbatteri städmaskin & skurmaskin 12V — Batteriproffs Hoppa till innehåll Passformsgaranti Leverans normalt 1–3 arbetsdagar Verifierade omdömen Mitt konto Kundservice Inkl. moms / Exkl. moms (privat) ⚡ Batteri proffs Professionella batterilösningar Sök batteri, modellnr eller användningsområde... Chatta med oss Svar direkt, dygnet runt Varukorg Alla batterier Truck & Traktion Städmaskiner UPS & Backup Fritid & Husvagn Batteri till din maskin          Vet du inte vilket batteri som passar? Berätta vilken maskin du har så hjälper vi dig hitta rätt — snabbt, enkelt och utan kostnad. Vi finns här mån–fre 08:00–17:00. Chatta med oss Skicka mejl"
+    },
+    {
+      "url": "https://www.batteriproffs.se/kategori/stationara",
+      "status": 200,
+      "title": [
+        "UPS batteri & backup batteri — Batteriproffs"
+      ],
+      "meta": {
+        "": null,
+        "viewport": "width=device-width, initial-scale=1",
+        "description": "Stationära batterier för UPS, batteribackup och reservkraft. Driftsäker reservström för permobiler, hissar, larm och sprinklersystem.",
+        "google-site-verification": "1vKK5ivGl-0FRnfRNTsD7sAW6TLncah2EOMI6yvKINs",
+        "og:title": "UPS batteri & batteribackup — Batteriproffs",
+        "og:description": "UPS batteri, backup batteri och stationära batterier. Driftsäker reservkraft för larm, hissar och sprinklersystem.",
+        "twitter:card": "summary",
+        "twitter:title": "UPS batteri & batteribackup — Batteriproffs",
+        "twitter:description": "UPS batteri, backup batteri och stationära batterier. Driftsäker reservkraft för larm, hissar och sprinklersystem.",
+        "next-size-adjust": ""
+      },
+      "canonical": "https://www.batteriproffs.se/kategori/stationara",
+      "lang": "sv",
+      "headings": [
+        [
+          "h2",
+          "Vet du vad batteriet ska sitta i?"
+        ],
+        [
+          "h3",
+          "Vet du inte vilket batteri som passar?"
+        ]
+      ],
+      "body_words_approx": 139,
+      "links": [
+        "#innehall",
+        "/",
+        "/#kunder-rubrik",
+        "/atervinning",
+        "/batteri-till",
+        "/batterivatten",
+        "/faq",
+        "/foretagskund",
+        "/golfbilsbatteri",
+        "/husbilsbatteri",
+        "/husvagnsbatteri",
+        "/integritet",
+        "/kategori/alla",
+        "/kategori/fritid-solenergi",
+        "/kategori/stadmaskiner",
+        "/kategori/stationara",
+        "/kategori/traktion-industri",
+        "/kontakt",
+        "/konto",
+        "/kunskap",
+        "/laddare",
+        "/marinbatteri",
+        "/om-oss",
+        "/skotsel",
+        "/solcellsbatteri-12v",
+        "/vilket-batteri",
+        "/villkor",
+        "/villkor#3-frakt-och-leverans",
+        "/villkor#6-passformsgaranti",
+        "mailto:info@batteriproffs.se"
+      ],
+      "images_count": 0,
+      "images_missing_alt": 0,
+      "schema": [
+        {
+          "@context": "https://schema.org",
+          "@type": "BreadcrumbList",
+          "itemListElement": [
+            {
+              "@type": "ListItem",
+              "position": 1,
+              "name": "Hem",
+              "item": "https://www.batteriproffs.se/"
+            },
+            {
+              "@type": "ListItem",
+              "position": 2,
+              "name": "UPS batteri & backup",
+              "item": "https://www.batteriproffs.se/kategori/stationara"
+            }
+          ]
+        }
+      ],
+      "headers": {
+        "Age": "1325",
+        "Cache-Control": "public, max-age=0, must-revalidate",
+        "Content-Length": "77257",
+        "Content-Type": "text/html; charset=utf-8",
+        "Date": "Sat, 19 Sep 2026 05:39:49 GMT",
+        "Etag": "\"efhj16k1jy1ng8\"",
+        "Permissions-Policy": "camera=(), microphone=(), geolocation=(), interest-cohort=()",
+        "Referrer-Policy": "strict-origin-when-cross-origin",
+        "Server": "Vercel",
+        "Strict-Transport-Security": "max-age=63072000",
+        "Vary": "rsc, next-router-state-tree, next-router-prefetch, next-router-segment-prefetch",
+        "X-Content-Type-Options": "nosniff",
+        "X-Frame-Options": "SAMEORIGIN",
+        "X-Matched-Path": "/kategori/stationara",
+        "X-Nextjs-Prerender": "1",
+        "X-Nextjs-Stale-Time": "300",
+        "X-Powered-By": "Next.js",
+        "X-Vercel-Cache": "HIT",
+        "X-Vercel-Id": "arn1::iad1::nk4qn-1789844004408-e6f08ab277ba",
+        "Connection": "close"
+      },
+      "in_sitemap": true,
+      "text_excerpt": "UPS batteri & backup batteri — Batteriproffs Hoppa till innehåll Passformsgaranti Leverans normalt 1–3 arbetsdagar Verifierade omdömen Mitt konto Kundservice Inkl. moms / Exkl. moms (privat) ⚡ Batteri proffs Professionella batterilösningar Sök batteri, modellnr eller användningsområde... Chatta med oss Svar direkt, dygnet runt Varukorg Alla batterier Truck & Traktion Städmaskiner UPS & Backup Fritid & Husvagn Batteri till din maskin          Vet du vad batteriet ska sitta i? Då är det oftast snabbare att utgå från användningen än från kategorin. Sidorna nedan visar bara de batterier som passar, med råd om kapacitet och montering. Solcellsbatteri 12V till stuga, husvagn och båt Solceller, stuga och off grid Vet du inte vilket batteri som passar? Berätta vilken maskin du har så hjälper vi dig hitta rätt — snabbt, enkelt och utan kostnad. Vi finns här mån–fre 08:00–17:00. Chatta med oss Skicka mejl"
+    },
+    {
+      "url": "https://www.batteriproffs.se/kategori/fritid-solenergi",
+      "status": 200,
+      "title": [
+        "Fritidsbatteri & Husvagnsbatteri 12V — Batteriproffs"
+      ],
+      "meta": {
+        "": null,
+        "viewport": "width=device-width, initial-scale=1",
+        "description": "Fritidsbatteri 12V för husvagn, husbil och båt. AGM och gel från 100Ah. Snabb leverans och passformsgaranti.",
+        "google-site-verification": "1vKK5ivGl-0FRnfRNTsD7sAW6TLncah2EOMI6yvKINs",
+        "og:title": "Fritidsbatteri & Husvagnsbatteri 12V — Batteriproffs",
+        "og:description": "Fritidsbatteri 12V 100Ah och uppåt för husvagn, husbil och båt. AGM och gel — snabb leverans.",
+        "twitter:card": "summary",
+        "twitter:title": "Fritidsbatteri & Husvagnsbatteri 12V — Batteriproffs",
+        "twitter:description": "Fritidsbatteri 12V 100Ah och uppåt för husvagn, husbil och båt. AGM och gel — snabb leverans.",
+        "next-size-adjust": ""
+      },
+      "canonical": "https://www.batteriproffs.se/kategori/fritid-solenergi",
+      "lang": "sv",
+      "headings": [
+        [
+          "h2",
+          "Vet du vad batteriet ska sitta i?"
+        ],
+        [
+          "h3",
+          "Vet du inte vilket batteri som passar?"
+        ]
+      ],
+      "body_words_approx": 155,
+      "links": [
+        "#innehall",
+        "/",
+        "/#kunder-rubrik",
+        "/atervinning",
+        "/batteri-till",
+        "/batterivatten",
+        "/faq",
+        "/foretagskund",
+        "/golfbilsbatteri",
+        "/husbilsbatteri",
+        "/husvagnsbatteri",
+        "/integritet",
+        "/kategori/alla",
+        "/kategori/fritid-solenergi",
+        "/kategori/stadmaskiner",
+        "/kategori/stationara",
+        "/kategori/traktion-industri",
+        "/kontakt",
+        "/konto",
+        "/kunskap",
+        "/laddare",
+        "/marinbatteri",
+        "/om-oss",
+        "/skotsel",
+        "/solcellsbatteri-12v",
+        "/vilket-batteri",
+        "/villkor",
+        "/villkor#3-frakt-och-leverans",
+        "/villkor#6-passformsgaranti",
+        "mailto:info@batteriproffs.se"
+      ],
+      "images_count": 0,
+      "images_missing_alt": 0,
+      "schema": [
+        {
+          "@context": "https://schema.org",
+          "@type": "BreadcrumbList",
+          "itemListElement": [
+            {
+              "@type": "ListItem",
+              "position": 1,
+              "name": "Hem",
+              "item": "https://www.batteriproffs.se/"
+            },
+            {
+              "@type": "ListItem",
+              "position": 2,
+              "name": "Fritidsbatteri & Husvagnsbatteri",
+              "item": "https://www.batteriproffs.se/kategori/fritid-solenergi"
+            }
+          ]
+        }
+      ],
+      "headers": {
+        "Age": "1325",
+        "Cache-Control": "public, max-age=0, must-revalidate",
+        "Content-Length": "82290",
+        "Content-Type": "text/html; charset=utf-8",
+        "Date": "Sat, 19 Sep 2026 05:39:49 GMT",
+        "Etag": "\"j09dqxohmi1rbt\"",
+        "Permissions-Policy": "camera=(), microphone=(), geolocation=(), interest-cohort=()",
+        "Referrer-Policy": "strict-origin-when-cross-origin",
+        "Server": "Vercel",
+        "Strict-Transport-Security": "max-age=63072000",
+        "Vary": "rsc, next-router-state-tree, next-router-prefetch, next-router-segment-prefetch",
+        "X-Content-Type-Options": "nosniff",
+        "X-Frame-Options": "SAMEORIGIN",
+        "X-Matched-Path": "/kategori/fritid-solenergi",
+        "X-Nextjs-Prerender": "1",
+        "X-Nextjs-Stale-Time": "300",
+        "X-Powered-By": "Next.js",
+        "X-Vercel-Cache": "HIT",
+        "X-Vercel-Id": "arn1::iad1::gzwdt-1789844004694-4fb88b9a56be",
+        "Connection": "close"
+      },
+      "in_sitemap": true,
+      "text_excerpt": "Fritidsbatteri & Husvagnsbatteri 12V — Batteriproffs Hoppa till innehåll Passformsgaranti Leverans normalt 1–3 arbetsdagar Verifierade omdömen Mitt konto Kundservice Inkl. moms / Exkl. moms (privat) ⚡ Batteri proffs Professionella batterilösningar Sök batteri, modellnr eller användningsområde... Chatta med oss Svar direkt, dygnet runt Varukorg Alla batterier Truck & Traktion Städmaskiner UPS & Backup Fritid & Husvagn Batteri till din maskin          Vet du vad batteriet ska sitta i? Då är det oftast snabbare att utgå från användningen än från kategorin. Sidorna nedan visar bara de batterier som passar, med råd om kapacitet och montering. Husbilsbatteri och bodelsbatteri 12V Husbil och bodel Husvagnsbatteri 12V Husvagn Marinbatteri och båtbatteri 12V Båt och marin Solcellsbatteri 12V till stuga, husvagn och båt Solceller, stuga och off grid Vet du inte vilket batteri som passar? Berätta vilken maskin du har så hjälper vi dig hitta rätt — snabbt, enkelt och utan kostnad. Vi finns här mån–fre 08:00–17:00. Chatta med oss Skicka mejl"
+    },
+    {
+      "url": "https://www.batteriproffs.se/batteri-till/permobil",
+      "status": 200,
+      "title": [
+        "Batteri till Permobil och elrullstol | Batteriproffs"
+      ],
+      "meta": {
+        "": null,
+        "viewport": "width=device-width, initial-scale=1",
+        "description": "Gelbatterier 12V som passar Permobil och andra eldrivna rullstolar, 50 till 76 Ah. Slutna och spillsäkra, priser öppet på sajten och passformsgaranti på köpet.",
+        "google-site-verification": "1vKK5ivGl-0FRnfRNTsD7sAW6TLncah2EOMI6yvKINs",
+        "og:title": "Batteri till Permobil och elrullstol | Batteriproffs",
+        "og:description": "Gelbatterier 12V som passar Permobil och andra eldrivna rullstolar, 50 till 76 Ah. Slutna och spillsäkra, priser öppet på sajten och passformsgaranti på köpet.",
+        "og:url": "https://www.batteriproffs.se/batteri-till/permobil",
+        "og:site_name": "Batteriproffs",
+        "og:locale": "sv_SE",
+        "og:image": "https://www.batteriproffs.se/produkter/gf12076v.jpg",
+        "og:type": "website",
+        "twitter:card": "summary_large_image",
+        "twitter:title": "Batteri till Permobil och elrullstol | Batteriproffs",
+        "twitter:description": "Gelbatterier 12V som passar Permobil och andra eldrivna rullstolar, 50 till 76 Ah. Slutna och spillsäkra, priser öppet på sajten och passformsgaranti på köpet.",
+        "twitter:image": "https://www.batteriproffs.se/produkter/gf12076v.jpg",
+        "next-size-adjust": ""
+      },
+      "canonical": "https://www.batteriproffs.se/batteri-till/permobil",
+      "lang": "sv",
+      "headings": [
+        [
+          "h1",
+          "Batteri till Permobil"
+        ],
+        [
+          "h2",
+          "Batterialternativ att kontrollera för din variant"
+        ],
+        [
+          "h2",
+          "Vilken storlek sitter i din stol?"
+        ],
+        [
+          "h2",
+          "Kontrollera detta innan du beställer"
+        ],
+        [
+          "h2",
+          "Hittar du inte din modell?"
+        ],
+        [
+          "h2",
+          "Vanliga frågor"
+        ],
+        [
+          "h3",
+          "Vet du inte vilket batteri som passar?"
+        ]
+      ],
+      "body_words_approx": 787,
+      "links": [
+        "#innehall",
+        "/",
+        "/#kunder-rubrik",
+        "/atervinning",
+        "/batteri-till",
+        "/batterivatten",
+        "/faq",
+        "/foretagskund",
+        "/golfbilsbatteri",
+        "/husbilsbatteri",
+        "/husvagnsbatteri",
+        "/integritet",
+        "/kategori/alla",
+        "/kategori/fritid-solenergi",
+        "/kategori/stadmaskiner",
+        "/kategori/stationara",
+        "/kategori/traktion-industri",
+        "/kontakt",
+        "/konto",
+        "/kunskap",
+        "/laddare",
+        "/marinbatteri",
+        "/om-oss",
+        "/produkt/gf-12-050v",
+        "/produkt/gf-12-052y",
+        "/produkt/gf-12-063y",
+        "/produkt/gf-12-076v",
+        "/skotsel",
+        "/solcellsbatteri-12v",
+        "/vilket-batteri",
+        "/villkor",
+        "/villkor#3-frakt-och-leverans",
+        "/villkor#6-passformsgaranti",
+        "mailto:info@batteriproffs.se"
+      ],
+      "images_count": 4,
+      "images_missing_alt": 0,
+      "schema": [
+        {
+          "@context": "https://schema.org",
+          "@type": "ItemList",
+          "name": "Batteri till Permobil",
+          "description": "Permobil tillverkas i Timrå och drivs, som de flesta eldrivna rullstolar, av två 12V-batterier kopplade i serie till 24V. Batteriet måste vara slutet och spillsäkert eftersom det sitter tätt inpå brukaren. Kapaciteten är det som avgör räckvidden och det som skiljer modellerna åt.",
+          "numberOfItems": 4,
+          "itemListElement": [
+            {
+              "@type": "ListItem",
+              "position": 1,
+              "item": {
+                "@type": "Product",
+                "name": "Sonnenschein GF1276V – Gelbatteri 12V 76Ah",
+                "url": "https://www.batteriproffs.se/produkt/gf-12-076v",
+                "image": "https://www.batteriproffs.se/produkter/gf12076v.jpg",
+                "sku": "gf-12-076v",
+                "offers": {
+                  "@type": "Offer",
+                  "priceCurrency": "SEK",
+                  "price": 3195,
+                  "availability": "https://schema.org/InStock"
+                }
+              }
+            },
+            {
+              "@type": "ListItem",
+              "position": 2,
+              "item": {
+                "@type": "Product",
+                "name": "Sonnenschein GF1263Y – Gelbatteri 12V 63Ah",
+                "url": "https://www.batteriproffs.se/produkt/gf-12-063y",
+                "image": "https://www.batteriproffs.se/produkter/gf1263y.jpg",
+                "sku": "gf-12-063y",
+                "offers": {
+                  "@type": "Offer",
+                  "priceCurrency": "SEK",
+                  "price": 3295,
+                  "availability": "https://schema.org/InStock"
+                }
+              }
+            },
+            {
+              "@type": "ListItem",
+              "position": 3,
+              "item": {
+                "@type": "Product",
+                "name": "Sonnenschein GF1252Y – Gelbatteri 12V 52Ah",
+                "url": "https://www.batteriproffs.se/produkt/gf-12-052y",
+                "image": "https://www.batteriproffs.se/produkter/gf1252y.png",
+                "sku": "gf-12-052y",
+                "offers": {
+                  "@type": "Offer",
+                  "priceCurrency": "SEK",
+                  "price": 2695,
+                  "availability": "https://schema.org/InStock"
+                }
+              }
+            },
+            {
+              "@type": "ListItem",
+              "position": 4,
+              "item": {
+                "@type": "Product",
+                "name": "Sonnenschein GF1250V – Gelbatteri 12V 50Ah",
+                "url": "https://www.batteriproffs.se/produkt/gf-12-050v",
+                "image": "https://www.batteriproffs.se/produkter/gf12050v.jpg",
+                "sku": "gf-12-050v",
+                "offers": {
+                  "@type": "Offer",
+                  "priceCurrency": "SEK",
+                  "price": 2195,
+                  "availability": "https://schema.org/InStock"
+                }
+              }
+            }
+          ]
+        },
+        {
+          "@context": "https://schema.org",
+          "@type": "FAQPage",
+          "mainEntity": [
+            {
+              "@type": "Question",
+              "name": "Vad är det för batteri i en permobil?",
+              "acceptedAnswer": {
+                "@type": "Answer",
+                "text": "Två slutna 12V-batterier kopplade i serie, alltså ett 24V-system. De ska vara djupcykliga och spillsäkra, i praktiken gel eller AGM. Kapaciteten ligger vanligen mellan 50 och 80 Ah beroende på modell. Siffran med Ah på etiketten är den du ska matcha."
+              }
+            },
+            {
+              "@type": "Question",
+              "name": "Var kan jag byta batteri i min permobil?",
+              "acceptedAnswer": {
+                "@type": "Answer",
+                "text": "Batterierna sitter under sitsen och är åtkomliga utan specialverktyg på de flesta modeller, så bytet går att göra själv. Är stolen förskriven via regionen är det oftast hjälpmedelscentralen som står för både batteri och byte, och då ska du kontakta dem först. Har du köpt stolen själv skickar vi batterierna hem till dig."
+              }
+            },
+            {
+              "@type": "Question",
+              "name": "Hur länge räcker ett batteri på 100 Ah?",
+              "acceptedAnswer": {
+                "@type": "Answer",
+                "text": "Det beror på hur mycket drivsystemet drar. Vid ungefär 10 A i snitt räcker 100 Ah teoretiskt i tio timmar, men ett blybatteri ska inte urladdas under halva kapaciteten om det ska hålla i år. Räkna därför med runt hälften som användbar tid. Kyla drar ner det ytterligare, en kall vinterdag kan kosta 20 till 30 procent."
+              }
+            },
+            {
+              "@type": "Question",
+              "name": "Vad är skillnaden på AGM och vanligt batteri?",
+              "acceptedAnswer": {
+                "@type": "Answer",
+                "text": "Ett vanligt blybatteri är öppet, har flytande syra, avger gas vid laddning och kan läcka om det välter. Det hör inte hemma i en rullstol. AGM och gel är båda slutna och spillsäkra: AGM har syran bunden i en glasfibermatta, gel i en kiselgelé. Gel tål fler djupa urladdningar och klarar värme bättre, vilket är skälet till att vi lagerför gel."
+              }
+            }
+          ]
+        },
+        {
+          "@context": "https://schema.org",
+          "@type": "BreadcrumbList",
+          "itemListElement": [
+            {
+              "@type": "ListItem",
+              "position": 1,
+              "name": "Hem",
+              "item": "https://www.batteriproffs.se/"
+            },
+            {
+              "@type": "ListItem",
+              "position": 2,
+              "name": "Batteri till maskin",
+              "item": "https://www.batteriproffs.se/batteri-till"
+            },
+            {
+              "@type": "ListItem",
+              "position": 3,
+              "name": "Permobil",
+              "item": "https://www.batteriproffs.se/batteri-till/permobil"
+            }
+          ]
+        }
+      ],
+      "headers": {
+        "Age": "0",
+        "Cache-Control": "public, max-age=0, must-revalidate",
+        "Content-Length": "120391",
+        "Content-Type": "text/html; charset=utf-8",
+        "Date": "Sat, 19 Sep 2026 18:53:25 GMT",
+        "Etag": "\"832ryggyez2kbi\"",
+        "Permissions-Policy": "camera=(), microphone=(), geolocation=(), interest-cohort=()",
+        "Referrer-Policy": "strict-origin-when-cross-origin",
+        "Server": "Vercel",
+        "Strict-Transport-Security": "max-age=63072000",
+        "Vary": "rsc, next-router-state-tree, next-router-prefetch, next-router-segment-prefetch",
+        "X-Content-Type-Options": "nosniff",
+        "X-Frame-Options": "SAMEORIGIN",
+        "X-Matched-Path": "/batteri-till/permobil",
+        "X-Nextjs-Prerender": "1",
+        "X-Nextjs-Stale-Time": "300",
+        "X-Powered-By": "Next.js",
+        "X-Vercel-Cache": "REVALIDATED",
+        "X-Vercel-Id": "arn1::iad1::gxdxc-1789844004995-a5d8643a8178",
+        "Connection": "close"
+      },
+      "in_sitemap": true,
+      "text_excerpt": "Batteri till Permobil och elrullstol | Batteriproffs Hoppa till innehåll Passformsgaranti Leverans normalt 1–3 arbetsdagar Verifierade omdömen Mitt konto Kundservice Inkl. moms / Exkl. moms (privat) ⚡ Batteri proffs Professionella batterilösningar Sök batteri, modellnr eller användningsområde... Chatta med oss Svar direkt, dygnet runt Varukorg Alla batterier Truck & Traktion Städmaskiner UPS & Backup Fritid & Husvagn Batteri till din maskin          Permobil, elrullstol och elscooter Batteri till  Permobil Permobil tillverkas i Timrå och drivs, som de flesta eldrivna rullstolar, av två 12V-batterier kopplade i serie till 24V. Batteriet måste vara slutet och spillsäkert eftersom det sitter tätt inpå brukaren. Kapaciteten är det som avgör räckvidden och det som skiljer modellerna åt. Osäker på modellen? Chatta med oss Batterialternativ att kontrollera för din variant Kopplingarna nedan är inte verifierade för varje modellvariant. Bekräfta batterifack, systemspänning, kemi, poler och laddare innan du beställer. 12V Sonnenschein  ·  Gelbatteri  ·   12V GF 12V 76Ah 76 Ah (C5) / 86 Ah (C20) 5.0 ( 1 ) 3 195 kr Inkl. moms Beställningsbar från leverantör Senast köpt   6 aug.  · 2 st Köp Jämför 12V Sonnenschein  ·  Gelbatteri  ·   12V GF 12V 63Ah 63 Ah (C5) / 70 Ah (C20) 3 295 kr Inkl. moms Beställningsbar från leverantör Köp Jämför 12V Sonnenschein  ·  Gelbatteri  ·   12V GF 12V 52Ah 52 Ah (C5) / 60 Ah (C20) 2 695 kr Inkl. moms Beställningsbar från leverantör Köp Jämför 12V Sonnenschein  ·  Gelbatteri  ·   12V GF 12V 50Ah 50 Ah (C5) / 55 Ah (C20) 2 195 kr Inkl. moms Beställningsbar från leverantör Senast köpt   24 aug.  · 2 st Köp Jämför Vilken storlek sitter i din stol? Kapaciteten varierar med modell och med hur långt stolen är byggd för att gå. Vanligast är någonstans mellan 50 och 80 Ah per batteri. Vi listar hela det spannet här. Läs etiketten på det batteri som sitter i nu. Där står spänningen i volt och kapaciteten i amperetimmar, och det är de två siffrorna du ska matcha. Är etiketten oläslig, mät batteriet i millimeter i stället och ring med måtten. Kontrollera detta innan du beställer Systemspänningen.   Räkna antalet batterier som sitter i maskinen i dag och multiplicera med deras märkspänning. Sex 8V-batterier betyder ett 48V-system. Batterifackets mått.   Kapaciteten hjälper inte om batteriet inte får plats. Mät längd, bredd och höjd inklusive poler. Polernas placering.   Plus och minus måste sitta åt rätt håll för att kablaget ska räcka. Byt hela uppsättningen.   Ett nytt batteri i serie med gamla åldras i takt med de gamla. Halva besparingen försvinner. Passar det ändå inte byter vi.   Har vi rekommenderat batteriet står vi för bytet och frakten åt båda hållen, utan returavdrag. Förpackningen ska vara obruten och batteriet får inte ha kopplats in. Villkoren står under   passformsgarantin . Hittar du inte din modell? Vi har fler batterier i lager än vad som listas här, och sitter det en annan variant i din maskin hittar vi oftast en direkt ersättare. Ring med maskinens modellbeteckning och märkspänningen, eller fotografera etiketten på det batteri som sitter i nu och mejla bilden. Chatta med oss Skicka ett meddelande Vanliga frågor Vad är det för batteri i en permobil? Två slutna 12V-batterier kopplade i serie, alltså ett 24V-system. De ska vara djupcykliga och spillsäkra, i praktiken gel eller AGM. Kapaciteten ligger vanligen mellan 50 och 80 Ah beroende på modell. Siffran med Ah på etiketten är den du ska matcha. Var kan jag byta batteri i min permobil? Batterierna sitter under sitsen och är åtkomliga utan specialverktyg på de flesta modeller, så bytet går att göra själv. Är stolen förskriven via regionen är det oftast hjälpmedelscentralen som står för både batteri och byte, och då ska du kontakta dem först. Har du köpt stolen själv skickar vi batterierna hem till dig. Hur länge räcker ett batteri på 100 Ah? Det beror på hur mycket drivsystemet drar. Vid ungefär 10 A i snitt räcker 100 Ah teoretiskt i tio timmar, men ett blybatteri ska inte urladdas under halva kapaciteten om det ska hålla i år. Räkna därför med runt hälften som användbar tid. Kyla drar ner det ytterligare, en kall vinterdag kan kosta 20 till 30 procent. Vad är skillnaden på AGM och vanligt batteri? Ett vanligt blybatteri är öppet, har flytande syra, avger gas vid laddning och kan läcka om det välter. Det hör inte hemma i en rullstol. AGM och gel är båda slutna och spillsäkra: AGM har syran bunden i en glasfibermatta, gel i en kiselgelé. Gel tål fler djupa urladdningar och klarar värme bättre, vilket är skälet till att vi lagerför gel. Vet du inte vilket batteri som passar? Berätta vilken maskin du har så hjälper vi dig hitta rätt — snabbt, enkelt och utan kostnad. Vi finns här mån–fre 08:00–17:00. Chatta med oss Skicka mejl"
+    },
+    {
+      "url": "https://www.batteriproffs.se/batteri-till/nilfisk-sc401",
+      "status": 200,
+      "title": [
+        "Batteri till Nilfisk SC401 — Skurmaskin | Batteriproffs"
+      ],
+      "meta": {
+        "": null,
+        "viewport": "width=device-width, initial-scale=1",
+        "description": "Hjälp att identifiera rätt batteri. Ingen verifierad produktkoppling publiceras innan variant och passform har kontrollerats.",
+        "google-site-verification": "1vKK5ivGl-0FRnfRNTsD7sAW6TLncah2EOMI6yvKINs",
+        "og:title": "Batteri till Nilfisk SC401 — Skurmaskin | Batteriproffs",
+        "og:description": "Hjälp att identifiera rätt batteri. Ingen verifierad produktkoppling publiceras innan variant och passform har kontrollerats.",
+        "og:url": "https://www.batteriproffs.se/batteri-till/nilfisk-sc401",
+        "og:site_name": "Batteriproffs",
+        "og:locale": "sv_SE",
+        "og:type": "website",
+        "twitter:card": "summary",
+        "twitter:title": "Batteri till Nilfisk SC401 — Skurmaskin | Batteriproffs",
+        "twitter:description": "Hjälp att identifiera rätt batteri. Ingen verifierad produktkoppling publiceras innan variant och passform har kontrollerats.",
+        "next-size-adjust": ""
+      },
+      "canonical": "https://www.batteriproffs.se/batteri-till/nilfisk-sc401",
+      "lang": "sv",
+      "headings": [
+        [
+          "h1",
+          "Batteri till Nilfisk SC401"
+        ],
+        [
+          "h2",
+          "Batteriuppgifter från tillverkaren"
+        ],
+        [
+          "h2",
+          "Passformen behöver kontrolleras"
+        ],
+        [
+          "h2",
+          "Kontrollera detta innan du beställer"
+        ],
+        [
+          "h2",
+          "Hittar du inte din modell?"
+        ],
+        [
+          "h3",
+          "Vet du inte vilket batteri som passar?"
+        ]
+      ],
+      "body_words_approx": 410,
+      "links": [
+        "#innehall",
+        "/",
+        "/#kunder-rubrik",
+        "/atervinning",
+        "/batteri-till",
+        "/batterivatten",
+        "/faq",
+        "/foretagskund",
+        "/golfbilsbatteri",
+        "/husbilsbatteri",
+        "/husvagnsbatteri",
+        "/integritet",
+        "/kategori/alla",
+        "/kategori/fritid-solenergi",
+        "/kategori/stadmaskiner",
+        "/kategori/stationara",
+        "/kategori/traktion-industri",
+        "/kontakt",
+        "/konto",
+        "/kunskap",
+        "/laddare",
+        "/marinbatteri",
+        "/om-oss",
+        "/skotsel",
+        "/solcellsbatteri-12v",
+        "/vilket-batteri",
+        "/villkor",
+        "/villkor#3-frakt-och-leverans",
+        "/villkor#6-passformsgaranti",
+        "https://www.exidegroup.com/eu/sites/default/files/2026-08/260806_e_sonnenschein_gf-v_datasheet_en_rz.pdf",
+        "https://www.nilfisk.com/media/vhllzu2q/nilfisk_produktkatalog_2024.pdf#page=270",
+        "https://www.nilfisk.com/media/zhdba1pd/au-sc401-instructions-for-use.pdf#page=59",
+        "mailto:info@batteriproffs.se"
+      ],
+      "images_count": 0,
+      "images_missing_alt": 0,
+      "schema": [
+        {
+          "@context": "https://schema.org",
+          "@type": "ItemList",
+          "name": "Batteri till Nilfisk SC401",
+          "description": "SC401 med blybatterier har 24V-system och två 12V-batterier. Gel-, AGM- och våtbatteriutföranden förekommer. Kontrollera exakt maskinvariant; SC401 finns även med litiumbatteri.",
+          "numberOfItems": 0,
+          "itemListElement": []
+        },
+        {
+          "@context": "https://schema.org",
+          "@type": "BreadcrumbList",
+          "itemListElement": [
+            {
+              "@type": "ListItem",
+              "position": 1,
+              "name": "Hem",
+              "item": "https://www.batteriproffs.se/"
+            },
+            {
+              "@type": "ListItem",
+              "position": 2,
+              "name": "Batteri till maskin",
+              "item": "https://www.batteriproffs.se/batteri-till"
+            },
+            {
+              "@type": "ListItem",
+              "position": 3,
+              "name": "Nilfisk SC401",
+              "item": "https://www.batteriproffs.se/batteri-till/nilfisk-sc401"
+            }
+          ]
+        }
+      ],
+      "headers": {
+        "Age": "4390",
+        "Cache-Control": "public, max-age=0, must-revalidate",
+        "Content-Length": "86088",
+        "Content-Type": "text/html; charset=utf-8",
+        "Date": "Sat, 19 Sep 2026 11:42:41 GMT",
+        "Etag": "\"5yeoyudv641u70\"",
+        "Permissions-Policy": "camera=(), microphone=(), geolocation=(), interest-cohort=()",
+        "Referrer-Policy": "strict-origin-when-cross-origin",
+        "Server": "Vercel",
+        "Strict-Transport-Security": "max-age=63072000",
+        "Vary": "rsc, next-router-state-tree, next-router-prefetch, next-router-segment-prefetch",
+        "X-Content-Type-Options": "nosniff",
+        "X-Frame-Options": "SAMEORIGIN",
+        "X-Matched-Path": "/batteri-till/nilfisk-sc401",
+        "X-Nextjs-Prerender": "1",
+        "X-Nextjs-Stale-Time": "300",
+        "X-Powered-By": "Next.js",
+        "X-Vercel-Cache": "STALE",
+        "X-Vercel-Id": "arn1::iad1::62wgh-1789844006027-9ff2d3a4a337",
+        "Connection": "close"
+      },
+      "in_sitemap": true,
+      "text_excerpt": "Batteri till Nilfisk SC401 — Skurmaskin | Batteriproffs Hoppa till innehåll Passformsgaranti Leverans normalt 1–3 arbetsdagar Verifierade omdömen Mitt konto Kundservice Inkl. moms / Exkl. moms (privat) ⚡ Batteri proffs Professionella batterilösningar Sök batteri, modellnr eller användningsområde... Chatta med oss Svar direkt, dygnet runt Varukorg Alla batterier Truck & Traktion Städmaskiner UPS & Backup Fritid & Husvagn Batteri till din maskin          Skurmaskin Batteri till  Nilfisk SC401 SC401 med blybatterier har 24V-system och två 12V-batterier. Gel-, AGM- och våtbatteriutföranden förekommer. Kontrollera exakt maskinvariant; SC401 finns även med litiumbatteri. Osäker på modellen? Chatta med oss Batteriuppgifter från tillverkaren Batterifack 350 × 350 × 260 mm enligt SC401-manualen, engelsk sida 9 Gelutförande 2 × 12 V 76 Ah. Nilfisk artikel 80564310 Andra katalogutföranden 2 × 12 V 84 Ah AGM (1464853000) eller 2 × 12 V 85 Ah våtbatteri (80564800) Jämförelse med GF12076V Två batterier upptar nominellt 330 × 342 × 236 mm och har rätt spänning och C5-kapacitet för gelutförandet. Poler, kablage, infästning och laddarprogram återstår att kontrollera. Detta är ingen färdig passformsrekommendation. Nilfisk SC401: originalmanual, engelsk sida 9 Nilfisk produktkatalog: batteriutföranden Exide GF-V: jämförelseunderlag Passformen behöver kontrolleras Vi visar inget batteri som verifierad ersättare till den här modellen just nu.   Kontakta oss med maskinens modell och batteriets artikelnummer. Kontrollera detta innan du beställer Systemspänningen.   Räkna antalet batterier som sitter i maskinen i dag och multiplicera med deras märkspänning. Sex 8V-batterier betyder ett 48V-system. Batterifackets mått.   Kapaciteten hjälper inte om batteriet inte får plats. Mät längd, bredd och höjd inklusive poler. Polernas placering.   Plus och minus måste sitta åt rätt håll för att kablaget ska räcka. Byt hela uppsättningen.   Ett nytt batteri i serie med gamla åldras i takt med de gamla. Halva besparingen försvinner. Passar det ändå inte byter vi.   Har vi rekommenderat batteriet står vi för bytet och frakten åt båda hållen, utan returavdrag. Förpackningen ska vara obruten och batteriet får inte ha kopplats in. Villkoren står under   passformsgarantin . Hittar du inte din modell? Vi har fler batterier i lager än vad som listas här, och sitter det en annan variant i din maskin hittar vi oftast en direkt ersättare. Ring med maskinens modellbeteckning och märkspänningen, eller fotografera etiketten på det batteri som sitter i nu och mejla bilden. Chatta med oss Skicka ett meddelande Vet du inte vilket batteri som passar? Berätta vilken maskin du har så hjälper vi dig hitta rätt — snabbt, enkelt och utan kostnad. Vi finns här mån–fre 08:00–17:00. Chatta med oss Skicka mejl"
+    },
+    {
+      "url": "https://www.batteriproffs.se/batteri-till/karcher-br-40-25",
+      "status": 200,
+      "title": [
+        "Batteri till Kärcher BR 40/25 — Skurmaskin | Batteriproffs"
+      ],
+      "meta": {
+        "": null,
+        "viewport": "width=device-width, initial-scale=1",
+        "description": "Batterival för Kärcher BR 40/25. 1 alternativ att kontrollera från 3195 kr inkl. moms. Snabb leverans i hela Sverige och hjälp att välja rätt.",
+        "google-site-verification": "1vKK5ivGl-0FRnfRNTsD7sAW6TLncah2EOMI6yvKINs",
+        "og:title": "Batteri till Kärcher BR 40/25 — Skurmaskin | Batteriproffs",
+        "og:description": "Batterival för Kärcher BR 40/25. 1 alternativ att kontrollera från 3195 kr inkl. moms. Snabb leverans i hela Sverige och hjälp att välja rätt.",
+        "og:url": "https://www.batteriproffs.se/batteri-till/karcher-br-40-25",
+        "og:site_name": "Batteriproffs",
+        "og:locale": "sv_SE",
+        "og:image": "https://www.batteriproffs.se/produkter/gf12076v.jpg",
+        "og:type": "website",
+        "twitter:card": "summary_large_image",
+        "twitter:title": "Batteri till Kärcher BR 40/25 — Skurmaskin | Batteriproffs",
+        "twitter:description": "Batterival för Kärcher BR 40/25. 1 alternativ att kontrollera från 3195 kr inkl. moms. Snabb leverans i hela Sverige och hjälp att välja rätt.",
+        "twitter:image": "https://www.batteriproffs.se/produkter/gf12076v.jpg",
+        "next-size-adjust": ""
+      },
+      "canonical": "https://www.batteriproffs.se/batteri-till/karcher-br-40-25",
+      "lang": "sv",
+      "headings": [
+        [
+          "h1",
+          "Batteri till Kärcher BR 40/25"
+        ],
+        [
+          "h2",
+          "Batterialternativ att kontrollera för din variant"
+        ],
+        [
+          "h2",
+          "Kontrollera detta innan du beställer"
+        ],
+        [
+          "h2",
+          "Hittar du inte din modell?"
+        ],
+        [
+          "h3",
+          "Vet du inte vilket batteri som passar?"
+        ]
+      ],
+      "body_words_approx": 360,
+      "links": [
+        "#innehall",
+        "/",
+        "/#kunder-rubrik",
+        "/atervinning",
+        "/batteri-till",
+        "/batterivatten",
+        "/faq",
+        "/foretagskund",
+        "/golfbilsbatteri",
+        "/husbilsbatteri",
+        "/husvagnsbatteri",
+        "/integritet",
+        "/kategori/alla",
+        "/kategori/fritid-solenergi",
+        "/kategori/stadmaskiner",
+        "/kategori/stationara",
+        "/kategori/traktion-industri",
+        "/kontakt",
+        "/konto",
+        "/kunskap",
+        "/laddare",
+        "/marinbatteri",
+        "/om-oss",
+        "/produkt/gf-12-076v",
+        "/skotsel",
+        "/solcellsbatteri-12v",
+        "/vilket-batteri",
+        "/villkor",
+        "/villkor#3-frakt-och-leverans",
+        "/villkor#6-passformsgaranti",
+        "mailto:info@batteriproffs.se"
+      ],
+      "images_count": 1,
+      "images_missing_alt": 0,
+      "schema": [
+        {
+          "@context": "https://schema.org",
+          "@type": "ItemList",
+          "name": "Batteri till Kärcher BR 40/25",
+          "description": "Kärcher BR 40/25 används i butik och lättare industri. Kapaciteten på batteriet styr direkt hur stor yta maskinen hinner med per laddning.",
+          "numberOfItems": 1,
+          "itemListElement": [
+            {
+              "@type": "ListItem",
+              "position": 1,
+              "item": {
+                "@type": "Product",
+                "name": "Sonnenschein GF1276V – Gelbatteri 12V 76Ah",
+                "url": "https://www.batteriproffs.se/produkt/gf-12-076v",
+                "image": "https://www.batteriproffs.se/produkter/gf12076v.jpg",
+                "sku": "gf-12-076v",
+                "offers": {
+                  "@type": "Offer",
+                  "priceCurrency": "SEK",
+                  "price": 3195,
+                  "availability": "https://schema.org/InStock"
+                }
+              }
+            }
+          ]
+        },
+        {
+          "@context": "https://schema.org",
+          "@type": "BreadcrumbList",
+          "itemListElement": [
+            {
+              "@type": "ListItem",
+              "position": 1,
+              "name": "Hem",
+              "item": "https://www.batteriproffs.se/"
+            },
+            {
+              "@type": "ListItem",
+              "position": 2,
+              "name": "Batteri till maskin",
+              "item": "https://www.batteriproffs.se/batteri-till"
+            },
+            {
+              "@type": "ListItem",
+              "position": 3,
+              "name": "Kärcher BR 40/25",
+              "item": "https://www.batteriproffs.se/batteri-till/karcher-br-40-25"
+            }
+          ]
+        }
+      ],
+      "headers": {
+        "Age": "0",
+        "Cache-Control": "public, max-age=0, must-revalidate",
+        "Content-Length": "91298",
+        "Content-Type": "text/html; charset=utf-8",
+        "Date": "Sat, 19 Sep 2026 18:53:26 GMT",
+        "Etag": "\"89255xxlho1y6t\"",
+        "Permissions-Policy": "camera=(), microphone=(), geolocation=(), interest-cohort=()",
+        "Referrer-Policy": "strict-origin-when-cross-origin",
+        "Server": "Vercel",
+        "Strict-Transport-Security": "max-age=63072000",
+        "Vary": "rsc, next-router-state-tree, next-router-prefetch, next-router-segment-prefetch",
+        "X-Content-Type-Options": "nosniff",
+        "X-Frame-Options": "SAMEORIGIN",
+        "X-Matched-Path": "/batteri-till/karcher-br-40-25",
+        "X-Nextjs-Prerender": "1",
+        "X-Nextjs-Stale-Time": "300",
+        "X-Powered-By": "Next.js",
+        "X-Vercel-Cache": "REVALIDATED",
+        "X-Vercel-Id": "arn1::iad1::hf7fh-1789844006328-287683057391",
+        "Connection": "close"
+      },
+      "in_sitemap": true,
+      "text_excerpt": "Batteri till Kärcher BR 40/25 — Skurmaskin | Batteriproffs Hoppa till innehåll Passformsgaranti Leverans normalt 1–3 arbetsdagar Verifierade omdömen Mitt konto Kundservice Inkl. moms / Exkl. moms (privat) ⚡ Batteri proffs Professionella batterilösningar Sök batteri, modellnr eller användningsområde... Chatta med oss Svar direkt, dygnet runt Varukorg Alla batterier Truck & Traktion Städmaskiner UPS & Backup Fritid & Husvagn Batteri till din maskin          Skurmaskin Batteri till  Kärcher BR 40/25 Kärcher BR 40/25 används i butik och lättare industri. Kapaciteten på batteriet styr direkt hur stor yta maskinen hinner med per laddning. Osäker på modellen? Chatta med oss Batterialternativ att kontrollera för din variant Kopplingarna nedan är inte verifierade för varje modellvariant. Bekräfta batterifack, systemspänning, kemi, poler och laddare innan du beställer. 12V Sonnenschein  ·  Gelbatteri  ·   12V GF 12V 76Ah 76 Ah (C5) / 86 Ah (C20) 5.0 ( 1 ) 3 195 kr Inkl. moms Beställningsbar från leverantör Senast köpt   6 aug.  · 2 st Köp Jämför Kontrollera detta innan du beställer Systemspänningen.   Räkna antalet batterier som sitter i maskinen i dag och multiplicera med deras märkspänning. Sex 8V-batterier betyder ett 48V-system. Batterifackets mått.   Kapaciteten hjälper inte om batteriet inte får plats. Mät längd, bredd och höjd inklusive poler. Polernas placering.   Plus och minus måste sitta åt rätt håll för att kablaget ska räcka. Byt hela uppsättningen.   Ett nytt batteri i serie med gamla åldras i takt med de gamla. Halva besparingen försvinner. Passar det ändå inte byter vi.   Har vi rekommenderat batteriet står vi för bytet och frakten åt båda hållen, utan returavdrag. Förpackningen ska vara obruten och batteriet får inte ha kopplats in. Villkoren står under   passformsgarantin . Hittar du inte din modell? Vi har fler batterier i lager än vad som listas här, och sitter det en annan variant i din maskin hittar vi oftast en direkt ersättare. Ring med maskinens modellbeteckning och märkspänningen, eller fotografera etiketten på det batteri som sitter i nu och mejla bilden. Chatta med oss Skicka ett meddelande Vet du inte vilket batteri som passar? Berätta vilken maskin du har så hjälper vi dig hitta rätt — snabbt, enkelt och utan kostnad. Vi finns här mån–fre 08:00–17:00. Chatta med oss Skicka mejl"
+    },
+    {
+      "url": "https://www.batteriproffs.se/golfbilsbatteri",
+      "status": 200,
+      "title": [
+        "Golfbilsbatteri 6V och 8V till Club Car, E-Z-GO och Yamaha | Batteriproffs"
+      ],
+      "meta": {
+        "": null,
+        "viewport": "width=device-width, initial-scale=1",
+        "description": "Golfbilsbatteri i GC2- och GC8-format till 36V- och 48V-golfbilar. Direkt utbytbart mot originalet, med pris per batteri och för hela paketet. Från 2 195 kr inkl. moms.",
+        "google-site-verification": "1vKK5ivGl-0FRnfRNTsD7sAW6TLncah2EOMI6yvKINs",
+        "og:title": "Golfbilsbatteri 6V och 8V till Club Car, E-Z-GO och Yamaha | Batteriproffs",
+        "og:description": "Golfbilsbatteri i GC2- och GC8-format till 36V- och 48V-golfbilar. Direkt utbytbart mot originalet, med pris per batteri och för hela paketet. Från 2 195 kr inkl. moms.",
+        "og:url": "https://www.batteriproffs.se/golfbilsbatteri",
+        "og:site_name": "Batteriproffs",
+        "og:locale": "sv_SE",
+        "og:type": "website",
+        "twitter:card": "summary",
+        "twitter:title": "Golfbilsbatteri 6V och 8V till Club Car, E-Z-GO och Yamaha | Batteriproffs",
+        "twitter:description": "Golfbilsbatteri i GC2- och GC8-format till 36V- och 48V-golfbilar. Direkt utbytbart mot originalet, med pris per batteri och för hela paketet. Från 2 195 kr inkl. moms.",
+        "next-size-adjust": ""
+      },
+      "canonical": "https://www.batteriproffs.se/golfbilsbatteri",
+      "lang": "sv",
+      "headings": [
+        [
+          "h1",
+          "Golfbilsbatteri till 36V och 48V"
+        ],
+        [
+          "h2",
+          "6 batterier för det här"
+        ],
+        [
+          "h2",
+          "Vad ett helt batteribyte kostar"
+        ],
+        [
+          "h2",
+          "Så väljer du rätt"
+        ],
+        [
+          "h3",
+          "Räkna batterierna, inte voltsiffran på laddaren"
+        ],
+        [
+          "h3",
+          "Byt hela uppsättningen samtidigt"
+        ],
+        [
+          "h3",
+          "GC2 och GC8 är måttstandarder"
+        ],
+        [
+          "h3",
+          "Öppet eller slutet"
+        ],
+        [
+          "h2",
+          "Vanliga frågor"
+        ],
+        [
+          "h3",
+          "Passar batterierna min Club Car eller E-Z-GO?"
+        ],
+        [
+          "h3",
+          "Hur länge håller ett golfbilsbatteri?"
+        ],
+        [
+          "h3",
+          "Kan jag köpa ett enstaka batteri?"
+        ],
+        [
+          "h2",
+          "Vi säljer till företag"
+        ],
+        [
+          "h2",
+          "Passar det inte byter vi"
+        ],
+        [
+          "h2",
+          "Läs vidare"
+        ],
+        [
+          "h3",
+          "Vet du inte vilket batteri som passar?"
+        ]
+      ],
+      "body_words_approx": 734,
+      "links": [
+        "#innehall",
+        "/",
+        "/#kunder-rubrik",
+        "/atervinning",
+        "/batteri-till",
+        "/batterivatten",
+        "/ersatter/trojan-t-105",
+        "/faq",
+        "/foretagskund",
+        "/golfbilsbatteri",
+        "/husbilsbatteri",
+        "/husvagnsbatteri",
+        "/integritet",
+        "/kategori/alla",
+        "/kategori/fritid-solenergi",
+        "/kategori/stadmaskiner",
+        "/kategori/stationara",
+        "/kategori/traktion-industri",
+        "/kontakt",
+        "/konto",
+        "/kunskap",
+        "/laddare",
+        "/marinbatteri",
+        "/om-oss",
+        "/produkt/evgc6a-a-m8",
+        "/produkt/evgc8a-a-m8",
+        "/produkt/gf-06-180v",
+        "/produkt/nm105-6et",
+        "/produkt/nm125-6et",
+        "/produkt/nm875-8et",
+        "/skotsel",
+        "/solcellsbatteri-12v",
+        "/vilket-batteri",
+        "/villkor",
+        "/villkor#3-frakt-och-leverans",
+        "/villkor#6-passformsgaranti",
+        "mailto:info@batteriproffs.se"
+      ],
+      "images_count": 6,
+      "images_missing_alt": 0,
+      "schema": [
+        {
+          "@context": "https://schema.org",
+          "@type": "ItemList",
+          "name": "Golfbilsbatteri till 36V och 48V",
+          "description": "Sex batterier som ska bytas samtidigt blir en dyr affär om du betalar märkespris för vart och ett. Vi säljer traktionsbatterier i samma GC2- och GC8-format som sitter i Club Car, E-Z-GO och Yamaha från fabrik, till ungefär halva priset mot Trojan.",
+          "numberOfItems": 6,
+          "itemListElement": [
+            {
+              "@type": "ListItem",
+              "position": 1,
+              "item": {
+                "@type": "Product",
+                "name": "Nordmax NM105-6ET – Traktionsbatteri 6V 225Ah",
+                "url": "https://www.batteriproffs.se/produkt/nm105-6et",
+                "image": "https://www.batteriproffs.se/produkter/nm105-6et.jpg",
+                "sku": "nm105-6et",
+                "offers": {
+                  "@type": "Offer",
+                  "priceCurrency": "SEK",
+                  "price": 2195,
+                  "availability": "https://schema.org/InStock"
+                }
+              }
+            },
+            {
+              "@type": "ListItem",
+              "position": 2,
+              "item": {
+                "@type": "Product",
+                "name": "Nordmax NM125-6ET – Traktionsbatteri 6V 240Ah",
+                "url": "https://www.batteriproffs.se/produkt/nm125-6et",
+                "image": "https://www.batteriproffs.se/produkter/nm125-6et.jpg",
+                "sku": "nm125-6et",
+                "offers": {
+                  "@type": "Offer",
+                  "priceCurrency": "SEK",
+                  "price": 2295,
+                  "availability": "https://schema.org/InStock"
+                }
+              }
+            },
+            {
+              "@type": "ListItem",
+              "position": 3,
+              "item": {
+                "@type": "Product",
+                "name": "Nordmax NM875-8ET – Traktionsbatteri 8V 170Ah",
+                "url": "https://www.batteriproffs.se/produkt/nm875-8et",
+                "image": "https://www.batteriproffs.se/produkter/nm875-8et.jpg",
+                "sku": "nm875-8et",
+                "offers": {
+                  "@type": "Offer",
+                  "priceCurrency": "SEK",
+                  "price": 2695,
+                  "availability": "https://schema.org/OutOfStock"
+                }
+              }
+            },
+            {
+              "@type": "ListItem",
+              "position": 4,
+              "item": {
+                "@type": "Product",
+                "name": "Discover EVGC6A-A – Dry Cell Traktionsbatteri 6V 220Ah",
+                "url": "https://www.batteriproffs.se/produkt/evgc6a-a-m8",
+                "image": "https://www.batteriproffs.se/produkter/evgc6a.jpg",
+                "sku": "evgc6a-a-m8",
+                "offers": {
+                  "@type": "Offer",
+                  "priceCurrency": "SEK",
+                  "price": 3295,
+                  "availability": "https://schema.org/InStock"
+                }
+              }
+            },
+            {
+              "@type": "ListItem",
+              "position": 5,
+              "item": {
+                "@type": "Product",
+                "name": "Discover EVGC8A-A – Dry Cell Traktionsbatteri 8V 160Ah",
+                "url": "https://www.batteriproffs.se/produkt/evgc8a-a-m8",
+                "image": "https://www.batteriproffs.se/produkter/evgc8a.jpg",
+                "sku": "evgc8a-a-m8",
+                "offers": {
+                  "@type": "Offer",
+                  "priceCurrency": "SEK",
+                  "price": 3470,
+                  "availability": "https://schema.org/InStock"
+                }
+              }
+            },
+            {
+              "@type": "ListItem",
+              "position": 6,
+              "item": {
+                "@type": "Product",
+                "name": "Sonnenschein GF6180V – Gelbatteri 6V 180Ah",
+                "url": "https://www.batteriproffs.se/produkt/gf-06-180v",
+                "image": "https://www.batteriproffs.se/produkter/gf06180v.jpg",
+                "sku": "gf-06-180v",
+                "offers": {
+                  "@type": "Offer",
+                  "priceCurrency": "SEK",
+                  "price": 3960,
+                  "availability": "https://schema.org/InStock"
+                }
+              }
+            }
+          ]
+        },
+        {
+          "@context": "https://schema.org",
+          "@type": "BreadcrumbList",
+          "itemListElement": [
+            {
+              "@type": "ListItem",
+              "position": 1,
+              "name": "Hem",
+              "item": "https://www.batteriproffs.se/"
+            },
+            {
+              "@type": "ListItem",
+              "position": 2,
+              "name": "Golfbilsbatteri till 36V och 48V",
+              "item": "https://www.batteriproffs.se/golfbilsbatteri"
+            }
+          ]
+        }
+      ],
+      "headers": {
+        "Age": "34093",
+        "Cache-Control": "public, max-age=0, must-revalidate",
+        "Content-Length": "130138",
+        "Content-Type": "text/html; charset=utf-8",
+        "Date": "Sat, 19 Sep 2026 09:25:14 GMT",
+        "Etag": "\"eq0l1h5ceb2rtf\"",
+        "Permissions-Policy": "camera=(), microphone=(), geolocation=(), interest-cohort=()",
+        "Referrer-Policy": "strict-origin-when-cross-origin",
+        "Server": "Vercel",
+        "Strict-Transport-Security": "max-age=63072000",
+        "Vary": "rsc, next-router-state-tree, next-router-prefetch, next-router-segment-prefetch",
+        "X-Content-Type-Options": "nosniff",
+        "X-Frame-Options": "SAMEORIGIN",
+        "X-Matched-Path": "/golfbilsbatteri",
+        "X-Nextjs-Prerender": "1",
+        "X-Nextjs-Stale-Time": "300",
+        "X-Powered-By": "Next.js",
+        "X-Vercel-Cache": "STALE",
+        "X-Vercel-Id": "arn1::iad1::fn5kr-1789844007310-7635710a7ea1",
+        "Connection": "close"
+      },
+      "in_sitemap": true,
+      "text_excerpt": "Golfbilsbatteri 6V och 8V till Club Car, E-Z-GO och Yamaha | Batteriproffs Hoppa till innehåll Passformsgaranti Leverans normalt 1–3 arbetsdagar Verifierade omdömen Mitt konto Kundservice Inkl. moms / Exkl. moms (privat) ⚡ Batteri proffs Professionella batterilösningar Sök batteri, modellnr eller användningsområde... Chatta med oss Svar direkt, dygnet runt Varukorg Alla batterier Truck & Traktion Städmaskiner UPS & Backup Fritid & Husvagn Batteri till din maskin Golfbilar och utilityfordon Golfbilsbatteri till 36V och 48V Sex batterier som ska bytas samtidigt blir en dyr affär om du betalar märkespris för vart och ett. Vi säljer traktionsbatterier i samma GC2- och GC8-format som sitter i Club Car, E-Z-GO och Yamaha från fabrik, till ungefär halva priset mot Trojan. Osäker på vilket som passar? Chatta med oss 6  batterier för det här 6V Nordmax  ·  Öppet blybatteri  ·   6V NM 6V 225Ah 225 Ah (C20) 2 195 kr Inkl. moms Beställningsbar från leverantör Senast köpt   19 sep.  · 4 st Köp Jämför 6V Nordmax  ·  Öppet blybatteri  ·   6V NM 6V 240Ah 240 Ah (C20) 2 295 kr Inkl. moms Beställningsbar från leverantör Senast köpt   2 sep.  · 4 st Köp Jämför 8V Nordmax  ·  Öppet blybatteri  ·   8V NM 8V 170Ah 170 Ah (C20) 2 695 kr Inkl. moms Ej beställningsbar Slut för tillfället Jämför 6V Discover  ·  AGM / Dry Cell  ·   6V Dry Cell 6V 220Ah 220 Ah (C20) 3 295 kr Inkl. moms Beställningsbar från leverantör Köp Jämför 8V Discover  ·  AGM / Dry Cell  ·   8V Dry Cell 8V 160Ah 160 Ah (C20) 3 470 kr Inkl. moms Beställningsbar från leverantör Köp Jämför 6V Sonnenschein  ·  Gelbatteri  ·   6V GF 6V 180Ah 180 Ah (C5) / 200 Ah (C20) 3 960 kr Inkl. moms Beställningsbar från leverantör Senast köpt   1 sep.  · 4 st Köp Jämför Vad ett helt batteribyte kostar Alla batterier i en golfbil ska bytas samtidigt. Här är priset för hela uppsättningen, exklusive frakt. 36V-golfbil 6  ×  NM 6V 225Ah ,  sex 6V-batterier i serie 13 170 kr 2 195 kr  per batteri, inkl. moms Se batteriet 48V-golfbil 6  ×  NM 8V 170Ah ,  sex 8V-batterier i serie 16 170 kr 2 695 kr  per batteri, inkl. moms Se batteriet Så väljer du rätt Räkna batterierna, inte voltsiffran på laddaren Sitter det sex batterier med 6V vardera är det ett 36V-system. Sitter det sex med 8V är det 48V. Räkna alltid i bilen i stället för att gå på vad som står i annonsen, äldre golfbilar har ofta byggts om. Byt hela uppsättningen samtidigt Ett nytt batteri i serie med fem gamla laddas och urladdas i takt med de gamla, och tappar kapacitet därefter. Halva vinsten med det nya batteriet försvinner första säsongen. GC2 och GC8 är måttstandarder Batterierna har samma yttermått som originalen, så de går ner i befintligt batterifack utan att något behöver byggas om. Kontrollera bara att polerna sitter åt samma håll som på de gamla. Öppet eller slutet Öppna blybatterier håller längst och kostar minst, men kräver påfyllning av batterivatten några gånger per säsong. Ska bilen stå oskött, eller köras av flera personer, är gelbatteriet värt merkostnaden. Vanliga frågor Passar batterierna min Club Car eller E-Z-GO? Batterierna har samma format som originalen och byts rakt av i 36V- och 48V-bilar från Club Car, E-Z-GO och Yamaha. Ring med årsmodell och antal batterier i bilen så bekräftar vi innan du beställer. Hur länge håller ett golfbilsbatteri? Ett öppet traktionsbatteri som laddas efter varje användning och hålls påfyllt med batterivatten brukar klara fem till sju säsonger i klubbdrift. Batterier som får stå urladdade över vintern dör betydligt tidigare. Kan jag köpa ett enstaka batteri? Ja, men vi avråder om de andra suttit i mer än en säsong. Serien blir aldrig starkare än det svagaste batteriet. Vi säljer till företag Kassan är byggd för företag och kräver organisationsnummer. Är du privatperson går beställningen inte att slutföra på sajten, men ring eller mejla så löser vi köpet manuellt. Så handlar företag hos oss Passar det inte byter vi Har vi rekommenderat batteriet står vi för bytet och frakten åt båda hållen, utan returavdrag. Förpackningen ska vara obruten och batteriet får inte ha kopplats in. Läs passformsgarantin Läs vidare Alla traktionsbatterier Ersätter Trojan T-105 Batterivatten och påfyllning Vet du inte vilket batteri som passar? Berätta vilken maskin du har så hjälper vi dig hitta rätt — snabbt, enkelt och utan kostnad. Vi finns här mån–fre 08:00–17:00. Chatta med oss Skicka mejl"
+    },
+    {
+      "url": "https://www.batteriproffs.se/produkt/nm105-6et",
+      "status": 200,
+      "title": [
+        "Nordmax NM105-6ET Gelbatteri städmaskin 6V 225 Ah | Batteriproffs"
+      ],
+      "meta": {
+        "": null,
+        "viewport": "width=device-width, initial-scale=1",
+        "description": "Nordmax NM105-6ET är ett kraftfullt 6V 225Ah traktionsbatteri för golfbilar, liftar och städmaskiner. Hög cykeltålighet, Trojan-kompatibelt. Köp online.",
+        "keywords": "traktionsbatteri 6V 225Ah, Nordmax NM105, batteri golfbil 6V, ersätter Trojan T-105, liftbatteri 6V, städmaskinsbatteri",
+        "google-site-verification": "1vKK5ivGl-0FRnfRNTsD7sAW6TLncah2EOMI6yvKINs",
+        "og:title": "Nordmax NM105-6ET Gelbatteri städmaskin 6V 225 Ah | Batteriproffs",
+        "og:description": "Nordmax NM105-6ET är ett kraftfullt 6V 225Ah traktionsbatteri för golfbilar, liftar och städmaskiner. Hög cykeltålighet, Trojan-kompatibelt. Köp online.",
+        "og:image": "https://www.batteriproffs.se/produkter/nm105-6et.jpg",
+        "twitter:card": "summary_large_image",
+        "twitter:title": "Nordmax NM105-6ET Gelbatteri städmaskin 6V 225 Ah | Batteriproffs",
+        "twitter:description": "Nordmax NM105-6ET är ett kraftfullt 6V 225Ah traktionsbatteri för golfbilar, liftar och städmaskiner. Hög cykeltålighet, Trojan-kompatibelt. Köp online.",
+        "twitter:image": "https://www.batteriproffs.se/produkter/nm105-6et.jpg",
+        "next-size-adjust": ""
+      },
+      "canonical": "https://www.batteriproffs.se/produkt/nm105-6et",
+      "lang": "sv",
+      "headings": [
+        [
+          "h2",
+          "Användningsområden"
+        ],
+        [
+          "h2",
+          "Ersätter"
+        ],
+        [
+          "h2",
+          "Rekommenderad laddare"
+        ],
+        [
+          "h2",
+          "Underhåll"
+        ],
+        [
+          "h1",
+          "Nordmax NM105-6ET – Traktionsbatteri 6V 225Ah"
+        ],
+        [
+          "h2",
+          "Datablad, mått och poler"
+        ],
+        [
+          "h2",
+          "Beskrivning"
+        ],
+        [
+          "h2",
+          "Specifikationer"
+        ],
+        [
+          "h2",
+          "Användningsområden"
+        ],
+        [
+          "h2",
+          "Ersätter"
+        ],
+        [
+          "h2",
+          "Rekommenderad laddare"
+        ],
+        [
+          "h2",
+          "Underhåll"
+        ],
+        [
+          "h2",
+          "Liknande specifikationer"
+        ],
+        [
+          "h2",
+          "Varför är det billigare än Trojan?"
+        ],
+        [
+          "h3",
+          "Vet du inte vilket batteri som passar?"
+        ]
+      ],
+      "body_words_approx": 755,
+      "links": [
+        "#innehall",
+        "/",
+        "/#kunder-rubrik",
+        "/atervinning",
+        "/batteri-till",
+        "/batteri-till/genie-lift",
+        "/batteri-till/haulotte-lift",
+        "/batteri-till/jlg-saxlift",
+        "/batteri-till/pallyftare",
+        "/batterivatten",
+        "/ersatter/trojan-t-105",
+        "/faq",
+        "/foretagskund",
+        "/golfbilsbatteri",
+        "/husbilsbatteri",
+        "/husvagnsbatteri",
+        "/integritet",
+        "/kategori/alla",
+        "/kategori/fritid-solenergi",
+        "/kategori/stadmaskiner",
+        "/kategori/stationara",
+        "/kategori/traktion-industri",
+        "/kontakt",
+        "/konto",
+        "/kunskap",
+        "/laddare",
+        "/marinbatteri",
+        "/om-oss",
+        "/produkt/nm125-6et",
+        "/produkt/nm305g-et",
+        "/produkt/nml16h-et",
+        "/skotsel",
+        "/solcellsbatteri-12v",
+        "/vilket-batteri",
+        "/villkor",
+        "/villkor#3-frakt-och-leverans",
+        "/villkor#6-passformsgaranti",
+        "https://www.nordmaxbattery.com/ui/product-resources/oem/datasheet-nm105-6et-pdf-_-801409.pdf?att=False&hash=7E1B022F99E05583AA7B17DE13F00B53",
+        "mailto:info@batteriproffs.se"
+      ],
+      "images_count": 4,
+      "images_missing_alt": 0,
+      "schema": [
+        {
+          "@context": "https://schema.org",
+          "@type": "Product",
+          "name": "Nordmax NM105-6ET – Traktionsbatteri 6V 225Ah",
+          "image": "https://www.batteriproffs.se/produkter/nm105-6et.jpg",
+          "description": "Nordmax NM105-6ET är ett öppet traktionsbatteri med en kapacitet på 225 Ah (C20) och 6 volts spänning. Batteriet är konstruerat för cyklisk användning där hög tillförlitlighet och lång livslängd krävs – exempelvis i golfbilar, personliftar, pallyftare och självgående städmaskiner. Med en hög cyklingstålighet klarar NM105-6ET frekventa laddnings- och urladdningscykler utan att förlora kapacitet. Batteriets mått (260 × 180 × 279 mm) följer internationell standard och är direkt kompatibelt med Trojan T-105 – du kan byta rakt av utan anpassningar. Det robusta polypropylen-höljet skyddar mot stötar och vibrationer, medan de noggrant utvalda blyplattorna säkerställer jämn energileverans genom hela urladdningscykeln. Nordmax batterier är utformade för nordiska förhållanden och presterar även vid lägre temperaturer. NM105-6ET är ett så kallat våtbatteri (flooded/fritt ventilerat), vilket innebär att batteriets elektrolyt är flytande. Detta kräver regelbunden kontroll och påfyllning av destillerat vatten, men ger i gengäld längre total livslängd och lägre inköpskostnad jämfört med underhållsfria alternativ.",
+          "sku": "nm105-6et",
+          "mpn": "NM105-6ET",
+          "brand": {
+            "@type": "Brand",
+            "name": "Nordmax"
+          },
+          "offers": {
+            "@type": "Offer",
+            "url": "https://www.batteriproffs.se/produkt/nm105-6et",
+            "priceCurrency": "SEK",
+            "price": 2195,
+            "itemCondition": "https://schema.org/NewCondition",
+            "availability": "https://schema.org/InStock",
+            "shippingDetails": {
+              "@type": "OfferShippingDetails",
+              "shippingRate": {
+                "@type": "MonetaryAmount",
+                "value": 695,
+                "currency": "SEK"
+              },
+              "shippingDestination": {
+                "@type": "DefinedRegion",
+                "addressCountry": "SE"
+              },
+              "deliveryTime": {
+                "@type": "ShippingDeliveryTime",
+                "handlingTime": {
+                  "@type": "QuantitativeValue",
+                  "minValue": 0,
+                  "maxValue": 2,
+                  "unitCode": "DAY"
+                },
+                "transitTime": {
+                  "@type": "QuantitativeValue",
+                  "minValue": 1,
+                  "maxValue": 5,
+                  "unitCode": "DAY"
+                }
+              }
+            },
+            "hasMerchantReturnPolicy": {
+              "@type": "MerchantReturnPolicy",
+              "applicableCountry": "SE",
+              "returnPolicyCategory": "https://schema.org/MerchantReturnFiniteReturnWindow",
+              "merchantReturnDays": 14,
+              "returnMethod": "https://schema.org/ReturnByMail",
+              "returnFees": "https://schema.org/ReturnFeesCustomerResponsibility",
+              "restockingFee": 30,
+              "merchantReturnLink": "https://www.batteriproffs.se/villkor"
+            }
+          }
+        },
+        {
+          "@context": "https://schema.org",
+          "@type": "BreadcrumbList",
+          "itemListElement": [
+            {
+              "@type": "ListItem",
+              "position": 1,
+              "name": "Hem",
+              "item": "https://www.batteriproffs.se/"
+            },
+            {
+              "@type": "ListItem",
+              "position": 2,
+              "name": "Gelbatteri städmaskin",
+              "item": "https://www.batteriproffs.se/kategori/stadmaskiner"
+            },
+            {
+              "@type": "ListItem",
+              "position": 3,
+              "name": "NM 6V 225Ah",
+              "item": "https://www.batteriproffs.se/produkt/nm105-6et"
+            }
+          ]
+        }
+      ],
+      "headers": {
+        "Age": "1328",
+        "Cache-Control": "public, max-age=0, must-revalidate",
+        "Content-Length": "115323",
+        "Content-Type": "text/html; charset=utf-8",
+        "Date": "Sat, 19 Sep 2026 05:39:46 GMT",
+        "Etag": "\"3uh7w63ikz2gjp\"",
+        "Permissions-Policy": "camera=(), microphone=(), geolocation=(), interest-cohort=()",
+        "Referrer-Policy": "strict-origin-when-cross-origin",
+        "Server": "Vercel",
+        "Strict-Transport-Security": "max-age=63072000",
+        "Vary": "rsc, next-router-state-tree, next-router-prefetch, next-router-segment-prefetch",
+        "X-Content-Type-Options": "nosniff",
+        "X-Frame-Options": "SAMEORIGIN",
+        "X-Matched-Path": "/produkt/nm105-6et",
+        "X-Nextjs-Prerender": "1",
+        "X-Nextjs-Stale-Time": "300",
+        "X-Powered-By": "Next.js",
+        "X-Vercel-Cache": "HIT",
+        "X-Vercel-Id": "arn1::iad1::ph7gk-1789844007707-9ed9f6ac3d30",
+        "Connection": "close"
+      },
+      "in_sitemap": true,
+      "text_excerpt": "Nordmax NM105-6ET Gelbatteri städmaskin 6V 225 Ah | Batteriproffs Hoppa till innehåll Passformsgaranti Leverans normalt 1–3 arbetsdagar Verifierade omdömen Mitt konto Kundservice Inkl. moms / Exkl. moms (privat) ⚡ Batteri proffs Professionella batterilösningar Sök batteri, modellnr eller användningsområde... Chatta med oss Svar direkt, dygnet runt Varukorg Alla batterier Truck & Traktion Städmaskiner UPS & Backup Fritid & Husvagn Batteri till din maskin Användningsområden Golfbilar (Club Car, E-Z-GO, Yamaha), personliftar (JLG, Genie, Haulotte), saxliftar, pallyftare, självgående städmaskiner, solcellslagring, elfordon, båtar. Se batteriet till en specifik maskin JLG saxlift Genie lift Haulotte lift Pallyftare Ersätter Batteriet är en direkt ersättare för   Trojan T-105 . Rekommenderad laddare NOCO GX2440 (24V-system) eller chAmp Pro 24V/12A. Vid 36V-system används 6 st NM105-6ET i serie. Så väljer du rätt laddare → Underhåll Det här är ett öppet blybatteri och behöver påfyllning av destillerat vatten var fjärde till sjätte vecka vid daglig drift. Guide till batterivatten → Nordmax  ·  Öppet blybatteri  ·   6V Nordmax NM105-6ET – Traktionsbatteri 6V 225Ah 2 195 kr Inkl. moms  · 1 756 kr exkl. moms + frakt   695  kr  inkl. moms   per order, oavsett antal batterier Jämför Datablad, mått och poler Mått och polutförande enligt artikelns originaldatablad. Kontrollera utrymme även för kablar, anslutningar och eventuella handtag. Originaldatablad med måttritning och poler (PDF) Artnr:  NM105-6ET Beställningsbar från leverantör Senast köpt   19 september  · 4 st  · 2 verifierade köp − 1 + LÄGG I VARUKORG Försäljning till företag. Organisationsnummer anges i kassan, enskild firma går bra. Beställa större mängd? Vi erbjuder offert på volymköp av högre värde. Passar den inte din maskin byter vi Leverans normalt 1–3 arbetsdagar Garanti enligt tillverkare Beskrivning Nordmax NM105-6ET är ett öppet traktionsbatteri med en kapacitet på 225 Ah (C20) och 6 volts spänning. Batteriet är konstruerat för cyklisk användning där hög tillförlitlighet och lång livslängd krävs – exempelvis i golfbilar, personliftar, pallyftare och självgående städmaskiner.\n\nMed en hög cyklingstålighet klarar NM105-6ET frekventa laddnings- och urladdningscykler utan att förlora kapacitet. Batteriets mått (260 × 180 × 279 mm) följer internationell standard och är direkt kompatibelt med Trojan T-105 – du kan byta rakt av utan anpassningar.\n\nDet robusta polypropylen-höljet skyddar mot stötar och vibrationer, medan de noggrant utvalda blyplattorna säkerställer jämn energileverans genom hela urladdningscykeln. Nordmax batterier är utformade för nordiska förhållanden och presterar även vid lägre temperaturer.\n\nNM105-6ET är ett så kallat våtbatteri (flooded/fritt ventilerat), vilket innebär att batteriets elektrolyt är flytande. Detta kräver regelbunden kontroll och påfyllning av destillerat vatten, men ger i gengäld längre total livslängd och lägre inköpskostnad jämfört med underhållsfria alternativ. Läs mer Specifikationer Spänning 6V Kapacitet (C20) 225 Ah Kapacitet (C5) 185 Ah Artikelnummer NM105-6ET Mått 260 × 180 × 279 mm Vikt ca 29 kg Poltyp ELPT Typ Blybatteri, öppet (fritt ventilerat) Drifttemperatur -20°C till +45°C Självurladdning 5–15 % per månad Ersätter Trojan T-105 Varumärke Nordmax Användningsområden Golfbilar (Club Car, E-Z-GO, Yamaha), personliftar (JLG, Genie, Haulotte), saxliftar, pallyftare, självgående städmaskiner, solcellslagring, elfordon, båtar. Se batteriet till en specifik maskin JLG saxlift Genie lift Haulotte lift Pallyftare Ersätter Batteriet är en direkt ersättare för   Trojan T-105 . Rekommenderad laddare NOCO GX2440 (24V-system) eller chAmp Pro 24V/12A. Vid 36V-system används 6 st NM105-6ET i serie. Så väljer du rätt laddare → Underhåll Det här är ett öppet blybatteri och behöver påfyllning av destillerat vatten var fjärde till sjätte vecka vid daglig drift. Guide till batterivatten → Liknande specifikationer Samma spänning och batterityp. Jämför mått och anslutningar innan du väljer. Detta är inte verifierade ersättare. 6V Nordmax  ·  Öppet blybatteri  ·   6V NM 6V 240Ah 240 Ah (C20) 2 295 kr Inkl. moms Beställningsbar från leverantör Senast köpt   2 sep.  · 4 st Köp Jämför 6V Nordmax  ·  Öppet blybatteri  ·   6V NM 6V 330Ah 330 Ah (C20) 3 495 kr Inkl. moms Beställningsbar från leverantör Köp Jämför 6V Nordmax  ·  Öppet blybatteri  ·   6V NM 6V 420Ah 420 Ah (C20) 3 995 kr Inkl. moms Beställningsbar från leverantör Köp Jämför Varför är det billigare än Trojan? För att det inte är ett Trojan. Det här är ett likvärdigt batteri med samma mått, spänning och kapacitet, byggt för samma användning. Trojan är ett amerikanskt premiumvarumärke och en stor del av prisskillnaden är namnet, inte batteriet. Passar det inte i din maskin byter vi det utan returavdrag, så länge förpackningen är obruten och du hör av dig inom 14 dagar. Hela förklaringen till våra priser → Vet du inte vilket batteri som passar? Berätta vilken maskin du har så hjälper vi dig hitta rätt — snabbt, enkelt och utan kostnad. Vi finns här mån–fre 08:00–17:00. Chatta med oss Skicka mejl"
+    },
+    {
+      "url": "https://www.batteriproffs.se/produkt/gf-12-076v",
+      "status": 200,
+      "title": [
+        "Sonnenschein GF1276V Gelbatteri städmaskin 12V 76 Ah | Batteriproffs"
+      ],
+      "meta": {
+        "": null,
+        "viewport": "width=device-width, initial-scale=1",
+        "description": "GF 12 076 V: 76 Ah (C5) / 86 Ah (C20), 330 × 171 × 236 mm, A-pol. Se Exides originaldatablad, polplacering och laddningsinformation inför batterivalet.",
+        "keywords": "Sonnenschein GF1276V, gelbatteri 12V 76Ah, batteri Nilfisk BA530, dryfit 12V, underhållsfritt städmaskinsbatteri",
+        "google-site-verification": "1vKK5ivGl-0FRnfRNTsD7sAW6TLncah2EOMI6yvKINs",
+        "og:title": "Sonnenschein GF1276V Gelbatteri städmaskin 12V 76 Ah | Batteriproffs",
+        "og:description": "GF 12 076 V: 76 Ah (C5) / 86 Ah (C20), 330 × 171 × 236 mm, A-pol. Se Exides originaldatablad, polplacering och laddningsinformation inför batterivalet.",
+        "og:image": "https://www.batteriproffs.se/produkter/gf12076v.jpg",
+        "twitter:card": "summary_large_image",
+        "twitter:title": "Sonnenschein GF1276V Gelbatteri städmaskin 12V 76 Ah | Batteriproffs",
+        "twitter:description": "GF 12 076 V: 76 Ah (C5) / 86 Ah (C20), 330 × 171 × 236 mm, A-pol. Se Exides originaldatablad, polplacering och laddningsinformation inför batterivalet.",
+        "twitter:image": "https://www.batteriproffs.se/produkter/gf12076v.jpg",
+        "next-size-adjust": ""
+      },
+      "canonical": "https://www.batteriproffs.se/produkt/gf-12-076v",
+      "lang": "sv",
+      "headings": [
+        [
+          "h2",
+          "Användningsområden"
+        ],
+        [
+          "h2",
+          "Rekommenderad laddare"
+        ],
+        [
+          "h2",
+          "Teknisk data"
+        ],
+        [
+          "h1",
+          "Sonnenschein GF1276V – Gelbatteri 12V 76Ah"
+        ],
+        [
+          "h2",
+          "Datablad, mått och poler"
+        ],
+        [
+          "h2",
+          "Beskrivning"
+        ],
+        [
+          "h2",
+          "Specifikationer"
+        ],
+        [
+          "h2",
+          "Användningsområden"
+        ],
+        [
+          "h2",
+          "Rekommenderad laddare"
+        ],
+        [
+          "h2",
+          "Teknisk data"
+        ],
+        [
+          "h2",
+          "Liknande specifikationer"
+        ],
+        [
+          "h2",
+          "Omdömen"
+        ],
+        [
+          "h2",
+          "Varför är det billigare än Trojan?"
+        ],
+        [
+          "h3",
+          "Vet du inte vilket batteri som passar?"
+        ]
+      ],
+      "body_words_approx": 1009,
+      "links": [
+        "#innehall",
+        "#omdomen-rubrik",
+        "/",
+        "/#kunder-rubrik",
+        "/atervinning",
+        "/batteri-till",
+        "/batteri-till/gansow-ct45",
+        "/batteri-till/gansow-ct70",
+        "/batteri-till/hako-scrubmaster-b30",
+        "/batteri-till/karcher-bd-43-25",
+        "/batteri-till/karcher-br-40-25",
+        "/batteri-till/nilfisk-ba530",
+        "/batteri-till/permobil",
+        "/batteri-till/tennant-t3-t3-plus",
+        "/batterivatten",
+        "/faq",
+        "/foretagskund",
+        "/golfbilsbatteri",
+        "/husbilsbatteri",
+        "/husvagnsbatteri",
+        "/integritet",
+        "/kategori/alla",
+        "/kategori/fritid-solenergi",
+        "/kategori/stadmaskiner",
+        "/kategori/stationara",
+        "/kategori/traktion-industri",
+        "/kontakt",
+        "/konto",
+        "/kunskap",
+        "/laddare",
+        "/marinbatteri",
+        "/om-oss",
+        "/produkt/gf-12-050v",
+        "/produkt/gf-12-052y",
+        "/produkt/gf-12-063y",
+        "/produkt/gf-12-105v",
+        "/skotsel",
+        "/solcellsbatteri-12v",
+        "/vilket-batteri",
+        "/villkor",
+        "/villkor#3-frakt-och-leverans",
+        "/villkor#6-passformsgaranti",
+        "https://www.exidegroup.com/eu/sites/default/files/2026-08/260806_e_sonnenschein_gf-v_datasheet_en_rz.pdf",
+        "mailto:info@batteriproffs.se"
+      ],
+      "images_count": 5,
+      "images_missing_alt": 0,
+      "schema": [
+        {
+          "@context": "https://schema.org",
+          "@type": "Product",
+          "name": "Sonnenschein GF1276V – Gelbatteri 12V 76Ah",
+          "aggregateRating": {
+            "@type": "AggregateRating",
+            "ratingValue": 5,
+            "reviewCount": 1,
+            "bestRating": 5,
+            "worstRating": 1
+          },
+          "image": "https://www.batteriproffs.se/produkter/gf12076v.jpg",
+          "description": "Sonnenschein GF 12 076 V är ett ventilreglerat gelbatteri för cyklisk användning. Kapaciteten är 76 Ah (C5) / 86 Ah (C20). Måtten är 330 × 171 × 236 mm och vikten 28,8 kg, med tillverkarens vikttolerans på ±5 %. Batteriet har A-pol och behöver ingen vattenpåfyllning. Exide anger 700 cykler enligt IEC 60254-1. Använd en laddare som tillverkaren godkänt för serien och följ driftinstruktionen vid montering, laddning och ventilation. Databladets andra sida visar polernas placering. Kontrollera maskinens exakta variant, batterifack och anslutningar före beställning.",
+          "sku": "gf-12-076v",
+          "mpn": "GF1276V",
+          "brand": {
+            "@type": "Brand",
+            "name": "Sonnenschein"
+          },
+          "offers": {
+            "@type": "Offer",
+            "url": "https://www.batteriproffs.se/produkt/gf-12-076v",
+            "priceCurrency": "SEK",
+            "price": 3195,
+            "itemCondition": "https://schema.org/NewCondition",
+            "availability": "https://schema.org/InStock",
+            "shippingDetails": {
+              "@type": "OfferShippingDetails",
+              "shippingRate": {
+                "@type": "MonetaryAmount",
+                "value": 695,
+                "currency": "SEK"
+              },
+              "shippingDestination": {
+                "@type": "DefinedRegion",
+                "addressCountry": "SE"
+              },
+              "deliveryTime": {
+                "@type": "ShippingDeliveryTime",
+                "handlingTime": {
+                  "@type": "QuantitativeValue",
+                  "minValue": 0,
+                  "maxValue": 2,
+                  "unitCode": "DAY"
+                },
+                "transitTime": {
+                  "@type": "QuantitativeValue",
+                  "minValue": 1,
+                  "maxValue": 5,
+                  "unitCode": "DAY"
+                }
+              }
+            },
+            "hasMerchantReturnPolicy": {
+              "@type": "MerchantReturnPolicy",
+              "applicableCountry": "SE",
+              "returnPolicyCategory": "https://schema.org/MerchantReturnFiniteReturnWindow",
+              "merchantReturnDays": 14,
+              "returnMethod": "https://schema.org/ReturnByMail",
+              "returnFees": "https://schema.org/ReturnFeesCustomerResponsibility",
+              "restockingFee": 30,
+              "merchantReturnLink": "https://www.batteriproffs.se/villkor"
+            }
+          }
+        },
+        {
+          "@context": "https://schema.org",
+          "@type": "BreadcrumbList",
+          "itemListElement": [
+            {
+              "@type": "ListItem",
+              "position": 1,
+              "name": "Hem",
+              "item": "https://www.batteriproffs.se/"
+            },
+            {
+              "@type": "ListItem",
+              "position": 2,
+              "name": "Gelbatteri städmaskin",
+              "item": "https://www.batteriproffs.se/kategori/stadmaskiner"
+            },
+            {
+              "@type": "ListItem",
+              "position": 3,
+              "name": "GF 12V 76Ah",
+              "item": "https://www.batteriproffs.se/produkt/gf-12-076v"
+            }
+          ]
+        }
+      ],
+      "headers": {
+        "Age": "1324",
+        "Cache-Control": "public, max-age=0, must-revalidate",
+        "Content-Length": "132250",
+        "Content-Type": "text/html; charset=utf-8",
+        "Date": "Sat, 19 Sep 2026 05:41:37 GMT",
+        "Etag": "\"t0239s3kud2tmy\"",
+        "Permissions-Policy": "camera=(), microphone=(), geolocation=(), interest-cohort=()",
+        "Referrer-Policy": "strict-origin-when-cross-origin",
+        "Server": "Vercel",
+        "Strict-Transport-Security": "max-age=63072000",
+        "Vary": "rsc, next-router-state-tree, next-router-prefetch, next-router-segment-prefetch",
+        "X-Content-Type-Options": "nosniff",
+        "X-Frame-Options": "SAMEORIGIN",
+        "X-Matched-Path": "/produkt/gf-12-076v",
+        "X-Nextjs-Prerender": "1",
+        "X-Nextjs-Stale-Time": "300",
+        "X-Powered-By": "Next.js",
+        "X-Vercel-Cache": "HIT",
+        "X-Vercel-Id": "arn1::iad1::m8r9s-1789844007992-9c192a7b61e1",
+        "Connection": "close"
+      },
+      "in_sitemap": true,
+      "text_excerpt": "Sonnenschein GF1276V Gelbatteri städmaskin 12V 76 Ah | Batteriproffs Hoppa till innehåll Passformsgaranti Leverans normalt 1–3 arbetsdagar Verifierade omdömen Mitt konto Kundservice Inkl. moms / Exkl. moms (privat) ⚡ Batteri proffs Professionella batterilösningar Sök batteri, modellnr eller användningsområde... Chatta med oss Svar direkt, dygnet runt Varukorg Alla batterier Truck & Traktion Städmaskiner UPS & Backup Fritid & Husvagn Batteri till din maskin Användningsområden Medelstora städmaskiner (Nilfisk BA530, Hako Scrubmaster B30, Kärcher BR 40/25, Gansow CT45/CT70), elrullstolar, golfvagnar, solcellssystem. Se batteriet till en specifik maskin Tennant T3 / T3+ Nilfisk BA530 Hako Scrubmaster B30 Kärcher BR 40/25 Kärcher BD 43/25 Gansow CT45 Gansow CT70 Permobil Rekommenderad laddare chAmp Pro 12V/30A (art.nr 0043890) – GEL-profil. Så väljer du rätt laddare → Teknisk data Laddning Ladda enligt DIN 41773 med ett laddprogram avsett för gel. Tillverkaren kräver en laddare de själva godkänt, modifierade laddkurvor är inte tillåtna. Underhållsladdning 2,23 V per cell, alltså 13,38 V på det här batteriet. Utjämningsladdning Endast med laddare som tillverkaren godkänt för serien. Lägsta urladdning Ladda ur högst 80 % av märkkapaciteten. Djupare urladdning förkortar livslängden. Livslängd 700 cykler enligt IEC 60254-1. Vattenpåfyllning Aldrig. Elektrolyten är fast och går varken att mäta eller fylla på. Arbetstemperatur 30 °C är nominell temperatur. 45 °C är gränsvärdet och inte tillåtet i drift. Batteriet ska hålla minst 15 °C när laddningen börjar och högst 35 °C. Vikt 28,8 kg (tolerans ±5 %) Pol A-pol, dras med 8 Nm Uppgifterna kommer från   Exides tekniska datablad för Sonnenschein GF-V . Osäker på din laddare?   Chatta med oss   så går vi igenom den tillsammans. Sonnenschein  ·  Gelbatteri  ·   12V Sonnenschein GF1276V – Gelbatteri 12V 76Ah 5.0 1   omdöme  · verifierade köp 3 195 kr Inkl. moms  · 2 556 kr exkl. moms + frakt   695  kr  inkl. moms   per order, oavsett antal batterier Jämför Datablad, mått och poler Gäller GF 12 076 V med A-pol. Polplacering 2 i ritningen på sida 2. Varianter med suffix P eller Q har andra anslutningar eller mått. Exide GF-V: datablad, polplacering och mått (PDF) Artnr:  GF-12-076V Beställningsbar från leverantör Senast köpt   6 augusti  · 2 st − 1 + LÄGG I VARUKORG Försäljning till företag. Organisationsnummer anges i kassan, enskild firma går bra. Beställa större mängd? Vi erbjuder offert på volymköp av högre värde. Passar den inte din maskin byter vi Leverans normalt 1–3 arbetsdagar Garanti enligt tillverkare Beskrivning Sonnenschein GF 12 076 V är ett ventilreglerat gelbatteri för cyklisk användning. Kapaciteten är 76 Ah (C5) / 86 Ah (C20). Måtten är 330 × 171 × 236 mm och vikten 28,8 kg, med tillverkarens vikttolerans på ±5 %.\n\nBatteriet har A-pol och behöver ingen vattenpåfyllning. Exide anger 700 cykler enligt IEC 60254-1. Använd en laddare som tillverkaren godkänt för serien och följ driftinstruktionen vid montering, laddning och ventilation.\n\nDatabladets andra sida visar polernas placering. Kontrollera maskinens exakta variant, batterifack och anslutningar före beställning. Läs mer Specifikationer Spänning 12V Kapacitet (C5) 76 Ah Kapacitet (C20) 86 Ah Artikelnummer GF1276V Mått 330 × 171 × 236 mm Vikt 28,8 kg (±5 %) Typ Gel (dryfit), helt underhållsfri Cykellivslängd 700 cykler enligt IEC 60254-1 Tillverkad Tyskland Varumärke Sonnenschein Poltyp A-pol Polplacering 2 (se databladets ritning) Åtdragningsmoment 8 Nm Användningsområden Medelstora städmaskiner (Nilfisk BA530, Hako Scrubmaster B30, Kärcher BR 40/25, Gansow CT45/CT70), elrullstolar, golfvagnar, solcellssystem. Se batteriet till en specifik maskin Tennant T3 / T3+ Nilfisk BA530 Hako Scrubmaster B30 Kärcher BR 40/25 Kärcher BD 43/25 Gansow CT45 Gansow CT70 Permobil Rekommenderad laddare chAmp Pro 12V/30A (art.nr 0043890) – GEL-profil. Så väljer du rätt laddare → Teknisk data Laddning Ladda enligt DIN 41773 med ett laddprogram avsett för gel. Tillverkaren kräver en laddare de själva godkänt, modifierade laddkurvor är inte tillåtna. Underhållsladdning 2,23 V per cell, alltså 13,38 V på det här batteriet. Utjämningsladdning Endast med laddare som tillverkaren godkänt för serien. Lägsta urladdning Ladda ur högst 80 % av märkkapaciteten. Djupare urladdning förkortar livslängden. Livslängd 700 cykler enligt IEC 60254-1. Vattenpåfyllning Aldrig. Elektrolyten är fast och går varken att mäta eller fylla på. Arbetstemperatur 30 °C är nominell temperatur. 45 °C är gränsvärdet och inte tillåtet i drift. Batteriet ska hålla minst 15 °C när laddningen börjar och högst 35 °C. Vikt 28,8 kg (tolerans ±5 %) Pol A-pol, dras med 8 Nm Uppgifterna kommer från   Exides tekniska datablad för Sonnenschein GF-V . Osäker på din laddare?   Chatta med oss   så går vi igenom den tillsammans. Liknande specifikationer Samma spänning och batterityp. Jämför mått och anslutningar innan du väljer. Detta är inte verifierade ersättare. 12V Sonnenschein  ·  Gelbatteri  ·   12V GF 12V 105Ah 105 Ah (C5) / 120 Ah (C20) 4 495 kr Inkl. moms Beställningsbar från leverantör Köp Jämför 12V Sonnenschein  ·  Gelbatteri  ·   12V GF 12V 63Ah 63 Ah (C5) / 70 Ah (C20) 3 295 kr Inkl. moms Beställningsbar från leverantör Köp Jämför 12V Sonnenschein  ·  Gelbatteri  ·   12V GF 12V 50Ah 50 Ah (C5) / 55 Ah (C20) 2 195 kr Inkl. moms Beställningsbar från leverantör Senast köpt   24 aug.  · 2 st Köp Jämför 12V Sonnenschein  ·  Gelbatteri  ·   12V GF 12V 52Ah 52 Ah (C5) / 60 Ah (C20) 2 695 kr Inkl. moms Beställningsbar från leverantör Köp Jämför Omdömen   5.0  av 5 ·   1   omdöme Bara kunder som köpt artikeln hos oss kan lämna omdöme: inbjudan mejlas efter leverans till adressen som användes vid köpet, och varje omdöme granskas manuellt innan det publiceras. Vi ändrar aldrig i texterna. Christer Hedlund Verifierat köp 1 september 2026 Varför är det billigare än Trojan? För att det inte är ett Trojan. Det här är ett likvärdigt batteri med samma mått, spänning och kapacitet, byggt för samma användning. Trojan är ett amerikanskt premiumvarumärke och en stor del av prisskillnaden är namnet, inte batteriet. Passar det inte i din maskin byter vi det utan returavdrag, så länge förpackningen är obruten och du hör av dig inom 14 dagar. Hela förklaringen till våra priser → Vet du inte vilket batteri som passar? Berätta vilken maskin du har så hjälper vi dig hitta rätt — snabbt, enkelt och utan kostnad. Vi finns här mån–fre 08:00–17:00. Chatta med oss Skicka mejl"
+    },
+    {
+      "url": "https://www.batteriproffs.se/kunskap/vad-kostar-ett-truckbatteri",
+      "status": 200,
+      "title": [
+        "Vad kostar ett truckbatteri? Priser 2026 | Batteriproffs"
+      ],
+      "meta": {
+        "": null,
+        "viewport": "width=device-width, initial-scale=1",
+        "description": "Vad kostar ett truckbatteri? Blockbatterier ligger på några tusen kronor, cellbatterier till större truckar på tiotusentals. Så vet du vilket du behöver.",
+        "google-site-verification": "1vKK5ivGl-0FRnfRNTsD7sAW6TLncah2EOMI6yvKINs",
+        "og:title": "Vad kostar ett truckbatteri? Priser 2026 | Batteriproffs",
+        "og:description": "Vad kostar ett truckbatteri? Blockbatterier ligger på några tusen kronor, cellbatterier till större truckar på tiotusentals. Så vet du vilket du behöver.",
+        "og:url": "https://www.batteriproffs.se/kunskap/vad-kostar-ett-truckbatteri",
+        "og:site_name": "Batteriproffs",
+        "og:locale": "sv_SE",
+        "og:type": "article",
+        "article:published_time": "2026-07-29",
+        "twitter:card": "summary",
+        "twitter:title": "Vad kostar ett truckbatteri? Priser 2026 | Batteriproffs",
+        "twitter:description": "Vad kostar ett truckbatteri? Blockbatterier ligger på några tusen kronor, cellbatterier till större truckar på tiotusentals. Så vet du vilket du behöver.",
+        "next-size-adjust": ""
+      },
+      "canonical": "https://www.batteriproffs.se/kunskap/vad-kostar-ett-truckbatteri",
+      "lang": "sv",
+      "headings": [
+        [
+          "h1",
+          "Vad kostar ett truckbatteri?"
+        ],
+        [
+          "h2",
+          "Det finns två helt olika saker som kallas truckbatteri"
+        ],
+        [
+          "h2",
+          "Så vet du vilket du har"
+        ],
+        [
+          "h2",
+          "Vad blockbatterier kostar hos oss"
+        ],
+        [
+          "h2",
+          "Vad som styr priset"
+        ],
+        [
+          "h2",
+          "Glöm inte kostnaden för att bli av med det gamla"
+        ],
+        [
+          "h2",
+          "Räkna på kronor per cykel, inte på inköpspriset"
+        ],
+        [
+          "h2",
+          "Osäker på vilket du behöver?"
+        ],
+        [
+          "h2",
+          "Läs vidare"
+        ],
+        [
+          "h3",
+          "Vet du inte vilket batteri som passar?"
+        ]
+      ],
+      "body_words_approx": 694,
+      "links": [
+        "#innehall",
+        "/",
+        "/#kunder-rubrik",
+        "/atervinning",
+        "/batteri-till",
+        "/batterivatten",
+        "/faq",
+        "/foretagskund",
+        "/golfbilsbatteri",
+        "/husbilsbatteri",
+        "/husvagnsbatteri",
+        "/integritet",
+        "/kategori/alla",
+        "/kategori/fritid-solenergi",
+        "/kategori/stadmaskiner",
+        "/kategori/stationara",
+        "/kategori/traktion-industri",
+        "/kontakt",
+        "/konto",
+        "/kunskap",
+        "/kunskap/gelbatteri-eller-oppet-blybatteri",
+        "/kunskap/traktionsbatteri-eller-startbatteri",
+        "/laddare",
+        "/marinbatteri",
+        "/om-oss",
+        "/produkt/nm105-6et",
+        "/produkt/nm125-6et",
+        "/produkt/nm875-8et",
+        "/produkt/nml16h-et",
+        "/skotsel",
+        "/solcellsbatteri-12v",
+        "/vilket-batteri",
+        "/villkor",
+        "/villkor#3-frakt-och-leverans",
+        "/villkor#6-passformsgaranti",
+        "mailto:info@batteriproffs.se"
+      ],
+      "images_count": 0,
+      "images_missing_alt": 0,
+      "schema": [
+        {
+          "@context": "https://schema.org",
+          "@type": "Article",
+          "headline": "Vad kostar ett truckbatteri?",
+          "description": "Vad kostar ett truckbatteri? Blockbatterier ligger på några tusen kronor, cellbatterier till större truckar på tiotusentals. Så vet du vilket du behöver.",
+          "datePublished": "2026-07-29",
+          "dateModified": "2026-07-29",
+          "inLanguage": "sv-SE",
+          "mainEntityOfPage": "https://www.batteriproffs.se/kunskap/vad-kostar-ett-truckbatteri",
+          "author": {
+            "@type": "Organization",
+            "name": "Batteriproffs",
+            "@id": "https://www.batteriproffs.se/#organization"
+          },
+          "publisher": {
+            "@id": "https://www.batteriproffs.se/#organization"
+          }
+        },
+        {
+          "@context": "https://schema.org",
+          "@type": "BreadcrumbList",
+          "itemListElement": [
+            {
+              "@type": "ListItem",
+              "position": 1,
+              "name": "Hem",
+              "item": "https://www.batteriproffs.se/"
+            },
+            {
+              "@type": "ListItem",
+              "position": 2,
+              "name": "Kunskapsbank",
+              "item": "https://www.batteriproffs.se/kunskap"
+            },
+            {
+              "@type": "ListItem",
+              "position": 3,
+              "name": "Vad kostar ett truckbatteri?",
+              "item": "https://www.batteriproffs.se/kunskap/vad-kostar-ett-truckbatteri"
+            }
+          ]
+        }
+      ],
+      "headers": {
+        "Age": "37358",
+        "Cache-Control": "public, max-age=0, must-revalidate",
+        "Content-Length": "97234",
+        "Content-Type": "text/html; charset=utf-8",
+        "Date": "Sat, 19 Sep 2026 08:30:49 GMT",
+        "Etag": "\"ufkuiqcx3z22nv\"",
+        "Permissions-Policy": "camera=(), microphone=(), geolocation=(), interest-cohort=()",
+        "Referrer-Policy": "strict-origin-when-cross-origin",
+        "Server": "Vercel",
+        "Strict-Transport-Security": "max-age=63072000",
+        "Vary": "rsc, next-router-state-tree, next-router-prefetch, next-router-segment-prefetch",
+        "X-Content-Type-Options": "nosniff",
+        "X-Frame-Options": "SAMEORIGIN",
+        "X-Matched-Path": "/kunskap/vad-kostar-ett-truckbatteri",
+        "X-Nextjs-Prerender": "1",
+        "X-Nextjs-Stale-Time": "300",
+        "X-Powered-By": "Next.js",
+        "X-Vercel-Cache": "STALE",
+        "X-Vercel-Id": "arn1::iad1::7rs4v-1789844008305-28d3641337f0",
+        "Connection": "close"
+      },
+      "in_sitemap": true,
+      "text_excerpt": "Vad kostar ett truckbatteri? Priser 2026 | Batteriproffs Hoppa till innehåll Passformsgaranti Leverans normalt 1–3 arbetsdagar Verifierade omdömen Mitt konto Kundservice Inkl. moms / Exkl. moms (privat) ⚡ Batteri proffs Professionella batterilösningar Sök batteri, modellnr eller användningsområde... Chatta med oss Svar direkt, dygnet runt Varukorg Alla batterier Truck & Traktion Städmaskiner UPS & Backup Fritid & Husvagn Batteri till din maskin Vad kostar ett truckbatteri? Kort svar: mellan några tusen kronor och långt över hundra tusen, beroende på om du behöver ett blockbatteri eller ett cellbatteri till en större truck. Här är hur du vet vilket av dem du har. 4  min läsning · Uppdaterad   29 juli 2026 Det finns två helt olika saker som kallas truckbatteri Prisspannet ser orimligt brett ut tills man vet att ordet täcker två olika produkter. Ett cellbatteri byggs av 2V-celler i ett stålkar, väger flera hundra kilo och sitter i motviktstruckar och större staplare. Ett blockbatteri är ett färdigt batteri i ett hölje, i 6V, 8V eller 12V, och sitter i pallyftare, ledstaplare, saxliftar och städmaskiner. Cellbatterierna är de som kostar tiotusentals kronor. Blockbatterierna är de vi säljer, och de ligger i ett helt annat spann. Så vet du vilket du har Titta på batteriet. Ser du ett stålkar med en rad separata celler som var och en har en egen propp, är det ett cellbatteri. Ser du ett eller flera fristående batterier med två poler var, ungefär i storlek som ett stort bilbatteri, är det blockbatterier. Ett annat sätt: läs typskylten på maskinen. Står det 24V och maskinen är en pallyftare eller städmaskin, är det nästan alltid fyra 6V-blockbatterier i serie. Vad blockbatterier kostar hos oss Priserna är inklusive moms och står öppet på varje produktsida. Frakt tillkommer med 695 kr oavsett orderstorlek. Att vi skriver ut priserna är ovanligt i den här branschen. Fyra av de sex största konkurrenterna visar inget pris alls utan kräver att du fyller i ett offertformulär eller loggar in först. Priser inklusive moms 6V 225 Ah, det vanligaste i pallyftare och städmaskiner 2 195 kr 6V 240 Ah, samma mått men mer kapacitet 2 295 kr 8V 175 Ah, vanligt i 48V-system 2 695 kr 6V 420 Ah, för långa arbetspass 3 995 kr Priser inkl. moms. Frakt 695 kr tillkommer. Vad som styr priset Kapacitet i amperetimmar. Det är den enskilt största faktorn. Teknik. Öppna blybatterier är billigast men kräver vattenpåfyllning. Gelbatterier kostar mer och är helt underhållsfria. Antal. En 24V-installation behöver fyra 6V-batterier, inte ett. Mått. Batteriet måste få plats i befintligt utrymme, vilket ibland utesluter det billigaste alternativet. Glöm inte kostnaden för att bli av med det gamla Ett uttjänt blybatteri är miljöfarligt avfall och får inte slängas som vanligt avfall. Att lämna det på återvinningscentral eller anlita någon som hämtar kostar tid och ibland pengar, och som företag har ni dessutom dokumentationsansvar för farligt avfall. Hos oss ingår det. Vi tar hand om ditt gamla batteri utan kostnad när du köper ett nytt, så den posten försvinner ur kalkylen. Så fungerar återvinningen  → Räkna på kronor per cykel, inte på inköpspriset Ett batteri som kostar tusen kronor mer men håller femhundra cykler längre är billigare i drift. Ett blockbatteri i cyklisk drift håller normalt mellan 1 200 och 1 500 cykler vid 50 procents urladdningsdjup, vilket för en maskin som används varje arbetsdag betyder ungefär fem år. Djupurladdning kortar livslängden snabbt. Kör du regelbundet batteriet helt tomt kan du halvera antalet cykler. Osäker på vilket du behöver? Ring med maskinens fabrikat och modell, plus spänning och kapacitet på batteriet som sitter i nu, så tar vi fram rätt batteri. Chatten svarar direkt, dygnet runt. Chatta med oss Hitta batteri till din maskin Läs vidare Traktionsbatteri eller startbatteri: vad är skillnaden? Ett startbatteri ger en kort, kraftig strömstöt och ska sedan laddas direkt. Ett traktionsbatteri ska tömmas l … Gelbatteri eller öppet blybatteri: vilket ska du välja? Öppna blybatterier är billigare i inköp men kräver att någon fyller på vatten. Gelbatterier är underhållsfria  … Vet du inte vilket batteri som passar? Berätta vilken maskin du har så hjälper vi dig hitta rätt — snabbt, enkelt och utan kostnad. Vi finns här mån–fre 08:00–17:00. Chatta med oss Skicka mejl"
+    },
+    {
+      "url": "https://www.batteriproffs.se/kunskap/gelbatteri-eller-oppet-blybatteri",
+      "status": 200,
+      "title": [
+        "Gelbatteri eller öppet blybatteri? Så väljer du | Batteriproffs"
+      ],
+      "meta": {
+        "": null,
+        "viewport": "width=device-width, initial-scale=1",
+        "description": "Gelbatteri eller öppet blybatteri? Skillnad i pris, underhåll, livslängd och laddning. Så väljer du rätt till lift, städmaskin eller pallyftare.",
+        "google-site-verification": "1vKK5ivGl-0FRnfRNTsD7sAW6TLncah2EOMI6yvKINs",
+        "og:title": "Gelbatteri eller öppet blybatteri? Så väljer du | Batteriproffs",
+        "og:description": "Gelbatteri eller öppet blybatteri? Skillnad i pris, underhåll, livslängd och laddning. Så väljer du rätt till lift, städmaskin eller pallyftare.",
+        "og:url": "https://www.batteriproffs.se/kunskap/gelbatteri-eller-oppet-blybatteri",
+        "og:site_name": "Batteriproffs",
+        "og:locale": "sv_SE",
+        "og:type": "article",
+        "article:published_time": "2026-07-29",
+        "twitter:card": "summary",
+        "twitter:title": "Gelbatteri eller öppet blybatteri? Så väljer du | Batteriproffs",
+        "twitter:description": "Gelbatteri eller öppet blybatteri? Skillnad i pris, underhåll, livslängd och laddning. Så väljer du rätt till lift, städmaskin eller pallyftare.",
+        "next-size-adjust": ""
+      },
+      "canonical": "https://www.batteriproffs.se/kunskap/gelbatteri-eller-oppet-blybatteri",
+      "lang": "sv",
+      "headings": [
+        [
+          "h1",
+          "Gelbatteri eller öppet blybatteri: vilket ska du välja?"
+        ],
+        [
+          "h2",
+          "Den praktiska skillnaden"
+        ],
+        [
+          "h2",
+          "Så här skulle jag välja"
+        ],
+        [
+          "h2",
+          "Laddaren måste matcha"
+        ],
+        [
+          "h2",
+          "Vad de kostar hos oss"
+        ],
+        [
+          "h2",
+          "Osäker på vilket du behöver?"
+        ],
+        [
+          "h2",
+          "Läs vidare"
+        ],
+        [
+          "h3",
+          "Vet du inte vilket batteri som passar?"
+        ]
+      ],
+      "body_words_approx": 516,
+      "links": [
+        "#innehall",
+        "/",
+        "/#kunder-rubrik",
+        "/atervinning",
+        "/batteri-till",
+        "/batterivatten",
+        "/faq",
+        "/foretagskund",
+        "/golfbilsbatteri",
+        "/husbilsbatteri",
+        "/husvagnsbatteri",
+        "/integritet",
+        "/kategori/alla",
+        "/kategori/fritid-solenergi",
+        "/kategori/stadmaskiner",
+        "/kategori/stationara",
+        "/kategori/traktion-industri",
+        "/kontakt",
+        "/konto",
+        "/kunskap",
+        "/kunskap/traktionsbatteri-eller-startbatteri",
+        "/kunskap/vad-kostar-ett-truckbatteri",
+        "/laddare",
+        "/marinbatteri",
+        "/om-oss",
+        "/produkt/evgc6a-a-m8",
+        "/produkt/gf-12-105v",
+        "/produkt/gf-12-160v",
+        "/produkt/nm105-6et",
+        "/skotsel",
+        "/solcellsbatteri-12v",
+        "/vilket-batteri",
+        "/villkor",
+        "/villkor#3-frakt-och-leverans",
+        "/villkor#6-passformsgaranti",
+        "mailto:info@batteriproffs.se"
+      ],
+      "images_count": 0,
+      "images_missing_alt": 0,
+      "schema": [
+        {
+          "@context": "https://schema.org",
+          "@type": "Article",
+          "headline": "Gelbatteri eller öppet blybatteri: vilket ska du välja?",
+          "description": "Gelbatteri eller öppet blybatteri? Skillnad i pris, underhåll, livslängd och laddning. Så väljer du rätt till lift, städmaskin eller pallyftare.",
+          "datePublished": "2026-07-29",
+          "dateModified": "2026-07-29",
+          "inLanguage": "sv-SE",
+          "mainEntityOfPage": "https://www.batteriproffs.se/kunskap/gelbatteri-eller-oppet-blybatteri",
+          "author": {
+            "@type": "Organization",
+            "name": "Batteriproffs",
+            "@id": "https://www.batteriproffs.se/#organization"
+          },
+          "publisher": {
+            "@id": "https://www.batteriproffs.se/#organization"
+          }
+        },
+        {
+          "@context": "https://schema.org",
+          "@type": "BreadcrumbList",
+          "itemListElement": [
+            {
+              "@type": "ListItem",
+              "position": 1,
+              "name": "Hem",
+              "item": "https://www.batteriproffs.se/"
+            },
+            {
+              "@type": "ListItem",
+              "position": 2,
+              "name": "Kunskapsbank",
+              "item": "https://www.batteriproffs.se/kunskap"
+            },
+            {
+              "@type": "ListItem",
+              "position": 3,
+              "name": "Gelbatteri eller öppet blybatteri: vilket ska du välja?",
+              "item": "https://www.batteriproffs.se/kunskap/gelbatteri-eller-oppet-blybatteri"
+            }
+          ]
+        }
+      ],
+      "headers": {
+        "Age": "10007",
+        "Cache-Control": "public, max-age=0, must-revalidate",
+        "Content-Length": "93609",
+        "Content-Type": "text/html; charset=utf-8",
+        "Date": "Sat, 19 Sep 2026 08:30:49 GMT",
+        "Etag": "\"k8j3chkkjz1zvo\"",
+        "Permissions-Policy": "camera=(), microphone=(), geolocation=(), interest-cohort=()",
+        "Referrer-Policy": "strict-origin-when-cross-origin",
+        "Server": "Vercel",
+        "Strict-Transport-Security": "max-age=63072000",
+        "Vary": "rsc, next-router-state-tree, next-router-prefetch, next-router-segment-prefetch",
+        "X-Content-Type-Options": "nosniff",
+        "X-Frame-Options": "SAMEORIGIN",
+        "X-Matched-Path": "/kunskap/gelbatteri-eller-oppet-blybatteri",
+        "X-Nextjs-Prerender": "1",
+        "X-Nextjs-Stale-Time": "300",
+        "X-Powered-By": "Next.js",
+        "X-Vercel-Cache": "STALE",
+        "X-Vercel-Id": "arn1::iad1::kxnct-1789844008584-24c8c9f35897",
+        "Connection": "close"
+      },
+      "in_sitemap": true,
+      "text_excerpt": "Gelbatteri eller öppet blybatteri? Så väljer du | Batteriproffs Hoppa till innehåll Passformsgaranti Leverans normalt 1–3 arbetsdagar Verifierade omdömen Mitt konto Kundservice Inkl. moms / Exkl. moms (privat) ⚡ Batteri proffs Professionella batterilösningar Sök batteri, modellnr eller användningsområde... Chatta med oss Svar direkt, dygnet runt Varukorg Alla batterier Truck & Traktion Städmaskiner UPS & Backup Fritid & Husvagn Batteri till din maskin Gelbatteri eller öppet blybatteri: vilket ska du välja? Öppna blybatterier är billigare i inköp men kräver att någon fyller på vatten. Gelbatterier är underhållsfria och kostar mer. Valet handlar mindre om teknik än om vem som ska sköta dem. 4  min läsning · Uppdaterad   29 juli 2026 Den praktiska skillnaden Ett öppet blybatteri har flytande syra och avger gas vid laddning. Vattnet som förångas måste fyllas på med avjoniserat vatten, normalt var femte till sjunde laddningscykel. Missar man det torkar plattorna och batteriet förstörs. Ett gelbatteri har elektrolyten bunden i en gel. Det är helt slutet, kräver ingen påfyllning, kan monteras i vilket läge som helst och kan inte läcka syra. Så här skulle jag välja Har ni en person med ansvar för maskinunderhåll som faktiskt gör det varje månad: öppet blybatteri. Lägre pris, längre livslängd om det sköts. Byter maskinerna förare ofta, eller finns ingen som äger underhållet: gelbatteri. Det som aldrig behöver skötas kan inte missas. Står maskinen där folk vistas, eller lutar den under drift: gelbatteri. Inget gasande, ingen syra som kan rinna. Ska batteriet stå oanvänt långa perioder: gelbatteri. De självurladdar långsammare. Laddaren måste matcha Det här missas ofta och är dyrt. Ett gelbatteri får inte laddas med en laddare avsedd för öppna blybatterier. Laddningsspänningen blir för hög, gelen torkar ut och batteriet är förstört inom några månader. Gelbatterier vill ha max 14,4 V för ett 12V-batteri vid 20 grader, med temperaturkompensering. Byter du från öppet till gel måste du byta eller ställa om laddaren samtidigt. Vad de kostar hos oss Räkna på hela livslängden och inte bara på inköpet. Ett öppet batteri som torkar för att ingen fyllt på vatten blir dyrare än ett gelbatteri som kostade mer men överlevde. Priser inklusive moms Öppet blybatteri 6V 225 Ah 2 195 kr 6V 220 Ah, samma storleksklass 3 295 kr Gelbatteri 12V 105 Ah (C5) 4 495 kr Gelbatteri 12V 160 Ah (C5), störst i sortimentet 6 595 kr Priser inkl. moms. Frakt 695 kr tillkommer. Osäker på vilket du behöver? Ring med maskinens fabrikat och modell, plus spänning och kapacitet på batteriet som sitter i nu, så tar vi fram rätt batteri. Chatten svarar direkt, dygnet runt. Chatta med oss Hitta batteri till din maskin Läs vidare Vad kostar ett truckbatteri? Kort svar: mellan några tusen kronor och långt över hundra tusen, beroende på om du behöver ett blockbatteri e … Traktionsbatteri eller startbatteri: vad är skillnaden? Ett startbatteri ger en kort, kraftig strömstöt och ska sedan laddas direkt. Ett traktionsbatteri ska tömmas l … Vet du inte vilket batteri som passar? Berätta vilken maskin du har så hjälper vi dig hitta rätt — snabbt, enkelt och utan kostnad. Vi finns här mån–fre 08:00–17:00. Chatta med oss Skicka mejl"
+    },
+    {
+      "url": "https://www.batteriproffs.se/husvagnsbatteri",
+      "status": 200,
+      "title": [
+        "Husvagnsbatteri 12V, gel och dry cell från 63 Ah | Batteriproffs"
+      ],
+      "meta": {
+        "": null,
+        "viewport": "width=device-width, initial-scale=1",
+        "description": "Husvagnsbatteri 12V från 63 till 196 Ah. Slutna gelbatterier och dry cell som tål djup urladdning, klarar mover och kylskåp på fritt stående. Från 3 195 kr inkl. moms.",
+        "google-site-verification": "1vKK5ivGl-0FRnfRNTsD7sAW6TLncah2EOMI6yvKINs",
+        "og:title": "Husvagnsbatteri 12V, gel och dry cell från 63 Ah | Batteriproffs",
+        "og:description": "Husvagnsbatteri 12V från 63 till 196 Ah. Slutna gelbatterier och dry cell som tål djup urladdning, klarar mover och kylskåp på fritt stående. Från 3 195 kr inkl. moms.",
+        "og:url": "https://www.batteriproffs.se/husvagnsbatteri",
+        "og:site_name": "Batteriproffs",
+        "og:locale": "sv_SE",
+        "og:type": "website",
+        "twitter:card": "summary",
+        "twitter:title": "Husvagnsbatteri 12V, gel och dry cell från 63 Ah | Batteriproffs",
+        "twitter:description": "Husvagnsbatteri 12V från 63 till 196 Ah. Slutna gelbatterier och dry cell som tål djup urladdning, klarar mover och kylskåp på fritt stående. Från 3 195 kr inkl. moms.",
+        "next-size-adjust": ""
+      },
+      "canonical": "https://www.batteriproffs.se/husvagnsbatteri",
+      "lang": "sv",
+      "headings": [
+        [
+          "h1",
+          "Husvagnsbatteri 12V"
+        ],
+        [
+          "h2",
+          "6 batterier för det här"
+        ],
+        [
+          "h2",
+          "Så väljer du rätt"
+        ],
+        [
+          "h3",
+          "Har du mover behöver du mer"
+        ],
+        [
+          "h3",
+          "Kolla facket och polernas läge"
+        ],
+        [
+          "h3",
+          "Ladda fullt innan vinterförvaring"
+        ],
+        [
+          "h3",
+          "Slutet batteri slipper ventilation"
+        ],
+        [
+          "h2",
+          "Vanliga frågor"
+        ],
+        [
+          "h3",
+          "Hur många amperetimmar behöver en husvagn?"
+        ],
+        [
+          "h3",
+          "Kan jag ha samma batteri som i bilen?"
+        ],
+        [
+          "h3",
+          "Hur vet jag att batteriet är slut?"
+        ],
+        [
+          "h2",
+          "Vi säljer till företag"
+        ],
+        [
+          "h2",
+          "Passar det inte byter vi"
+        ],
+        [
+          "h2",
+          "Läs vidare"
+        ],
+        [
+          "h3",
+          "Vet du inte vilket batteri som passar?"
+        ]
+      ],
+      "body_words_approx": 667,
+      "links": [
+        "#innehall",
+        "/",
+        "/#kunder-rubrik",
+        "/atervinning",
+        "/batteri-till",
+        "/batterivatten",
+        "/faq",
+        "/foretagskund",
+        "/golfbilsbatteri",
+        "/husbilsbatteri",
+        "/husvagnsbatteri",
+        "/integritet",
+        "/kategori/alla",
+        "/kategori/fritid-solenergi",
+        "/kategori/stadmaskiner",
+        "/kategori/stationara",
+        "/kategori/traktion-industri",
+        "/kontakt",
+        "/konto",
+        "/kunskap",
+        "/laddare",
+        "/marinbatteri",
+        "/om-oss",
+        "/produkt/ev31a-a-m8",
+        "/produkt/gf-12-063y",
+        "/produkt/gf-12-076v",
+        "/produkt/gf-12-105v",
+        "/produkt/gf-12-160v",
+        "/produkt/nm1275-12et",
+        "/skotsel",
+        "/solcellsbatteri-12v",
+        "/vilket-batteri",
+        "/villkor",
+        "/villkor#3-frakt-och-leverans",
+        "/villkor#6-passformsgaranti",
+        "mailto:info@batteriproffs.se"
+      ],
+      "images_count": 6,
+      "images_missing_alt": 0,
+      "schema": [
+        {
+          "@context": "https://schema.org",
+          "@type": "ItemList",
+          "name": "Husvagnsbatteri 12V",
+          "description": "I husvagnen räcker ofta ett mindre batteri än i husbilen, eftersom förbrukningen är lägre och laddningen sker via landström. Undantaget är mover och kylskåp på fritt stående, då blir kapaciteten snabbt avgörande.",
+          "numberOfItems": 6,
+          "itemListElement": [
+            {
+              "@type": "ListItem",
+              "position": 1,
+              "item": {
+                "@type": "Product",
+                "name": "Sonnenschein GF1276V – Gelbatteri 12V 76Ah",
+                "url": "https://www.batteriproffs.se/produkt/gf-12-076v",
+                "image": "https://www.batteriproffs.se/produkter/gf12076v.jpg",
+                "sku": "gf-12-076v",
+                "offers": {
+                  "@type": "Offer",
+                  "priceCurrency": "SEK",
+                  "price": 3195,
+                  "availability": "https://schema.org/InStock"
+                }
+              }
+            },
+            {
+              "@type": "ListItem",
+              "position": 2,
+              "item": {
+                "@type": "Product",
+                "name": "Sonnenschein GF12105V – Gelbatteri 12V 105Ah",
+                "url": "https://www.batteriproffs.se/produkt/gf-12-105v",
+                "image": "https://www.batteriproffs.se/produkter/gf12105v.png",
+                "sku": "gf-12-105v",
+                "offers": {
+                  "@type": "Offer",
+                  "priceCurrency": "SEK",
+                  "price": 4495,
+                  "availability": "https://schema.org/InStock"
+                }
+              }
+            },
+            {
+              "@type": "ListItem",
+              "position": 3,
+              "item": {
+                "@type": "Product",
+                "name": "Discover EV31A-A – Dry Cell Traktionsbatteri 12V 120Ah",
+                "url": "https://www.batteriproffs.se/produkt/ev31a-a-m8",
+                "image": "https://www.batteriproffs.se/produkter/ev31a.png",
+                "sku": "ev31a-a-m8",
+                "offers": {
+                  "@type": "Offer",
+                  "priceCurrency": "SEK",
+                  "price": 3795,
+                  "availability": "https://schema.org/InStock"
+                }
+              }
+            },
+            {
+              "@type": "ListItem",
+              "position": 4,
+              "item": {
+                "@type": "Product",
+                "name": "Sonnenschein GF1263Y – Gelbatteri 12V 63Ah",
+                "url": "https://www.batteriproffs.se/produkt/gf-12-063y",
+                "image": "https://www.batteriproffs.se/produkter/gf1263y.jpg",
+                "sku": "gf-12-063y",
+                "offers": {
+                  "@type": "Offer",
+                  "priceCurrency": "SEK",
+                  "price": 3295,
+                  "availability": "https://schema.org/InStock"
+                }
+              }
+            },
+            {
+              "@type": "ListItem",
+              "position": 5,
+              "item": {
+                "@type": "Product",
+                "name": "Nordmax NM1275-12ET – Traktionsbatteri 12V 150Ah",
+                "url": "https://www.batteriproffs.se/produkt/nm1275-12et",
+                "image": "https://www.batteriproffs.se/produkter/nm1275-12et.jpg",
+                "sku": "nm1275-12et",
+                "offers": {
+                  "@type": "Offer",
+                  "priceCurrency": "SEK",
+                  "price": 3495,
+                  "availability": "https://schema.org/InStock"
+                }
+              }
+            },
+            {
+              "@type": "ListItem",
+              "position": 6,
+              "item": {
+                "@type": "Product",
+                "name": "Sonnenschein GF12160V – Gelbatteri 12V 160Ah",
+                "url": "https://www.batteriproffs.se/produkt/gf-12-160v",
+                "image": "https://www.batteriproffs.se/produkter/gf12160v.jpg",
+                "sku": "gf-12-160v",
+                "offers": {
+                  "@type": "Offer",
+                  "priceCurrency": "SEK",
+                  "price": 6595,
+                  "availability": "https://schema.org/InStock"
+                }
+              }
+            }
+          ]
+        },
+        {
+          "@context": "https://schema.org",
+          "@type": "BreadcrumbList",
+          "itemListElement": [
+            {
+              "@type": "ListItem",
+              "position": 1,
+              "name": "Hem",
+              "item": "https://www.batteriproffs.se/"
+            },
+            {
+              "@type": "ListItem",
+              "position": 2,
+              "name": "Husvagnsbatteri 12V",
+              "item": "https://www.batteriproffs.se/husvagnsbatteri"
+            }
+          ]
+        }
+      ],
+      "headers": {
+        "Age": "37355",
+        "Cache-Control": "public, max-age=0, must-revalidate",
+        "Content-Length": "128978",
+        "Content-Type": "text/html; charset=utf-8",
+        "Date": "Sat, 19 Sep 2026 05:40:21 GMT",
+        "Etag": "\"2hvl0870242qys\"",
+        "Permissions-Policy": "camera=(), microphone=(), geolocation=(), interest-cohort=()",
+        "Referrer-Policy": "strict-origin-when-cross-origin",
+        "Server": "Vercel",
+        "Strict-Transport-Security": "max-age=63072000",
+        "Vary": "rsc, next-router-state-tree, next-router-prefetch, next-router-segment-prefetch",
+        "X-Content-Type-Options": "nosniff",
+        "X-Frame-Options": "SAMEORIGIN",
+        "X-Matched-Path": "/husvagnsbatteri",
+        "X-Nextjs-Prerender": "1",
+        "X-Nextjs-Stale-Time": "300",
+        "X-Powered-By": "Next.js",
+        "X-Vercel-Cache": "STALE",
+        "X-Vercel-Id": "arn1::iad1::txvwh-1789844008935-e8455a678a15",
+        "Connection": "close"
+      },
+      "in_sitemap": true,
+      "text_excerpt": "Husvagnsbatteri 12V, gel och dry cell från 63 Ah | Batteriproffs Hoppa till innehåll Passformsgaranti Leverans normalt 1–3 arbetsdagar Verifierade omdömen Mitt konto Kundservice Inkl. moms / Exkl. moms (privat) ⚡ Batteri proffs Professionella batterilösningar Sök batteri, modellnr eller användningsområde... Chatta med oss Svar direkt, dygnet runt Varukorg Alla batterier Truck & Traktion Städmaskiner UPS & Backup Fritid & Husvagn Batteri till din maskin Husvagn Husvagnsbatteri 12V I husvagnen räcker ofta ett mindre batteri än i husbilen, eftersom förbrukningen är lägre och laddningen sker via landström. Undantaget är mover och kylskåp på fritt stående, då blir kapaciteten snabbt avgörande. Osäker på vilket som passar? Chatta med oss 6  batterier för det här 12V Sonnenschein  ·  Gelbatteri  ·   12V GF 12V 76Ah 76 Ah (C5) / 86 Ah (C20) 5.0 ( 1 ) 3 195 kr Inkl. moms Beställningsbar från leverantör Senast köpt   6 aug.  · 2 st Köp Jämför 12V Sonnenschein  ·  Gelbatteri  ·   12V GF 12V 105Ah 105 Ah (C5) / 120 Ah (C20) 4 495 kr Inkl. moms Beställningsbar från leverantör Köp Jämför 12V Discover  ·  AGM / Dry Cell  ·   12V Dry Cell 12V 120Ah 120 Ah (C20) 3 795 kr Inkl. moms Beställningsbar från leverantör Senast köpt   4 aug.  · 2 st Köp Jämför 12V Sonnenschein  ·  Gelbatteri  ·   12V GF 12V 63Ah 63 Ah (C5) / 70 Ah (C20) 3 295 kr Inkl. moms Beställningsbar från leverantör Köp Jämför 12V Nordmax  ·  Öppet blybatteri  ·   12V NM 12V 150Ah 150 Ah (C20) 3 495 kr Inkl. moms Beställningsbar från leverantör Köp Jämför 12V Sonnenschein  ·  Gelbatteri  ·   12V GF 12V 160Ah 160 Ah (C5) / 196 Ah (C20) 6 595 kr Inkl. moms Beställningsbar från leverantör Köp Jämför Så väljer du rätt Har du mover behöver du mer En mover drar mycket ström under kort tid när vagnen ska rangeras. Ett litet batteri klarar det en gång men börjar sacka när det är halvurladdat. Med mover installerad bör du ligga på minst 100 Ah. Kolla facket och polernas läge Husvagnsfack är ofta trängre än husbilarnas. Mät höjden med polerna inräknade, och se efter åt vilket håll plus sitter innan du beställer. Ladda fullt innan vinterförvaring Ett halvurladdat blybatteri kan frysa sönder. Ladda fullt, koppla loss minuspolen och ladda upp igen någon gång under vintern, eller ta in batteriet. Slutet batteri slipper ventilation Gel och dry cell gasar inte i normal drift och kan därför sitta inne i vagnen. Ett öppet blybatteri måste sitta ventilerat utåt. Varför de här batterierna.  Discover EV31A-A och Nordmax NM1275-12ET anges för husbils- och fritidssystem i produktdatan. Sonnenschein GF-serien står med på sin konstruktion: 12V, sluten och djupcyklisk, alltså rätt sorts batteri för en husvagn och tillåten att montera inne i vagnen. Vanliga frågor Hur många amperetimmar behöver en husvagn? Står du mest på camping med landström räcker 60 till 80 Ah gott. Står du fritt, eller har mover och kompressorkyl, är 100 Ah och uppåt en rimligare utgångspunkt. Kan jag ha samma batteri som i bilen? Nej. Bilens startbatteri tål inte att urladdas djupt om och om igen. Det håller en säsong i en husvagn och tappar sedan kapacitet snabbt. Hur vet jag att batteriet är slut? Ett fulladdat och vilande 12V-blybatteri ska ligga runt 12,7 volt. Ligger det under 12,4 direkt efter laddning, eller sjunker snabbt vid belastning, är det på väg ut. Vi säljer till företag Kassan är byggd för företag och kräver organisationsnummer. Är du privatperson går beställningen inte att slutföra på sajten, men ring eller mejla så löser vi köpet manuellt. Så handlar företag hos oss Passar det inte byter vi Har vi rekommenderat batteriet står vi för bytet och frakten åt båda hållen, utan returavdrag. Förpackningen ska vara obruten och batteriet får inte ha kopplats in. Läs passformsgarantin Läs vidare Bodelsbatteri till husbil Solcellsbatteri 12V Fritid och solenergi Vet du inte vilket batteri som passar? Berätta vilken maskin du har så hjälper vi dig hitta rätt — snabbt, enkelt och utan kostnad. Vi finns här mån–fre 08:00–17:00. Chatta med oss Skicka mejl"
+    },
+    {
+      "url": "https://www.batteriproffs.se/marinbatteri",
+      "status": 200,
+      "title": [
+        "Marinbatteri och båtbatteri 12V, förbrukningsbatteri | Batteriproffs"
+      ],
+      "meta": {
+        "": null,
+        "viewport": "width=device-width, initial-scale=1",
+        "description": "Marinbatteri 12V från 50 till 196 Ah. Slutna djupcykliska förbrukningsbatterier för ekolod, kylbox, belysning och bogpropeller. Från 2 195 kr inkl. moms.",
+        "google-site-verification": "1vKK5ivGl-0FRnfRNTsD7sAW6TLncah2EOMI6yvKINs",
+        "og:title": "Marinbatteri och båtbatteri 12V, förbrukningsbatteri | Batteriproffs",
+        "og:description": "Marinbatteri 12V från 50 till 196 Ah. Slutna djupcykliska förbrukningsbatterier för ekolod, kylbox, belysning och bogpropeller. Från 2 195 kr inkl. moms.",
+        "og:url": "https://www.batteriproffs.se/marinbatteri",
+        "og:site_name": "Batteriproffs",
+        "og:locale": "sv_SE",
+        "og:type": "website",
+        "twitter:card": "summary",
+        "twitter:title": "Marinbatteri och båtbatteri 12V, förbrukningsbatteri | Batteriproffs",
+        "twitter:description": "Marinbatteri 12V från 50 till 196 Ah. Slutna djupcykliska förbrukningsbatterier för ekolod, kylbox, belysning och bogpropeller. Från 2 195 kr inkl. moms.",
+        "next-size-adjust": ""
+      },
+      "canonical": "https://www.batteriproffs.se/marinbatteri",
+      "lang": "sv",
+      "headings": [
+        [
+          "h1",
+          "Marinbatteri och båtbatteri 12V"
+        ],
+        [
+          "h2",
+          "6 batterier för det här"
+        ],
+        [
+          "h2",
+          "Så väljer du rätt"
+        ],
+        [
+          "h3",
+          "Skilj start från förbrukning"
+        ],
+        [
+          "h3",
+          "Slutet batteri är rätt ombord"
+        ],
+        [
+          "h3",
+          "Bogpropellern styr storleken"
+        ],
+        [
+          "h3",
+          "Vinterkonservera batteriet också"
+        ],
+        [
+          "h2",
+          "Vanliga frågor"
+        ],
+        [
+          "h3",
+          "Vad är skillnaden mellan startbatteri och förbrukningsbatteri?"
+        ],
+        [
+          "h3",
+          "Kan jag koppla flera batterier parallellt?"
+        ],
+        [
+          "h3",
+          "Tål batterierna att sitta i en fuktig båt?"
+        ],
+        [
+          "h2",
+          "Vi säljer till företag"
+        ],
+        [
+          "h2",
+          "Passar det inte byter vi"
+        ],
+        [
+          "h2",
+          "Läs vidare"
+        ],
+        [
+          "h3",
+          "Vet du inte vilket batteri som passar?"
+        ]
+      ],
+      "body_words_approx": 726,
+      "links": [
+        "#innehall",
+        "/",
+        "/#kunder-rubrik",
+        "/atervinning",
+        "/batteri-till",
+        "/batterivatten",
+        "/faq",
+        "/foretagskund",
+        "/golfbilsbatteri",
+        "/husbilsbatteri",
+        "/husvagnsbatteri",
+        "/integritet",
+        "/kategori/alla",
+        "/kategori/fritid-solenergi",
+        "/kategori/stadmaskiner",
+        "/kategori/stationara",
+        "/kategori/traktion-industri",
+        "/kontakt",
+        "/konto",
+        "/kunskap",
+        "/kunskap/startbatteri-eller-forbrukningsbatteri-i-baten",
+        "/laddare",
+        "/marinbatteri",
+        "/om-oss",
+        "/produkt/ev31a-a-m8",
+        "/produkt/ev512a-150-m8",
+        "/produkt/gf-12-050v",
+        "/produkt/gf-12-076v",
+        "/produkt/gf-12-105v",
+        "/produkt/gf-12-160v",
+        "/skotsel",
+        "/solcellsbatteri-12v",
+        "/vilket-batteri",
+        "/villkor",
+        "/villkor#3-frakt-och-leverans",
+        "/villkor#6-passformsgaranti",
+        "mailto:info@batteriproffs.se"
+      ],
+      "images_count": 6,
+      "images_missing_alt": 0,
+      "schema": [
+        {
+          "@context": "https://schema.org",
+          "@type": "ItemList",
+          "name": "Marinbatteri och båtbatteri 12V",
+          "description": "Ombord finns två helt olika jobb: starta motorn och driva allt annat. Vi säljer batterier för det andra jobbet. Förbrukningsbatterier som ska driva ekolod, kylbox, belysning och bogpropeller, och som tål att tömmas och laddas om och om igen.",
+          "numberOfItems": 6,
+          "itemListElement": [
+            {
+              "@type": "ListItem",
+              "position": 1,
+              "item": {
+                "@type": "Product",
+                "name": "Discover EV31A-A – Dry Cell Traktionsbatteri 12V 120Ah",
+                "url": "https://www.batteriproffs.se/produkt/ev31a-a-m8",
+                "image": "https://www.batteriproffs.se/produkter/ev31a.png",
+                "sku": "ev31a-a-m8",
+                "offers": {
+                  "@type": "Offer",
+                  "priceCurrency": "SEK",
+                  "price": 3795,
+                  "availability": "https://schema.org/InStock"
+                }
+              }
+            },
+            {
+              "@type": "ListItem",
+              "position": 2,
+              "item": {
+                "@type": "Product",
+                "name": "Discover EV512A-150 – Dry Cell Traktionsbatteri 12V 150Ah",
+                "url": "https://www.batteriproffs.se/produkt/ev512a-150-m8",
+                "image": "https://www.batteriproffs.se/produkter/ev512a-150.jpeg",
+                "sku": "ev512a-150-m8",
+                "offers": {
+                  "@type": "Offer",
+                  "priceCurrency": "SEK",
+                  "price": 4895,
+                  "availability": "https://schema.org/InStock"
+                }
+              }
+            },
+            {
+              "@type": "ListItem",
+              "position": 3,
+              "item": {
+                "@type": "Product",
+                "name": "Sonnenschein GF12105V – Gelbatteri 12V 105Ah",
+                "url": "https://www.batteriproffs.se/produkt/gf-12-105v",
+                "image": "https://www.batteriproffs.se/produkter/gf12105v.png",
+                "sku": "gf-12-105v",
+                "offers": {
+                  "@type": "Offer",
+                  "priceCurrency": "SEK",
+                  "price": 4495,
+                  "availability": "https://schema.org/InStock"
+                }
+              }
+            },
+            {
+              "@type": "ListItem",
+              "position": 4,
+              "item": {
+                "@type": "Product",
+                "name": "Sonnenschein GF12160V – Gelbatteri 12V 160Ah",
+                "url": "https://www.batteriproffs.se/produkt/gf-12-160v",
+                "image": "https://www.batteriproffs.se/produkter/gf12160v.jpg",
+                "sku": "gf-12-160v",
+                "offers": {
+                  "@type": "Offer",
+                  "priceCurrency": "SEK",
+                  "price": 6595,
+                  "availability": "https://schema.org/InStock"
+                }
+              }
+            },
+            {
+              "@type": "ListItem",
+              "position": 5,
+              "item": {
+                "@type": "Product",
+                "name": "Sonnenschein GF1276V – Gelbatteri 12V 76Ah",
+                "url": "https://www.batteriproffs.se/produkt/gf-12-076v",
+                "image": "https://www.batteriproffs.se/produkter/gf12076v.jpg",
+                "sku": "gf-12-076v",
+                "offers": {
+                  "@type": "Offer",
+                  "priceCurrency": "SEK",
+                  "price": 3195,
+                  "availability": "https://schema.org/InStock"
+                }
+              }
+            },
+            {
+              "@type": "ListItem",
+              "position": 6,
+              "item": {
+                "@type": "Product",
+                "name": "Sonnenschein GF1250V – Gelbatteri 12V 50Ah",
+                "url": "https://www.batteriproffs.se/produkt/gf-12-050v",
+                "image": "https://www.batteriproffs.se/produkter/gf12050v.jpg",
+                "sku": "gf-12-050v",
+                "offers": {
+                  "@type": "Offer",
+                  "priceCurrency": "SEK",
+                  "price": 2195,
+                  "availability": "https://schema.org/InStock"
+                }
+              }
+            }
+          ]
+        },
+        {
+          "@context": "https://schema.org",
+          "@type": "BreadcrumbList",
+          "itemListElement": [
+            {
+              "@type": "ListItem",
+              "position": 1,
+              "name": "Hem",
+              "item": "https://www.batteriproffs.se/"
+            },
+            {
+              "@type": "ListItem",
+              "position": 2,
+              "name": "Marinbatteri och båtbatteri 12V",
+              "item": "https://www.batteriproffs.se/marinbatteri"
+            }
+          ]
+        }
+      ],
+      "headers": {
+        "Age": "37355",
+        "Cache-Control": "public, max-age=0, must-revalidate",
+        "Content-Length": "131048",
+        "Content-Type": "text/html; charset=utf-8",
+        "Date": "Sat, 19 Sep 2026 05:40:21 GMT",
+        "Etag": "\"b4komhqxqu2sj4\"",
+        "Permissions-Policy": "camera=(), microphone=(), geolocation=(), interest-cohort=()",
+        "Referrer-Policy": "strict-origin-when-cross-origin",
+        "Server": "Vercel",
+        "Strict-Transport-Security": "max-age=63072000",
+        "Vary": "rsc, next-router-state-tree, next-router-prefetch, next-router-segment-prefetch",
+        "X-Content-Type-Options": "nosniff",
+        "X-Frame-Options": "SAMEORIGIN",
+        "X-Matched-Path": "/marinbatteri",
+        "X-Nextjs-Prerender": "1",
+        "X-Nextjs-Stale-Time": "300",
+        "X-Powered-By": "Next.js",
+        "X-Vercel-Cache": "STALE",
+        "X-Vercel-Id": "arn1::iad1::zt4dc-1789844009251-ee307bbd450a",
+        "Connection": "close"
+      },
+      "in_sitemap": true,
+      "text_excerpt": "Marinbatteri och båtbatteri 12V, förbrukningsbatteri | Batteriproffs Hoppa till innehåll Passformsgaranti Leverans normalt 1–3 arbetsdagar Verifierade omdömen Mitt konto Kundservice Inkl. moms / Exkl. moms (privat) ⚡ Batteri proffs Professionella batterilösningar Sök batteri, modellnr eller användningsområde... Chatta med oss Svar direkt, dygnet runt Varukorg Alla batterier Truck & Traktion Städmaskiner UPS & Backup Fritid & Husvagn Batteri till din maskin Båt och marin Marinbatteri och båtbatteri 12V Ombord finns två helt olika jobb: starta motorn och driva allt annat. Vi säljer batterier för det andra jobbet. Förbrukningsbatterier som ska driva ekolod, kylbox, belysning och bogpropeller, och som tål att tömmas och laddas om och om igen. Osäker på vilket som passar? Chatta med oss Vi säljer inte startbatterier till båt. Ska motorns startbatteri bytas är vi fel leverantör, och det säger vi hellre nu än efter att du beställt. 6  batterier för det här 12V Discover  ·  AGM / Dry Cell  ·   12V Dry Cell 12V 120Ah 120 Ah (C20) 3 795 kr Inkl. moms Beställningsbar från leverantör Senast köpt   4 aug.  · 2 st Köp Jämför 12V Discover  ·  AGM / Dry Cell  ·   12V Dry Cell 12V 150Ah 150 Ah (C20) 4 895 kr Inkl. moms Beställningsbar från leverantör Köp Jämför 12V Sonnenschein  ·  Gelbatteri  ·   12V GF 12V 105Ah 105 Ah (C5) / 120 Ah (C20) 4 495 kr Inkl. moms Beställningsbar från leverantör Köp Jämför 12V Sonnenschein  ·  Gelbatteri  ·   12V GF 12V 160Ah 160 Ah (C5) / 196 Ah (C20) 6 595 kr Inkl. moms Beställningsbar från leverantör Köp Jämför 12V Sonnenschein  ·  Gelbatteri  ·   12V GF 12V 76Ah 76 Ah (C5) / 86 Ah (C20) 5.0 ( 1 ) 3 195 kr Inkl. moms Beställningsbar från leverantör Senast köpt   6 aug.  · 2 st Köp Jämför 12V Sonnenschein  ·  Gelbatteri  ·   12V GF 12V 50Ah 50 Ah (C5) / 55 Ah (C20) 2 195 kr Inkl. moms Beställningsbar från leverantör Senast köpt   24 aug.  · 2 st Köp Jämför Så väljer du rätt Skilj start från förbrukning Ett batteri som både ska starta motorn och driva kylboxen gör inget av det bra. Har du bara ett batteri ombord idag är två separata, med skiljerelä eller huvudströmbrytare, den enskilt bästa uppgraderingen. Slutet batteri är rätt ombord Gel och dry cell är förseglade och läcker inte syra om båten kränger. De gasar heller inte i normal drift, vilket spelar roll i ett trångt och dåligt ventilerat batteriutrymme. Bogpropellern styr storleken En bogpropeller drar väldigt mycket ström i korta stötar. Sitter den på förbrukningsbatteriet behöver du både hög kapacitet och ett batteri som tål effektuttaget, alltså dry cell snarare än gel. Vinterkonservera batteriet också Ladda fullt före upptagning och håll det laddat under vintern. Ett urladdat blybatteri i en kall båt är ett batteri som ska köpas nytt till våren. Varför de här batterierna.  Discover EV31A-A anges för båtinstallationer i produktdatan. Övriga står med på sin konstruktion: 12V, slutna och djupcykliska, alltså byggda för förbrukningsdrift ombord. Vanliga frågor Vad är skillnaden mellan startbatteri och förbrukningsbatteri? Startbatteriet ger flera hundra ampere i några sekunder och urladdas nästan aldrig djupt. Förbrukningsbatteriet ger några ampere i timmar och töms regelbundet. Plattorna är byggda olika för de två jobben, och ett batteri som gör fel jobb slits ut i förtid. Kan jag koppla flera batterier parallellt? Ja, samma typ, samma kapacitet och helst samma ålder. Parallellkoppling ger mer kapacitet på 12V. Blandar du gammalt och nytt drar det gamla ner det nya. Tål batterierna att sitta i en fuktig båt? Gel och dry cell är förseglade och tål marin miljö bra. Polerna ska ändå hållas rena och gärna fettas, och batteriet ska sitta fast så det inte kan röra sig i sjögång. Vi säljer till företag Kassan är byggd för företag och kräver organisationsnummer. Är du privatperson går beställningen inte att slutföra på sajten, men ring eller mejla så löser vi köpet manuellt. Så handlar företag hos oss Passar det inte byter vi Har vi rekommenderat batteriet står vi för bytet och frakten åt båda hållen, utan returavdrag. Förpackningen ska vara obruten och batteriet får inte ha kopplats in. Läs passformsgarantin Läs vidare Guide: start eller förbrukning ombord Solcellsbatteri 12V Fritid och solenergi Vet du inte vilket batteri som passar? Berätta vilken maskin du har så hjälper vi dig hitta rätt — snabbt, enkelt och utan kostnad. Vi finns här mån–fre 08:00–17:00. Chatta med oss Skicka mejl"
+    }
+  ],
+  "robots": "User-Agent: *\nAllow: /\nDisallow: /api/\nDisallow: /studio\nDisallow: /admin\nDisallow: /konto\nDisallow: /kassa\nDisallow: /tack\n\nSitemap: https://www.batteriproffs.se/sitemap.xml\n",
+  "sitemap": {
+    "urls": [
+      "https://www.batteriproffs.se",
+      "https://www.batteriproffs.se/batteri-till",
+      "https://www.batteriproffs.se/laddare",
+      "https://www.batteriproffs.se/batterivatten",
+      "https://www.batteriproffs.se/kunskap",
+      "https://www.batteriproffs.se/vilket-batteri",
+      "https://www.batteriproffs.se/foretagskund",
+      "https://www.batteriproffs.se/atervinning",
+      "https://www.batteriproffs.se/faq",
+      "https://www.batteriproffs.se/skotsel",
+      "https://www.batteriproffs.se/kontakt",
+      "https://www.batteriproffs.se/om-oss",
+      "https://www.batteriproffs.se/villkor",
+      "https://www.batteriproffs.se/integritet",
+      "https://www.batteriproffs.se/kategori/alla",
+      "https://www.batteriproffs.se/kategori/traktion-industri",
+      "https://www.batteriproffs.se/kategori/stadmaskiner",
+      "https://www.batteriproffs.se/kategori/stationara",
+      "https://www.batteriproffs.se/kategori/fritid-solenergi",
+      "https://www.batteriproffs.se/produkt/nm125-6et",
+      "https://www.batteriproffs.se/produkt/nm305g-et",
+      "https://www.batteriproffs.se/produkt/nml16h-et",
+      "https://www.batteriproffs.se/produkt/nm1275-12et",
+      "https://www.batteriproffs.se/produkt/ev305a-a-am",
+      "https://www.batteriproffs.se/produkt/evl16a-a-m8",
+      "https://www.batteriproffs.se/produkt/ev31a-a-m8",
+      "https://www.batteriproffs.se/produkt/ev512a-150-m8",
+      "https://www.batteriproffs.se/produkt/gf-06-240v",
+      "https://www.batteriproffs.se/produkt/nm105-6et",
+      "https://www.batteriproffs.se/produkt/gf-12-063y",
+      "https://www.batteriproffs.se/produkt/gf-12-076v",
+      "https://www.batteriproffs.se/produkt/gf-12-105v",
+      "https://www.batteriproffs.se/produkt/gf-12-050v",
+      "https://www.batteriproffs.se/produkt/gf-12-160v",
+      "https://www.batteriproffs.se/produkt/nm875-8et",
+      "https://www.batteriproffs.se/produkt/evgc6a-a-m8",
+      "https://www.batteriproffs.se/produkt/evgc8a-a-m8",
+      "https://www.batteriproffs.se/produkt/gf-06-180v",
+      "https://www.batteriproffs.se/produkt/gf-12-052y",
+      "https://www.batteriproffs.se/batteri-till/tennant-t3-t3-plus",
+      "https://www.batteriproffs.se/batteri-till/nilfisk-sc250",
+      "https://www.batteriproffs.se/batteri-till/nilfisk-sc401",
+      "https://www.batteriproffs.se/batteri-till/nilfisk-sc500",
+      "https://www.batteriproffs.se/batteri-till/nilfisk-sc6000",
+      "https://www.batteriproffs.se/batteri-till/nilfisk-ba530",
+      "https://www.batteriproffs.se/batteri-till/nilfisk-ba451d",
+      "https://www.batteriproffs.se/batteri-till/hako-scrubmaster-b12",
+      "https://www.batteriproffs.se/batteri-till/hako-scrubmaster-b30",
+      "https://www.batteriproffs.se/batteri-till/hako-scrubmaster-b45",
+      "https://www.batteriproffs.se/batteri-till/hako-scrubmaster-b120",
+      "https://www.batteriproffs.se/batteri-till/karcher-br-35-12",
+      "https://www.batteriproffs.se/batteri-till/karcher-br-40-25",
+      "https://www.batteriproffs.se/batteri-till/karcher-bd-43-25",
+      "https://www.batteriproffs.se/batteri-till/karcher-bd-50-50",
+      "https://www.batteriproffs.se/batteri-till/karcher-br-55-40",
+      "https://www.batteriproffs.se/batteri-till/karcher-br-75-140",
+      "https://www.batteriproffs.se/batteri-till/gansow-ct45",
+      "https://www.batteriproffs.se/batteri-till/gansow-ct70",
+      "https://www.batteriproffs.se/batteri-till/gansow-bt70",
+      "https://www.batteriproffs.se/batteri-till/tennant-stadmaskin",
+      "https://www.batteriproffs.se/batteri-till/comac-stadmaskin",
+      "https://www.batteriproffs.se/batteri-till/jlg-saxlift",
+      "https://www.batteriproffs.se/batteri-till/genie-lift",
+      "https://www.batteriproffs.se/batteri-till/haulotte-lift",
+      "https://www.batteriproffs.se/batteri-till/snorkel-lift",
+      "https://www.batteriproffs.se/batteri-till/club-car-precedent",
+      "https://www.batteriproffs.se/batteri-till/ez-go-rxv",
+      "https://www.batteriproffs.se/batteri-till/ez-go-txt",
+      "https://www.batteriproffs.se/batteri-till/yamaha-drive",
+      "https://www.batteriproffs.se/batteri-till/pallyftare",
+      "https://www.batteriproffs.se/batteri-till/agv-fordon",
+      "https://www.batteriproffs.se/batteri-till/permobil",
+      "https://www.batteriproffs.se/ersatter/trojan-t-125",
+      "https://www.batteriproffs.se/ersatter/trojan-t-105",
+      "https://www.batteriproffs.se/ersatter/trojan-t-875",
+      "https://www.batteriproffs.se/golfbilsbatteri",
+      "https://www.batteriproffs.se/solcellsbatteri-12v",
+      "https://www.batteriproffs.se/husbilsbatteri",
+      "https://www.batteriproffs.se/husvagnsbatteri",
+      "https://www.batteriproffs.se/marinbatteri",
+      "https://www.batteriproffs.se/kunskap/vad-kostar-ett-truckbatteri",
+      "https://www.batteriproffs.se/kunskap/traktionsbatteri-eller-startbatteri",
+      "https://www.batteriproffs.se/kunskap/gelbatteri-eller-oppet-blybatteri",
+      "https://www.batteriproffs.se/kunskap/agm-gel-eller-litium-i-husbilen",
+      "https://www.batteriproffs.se/kunskap/dimensionera-solcellsbatteri",
+      "https://www.batteriproffs.se/kunskap/startbatteri-eller-forbrukningsbatteri-i-baten"
+    ],
+    "count": 86,
+    "unique_lastmod": [
+      "2026-09-11T15:46:15.152Z"
+    ]
+  }
+}
