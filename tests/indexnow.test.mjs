@@ -196,11 +196,13 @@ test('concurrent state writer is not force-overwritten', async () => {
 test('workflow serializes runs, checks production bot, and executes default-branch code only', async () => {
   const workflow = await readFile(new URL('../.github/workflows/indexnow.yml', import.meta.url), 'utf8')
   assert.match(workflow, /group: indexnow-production-catalogue\n  cancel-in-progress: false/)
-  assert.match(workflow, /ref: \$\{\{ github.event.repository.default_branch \}\}/)
+  assert.match(workflow, /DEFAULT_BRANCH: \$\{\{ github.event.repository.default_branch \}\}/)
   assert.match(workflow, /deployment.environment == 'Production'/)
   assert.match(workflow, /deployment_status.creator.login == 'vercel\[bot\]'/)
-  assert.match(workflow, /persist-credentials: false/)
-  assert.doesNotMatch(workflow, /checkout[^]*ref: \$\{\{ github.event.deployment.sha/)
+  assert.match(workflow, /commits\/\$DEFAULT_BRANCH/)
+  assert.match(workflow, /\?ref=\$TRUSTED_SHA/)
+  assert.match(workflow, /for module in core github run/)
+  assert.doesNotMatch(workflow, /actions\/checkout/)
 })
 
 

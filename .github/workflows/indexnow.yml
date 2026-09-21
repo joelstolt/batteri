@@ -35,12 +35,22 @@ jobs:
     runs-on: ubuntu-latest
     timeout-minutes: 15
     steps:
-      # Never execute the deployment event's checkout or anything from the state
-      # branch. Only maintained code from our trusted default branch runs here.
-      - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
-        with:
-          ref: ${{ github.event.repository.default_branch }}
-          persist-credentials: false
+      # Fetch only the three runtime modules from a pinned default-branch SHA.
+      # A full checkout fails on a pre-existing gitlink without .gitmodules.
+      # Never execute code from the deployment event or the state branch.
+      - name: Fetch trusted default-branch scripts
+        env:
+          GH_TOKEN: ${{ github.token }}
+          DEFAULT_BRANCH: ${{ github.event.repository.default_branch }}
+        run: |
+          set -euo pipefail
+          TRUSTED_SHA="$(gh api "repos/$GITHUB_REPOSITORY/commits/$DEFAULT_BRANCH" --jq '.sha')"
+          [[ "$TRUSTED_SHA" =~ ^[a-f0-9]{40}$ ]]
+          mkdir -p scripts/indexnow
+          for module in core github run; do
+            gh api "repos/$GITHUB_REPOSITORY/contents/scripts/indexnow/$module.mjs?ref=$TRUSTED_SHA" \
+              --jq '.content' | base64 --decode > "scripts/indexnow/$module.mjs"
+          done
       - uses: actions/setup-node@820762786026740c76f36085b0efc47a31fe5020 # v7.0.0
         with:
           node-version: '24'

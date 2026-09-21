@@ -33,8 +33,10 @@ skickar inget. Det är förväntat innan den manuella första körningen ovan.
 ## Efterföljande deployer
 
 Workflow reagerar bara på lyckad `Production` från `vercel[bot]` i rätt repo.
-Koden checkas alltid ut från betrodd default branch. Manifest/state är enbart
-JSON-data; ingen kod checkas ut eller körs från deployment-SHA eller state-gren.
+De tre runtime-modulerna hämtas via GitHub API från en fixerad commit på betrodd
+default branch. Detta undviker repots äldre worktree-gitlink som saknar
+`.gitmodules` och stoppar vanlig checkout. Manifest/state är enbart JSON-data;
+ingen kod hämtas eller körs från deployment-SHA eller state-gren.
 
 1. Matcha live-manifestets revision mot deployment-eventets SHA (begränsad retry).
 2. Kontrollera ownership-textfilen på canonical-domänen.
