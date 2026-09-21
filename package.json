@@ -5,10 +5,12 @@
   "main": "index.js",
   "scripts": {
     "dev": "next dev",
-    "build": "next build",
+    "build": "node scripts/indexnow/generate.mjs && next build",
     "start": "next start",
     "lint": "eslint .",
-    "test": "vitest run"
+    "test": "vitest run",
+    "indexnow:manifest": "node scripts/indexnow/generate.mjs",
+    "indexnow:test": "node --test tests/indexnow.test.mjs"
   },
   "keywords": [],
   "author": "",

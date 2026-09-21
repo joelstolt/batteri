@@ -1,0 +1,53 @@
+name: IndexNow production catalogue
+
+on:
+  deployment_status:
+  workflow_dispatch:
+    inputs:
+      revision:
+        description: 'Exact 40-character commit SHA currently deployed on www.batteriproffs.se'
+        required: true
+        type: string
+      dry_run:
+        description: 'Verify and show URL diff without submitting or saving state'
+        type: boolean
+        default: true
+      initial_products_bootstrap:
+        description: 'First run only: submit public products and seed other catalogue pages as baseline'
+        type: boolean
+        default: false
+
+permissions:
+  contents: write
+
+concurrency:
+  group: indexnow-production-catalogue
+  cancel-in-progress: false
+
+jobs:
+  notify:
+    if: >-
+      github.repository == 'joelstolt/batteri' &&
+      ((github.event_name == 'workflow_dispatch' && github.ref == format('refs/heads/{0}', github.event.repository.default_branch)) ||
+      (github.event_name == 'deployment_status' && github.event.deployment_status.state == 'success' &&
+      github.event.deployment.environment == 'Production' && github.event.deployment.creator.login == 'vercel[bot]' &&
+      github.event.deployment_status.creator.login == 'vercel[bot]'))
+    runs-on: ubuntu-latest
+    timeout-minutes: 15
+    steps:
+      # Never execute the deployment event's checkout or anything from the state
+      # branch. Only maintained code from our trusted default branch runs here.
+      - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
+        with:
+          ref: ${{ github.event.repository.default_branch }}
+          persist-credentials: false
+      - uses: actions/setup-node@820762786026740c76f36085b0efc47a31fe5020 # v7.0.0
+        with:
+          node-version: '24'
+      - name: Verify production, submit changes, acknowledge baseline
+        env:
+          GITHUB_TOKEN: ${{ github.token }}
+          EXPECTED_REVISION: ${{ github.event_name == 'deployment_status' && github.event.deployment.sha || inputs.revision }}
+          INDEXNOW_SUBMIT: ${{ github.event_name == 'deployment_status' || !inputs.dry_run }}
+          INDEXNOW_INITIAL_PRODUCTS_BOOTSTRAP: ${{ github.event_name == 'workflow_dispatch' && inputs.initial_products_bootstrap }}
+        run: node scripts/indexnow/run.mjs

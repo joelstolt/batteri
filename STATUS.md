@@ -730,3 +730,36 @@ byggs.
 - **`docs/lankbygge-texter.md`**: klubbpitch (golfklubbar = B2B nu, båt/husbil
   när B2C finns), sex forumsvar, katalogtext, återförsäljarlista, testsajtpitch,
   rabattkodstext, partnermejlet om fritidssortimentet. Konton skapar Joel själv.
+
+## Bing, IndexNow och Merchant Center (2026-09-21)
+
+Verifierat i inloggade konton:
+
+- Bing Site Explorer visar alla 20 publika produktsidor som indexerade, utan
+  fel/varningar/exkluderingar i produktmappen. Flera senaste hämtningar är från
+  augusti eller tidigare. IndexNow behövs för snabbare upptäckt av ändringar.
+- Bing hade redan sitemap.xml med status Success och 86 upptäckta adresser.
+  Sitemapen skickades om 21 september och kvitterades som Processing.
+- Bing AI Performance visar 6 citeringar av /batterivatten, från 19 september,
+  i rapporten Microsoft Copilots and Partners. Detta är ett stickprov och inte
+  ett separat ChatGPT-mått eller ett resultat av dagens ändringar.
+- Merchant Center 5819396648 är fortfarande spärrat för Felaktig framställning:
+  20 inte godkända produkter, inga under granskning. Google anger ingen specifik
+  orsak utöver de allmänna riktlinjerna. Äldre antaganden om SNI är inte bevis.
+- Returpolicyn i Google ÄR redan verifierad och gäller alla 20 produkter:
+  14 dagar, kunden betalar returfrakt och 30 % returavdrag. Äldre TODO om att
+  registrera detta är inaktuellt. Adress och kundtjänst finns i företagsprofilen,
+  webbplatsen är verifierad och tagen i anspråk. Ingen omprövning skickad.
+
+IndexNow: `.github/workflows/indexnow.yml` reagerar på lyckad Vercel
+Production-deploy. `scripts/indexnow/` jämför ett publikt buildmanifest på den
+skarpa domänen med senast kvitterad version på data-grenen `indexnow-state`.
+Endast nya, ändrade och borttagna katalogadresser skickas. Första inlämningen
+startas uttryckligen med `initial_products_bootstrap=true` och omfattar de 20
+produkter som fick nya strukturerade data 21 september. Övriga katalogsidor
+läggs in som jämförelseunderlag utan historiska omskick. Ingen privat nyckel,
+databas eller extra cron används. HTTP 202 är väntande validering, inte färdigt
+kvitto. Körinstruktioner finns i `scripts/indexnow/README.md`.
+
+Kontounderlag, produktvisa hämtningsdatum och det externa verifieringskvittot
+finns i ../../outputs/batteriproffs-bing-merchant-20260921.md.
