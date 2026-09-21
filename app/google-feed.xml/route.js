@@ -1,9 +1,10 @@
-import { publicProducts, getProductImage, getProductBrand } from "@/lib/products"
+import { publicProducts, getProductImage } from "@/lib/products"
+
+import { SITE_URL } from "@/lib/constants"
+import { productIdentifiers } from "@/lib/product-discovery"
+import { productShippingInclVat } from "@/lib/store-policy"
 
 export const dynamic = "force-static"
-
-const SITE = "https://www.batteriproffs.se"
-const SHIPPING_PRICE = "695.00 SEK"
 
 function esc(s) {
   return String(s)
@@ -19,27 +20,25 @@ function plainDescription(product) {
 }
 
 function feedItem(product) {
-  // Traktionsbatterier saluförs inte med GTIN. Utan `identifier_exists: no`
-  // antar Google att streckkoden bara glömts bort och kan flagga artikeln som
-  // ofullständig. Med den satt räcker varumärke plus artikelnummer.
-  const mpn = product.specs?.["Artikelnummer"] || product.slug.toUpperCase()
+  // Varumärke + tillverkarens MPN är identifierare även när GTIN saknas.
+  const { brand, mpn } = productIdentifiers(product)
   return `  <item>
     <g:id>${esc(product.slug)}</g:id>
     <g:title>${esc(product.name.slice(0, 150))}</g:title>
     <g:description>${esc(plainDescription(product))}</g:description>
-    <g:link>${SITE}/produkt/${esc(product.slug)}</g:link>
-    <g:image_link>${SITE}${esc(getProductImage(product))}</g:image_link>
+    <g:link>${SITE_URL}/produkt/${esc(product.slug)}</g:link>
+    <g:image_link>${SITE_URL}${esc(getProductImage(product))}</g:image_link>
     <g:availability>${product.inStock ? "in_stock" : "out_of_stock"}</g:availability>
     <g:price>${product.price.toFixed(2)} SEK</g:price>
-    <g:brand>${esc(getProductBrand(product))}</g:brand>
-    <g:mpn>${esc(mpn)}</g:mpn>
-    <g:identifier_exists>no</g:identifier_exists>
+    ${brand ? `<g:brand>${esc(brand)}</g:brand>` : ""}
+    ${mpn ? `<g:mpn>${esc(mpn)}</g:mpn>` : ""}
+    ${brand && mpn ? "<g:identifier_exists>yes</g:identifier_exists>" : ""}
     <g:condition>new</g:condition>
     <g:google_product_category>Electronics &gt; Power &gt; Batteries</g:google_product_category>
     <g:product_type>${esc(product.category)}</g:product_type>
     <g:shipping>
       <g:country>SE</g:country>
-      <g:price>${SHIPPING_PRICE}</g:price>
+      <g:price>${productShippingInclVat(product).toFixed(2)} SEK</g:price>
     </g:shipping>
   </item>`
 }
@@ -49,7 +48,7 @@ export async function GET() {
 <rss version="2.0" xmlns:g="http://base.google.com/ns/1.0">
 <channel>
   <title>Batteriproffs</title>
-  <link>${SITE}</link>
+  <link>${SITE_URL}</link>
   <description>Traktions-, gel- och fritidsbatterier från Batteriproffs</description>
 ${publicProducts.map(feedItem).join("\n")}
 </channel>

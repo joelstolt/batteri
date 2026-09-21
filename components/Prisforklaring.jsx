@@ -1,3 +1,4 @@
+import { RETURN_WINDOW_DAYS } from "@/lib/store-policy"
 import Link from "next/link"
 import ChattKnapp from "@/components/ChattKnapp"
 
@@ -58,7 +59,7 @@ export function PrisforklaringKort() {
         </p>
         <p className="mt-2.5 leading-relaxed text-text-dark">
           Passar det inte i din maskin byter vi det utan returavdrag, så länge
-          förpackningen är obruten och du hör av dig inom 14 dagar.
+          förpackningen är obruten och du hör av dig inom {RETURN_WINDOW_DAYS} dagar.
         </p>
         <p className="mt-3.5 text-sm">
           <Link href="/om-oss" className="font-heading font-bold text-accent hover:underline">

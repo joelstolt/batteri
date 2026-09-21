@@ -1,3 +1,4 @@
+import { STANDARD_SHIPPING_INCL_VAT, RETURN_WINDOW_DAYS, RETURN_RESTOCKING_FEE_PERCENT, DELIVERY_ESTIMATE } from "@/lib/store-policy"
 import TopBar from "@/components/TopBar"
 import Header from "@/components/Header"
 import Footer from "@/components/Footer"
@@ -129,13 +130,13 @@ export default function VillkorPage() {
                 <p>
                   Beställningar skickas med PostNord, i de flesta fall direkt från vår
                   leverantör. Order som läggs på vardagar före kl 14:00 skickas normalt
-                  samma dag och är vanligtvis framme inom 1–3 arbetsdagar i hela Sverige.
+                  samma dag och är vanligtvis framme inom {DELIVERY_ESTIMATE} i hela Sverige.
                   Leveranstiden är en uppskattning och ingen garanti — vid restnotering,
                   pallbokning eller hög belastning hos transportören kan det ta längre.
                   Blir din order försenad hör vi av oss.
                 </p>
                 <p>
-                  <strong>Fraktkostnad:</strong> 695 kr inkl. moms per försändelse i
+                  <strong>Fraktkostnad:</strong> {STANDARD_SHIPPING_INCL_VAT} kr inkl. moms per försändelse i
                   hela Sverige. För särskilt tunga eller skrymmande artiklar (t.ex.
                   produkter klassade som farligt gods eller som inte kan hanteras
                   manuellt) kan en högre frakt tillämpas — det framgår alltid innan du
@@ -191,7 +192,7 @@ export default function VillkorPage() {
                 <p>
                   <strong>Kontakta oss alltid först.</strong> Hör av dig till{" "}
                   <a className="text-navy underline" href="mailto:info@batteriproffs.se">info@batteriproffs.se</a>{" "}
-                  inom <strong>14 dagar</strong> från det att du tog emot leveransen.
+                  inom <strong>{RETURN_WINDOW_DAYS} dagar</strong> från det att du tog emot leveransen.
                   Först när vi godkänt returen skriftligt får varan skickas tillbaka, och
                   då får du returadress och instruktioner av oss. En retur som skickas
                   utan godkännande i förväg kan vi inte ta emot.
@@ -205,8 +206,8 @@ export default function VillkorPage() {
                   företag returrätt alls.
                 </p>
                 <p>
-                  <strong>Returavdrag 30 %.</strong> Vid godkänd retur av en felfri vara
-                  gör vi ett avdrag på 30 % av varans värde. Avdraget motsvarar det som
+                  <strong>Returavdrag {RETURN_RESTOCKING_FEE_PERCENT} %.</strong> Vid godkänd retur av en felfri vara
+                  gör vi ett avdrag på {RETURN_RESTOCKING_FEE_PERCENT} % av varans värde. Avdraget motsvarar det som
                   vår leverantör drar av oss för kontroll, provning och åter i lager.
                   Fraktkostnaden återbetalas inte, och du står själv för returfrakten
                   samt för risken under transporten. Välj ett spårbart fraktsätt och
@@ -241,7 +242,7 @@ export default function VillkorPage() {
                 </p>
                 <p>
                   Garantin förutsätter att förpackningen är obruten och att batteriet
-                  aldrig kopplats in, och att du hör av dig inom 14 dagar från leveransen.
+                  aldrig kopplats in, och att du hör av dig inom {RETURN_WINDOW_DAYS} dagar från leveransen.
                   Uppge maskinens märke och modell så hittar vi rätt batteri direkt. Är du
                   osäker före köpet, ring{" "}
                   <a className="text-navy underline" href="tel:+46766867752">076-686 77 52</a>{" "}

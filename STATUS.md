@@ -1,3 +1,18 @@
+## 2026-09-21: produktdata för AI-sök
+
+SEO-runda godkänd av Joel. Byggd från produktionsgrenens 5431034 i den separata grenen improve/product-discovery-20260921.
+
+- Google-feeden använder verkligt varumärke och MPN. Alla 20 nuvarande artiklar har identifier_exists=yes. SKU används aldrig som påhittat tillverkarartikelnummer; inga GTIN har gissats.
+- Produkt-JSON-LD byggs i lib/product-schema.js. lib/product-discovery.js mappar synliga specifikationer till separata PropertyValue-fält och kända mått till depth/width/height. C5/C20, polsuffix, ungefärlig vikt och källornas variantreservationer bevaras. EV305A:s obekräftade totalhöjd lämnas utanför dimensionsfälten.
+- Publicerade returdagar, returavdrag och frakt hämtas från lib/store-policy.js i produktdata, produktvy, FAQ, köpvillkor och llms.txt. Faktiska villkor och priser ändras inte. Betalningsberäkning och betalnings-API:er är orörda.
+- /llms.txt genereras av app/llms.txt/route.js från policyn och publicProducts. Det gamla löftet om 30 dagars öppet köp är borttaget. Alla 20 produktsidor länkas.
+- Den tidigare ospecificerade uppdelningen av leveranstiden i hantering och transport har tagits bort ur JSON-LD. Normalt 1-3 arbetsdagar och undantag står fortsatt i den synliga policyn.
+- Lokal kontroll: 104 tester, lint och produktionsbygge godkända. Efter publicering kontrolleras alla 20 produktsidor, feed, sitemap, robots och llms.txt via curl. Kvitto sparas under Dev/outputs/batteriproffs-ai-20260921-verification.json.
+
+Kvar utanför denna runda: verifiera verkliga OAI-SearchBot-anrop i Vercels loggar; undersöka OpenAI:s godkännande och marknadsstöd för Sverige/SEK innan eventuell direktfeed. Ingen OpenAI-feed är ansluten. Checkout-grenen improve/checkout-products-20260919 ingår inte.
+
+Källor: https://support.google.com/merchants/answer/6324478?hl=en och https://schema.org/PropertyValue.
+
 ## 2026-09-05: Stripe-test och ordermejl verifierade
 
 Betalningstestet är klart. Två köp genomförda i rätt Stripe-testkonto: nekat kort med lyckat återförsök, 3D Secure, flera artikelrader, reservation, debitering och leverans. Åtta orderrelaterade testmejl verifierade Delivered i Resend. Kontrollerade återförsök gav inga extra debiteringar eller utskick. Detaljer och begränsningar: docs/payment-e2e-20260905.md och JSON-kvittot bredvid.

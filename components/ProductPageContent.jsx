@@ -21,6 +21,7 @@ import {
   getProductChemistry,
 } from "@/lib/products"
 import { CATEGORIES } from "@/lib/constants"
+import { productShippingInclVat } from "@/lib/store-policy"
 import { machinesForProduct } from "@/lib/machines"
 import { slugifyModel } from "@/lib/replacements"
 import { teknikFor } from "@/lib/teknik"
@@ -391,7 +392,7 @@ export default function ProductPageContent({
                 <div className="mt-1.5 text-sm text-text-mid">
                   + frakt{" "}
                   <span className="font-semibold text-text-dark">
-                    {formatPrice(displayPrice(695))} kr {vatLabel.toLowerCase()}
+                    {formatPrice(displayPrice(productShippingInclVat(product)))} kr {vatLabel.toLowerCase()}
                   </span>{" "}
                   per order, oavsett antal batterier
                 </div>

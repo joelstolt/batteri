@@ -1,6 +1,7 @@
 import { notFound } from "next/navigation"
-import { products, getProductImage, getProductBrand } from "@/lib/products"
+import { products } from "@/lib/products"
 import { breadcrumbJsonLd, jsonLdProps } from "@/lib/schema"
+import { buildProductJsonLd } from "@/lib/product-schema"
 import { hamtaGodkandaCachat, sammanfatta } from "@/lib/omdomen"
 import { hamtaKopPerProduktCachat } from "@/lib/orders"
 import { CATEGORIES } from "@/lib/constants"
@@ -94,94 +95,6 @@ export async function generateMetadata({ params }) {
   }
 }
 
-const SITE = "https://www.batteriproffs.se"
-
-function buildProductJsonLd(product, omdomen = []) {
-  const sum = sammanfatta(omdomen)
-
-  return {
-    "@context": "https://schema.org",
-    "@type": "Product",
-    name: product.name,
-    /*
-     * aggregateRating sätts BARA när det finns riktiga omdömen, och värdet är
-     * det faktiska snittet — aldrig avrundat uppåt.
-     *
-     * Konkurrenten som visar omdömen märker upp ratingValue 5 på produktsidor
-     * som innehåller både ettor och fyror. Google kan då visa 5,0 i
-     * sökresultatet på ett betyg som i verkligheten ligger kring 4,5. Det är
-     * vilseledande, och det är den enda punkt där de går att sätta dit.
-     */
-    ...(sum
-      ? {
-          aggregateRating: {
-            "@type": "AggregateRating",
-            ratingValue: sum.snitt,
-            reviewCount: sum.antal,
-            bestRating: 5,
-            worstRating: 1,
-          },
-        }
-      : {}),
-    image: `${SITE}${getProductImage(product)}`,
-    description: (product.description || product.metaDescription || "").replace(/\n+/g, " "),
-    sku: product.slug,
-    mpn: product.specs?.["Artikelnummer"] || product.slug.toUpperCase(),
-    brand: {
-      "@type": "Brand",
-      name: getProductBrand(product),
-    },
-    offers: {
-      "@type": "Offer",
-      url: `${SITE}/produkt/${product.slug}`,
-      priceCurrency: "SEK",
-      price: product.price,
-      itemCondition: "https://schema.org/NewCondition",
-      availability: product.inStock
-        ? "https://schema.org/InStock"
-        : "https://schema.org/OutOfStock",
-      shippingDetails: {
-        "@type": "OfferShippingDetails",
-        shippingRate: {
-          "@type": "MonetaryAmount",
-          value: 695,
-          currency: "SEK",
-        },
-        shippingDestination: {
-          "@type": "DefinedRegion",
-          addressCountry: "SE",
-        },
-        deliveryTime: {
-          "@type": "ShippingDeliveryTime",
-          handlingTime: { "@type": "QuantitativeValue", minValue: 0, maxValue: 2, unitCode: "DAY" },
-          transitTime: { "@type": "QuantitativeValue", minValue: 1, maxValue: 5, unitCode: "DAY" },
-        },
-      },
-      /*
-       * Måste spegla /villkor exakt.
-       *
-       * Google flaggade redan sajten för Felaktig framställning en gång, och
-       * motstridiga returuppgifter mellan strukturerad data och villkorstexten
-       * är precis en sådan motsägelse. Ändras returvillkoren ska de fyra
-       * fälten nedan ändras i samma commit.
-       *
-       * restockingFee är ett tal = procent av varans pris, alltså vårt
-       * returavdrag på 30 % som speglar leverantörens avdrag mot oss.
-       */
-      hasMerchantReturnPolicy: {
-        "@type": "MerchantReturnPolicy",
-        applicableCountry: "SE",
-        returnPolicyCategory: "https://schema.org/MerchantReturnFiniteReturnWindow",
-        merchantReturnDays: 14,
-        returnMethod: "https://schema.org/ReturnByMail",
-        returnFees: "https://schema.org/ReturnFeesCustomerResponsibility",
-        restockingFee: 30,
-        merchantReturnLink: `${SITE}/villkor`,
-      },
-    },
-  }
-}
-
 export default async function ProductRoute({ params }) {
   const { slug } = await params
   const product = products.find((p) => p.slug === slug)
@@ -214,7 +127,7 @@ export default async function ProductRoute({ params }) {
       {product && !product.hidden && (
         <script
           type="application/ld+json"
-          dangerouslySetInnerHTML={{ __html: JSON.stringify(buildProductJsonLd(product, omdomen)) }}
+          dangerouslySetInnerHTML={{ __html: JSON.stringify(buildProductJsonLd(product, sammanfatta(omdomen))).replace(/</g, "\\u003c") }}
         />
       )}
       {product && (
