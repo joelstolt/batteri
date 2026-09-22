@@ -2,12 +2,8 @@ import Stripe from "stripe"
 import { createHash, randomUUID } from "node:crypto"
 import { serializeOrderItems } from "@/lib/order-items"
 import { NextResponse } from "next/server"
-// Priset slås upp i lib/products.js, aldrig via Sanity. Sanity-datasetet är
-// tomt, så varje orderrad kostade ett nätverksanrop som ändå föll tillbaka hit.
-// Värre: la någon in en produkt i studion vann Sanity-priset i kassan medan
-// produktsidan visade det hårdkodade — kunden ser ett pris och debiteras ett
-// annat. getProductBySlug slår mot hela `products`, inte publicProducts, så
-// dolda testartiklar går fortfarande att provköpa precis som förut.
+// Priser hämtas från samma produktdata som produktsidan använder.
+// getProductBySlug söker i hela products, så dolda testartiklar kan provköpas.
 import { getProductBySlug } from "@/lib/products"
 import {
   rateLimit,

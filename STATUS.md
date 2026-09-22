@@ -1,3 +1,9 @@
+## 2026-09-22: Sanity bortkopplat
+
+Joel använder inte Sanity och har bett att kopplingen tas bort. Studio-rutten, klienten, de oanvända frågefunktionerna, scheman och tillhörande paket är borttagna. Även styled-components och de tre paketundantagen användes bara av Sanity och är borttagna. Låsfilen har 691 färre paketversioner, utan uppgraderingar av kvarvarande paket. Produktdata och priser hämtas fortsatt från lib/products.js. Historiska arbetskopior och Sanity-projektet hos leverantören ingår inte i ändringen.
+
+Lokalt verifierat: 104 Vitest-tester, 16 IndexNow-tester, lint och produktionsbygge passerar. Inga aktiva Sanity-importer eller Sanity-paket finns kvar. Produktionsbygget innehåller ingen Studio-rutt. Vercel har inga Sanity-miljövariabler. Deploy sker via main till https://www.batteriproffs.se; HTTP-status och jämförelse av produktfeed, llms.txt och sitemap före/efter sparas i Dev/outputs/batteriproffs-sanity-20260922-verification.json.
+
 ## 2026-09-21: produktdata för AI-sök
 
 SEO-runda godkänd av Joel. Byggd från produktionsgrenens 5431034 i den separata grenen improve/product-discovery-20260921.
@@ -97,8 +103,8 @@ Det här styr formuleringar och funktionsval, så läs det innan du skriver copy
 
 ## Vad som finns
 
-20 produkter i `lib/products.js` (hårdkodade). Sanity är inkopplat men innehåller
-**noll produkter** — rör det inte, det är en fälla att börja läsa därifrån.
+20 produkter i `lib/products.js`. Detta är sajtens produktkälla. Sanity-kopplingen
+är borttagen sedan 2026-09-22.
 
 Sidor: startsida, 20 produktsidor, kategorier, 30 maskinsidor under
 `/batteri-till/<slug>`, 3 ersättningssidor under `/ersatter/<slug>`, `/laddare`,
@@ -165,7 +171,6 @@ byts numret igen: grep:a hela kodbasen på båda formaten. Gamla numret
 | `lib/orders.js` | Enda översättningen PaymentIntent → order. Läser **två** radformat: `{name,qty,price}` för ordrar före 2026-07-29 och `{s,n,q,p}` efter. Båda måste fungera för all framtid, gamla ordrar ligger kvar oförändrade i Stripe. `orderIdFor` får aldrig ändras — numret står i utskickade mejl. |
 | `lib/konto-auth.js` | Signering av inloggningslänk och session. Nyckeln härleds ur `ADMIN_TOKEN`. |
 | `lib/admin-auth.js` | Tokenkoll för admin-endpointerna. Konstanttidsjämförelse plus eget tak per IP. |
-| `lib/queries.js` | **Läses inte av något.** Sanity-lagret, urkopplat ur kassan 2026-07-29. Koppla inte in det igen utan att först bestämma vilken källa som äger priset. |
 | `app/globals.css` | Färgtokens med uppmätt kontrast i kommentar. `--color-amber-heading` bara till stora rubriker. Rör inte utan att mäta om. |
 
 ## Fällor som redan kostat tid

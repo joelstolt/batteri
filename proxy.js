@@ -8,11 +8,6 @@ export function proxy(request) {
     "Cache-Control": "no-store",
   }
   // Preview contains no payment credentials and cannot send messages or run jobs.
-  if (path.startsWith("/studio"))
-    return new NextResponse("Studion är avstängd i förhandsvisningen.", {
-      status: 503,
-      headers,
-    })
   if (path.startsWith("/api/")) {
     const invalidOrder =
       path === "/api/order" &&
