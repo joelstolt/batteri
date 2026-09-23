@@ -13,7 +13,7 @@ export function GET() {
 
 Kontakt: ${EMAIL} eller ${PHONE}, vardagar 08:00-17:00.
 Leverans: normalt ${DELIVERY_ESTIMATE}, inte garanterat. Se köpvillkoren för undantag.
-Ordinarie frakt: ${STANDARD_SHIPPING_INCL_VAT} kr inklusive moms per försändelse i Sverige. Eventuella undantag framgår före köpet.
+Fast frakt: ${STANDARD_SHIPPING_INCL_VAT} kr inklusive moms per beställning i hela Sverige, oavsett antal batterier, vikt eller om leveransen sker på pall. Inga frakttillägg tillkommer för tungt eller skrymmande gods. Totalpriset inklusive frakt visas i kassan innan köpet slutförs.
 Betalning: kortbetalning i kassan.
 Retur: kontakta oss inom ${RETURN_WINDOW_DAYS} dagar från leveransen och invänta skriftligt godkännande. Batteriet ska vara obrukat och förpackningen obruten. Vid godkänd retur av felfri vara görs ${RETURN_RESTOCKING_FEE_PERCENT} procent returavdrag. Frakten återbetalas inte och kunden står för returfrakten. Specialbeställda artiklar undantas. Fullständiga villkor: ${SITE_URL}/villkor#5-retur
 Passformsgaranti: byte utan returavdrag enligt villkoren. Förpackningen ska vara obruten och batteriet får inte ha kopplats in. Kontakta oss inom ${RETURN_WINDOW_DAYS} dagar från leveransen. Fraktansvaret beror på om vi rekommenderade batteriet: ${SITE_URL}/villkor#6-passformsgaranti

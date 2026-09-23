@@ -45,7 +45,7 @@ export default function VillkorPage() {
                 Köpvillkor &amp; Leveransvillkor
               </h1>
               <p className="mt-3 text-sm text-text-mid">
-                Senast uppdaterad: augusti 2026
+                Senast uppdaterad: 23 september 2026
               </p>
             </div>
           </div>
@@ -136,11 +136,11 @@ export default function VillkorPage() {
                   Blir din order försenad hör vi av oss.
                 </p>
                 <p>
-                  <strong>Fraktkostnad:</strong> {STANDARD_SHIPPING_INCL_VAT} kr inkl. moms per försändelse i
-                  hela Sverige. För särskilt tunga eller skrymmande artiklar (t.ex.
-                  produkter klassade som farligt gods eller som inte kan hanteras
-                  manuellt) kan en högre frakt tillämpas — det framgår alltid innan du
-                  slutför köpet.
+                  <strong>Fraktkostnad:</strong> Fast frakt på {STANDARD_SHIPPING_INCL_VAT} kr
+                  inklusive moms per beställning i hela Sverige, oavsett antal
+                  batterier, vikt eller om leveransen sker på pall. Inga frakttillägg
+                  tillkommer för tungt eller skrymmande gods. Totalpriset inklusive
+                  frakt visas i kassan innan du slutför köpet.
                 </p>
                 <p>
                   Stämmer inte innehållet i leveransen med orderbekräftelsen, eller är
