@@ -68,7 +68,7 @@ export async function POST(request) {
             Klicka på knappen så kommer du in på ${escape(epost)} och ser dina
             ordrar. Länken gäller i 15 minuter.
           </p>
-          <a href="${escape(lank)}" style="display:inline-block;background:#0B1D3A;color:#fff;text-decoration:none;padding:13px 26px;border-radius:10px;font-weight:700;font-size:14px;">
+          <a href="${escape(lank)}" class="bp-knapp" style="display:inline-block;background:#0B1D3A;color:#fff;text-decoration:none;padding:13px 26px;border-radius:10px;font-weight:700;font-size:14px;">
             Logga in
           </a>
           <p style="margin-top:26px;font-size:13px;line-height:1.6;color:#6B7280;">

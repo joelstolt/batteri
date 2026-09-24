@@ -140,7 +140,7 @@ export async function POST(request) {
 
       ${
         trackingUrl
-          ? `<a href="${trackingUrl}" style="display:inline-block;background:#0B1D3A;color:#fff;text-decoration:none;padding:12px 22px;border-radius:10px;font-weight:700;font-size:14px;">
+          ? `<a href="${trackingUrl}" class="bp-knapp" style="display:inline-block;background:#0B1D3A;color:#fff;text-decoration:none;padding:12px 22px;border-radius:10px;font-weight:700;font-size:14px;">
               Spåra paketet
             </a>`
           : ""
