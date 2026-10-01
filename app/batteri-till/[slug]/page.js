@@ -23,7 +23,7 @@ function productsFor(machine) {
 export async function generateMetadata({ params }) {
   const { slug } = await params
   const machine = machineBySlug(slug)
-  if (!machine) return { title: "Sidan hittades inte — Batteriproffs" }
+  if (!machine) return { title: "Sidan hittades inte | Batteriproffs" }
 
   const products = productsFor(machine)
   const priceFrom = products.length ? Math.min(...products.map((p) => p.price)) : null

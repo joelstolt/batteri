@@ -6,7 +6,7 @@ import { CATEGORIES } from "@/lib/constants"
 import ChattKnapp from "@/components/ChattKnapp"
 
 export const metadata = {
-  title: "Sidan hittades inte — Batteriproffs",
+  title: "Sidan hittades inte | Batteriproffs",
   robots: { index: false, follow: false },
 }
 

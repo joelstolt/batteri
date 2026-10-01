@@ -147,7 +147,7 @@ export async function POST(request) {
       }
 
       <p style="margin-top:24px;font-size:14px;line-height:1.6;color:#374151;">
-        Leveranstid är normalt 1–3 arbetsdagar. Frågor om leveransen? Svara
+        Leveranstid är normalt 1-3 arbetsdagar. Frågor om leveransen? Svara
         på det här mejlet.
       </p>
     `
@@ -158,9 +158,9 @@ export async function POST(request) {
           from: FROM,
           to: customerEmail,
           replyTo: ADMIN_EMAIL,
-          subject: `Din order är skickad — ${orderId}`,
+          subject: `Din order är skickad (${orderId})`,
           html: emailLayout({
-            title: `Din order är skickad — ${orderId}`,
+            title: `Din order är skickad (${orderId})`,
             preheader: `${carrier} · ${tracking}`,
             body: emailBody,
           }),
@@ -236,7 +236,7 @@ export async function POST(request) {
         tyst,
         varning: tyst
           ? "Betalningen är dragen, men ordern kunde inte märkas som skickad i Stripe. Sätt spårningsnumret i Stripe för hand."
-          : "Mejlet är skickat, men ordern kunde inte märkas som skickad i Stripe. Skicka inte om — sätt spårningsnumret i Stripe för hand.",
+          : "Mejlet är skickat, men ordern kunde inte märkas som skickad i Stripe. Skicka inte om, sätt spårningsnumret i Stripe för hand.",
       })
     }
 

@@ -5,7 +5,7 @@ import KontoContent from "@/components/KontoContent"
 import Footer from "@/components/Footer"
 
 export const metadata = {
-  title: "Mitt konto — Batteriproffs",
+  title: "Mitt konto | Batteriproffs",
   description: "Se dina ordrar, leveransstatus och beställ om tidigare köp.",
   // Kundens ordersida hör inte hemma i sökresultatet. Ingen canonical heller —
   // sidan ska inte rankas på något.

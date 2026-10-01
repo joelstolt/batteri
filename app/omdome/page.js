@@ -12,7 +12,7 @@ import ChattKnapp from "@/components/ChattKnapp"
 const stripe = new Stripe(process.env.STRIPE_SECRET_KEY)
 
 export const metadata = {
-  title: "Lämna ett omdöme — Batteriproffs",
+  title: "Lämna ett omdöme | Batteriproffs",
   description: "Betygsätt din order hos Batteriproffs.",
   robots: { index: false, follow: false },
 }

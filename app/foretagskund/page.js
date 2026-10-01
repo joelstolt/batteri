@@ -20,7 +20,7 @@ import ChattKnapp from "@/components/ChattKnapp"
  */
 export const metadata = pageMeta({
   path: "/foretagskund",
-  title: "Företagskund — batterier till företag, kommun och myndighet | Batteriproffs",
+  title: "Företagskund: batterier till företag, kommun och myndighet | Batteriproffs",
   description:
     "Handla batterier som företag. Priser öppet på sajten, offert på volym, gratis återvinning av gamla batterier och personlig rådgivning.",
 })

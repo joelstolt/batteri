@@ -16,7 +16,7 @@ export async function generateStaticParams() {
 export async function generateMetadata({ params }) {
   const { slug } = await params
   const a = artikelBySlug(slug)
-  if (!a) return { title: "Sidan hittades inte — Batteriproffs" }
+  if (!a) return { title: "Sidan hittades inte | Batteriproffs" }
 
   return {
     ...pageMeta({

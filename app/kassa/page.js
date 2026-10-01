@@ -5,7 +5,7 @@ import Footer from "@/components/Footer"
 
 export const metadata = {
   robots: { index: false, follow: false },
-  title: "Kassa — Batteriproffs",
+  title: "Kassa | Batteriproffs",
   description: "Slutför din beställning hos Batteriproffs.",
 }
 

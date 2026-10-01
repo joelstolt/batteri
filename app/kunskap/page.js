@@ -9,7 +9,7 @@ import Footer from "@/components/Footer"
 
 export const metadata = pageMeta({
   path: "/kunskap",
-  title: "Kunskapsbank — guider om traktions- och truckbatterier | Batteriproffs",
+  title: "Kunskapsbank: guider om traktions- och truckbatterier | Batteriproffs",
   description:
     "Vad kostar ett truckbatteri, skillnaden mot startbatteri, och gel eller öppet blybatteri. Raka svar från oss som säljer dem, med priser utskrivna.",
 })

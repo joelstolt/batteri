@@ -5,7 +5,7 @@ import Footer from "@/components/Footer"
 
 export const metadata = {
   alternates: { canonical: "https://www.batteriproffs.se/kontakt" },
-  title: "Kontakta oss — Batteriproffs",
+  title: "Kontakta oss | Batteriproffs",
   description:
     "Kontakta Batteriproffs för rådgivning om batterier. Vi hjälper dig hitta rätt batteri för din verksamhet.",
 }

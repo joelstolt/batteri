@@ -23,7 +23,7 @@ const dmSans = DM_Sans({
 // canonical sätts per sida, aldrig här (ärvs annars till hela sajten).
 export const metadata = {
   metadataBase: new URL("https://www.batteriproffs.se"),
-  title: "Batteriproffs — Fritidsbatteri, traktionsbatteri & truckbatteri",
+  title: "Batteriproffs | Fritidsbatteri, traktionsbatteri & truckbatteri",
   // INGA erfarenhetspåståenden här. Det stod "20+ års erfarenhet" fram till
   // 2026-08-03, på ett bolag som gjort sin första order i juli 2026. Eftersom
   // det är root-layouten ärvdes påståendet av varje sida som inte satte egen
@@ -37,7 +37,7 @@ export const metadata = {
   description:
     "Köp fritidsbatteri, traktionsbatteri, truckbatteri och gelbatteri till företag. Priser öppet på sajten, leverans i hela Sverige och passformsgaranti på alla batterier.",
   openGraph: {
-    title: "Batteriproffs — Fritidsbatteri, traktionsbatteri & truckbatteri",
+    title: "Batteriproffs | Fritidsbatteri, traktionsbatteri & truckbatteri",
     description:
       "Fritidsbatteri, traktionsbatteri, truckbatteri och gelbatteri för städmaskiner. Snabb leverans i hela Sverige.",
     url: "https://www.batteriproffs.se",

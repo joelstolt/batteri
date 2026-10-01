@@ -68,13 +68,13 @@ export async function generateMetadata({ params }) {
   const product = products.find((p) => p.slug === slug)
 
   if (!product) {
-    return { title: "Produkt hittades inte — Batteriproffs" }
+    return { title: "Produkt hittades inte | Batteriproffs" }
   }
 
   // Interna testartiklar ska aldrig indexeras
   if (product.hidden) {
     return {
-      title: `${product.name} — Batteriproffs`,
+      title: `${product.name} | Batteriproffs`,
       robots: { index: false, follow: false },
     }
   }

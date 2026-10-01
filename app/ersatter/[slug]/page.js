@@ -18,7 +18,7 @@ export async function generateStaticParams() {
 export async function generateMetadata({ params }) {
   const { slug } = await params
   const r = replacementBySlug(slug)
-  if (!r) return { title: "Sidan hittades inte — Batteriproffs" }
+  if (!r) return { title: "Sidan hittades inte | Batteriproffs" }
 
   const title = `Ersättning för ${r.original} — ${r.product.shortName} | Batteriproffs`
   const description = `Söker du ${r.original}? ${r.product.name} ersätter den direkt. ${r.product.voltage} ${r.product.capacity}, ${r.product.price} kr inkl. moms. Snabb leverans i hela Sverige.`
