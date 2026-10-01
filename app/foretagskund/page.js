@@ -157,11 +157,11 @@ export default function ForetagskundPage() {
 
           <p className="mt-8 text-sm text-text-light">
             Se även{" "}
-            <Link href="/villkor" className="font-semibold text-accent hover:underline">
+            <Link href="/villkor" className="font-semibold text-navy hover:underline">
               köpvillkoren
             </Link>{" "}
             och{" "}
-            <Link href="/atervinning" className="font-semibold text-accent hover:underline">
+            <Link href="/atervinning" className="font-semibold text-navy hover:underline">
               hur återvinningen fungerar
             </Link>
             .

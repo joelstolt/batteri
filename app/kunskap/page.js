@@ -42,7 +42,7 @@ export default function KunskapPage() {
                   href={`/kunskap/${a.slug}`}
                   className="group block rounded-xl border border-border bg-white p-6 transition-all duration-200 hover:-translate-y-0.5 hover:border-border-dark hover:shadow-lg"
                 >
-                  <h2 className="font-heading text-lg font-bold text-navy group-hover:text-accent">
+                  <h2 className="font-heading text-lg font-bold text-navy group-hover:text-amber-text">
                     {a.title}
                   </h2>
                   <p className="mt-2 leading-relaxed text-text-mid">{a.ingress}</p>

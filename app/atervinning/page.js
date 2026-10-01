@@ -127,11 +127,11 @@ export default function AtervinningPage() {
 
           <p className="mt-8 text-sm text-text-light">
             Läs mer om{" "}
-            <Link href="/skotsel" className="font-semibold text-accent hover:underline">
+            <Link href="/skotsel" className="font-semibold text-navy hover:underline">
               skötsel som förlänger batteriets liv
             </Link>{" "}
             eller i vår{" "}
-            <Link href="/kunskap" className="font-semibold text-accent hover:underline">
+            <Link href="/kunskap" className="font-semibold text-navy hover:underline">
               kunskapsbank
             </Link>
             .

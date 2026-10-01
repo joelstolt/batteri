@@ -62,7 +62,7 @@ export function PrisforklaringKort() {
           förpackningen är obruten och du hör av dig inom {RETURN_WINDOW_DAYS} dagar.
         </p>
         <p className="mt-3.5 text-sm">
-          <Link href="/om-oss" className="font-heading font-bold text-accent hover:underline">
+          <Link href="/om-oss" className="font-heading font-bold text-navy hover:underline">
             Hela förklaringen till våra priser →
           </Link>
         </p>

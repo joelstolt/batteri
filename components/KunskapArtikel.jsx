@@ -69,7 +69,7 @@ export default function KunskapArtikel({ artikel }) {
               <p className="mt-4">
                 <Link
                   href={s.lank.href}
-                  className="font-heading font-bold text-accent hover:underline"
+                  className="font-heading font-bold text-navy hover:underline"
                 >
                   {s.lank.text} →
                 </Link>
@@ -110,7 +110,7 @@ export default function KunskapArtikel({ artikel }) {
               return (
                 <li key={slug}>
                   <Link href={`/kunskap/${a.slug}`} className="group block">
-                    <span className="font-heading font-bold text-navy group-hover:text-accent">
+                    <span className="font-heading font-bold text-navy group-hover:text-amber-text">
                       {a.title}
                     </span>
                     <span className="mt-0.5 block text-sm leading-relaxed text-text-light">
@@ -142,7 +142,7 @@ function Prislista({ rader }) {
           {synliga.map((r) => (
             <tr key={r.slug} className="border-b border-border last:border-0">
               <td className="px-4 py-3">
-                <Link href={`/produkt/${r.slug}`} className="font-semibold text-navy hover:text-accent">
+                <Link href={`/produkt/${r.slug}`} className="font-semibold text-navy hover:text-amber-text">
                   {r.vad}
                 </Link>
               </td>

@@ -51,7 +51,7 @@ export default function OmdomeFormular({ order, rad, onKlar }) {
     return (
       <button
         onClick={() => setOppet(true)}
-        className="text-sm font-semibold text-accent hover:underline"
+        className="text-sm font-semibold text-navy hover:underline"
       >
         Lämna omdöme
       </button>

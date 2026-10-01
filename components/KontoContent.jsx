@@ -312,7 +312,7 @@ function OrderKort({ order }) {
           <button
             onClick={() => setOppen(!oppen)}
             aria-expanded={oppen}
-            className="text-xs font-semibold text-accent"
+            className="text-xs font-semibold text-navy hover:underline"
           >
             {oppen ? "Dölj detaljer" : "Visa detaljer"}
           </button>
