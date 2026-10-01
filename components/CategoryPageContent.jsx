@@ -95,7 +95,7 @@ export default function CategoryPage() {
                 </h1>
               </div>
               <p className="max-w-lg text-base text-text-mid">
-                {category.desc} — Kvalitetsbatterier till proffspriser. Snabb
+                {category.desc}. Kvalitetsbatterier till proffspriser. Snabb
                 leverans i hela Sverige.
               </p>
             </div>

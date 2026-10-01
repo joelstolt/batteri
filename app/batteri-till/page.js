@@ -9,9 +9,9 @@ import CtaBanner from "@/components/CtaBanner"
 import Footer from "@/components/Footer"
 import ChattKnapp from "@/components/ChattKnapp"
 
-const title = "Batteri till din maskin — hitta rätt batteri per modell | Batteriproffs"
+const title = "Batteri till din maskin: hitta rätt batteri per modell | Batteriproffs"
 const description =
-  "Hitta batteriet som passar din städmaskin, lift, golfbil eller pallyftare. Nilfisk, Hako, Kärcher, JLG, Genie, Club Car och fler — med pris och lagerstatus."
+  "Hitta batteriet som passar din städmaskin, lift, golfbil eller pallyftare. Nilfisk, Hako, Kärcher, JLG, Genie, Club Car och fler, med pris och lagerstatus."
 
 export const metadata = {
   title,

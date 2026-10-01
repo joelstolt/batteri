@@ -20,7 +20,7 @@ export async function generateMetadata({ params }) {
   const r = replacementBySlug(slug)
   if (!r) return { title: "Sidan hittades inte | Batteriproffs" }
 
-  const title = `Ersättning för ${r.original} — ${r.product.shortName} | Batteriproffs`
+  const title = `Ersättning för ${r.original}: ${r.product.shortName} | Batteriproffs`
   const description = `Söker du ${r.original}? ${r.product.name} ersätter den direkt. ${r.product.voltage} ${r.product.capacity}, ${r.product.price} kr inkl. moms. Snabb leverans i hela Sverige.`
 
   return {
@@ -82,7 +82,7 @@ export default async function ReplacementRoute({ params }) {
 
               <p className="mt-5 max-w-2xl text-base leading-relaxed text-text-mid">
                 {p.name} ersätter {r.original} direkt. Kontrollera batterifackets mått och
-                polernas placering mot specifikationen nedan innan du beställer — är du osäker
+                polernas placering mot specifikationen nedan innan du beställer. Är du osäker
                 ringer du oss så bekräftar vi passformen.
               </p>
             </div>

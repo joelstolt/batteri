@@ -27,7 +27,7 @@ export default function AboutContent() {
           <FadeIn>
             <div className="mb-2 text-xs font-bold uppercase tracking-widest text-amber-text">Om oss</div>
             <h1 className="mb-3 font-heading text-[clamp(28px,4vw,40px)] font-extrabold tracking-tight text-text-dark">
-              Batteriproffs — din specialist inom traktionsbatterier
+              Batteriproffs, din specialist inom traktionsbatterier
             </h1>
             {/*
               INGA superlativ eller rankningspåståenden här. Det stod "en av
@@ -58,20 +58,20 @@ export default function AboutContent() {
               </h2>
               <div className="flex flex-col gap-4 text-base leading-relaxed text-text-mid">
                 <p>
-                  De flesta som säljer batterier online försöker täcka allt —
+                  De flesta som säljer batterier online försöker täcka allt,
                   från knappceller till lastbilsbatterier. Resultatet blir ofta
                   ytlig kunskap och generiska rekommendationer.
                 </p>
                 <p>
                   Vi valde en annan väg. Batteriproffs fokuserar uteslutande på
                   traktionsbatterier för industri, städmaskiner, liftar, golfbilar
-                  och elfordon. Vi säljer enbart produkter vi själva litar på — från
+                  och elfordon. Vi säljer enbart produkter vi själva litar på, från
                   Nordmax, Discover och Sonnenschein.
                 </p>
                 <p>
                   Det smala fokuset gör att vi kan erbjuda djup produktkunskap,
                   vassare priser och snabbare leveranser. När du kontaktar oss
-                  pratar du med någon som faktiskt förstår ditt användningsområde —
+                  pratar du med någon som faktiskt förstår ditt användningsområde,
                   inte en ordertagare som läser från ett manus.
                 </p>
                 {/*
@@ -158,8 +158,8 @@ export default function AboutContent() {
                 {[
                   { num: String(ANTAL_MODELLER), label: "Batterimodeller i sortimentet" },
                   { num: String(ANTAL_VARUMARKEN), label: "Premiumvarumärken" },
-                  { num: "08–17", label: "Mån–Fre öppet" },
-                  { num: "1–3", label: "Dagar, normal leverans" },
+                  { num: "08-17", label: "Mån-Fre öppet" },
+                  { num: "1-3", label: "Dagar, normal leverans" },
                 ].map((s, i) => (
                   <div key={i}>
                     <div className="font-heading text-3xl font-extrabold text-white">{s.num}</div>
@@ -219,7 +219,7 @@ export default function AboutContent() {
                 <p>
                   Batterier är kritiska komponenter. En städmaskin som stannar mitt i
                   ett skift, en golfbil som inte klarar 18 hål eller en lift som inte
-                  startar — det kostar tid och pengar. Därför är det avgörande att välja
+                  startar: det kostar tid och pengar. Därför är det avgörande att välja
                   rätt batteri från början.
                 </p>
                 <p>
@@ -244,7 +244,7 @@ export default function AboutContent() {
                 <p>
                   Varje produktsida visar fullständiga specifikationer: spänning,
                   kapacitet, mått, batterityp och vilket batteri artikeln ersätter.
-                  Behöver du något mer står vi alltid redo att svara på frågor —
+                  Behöver du något mer står vi alltid redo att svara på frågor:
                   före, under och efter köpet.
                 </p>
               </div>
@@ -288,12 +288,12 @@ export default function AboutContent() {
 
           <div className="grid gap-5 sm:grid-cols-2 lg:grid-cols-3">
             {[
-              { icon: <Award size={22} />, title: "Expertis", desc: "Vi kan våra produkter in och ut. Varje rekommendation baseras på erfarenhet och produktkunskap — inte gissningar." },
+              { icon: <Award size={22} />, title: "Expertis", desc: "Vi kan våra produkter in och ut. Varje rekommendation baseras på erfarenhet och produktkunskap, inte gissningar." },
               { icon: <HeartHandshake size={22} />, title: "Ärlighet", desc: "Vi säljer aldrig ett dyrare batteri än du behöver. Vårt mål är att du ska komma tillbaka." },
               { icon: <Shield size={22} />, title: "Kvalitet", desc: "Vi säljer enbart batterier från tillverkare vi litar på: Nordmax, Discover och Sonnenschein." },
-              { icon: <Zap size={22} />, title: "Snabbhet", desc: "Batterier skickas direkt från vår leverantör, vilket kortar vägen. De flesta leveranser når dig inom 1–3 arbetsdagar." },
-              { icon: <Users size={22} />, title: "Personligt", desc: "Ring eller mejla oss på vardagar 08–17. Vi tar oss tid att förstå ditt behov innan vi rekommenderar." },
-              { icon: <Truck size={22} />, title: "Service", desc: "Leverans normalt inom 1–3 dagar, passformsgaranti på alla batterier och support som faktiskt hjälper dig." },
+              { icon: <Zap size={22} />, title: "Snabbhet", desc: "Batterier skickas direkt från vår leverantör, vilket kortar vägen. De flesta leveranser når dig inom 1-3 arbetsdagar." },
+              { icon: <Users size={22} />, title: "Personligt", desc: "Ring eller mejla oss på vardagar 08-17. Vi tar oss tid att förstå ditt behov innan vi rekommenderar." },
+              { icon: <Truck size={22} />, title: "Service", desc: "Leverans normalt inom 1-3 dagar, passformsgaranti på alla batterier och support som faktiskt hjälper dig." },
             ].map((val, i) => (
               <FadeIn key={i} delay={i * 0.06}>
                 <div className="h-full rounded-2xl border border-border bg-surface p-6 transition-all duration-200 hover:-translate-y-1 hover:shadow-md">
@@ -322,7 +322,7 @@ export default function AboutContent() {
                   <p>
                     Att byta batteri istället för att köpa en ny maskin är ett av de
                     mest hållbara valen du kan göra. Ett nytt batteri förlänger livslängden
-                    på din städmaskin, truck eller golfbil med många år — till en bråkdel
+                    på din städmaskin, truck eller golfbil med många år, till en bråkdel
                     av kostnaden.
                   </p>
                   <p>
@@ -339,7 +339,7 @@ export default function AboutContent() {
               <div className="grid grid-cols-1 gap-4 sm:grid-cols-2">
                 {[
                   { val: "95%+", label: "Återvinningsgrad för blybatterier" },
-                  { val: "2–3×", label: "Längre livslängd med rätt laddare" },
+                  { val: "2-3×", label: "Längre livslängd med rätt laddare" },
                   { val: "700+", label: "Cykler med Sonnenschein gel" },
                   { val: "1 000+", label: "Cykler med Discover Dry Cell" },
                 ].map((stat, i) => (
@@ -405,14 +405,14 @@ export default function AboutContent() {
             <div className="rounded-2xl bg-navy p-8 text-center sm:p-12">
               <div className="mb-3 flex items-center justify-center gap-2">
                 <Clock size={20} className="text-amber-bg" />
-                <span className="text-sm font-semibold text-amber-bg">Mån–Fre 08:00–17:00</span>
+                <span className="text-sm font-semibold text-amber-bg">Mån-Fre 08:00-17:00</span>
               </div>
               <h2 className="mb-3 font-heading text-2xl font-extrabold text-white">
                 Osäker på vilket batteri du behöver?
               </h2>
               <p className="mx-auto mb-6 max-w-lg text-base text-white/70">
                 Berätta vilken maskin du har så hjälper vi dig hitta rätt batteri
-                och laddare — snabbt, enkelt och utan kostnad.
+                och laddare, snabbt, enkelt och utan kostnad.
               </p>
               <a
                 href="/kontakt"

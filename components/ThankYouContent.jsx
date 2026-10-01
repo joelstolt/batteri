@@ -210,7 +210,7 @@ export default function ThankYouContent() {
             </div>
             <div>
               <div className="text-sm font-bold text-text-dark">
-                Leverans normalt 1–3 dagar
+                Leverans normalt 1-3 dagar
               </div>
               <div className="text-sm text-text-mid">
                 Spårningsnummer mejlas vid avsändning

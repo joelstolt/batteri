@@ -22,8 +22,8 @@ export default function CtaBanner() {
             Vet du inte vilket batteri som passar?
           </h3>
           <p className="max-w-lg text-base text-white/75">
-            Berätta vilken maskin du har så hjälper vi dig hitta rätt — snabbt,
-            enkelt och utan kostnad. Vi finns här mån–fre 08:00–17:00.
+            Berätta vilken maskin du har så hjälper vi dig hitta rätt, snabbt,
+            enkelt och utan kostnad. Vi finns här mån-fre 08:00-17:00.
           </p>
         </div>
         <div className="flex flex-wrap gap-3">

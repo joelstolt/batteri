@@ -353,7 +353,7 @@ export default function ContactContent({
                 </h3>
                 <div className="flex flex-col gap-2.5">
                   {[
-                    { day: "Måndag – Fredag", time: "08:00 – 17:00" },
+                    { day: "Måndag-Fredag", time: "08:00-17:00" },
                     { day: "Lördag", time: "Stängt" },
                     { day: "Söndag", time: "Stängt" },
                   ].map((row) => (

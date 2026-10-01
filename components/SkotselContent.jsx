@@ -26,30 +26,30 @@ const SECTIONS = [
   {
     id: "grunder",
     icon: Gauge,
-    title: "Grunderna — så fungerar ditt batteri",
+    title: "Grunderna: så fungerar ditt batteri",
     body: [
-      "Ett gel-batteri (som Sonnenschein dryfit) använder en gel-elektrolyt istället för flytande syra. Det gör batteriet helt underhållsfritt, läckagefritt och tåligt mot djupurladdning. Cyklisk användning — där batteriet laddas ur och upp gång på gång — är vad gel-tekniken är gjord för.",
+      "Ett gel-batteri (som Sonnenschein dryfit) använder en gel-elektrolyt istället för flytande syra. Det gör batteriet helt underhållsfritt, läckagefritt och tåligt mot djupurladdning. Cyklisk användning, där batteriet laddas ur och upp gång på gång, är vad gel-tekniken är gjord för.",
       "Livslängden mäts oftast i cykler. Hur många cykler du får ut beror på tre saker: urladdningsdjup (DoD), laddningsrutiner och temperatur. Ett batteri som regelbundet djupurladdas till 100 % får färre cykler än ett som hålls vid 50 % DoD. Att lära sig de här tre faktorerna är det viktigaste du kan göra för att få maximal livslängd.",
     ],
   },
   {
     id: "laddning",
     icon: BatteryCharging,
-    title: "Laddning — gör det rätt från början",
+    title: "Laddning: gör det rätt från början",
     body: [
-      "Gel-batterier kräver en laddare med IU-karakteristik (konstantström följt av konstantspänning). Laddningsspänningen ska ligga på max 14,4 V för ett 12 V-batteri vid +20 °C, med temperaturkompensering på cirka -24 mV/°C. För hög spänning torkar ut gelen — för låg spänning leder till sulfatering.",
+      "Gel-batterier kräver en laddare med IU-karakteristik (konstantström följt av konstantspänning). Laddningsspänningen ska ligga på max 14,4 V för ett 12 V-batteri vid +20 °C, med temperaturkompensering på cirka -24 mV/°C. För hög spänning torkar ut gelen, för låg spänning leder till sulfatering.",
       "Ladda alltid batteriet så snart det går efter användning. Att låta ett urladdat gel-batteri stå oladdat i flera dagar är den vanligaste orsaken till för tidig död. Underhållsladdning (float) på ca 13,8 V är säkert att ha igång hela tiden när batteriet inte används.",
-      "Använder du en bil-laddare för bilbatterier på ditt gel-batteri? Det är en av de snabbaste vägarna att förstöra ett dyrt batteri. Bilbatteriladdare ger ofta 14,8–15,5 V — det kokar bort gelen och batteriet är förstört på några månader.",
+      "Använder du en bil-laddare för bilbatterier på ditt gel-batteri? Det är en av de snabbaste vägarna att förstöra ett dyrt batteri. Bilbatteriladdare ger ofta 14,8-15,5 V. Det kokar bort gelen och batteriet är förstört på några månader.",
     ],
   },
   {
     id: "forvaring",
     icon: Snowflake,
-    title: "Förvaring — viktigare än du tror",
+    title: "Förvaring: viktigare än du tror",
     body: [
-      "Förvaras batteriet under vintern? Ladda upp det helt först (100 %), koppla bort förbrukare och lagra svalt och torrt. Optimal förvaringstemperatur är 10–20 °C. För varmt accelererar självurladdning, för kallt påverkar inte cellerna men kondens kan bli ett problem.",
-      "Ett fulladdat gel-batteri tappar cirka 2–3 % per månad i självurladdning vid 20 °C. Ladda underhåll en gång i månaden eller anslut en intelligent underhållsladdare. Att låta ett gel-batteri stå urladdat i 3–6 månader är ofta liktydigt med att slänga det.",
-      "Förvara aldrig batterier direkt på betonggolv om det är fuktigt — använd en träpall eller skumplatta. Och håll dem upprätt, även om gel-batterier är läckagesäkra.",
+      "Förvaras batteriet under vintern? Ladda upp det helt först (100 %), koppla bort förbrukare och lagra svalt och torrt. Optimal förvaringstemperatur är 10-20 °C. För varmt accelererar självurladdning, för kallt påverkar inte cellerna men kondens kan bli ett problem.",
+      "Ett fulladdat gel-batteri tappar cirka 2-3 % per månad i självurladdning vid 20 °C. Ladda underhåll en gång i månaden eller anslut en intelligent underhållsladdare. Att låta ett gel-batteri stå urladdat i 3-6 månader är ofta liktydigt med att slänga det.",
+      "Förvara aldrig batterier direkt på betonggolv om det är fuktigt. Använd en träpall eller skumplatta. Och håll dem upprätt, även om gel-batterier är läckagesäkra.",
     ],
   },
   {
@@ -71,7 +71,7 @@ const SECTIONS = [
     list: [
       "Visuell kontroll: leta efter sprickor, svullnad eller läckage",
       "Polskor: rengjorda, fettade och hårt åtdragna (inte galet)",
-      "Spänningskontroll: 12,8–13,0 V vilospänning på fulladdat batteri",
+      "Spänningskontroll: 12,8-13,0 V vilospänning på fulladdat batteri",
       "Laddare: rätt profil och temperaturkompensering aktiv",
       "Anslutningar: inga oxiderade, lösa eller varma kablar",
       "Vid bank: balansera och mät varje cell minst en gång om året",
@@ -82,7 +82,7 @@ const SECTIONS = [
     icon: Wrench,
     title: "Snabb felsökning",
     body: [
-      "Batteriet håller inte längre laddning? Mät vilospänningen efter 24 timmars vila. Under 12,4 V tyder på sulfatering eller cellfel. Mät också spänningen direkt under belastning — sjunker den snabbt under 11 V är batteriet sannolikt slut.",
+      "Batteriet håller inte längre laddning? Mät vilospänningen efter 24 timmars vila. Under 12,4 V tyder på sulfatering eller cellfel. Mät också spänningen direkt under belastning. Sjunker den snabbt under 11 V är batteriet sannolikt slut.",
       "Batteriet blir varmt under laddning? Sluta ladda omedelbart. Antingen är laddaren för aggressiv eller så är en cell internt kortsluten. Båda är farliga och behöver åtgärdas innan du fortsätter.",
       "Är du osäker: chatta med oss. Felsökningen kostar inget och vi säger ärligt om batteriet är värt att rädda eller om det är dags att byta.",
     ],
@@ -100,7 +100,7 @@ export default function SkotselContent() {
               Guide
             </div>
             <h1 className="mb-3 max-w-3xl font-heading text-[clamp(28px,4vw,40px)] font-extrabold leading-[1.15] tracking-tight text-text-dark">
-              Skötsel av batterier — så får du dubbla livslängden
+              Skötsel av batterier: så får du dubbla livslängden
             </h1>
             <p className="max-w-2xl text-base leading-relaxed text-text-mid">
               En gedigen guide till laddning, förvaring och underhåll av gel-,
@@ -190,7 +190,7 @@ export default function SkotselContent() {
                 </h3>
                 <p className="mb-6 max-w-md text-sm leading-relaxed text-white/60">
                   Chatta eller mejla oss med ditt användningsområde och nuvarande
-                  setup. Vi ger dig ett rakt svar — utan säljsnack.
+                  setup. Vi ger dig ett rakt svar, utan säljsnack.
                 </p>
                 <div className="flex flex-col gap-3 sm:flex-row">
                   <ChattKnapp

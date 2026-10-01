@@ -325,8 +325,8 @@ function CheckoutForm({
       setLoading(false)
       submitting.current = false
       setPaymentError(
-        "Betalningen tar ovanligt lång tid. Ladda om sidan och försök igen — " +
-          "blir det samma sak, chatta med oss eller mejla info@batteriproffs.se så tar vi ordern manuellt.",
+        "Betalningen tar ovanligt lång tid. Ladda om sidan och försök igen. " +
+          "Blir det samma sak, chatta med oss eller mejla info@batteriproffs.se så tar vi ordern manuellt.",
       )
     }, 45000)
 
@@ -635,7 +635,7 @@ function CheckoutForm({
 
       {/* Lossning — batterierna går som pallgods */}
       <div data-field="unloading">
-        <SectionHeading note="Batterierna skickas på pall. Vet du hur de kan lossas hos er går leveransen snabbare — annars ringer vi och stämmer av.">
+        <SectionHeading note="Batterierna skickas på pall. Vet du hur de kan lossas hos er går leveransen snabbare, annars ringer vi och stämmer av.">
           Lossning vid leverans{" "}
           <span className="text-base font-normal text-text-light">
             (valfritt)
@@ -740,7 +740,7 @@ function CheckoutForm({
           <Truck size={20} className="text-text-mid" />
           <div className="flex-1">
             <div className="text-sm font-semibold text-text-dark">
-              PostNord — Företagsleverans (normalt 1–3 dagar)
+              PostNord: Företagsleverans (normalt 1-3 dagar)
             </div>
             <div className="text-xs text-text-mid">
               Spårningsnummer mejlas när ordern skickats
@@ -794,7 +794,7 @@ function CheckoutForm({
         ) : (
           <>
             <Lock size={16} />
-            Slutför köp — {formatPrice(totalInclVat)} kr
+            Slutför köp: {formatPrice(totalInclVat)} kr
           </>
         )}
       </button>
@@ -1148,7 +1148,7 @@ export default function CheckoutContent({ reviewPreview = false }) {
             <div className="mt-4 inline-flex items-center gap-2 rounded-full border border-border bg-white px-4 py-2">
               <Building2 size={15} className="text-navy" />
               <span className="text-sm font-medium text-text-dark">
-                Företagsbeställning — alla priser visas exkl. moms
+                Företagsbeställning: alla priser visas exkl. moms
               </span>
             </div>
           </FadeIn>

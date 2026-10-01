@@ -79,7 +79,7 @@ export default function VillkorPage() {
                 <ul className="ml-5 list-disc space-y-1">
                   <li>E-post: <a className="text-navy underline" href="mailto:info@batteriproffs.se">info@batteriproffs.se</a></li>
                   <li>Telefon: <a className="text-navy underline" href="tel:+46766867752">076-686 77 52</a></li>
-                  <li>Öppettider: Måndag–fredag 08:00–17:00</li>
+                  <li>Öppettider: Måndag-fredag 08:00-17:00</li>
                 </ul>
               </Section>
 
@@ -112,8 +112,8 @@ export default function VillkorPage() {
                   bindande och du blir betalningsskyldig.
                 </p>
                 <p>
-                  En orderbekräftelse skickas direkt till den e-postadress du angett —
-                  spara den, där finns informationen du behöver vid eventuella ärenden.
+                  En orderbekräftelse skickas direkt till den e-postadress du angett.
+                  Spara den, där finns informationen du behöver vid eventuella ärenden.
                 </p>
                 <p>
                   <strong>Ändring eller avbokning:</strong> Vill du justera eller avboka
@@ -131,7 +131,7 @@ export default function VillkorPage() {
                   Beställningar skickas med PostNord, i de flesta fall direkt från vår
                   leverantör. Order som läggs på vardagar före kl 14:00 skickas normalt
                   samma dag och är vanligtvis framme inom {DELIVERY_ESTIMATE} i hela Sverige.
-                  Leveranstiden är en uppskattning och ingen garanti — vid restnotering,
+                  Leveranstiden är en uppskattning och ingen garanti. Vid restnotering,
                   pallbokning eller hög belastning hos transportören kan det ta längre.
                   Blir din order försenad hör vi av oss.
                 </p>
@@ -330,7 +330,7 @@ export default function VillkorPage() {
                 <p>
                   Vi har rätt att häva ett avtal utan ersättningsskyldighet om kunden
                   insett eller borde ha insett att en uppgift på batteriproffs.se var
-                  felaktig — det gäller särskilt vid felaktiga prisuppgifter eller
+                  felaktig. Det gäller särskilt vid felaktiga prisuppgifter eller
                   lagersaldon.
                 </p>
                 <p>
@@ -338,14 +338,14 @@ export default function VillkorPage() {
                   kanaler är det uppgifterna på webbplatsen som gäller.
                 </p>
                 <p>
-                  Vi är inte bundna av detta avtal vid force majeure — t.ex.
+                  Vi är inte bundna av detta avtal vid force majeure, t.ex.
                   myndighetsbeslut, lagändring, arbetsmarknadskonflikt, krig, brand,
                   översvämning, naturkatastrof eller annan extraordinär händelse utanför
                   vår kontroll.
                 </p>
                 <p>
-                  Allt material på batteriproffs.se — logotyp, produktbilder, texter och
-                  programkod — skyddas av upphovsrätts- och varumärkeslagstiftningen och
+                  Allt material på batteriproffs.se (logotyp, produktbilder, texter och
+                  programkod) skyddas av upphovsrätts- och varumärkeslagstiftningen och
                   får inte kopieras, spridas eller på annat sätt nyttjas av tredje part
                   utan vårt skriftliga tillstånd. Färgåtergivningen kan variera mellan
                   olika skärmar och utgör inte i sig grund för reklamation.

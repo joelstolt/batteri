@@ -144,7 +144,7 @@ export async function POST(request) {
         from: FROM,
         to: email,
         replyTo: ADMIN_EMAIL,
-        subject: "Tack för ditt meddelande — Batteriproffs",
+        subject: "Tack för ditt meddelande | Batteriproffs",
         html: emailLayout({
           title: "Vi har tagit emot ditt meddelande",
           preheader: "Vi återkommer inom 24 timmar.",

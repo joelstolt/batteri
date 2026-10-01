@@ -155,7 +155,7 @@ export default function HeroSearch({ onForhandsvisning }) {
         {kanSoka &&
           (traffar.length > 0
             ? `${traffar.length} träffar`
-            : "Inga träffar — chatta med oss så hjälper vi dig")}
+            : "Inga träffar. Chatta med oss så hjälper vi dig")}
       </div>
 
       {oppen && kanSoka && (
@@ -215,7 +215,7 @@ export default function HeroSearch({ onForhandsvisning }) {
             <div className="px-4 py-5 text-sm text-text-mid">
               Ingen träff på{" "}
               <strong className="text-text-dark">{query.trim()}</strong>. Vi har
-              fler batterier än vad som listas här —{" "}
+              fler batterier än vad som listas här.{" "}
               <button
                 type="button"
                 onClick={() => {
@@ -223,7 +223,7 @@ export default function HeroSearch({ onForhandsvisning }) {
                 }}
                 className="font-semibold text-navy hover:underline"
               >
-                chatta med oss
+                Chatta med oss
               </button>{" "}
               med modellbeteckningen så tar vi fram rätt.
             </div>

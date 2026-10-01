@@ -4,14 +4,14 @@ import FadeIn from "./FadeIn"
 
 const CHECKPOINTS = [
   {
-    title: "Normalt 1–3 dagars leverans",
-    desc: "Order lagd före 14:00 skickas normalt samma dag och är oftast framme inom 1–3 arbetsdagar. Vid restnotering eller pallbokning kan det ta längre — vi hör av oss om något drar ut.",
+    title: "Normalt 1-3 dagars leverans",
+    desc: "Order lagd före 14:00 skickas normalt samma dag och är oftast framme inom 1-3 arbetsdagar. Vid restnotering eller pallbokning kan det ta längre. Vi hör av oss om något drar ut.",
   },
   {
     // Inte "direkt från tillverkaren": vi köper via distributör. Det som ÄR
     // sant och går att kontrollera är prisnivån och att priserna står öppet.
     title: "Öppna priser, långt under märkespriset",
-    desc: "Priset står på varje produkt, inga offertformulär. Ett likvärdigt batteri till Trojan T-105 kostar 2 195 kr hos oss — jämför gärna med vad märkesåterförsäljarna tar.",
+    desc: "Priset står på varje produkt, inga offertformulär. Ett likvärdigt batteri till Trojan T-105 kostar 2 195 kr hos oss. Jämför gärna med vad märkesåterförsäljarna tar.",
   },
   {
     title: "Svar direkt, dygnet runt",

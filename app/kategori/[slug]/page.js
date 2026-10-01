@@ -19,7 +19,7 @@ const CATEGORY_SEO = {
   "traktion-industri": {
     title: "Truckbatteri & Traktionsbatteri 6V/12V | Batteriproffs",
     description:
-      "Köp truckbatteri och traktionsbatteri 6V/12V från 120–420 Ah. Nordmax, Discover Dry Cell. Snabb leverans i hela Sverige.",
+      "Köp truckbatteri och traktionsbatteri 6V/12V från 120-420 Ah. Nordmax, Discover Dry Cell. Snabb leverans i hela Sverige.",
     ogTitle: "Truckbatteri & Traktionsbatteri | Batteriproffs",
     ogDescription:
       "Truckbatteri 24V/48V och traktionsbatteri 6V/12V från Nordmax och Discover. Passformsgaranti.",
@@ -46,7 +46,7 @@ const CATEGORY_SEO = {
       "Fritidsbatteri 12V för husvagn, husbil och båt. AGM och gel från 100Ah. Snabb leverans och passformsgaranti.",
     ogTitle: "Fritidsbatteri & Husvagnsbatteri 12V | Batteriproffs",
     ogDescription:
-      "Fritidsbatteri 12V 100Ah och uppåt för husvagn, husbil och båt. AGM och gel — snabb leverans.",
+      "Fritidsbatteri 12V 100Ah och uppåt för husvagn, husbil och båt. AGM och gel, snabb leverans.",
   },
   alla: {
     title: "Alla batterier | Fritidsbatteri, traktionsbatteri & gelbatteri",

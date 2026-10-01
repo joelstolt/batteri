@@ -32,7 +32,7 @@ export async function generateMetadata({ params }) {
   // title/description i registret i stället, eftersom mallens variant blir för
   // lång och upprepar maskinnamnet. Se lib/machines.js.
   const title =
-    machine.title || `Batteri till ${machine.name} — ${machine.type} | Batteriproffs`
+    machine.title || `Batteri till ${machine.name} (${machine.type.toLowerCase()}) | Batteriproffs`
   const description =
     machine.description ||
     (priceFrom

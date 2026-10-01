@@ -78,7 +78,7 @@ export default function Hero() {
 
             <p className="mb-8 max-w-[620px] text-[17px] leading-relaxed text-white/75">
               Traktionsbatterier och gelbatterier till truckar, saxliftar,
-              städmaskiner och UPS. Priserna står öppet, leverans normalt 1–3
+              städmaskiner och UPS. Priserna står öppet, leverans normalt 1-3
               arbetsdagar, och chatten hjälper dig välja rätt.
             </p>
 

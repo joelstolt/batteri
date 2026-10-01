@@ -31,6 +31,10 @@ function datum(unix) {
   })
 }
 
+// Produktnamnen hade " – " mellan artikelnummer och beskrivning fram till
+// 2026-10-01, nu komma. Gamla ordrar bär det gamla namnet i metadatan.
+const normNamn = (namn) => String(namn).replace(/\s[–—]\s/g, ", ")
+
 /**
  * Kopplar en orderrad till en produkt som fortfarande säljs.
  *
@@ -46,7 +50,7 @@ function hittaProdukt(rad) {
   if (!rad.name) return null
   return (
     publicProducts.find(
-      (p) => p.name === rad.name || p.shortName === rad.name,
+      (p) => p.name === normNamn(rad.name) || p.shortName === rad.name,
     ) || null
   )
 }

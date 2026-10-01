@@ -163,7 +163,7 @@ export default function ChargerPage() {
                               </Link>
                             </td>
                             <td className="px-5 py-3 align-top text-text-mid">
-                              {p.specs?.["Typ"]?.split(",")[0] || "—"}
+                              {p.specs?.["Typ"]?.split(",")[0] || "-"}
                             </td>
                             <td className="px-5 py-3 align-top text-text-mid">
                               {p.recommendedCharger}

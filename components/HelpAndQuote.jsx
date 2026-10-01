@@ -59,7 +59,7 @@ export default function HelpAndQuote() {
             </div>
             <div className="mb-3 text-sm leading-relaxed text-white/70">
               Större volym eller återkommande behov? Vi tar fram offert. Fakturaköp
-              går via oss — hör av dig så löser vi det.
+              går via oss. Hör av dig så löser vi det.
             </div>
             <span className="mt-auto font-heading text-sm font-bold text-amber">
               Begär offert →

@@ -76,7 +76,7 @@ export async function POST(request) {
     await stripe.paymentIntents.update(paymentIntentId, {
       description: `Order — ${company}`,
       shipping: {
-        name: attention ? `${company} — att: ${attention}` : company,
+        name: attention ? `${company}, att: ${attention}` : company,
         phone: String(form.deliveryPhone || form.phone || "").trim() || undefined,
         address: {
           line1: String(form.address || "").trim(),

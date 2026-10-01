@@ -58,7 +58,7 @@ const COLUMNS = [
 // Se kommentaren i lib/constants.js: inga påståenden som inte går att belägga,
 // och inget öppet köp att lova på en kassa som bara släpper in företag.
 const TRUST_FEATURES = [
-  { icon: Truck, label: "Snabb leverans 1–3 dgr" },
+  { icon: Truck, label: "Snabb leverans 1-3 dgr" },
   { icon: RotateCcw, label: "Passformsgaranti" },
   { icon: Shield, label: "Säker betalning" },
   { icon: Award, label: "Priser utan offert" },
@@ -114,7 +114,7 @@ export default function Footer() {
               </a>
               <div className="flex items-center gap-2 text-sm text-white/60">
                 <Clock className="h-3.5 w-3.5" />
-                Mån–Fre 08:00–17:00
+                Mån-Fre 08:00-17:00
               </div>
               <div className="pt-1 text-xs leading-relaxed text-white/60">
                 Joel Stolt · Org.nr 901108-0851

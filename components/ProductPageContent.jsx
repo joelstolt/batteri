@@ -526,7 +526,7 @@ export default function ProductPageContent({
                   },
                   {
                     icon: <Truck size={16} />,
-                    text: "Leverans normalt 1–3 arbetsdagar",
+                    text: "Leverans normalt 1-3 arbetsdagar",
                   },
                   {
                     icon: <Shield size={16} />,

@@ -9,7 +9,7 @@ import CtaBanner from "@/components/CtaBanner"
 import Footer from "@/components/Footer"
 import ChattKnapp from "@/components/ChattKnapp"
 
-const title = "Batterivatten — påfyllning av öppna traktionsbatterier | Batteriproffs"
+const title = "Batterivatten: påfyllning av öppna traktionsbatterier | Batteriproffs"
 const description =
   "Vilka batterier behöver batterivatten, hur ofta och hur mycket? Guide till vattenpåfyllning av öppna blybatterier, och varför det måste vara destillerat."
 
@@ -135,7 +135,7 @@ export default function BatteryWaterPage() {
                 },
                 {
                   t: "Kontrollera var fjärde till sjätte vecka",
-                  d: "Vid daglig drift i skift kan det behövas varannan vecka. Ett batteri som plötsligt drar mycket mer vatten än vanligt är på väg att bli överladdat — kontrollera laddaren.",
+                  d: "Vid daglig drift i skift kan det behövas varannan vecka. Ett batteri som plötsligt drar mycket mer vatten än vanligt är på väg att bli överladdat. Kontrollera laddaren.",
                 },
               ].map((x, i) => (
                 <div key={x.t} className="flex gap-4 rounded-xl border border-border bg-surface p-5">

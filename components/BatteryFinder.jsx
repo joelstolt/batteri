@@ -72,8 +72,8 @@ export default function BatteryFinder() {
         <div>
           <h3 className="font-heading text-[17px] font-bold text-white">Hitta rätt batteri</h3>
           <p className="mt-0.5 text-[13px] text-white/50">
-            {step === 0 && "Steg 1 av 2 — Välj användningsområde"}
-            {step === 1 && "Steg 2 av 2 — Välj spänning"}
+            {step === 0 && "Steg 1 av 2: Välj användningsområde"}
+            {step === 1 && "Steg 2 av 2: Välj spänning"}
             {step === 2 && "Klart! Vi har förslag åt dig"}
           </p>
         </div>
