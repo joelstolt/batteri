@@ -15,6 +15,7 @@ import {
 import { motion, AnimatePresence } from "framer-motion"
 import { CATEGORIES } from "@/lib/constants"
 import { oppnaChatt } from "@/components/ChattKnapp"
+import SokHjalp from "@/components/SokHjalp"
 import { sok, sokbar } from "@/lib/search-index"
 import { useVat } from "@/lib/vat-context"
 import { track } from "@/lib/track"
@@ -100,6 +101,8 @@ export default function SearchModal({ isOpen, onClose }) {
   const ersattningar = traffar.filter((t) => t.typ === "ersattning").slice(0, 4)
   const sidor = traffar.filter((t) => t.typ === "sida").slice(0, 3)
   const produkter = traffar.filter((t) => t.typ === "produkt").slice(0, 6)
+  // Delträffar: inget exakt svar på det som skrevs, bara de närmaste
+  const delvis = traffar.length > 0 && traffar[0].delvis === true
 
   // Logga vad besökarna faktiskt söker efter. Det är den billigaste källan vi
   // har till vilka maskinmodeller och artikelnummer som ska bli egna sidor
@@ -114,12 +117,15 @@ export default function SearchModal({ isOpen, onClose }) {
        * Umami listar event per namn, så en nolla begravd i en egenskap syns
        * inte förrän någon aktivt filtrerar. Som eget namn står den i listan
        * och blir en sortimentsignal: det här ville kunden köpa och vi hade
-       * det inte.
+       * det inte. Delträffar räknas hit också, annars försvinner sökningar
+       * som "kärcher br 55/60w" ur signalen så fort fallbacken ger något.
        */
-      if (traffar.length === 0) track("sok-utan-traff", { term: q })
+      if (traffar.length === 0 || delvis) {
+        track("sok-utan-traff", { term: q, delvis: traffar.length })
+      }
     }, 1200)
     return () => clearTimeout(t)
-  }, [q, traffar.length])
+  }, [q, traffar.length, delvis])
 
   const hasResults = traffar.length > 0
 
@@ -266,9 +272,12 @@ export default function SearchModal({ isOpen, onClose }) {
                   <p className="mb-1 font-heading text-base font-bold text-text-dark">
                     Ingen träff på "{query}"
                   </p>
+                  <p className="mx-auto mb-1 font-heading text-sm font-bold text-text-dark">
+                    Hittar du inte din maskin?
+                  </p>
                   <p className="mx-auto mb-4 max-w-[420px] text-sm leading-relaxed text-text-mid">
-                    Vi har fler batterier än vad som listas på sajten. Skicka
-                    modellbeteckningen så tar vi fram rätt batteri och pris.
+                    Skicka modellen så letar vi rätt batteri. Vi har fler
+                    batterier än vad som listas på sajten.
                   </p>
                   <div className="flex flex-wrap items-center justify-center gap-2.5">
                     <button
@@ -293,6 +302,13 @@ export default function SearchModal({ isOpen, onClose }) {
               ) : (
                 /* Results */
                 <div>
+                  {delvis && (
+                    <div className="border-b border-border bg-surface px-5 py-3 text-sm text-text-mid">
+                      Ingen exakt träff på{" "}
+                      <strong className="text-text-dark">{query.trim()}</strong>
+                      . Här är de närmaste träffarna.
+                    </div>
+                  )}
                   {maskiner.length > 0 && (
                     <div className="border-b border-border px-5 py-4">
                       <div className="mb-2 text-xs font-bold uppercase tracking-wider text-text-light">
@@ -368,6 +384,10 @@ export default function SearchModal({ isOpen, onClose }) {
                         </button>
                       ))}
                     </div>
+                  )}
+
+                  {delvis && (
+                    <SokHjalp className="border-t border-border" onKlar={onClose} />
                   )}
                 </div>
               )}

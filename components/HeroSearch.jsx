@@ -14,7 +14,7 @@ import {
   LayoutGrid,
 } from "lucide-react"
 import { sok, sokbar } from "@/lib/search-index"
-import { oppnaChatt } from "@/components/ChattKnapp"
+import SokHjalp from "@/components/SokHjalp"
 
 const IKON = {
   maskin: Wrench,
@@ -59,7 +59,13 @@ export default function HeroSearch({ onForhandsvisning }) {
 
   // Rapportera upp den träff som är i fokus, så heron kan visa den. Utan det
   // står samma stillastående batteribild kvar oavsett vad besökaren skriver.
-  const forhandsvisad = traffar.length ? traffar[aktiv >= 0 ? aktiv : 0] : null
+  // Delträffar är gissningar, inte svaret på det som skrevs: visa dem inte som
+  // förhandsvisning förrän besökaren själv markerat en.
+  const delvis = traffar.length > 0 && traffar[0].delvis === true
+  const forhandsvisad =
+    traffar.length && (aktiv >= 0 || !delvis)
+      ? traffar[aktiv >= 0 ? aktiv : 0]
+      : null
   useEffect(() => {
     onForhandsvisning?.(forhandsvisad || null)
   }, [forhandsvisad, onForhandsvisning])
@@ -81,11 +87,15 @@ export default function HeroSearch({ onForhandsvisning }) {
       const term = query.trim().toLowerCase()
       track("hero-sok", { term, traffar: traffar.length })
       // Eget event, av samma skäl som i SearchModal: en nolla begravd i en
-      // egenskap syns inte i Umamis eventlista.
-      if (traffar.length === 0) track("sok-utan-traff", { term })
+      // egenskap syns inte i Umamis eventlista. Delträffar räknas som
+      // "utan träff": modellen saknas fortfarande, och det är den signalen
+      // som styr vilka maskinsidor som byggs härnäst.
+      if (traffar.length === 0 || delvis) {
+        track("sok-utan-traff", { term, delvis: traffar.length })
+      }
     }, 1200)
     return () => clearTimeout(t)
-  }, [query, traffar.length])
+  }, [query, traffar.length, delvis])
 
   const ga = (href) => {
     setOppen(false)
@@ -105,7 +115,9 @@ export default function HeroSearch({ onForhandsvisning }) {
       setAktiv((i) => (i <= 0 ? traffar.length - 1 : i - 1))
     } else if (e.key === "Enter") {
       e.preventDefault()
-      ga(traffar[aktiv >= 0 ? aktiv : 0].href)
+      // Vid delträffar öppnas inget förrän besökaren valt själv
+      const i = aktiv >= 0 ? aktiv : delvis ? -1 : 0
+      if (i >= 0) ga(traffar[i].href)
     } else if (e.key === "Escape") {
       setOppen(false)
       setAktiv(-1)
@@ -153,13 +165,22 @@ export default function HeroSearch({ onForhandsvisning }) {
       {/* Skärmläsare behöver få veta att listan ändrats */}
       <div aria-live="polite" className="sr-only">
         {kanSoka &&
-          (traffar.length > 0
-            ? `${traffar.length} träffar`
-            : "Inga träffar. Chatta med oss så hjälper vi dig")}
+          (delvis
+            ? `Ingen exakt träff. ${traffar.length} närmaste träffar`
+            : traffar.length > 0
+              ? `${traffar.length} träffar`
+              : "Inga träffar. Chatta med oss så hjälper vi dig")}
       </div>
 
       {oppen && kanSoka && (
         <div className="absolute left-0 right-0 top-full z-40 mt-2 overflow-hidden rounded-xl border border-border bg-white shadow-[0_12px_40px_rgba(0,0,0,0.18)]">
+          {delvis && (
+            <div className="border-b border-border bg-surface px-4 py-2 text-xs text-text-mid">
+              Ingen exakt träff på{" "}
+              <strong className="text-text-dark">{query.trim()}</strong>.
+              Närmaste träffar:
+            </div>
+          )}
           {traffar.length > 0 ? (
             <ul
               id={listId}
@@ -212,21 +233,21 @@ export default function HeroSearch({ onForhandsvisning }) {
               })}
             </ul>
           ) : (
-            <div className="px-4 py-5 text-sm text-text-mid">
-              Ingen träff på{" "}
-              <strong className="text-text-dark">{query.trim()}</strong>. Vi har
-              fler batterier än vad som listas här.{" "}
-              <button
-                type="button"
-                onClick={() => {
-                  if (!oppnaChatt()) router.push("/kontakt")
-                }}
-                className="font-semibold text-navy hover:underline"
-              >
-                Chatta med oss
-              </button>{" "}
-              med modellbeteckningen så tar vi fram rätt.
+            <div>
+              <div className="px-4 pb-1 pt-4 text-sm text-text-mid">
+                Ingen träff på{" "}
+                <strong className="text-text-dark">{query.trim()}</strong>. Vi
+                har fler batterier än vad som listas här.
+              </div>
+              <SokHjalp onKlar={() => setOppen(false)} />
             </div>
+          )}
+
+          {delvis && (
+            <SokHjalp
+              className="border-t border-border"
+              onKlar={() => setOppen(false)}
+            />
           )}
 
           {traffar.length > 0 && (
