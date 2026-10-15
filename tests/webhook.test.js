@@ -86,3 +86,13 @@ it("does not send a second confirmation when manual capture settles", async () =
   expect((await POST(req())).status).toBe(200)
   expect(mock.send).not.toHaveBeenCalled()
 })
+
+it("includes a tracking request with the order reference in customer confirmations", async () => {
+  expect((await POST(req())).status).toBe(200)
+  for (const role of ["customer", "accounting"]) {
+    const message = mock.send.mock.calls.find(([send]) => send.role === role)[0].message
+    expect(message.html).toContain("Begär spårningsnummer")
+    expect(message.html).toContain("BP-FIXTURE")
+    expect(message.html).toContain("Skicka mejlet för att begära")
+  }
+})

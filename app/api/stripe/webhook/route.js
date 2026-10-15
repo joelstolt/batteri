@@ -12,6 +12,7 @@ import {
 import { readOrderItems } from "@/lib/orders"
 import { unloadingLabel } from "@/lib/checkout"
 import { sendOrderMail } from "@/lib/order-mail"
+import { trackingRequestEmail } from "@/lib/tracking-request-email"
 import { SELJARE } from "@/lib/constants"
 
 const stripe = new Stripe(process.env.STRIPE_SECRET_KEY)
@@ -152,6 +153,7 @@ function buildOrderBody({
       ${reserved ? "Beloppet är reserverat på ditt kort och dras när ordern skickas. Det här mejlet bekräftar din beställning." : "Betalningen är genomförd. Det här mejlet är ditt kvitto."}
       Normal leveranstid är 1-3 arbetsdagar.
     </p>
+    ${trackingRequestEmail(orderId)}
   `
 }
 
