@@ -124,6 +124,8 @@ export default function ProductCard({ product }) {
                 {new Date(kop.datum * 1000).toLocaleDateString("sv-SE", {
                   day: "numeric",
                   month: "short",
+                  // Samma dag på servern som i webbläsaren, se ProductPageContent.
+                  timeZone: "Europe/Stockholm",
                 })}
               </span>
               {kop.antal > 1 && ` · ${kop.antal} st`}

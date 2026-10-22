@@ -28,6 +28,7 @@ function datum(unix) {
     year: "numeric",
     month: "long",
     day: "numeric",
+    timeZone: "Europe/Stockholm",
   })
 }
 

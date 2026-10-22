@@ -462,9 +462,14 @@ export default function ProductPageContent({
                   <span>
                     Senast köpt{" "}
                     <span className="font-semibold text-text-dark">
+                      {/* Fast tidszon, annars ger servern (UTC) och en
+                          webbläsare i en annan zon olika dag. Googles
+                          renderare kör Stillahavstid: hydreringen sprack,
+                          React renderade om sidan och JSON-LD hamnade två
+                          gånger ("Dubblett av fältet brand", 2026-10-22). */}
                       {new Date(senasteKop.datum * 1000).toLocaleDateString(
                         "sv-SE",
-                        { day: "numeric", month: "long" },
+                        { day: "numeric", month: "long", timeZone: "Europe/Stockholm" },
                       )}
                     </span>
                     {senasteKop.antal > 1 && ` · ${senasteKop.antal} st`}

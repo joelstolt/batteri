@@ -57,7 +57,7 @@ export default function OrderDocument({ id }) {
         Ordersammanställning {order.orderId}
       </h1>
       <p className="mt-3">
-        {new Date(order.created * 1000).toLocaleDateString("sv-SE")} ·{" "}
+        {new Date(order.created * 1000).toLocaleDateString("sv-SE", { timeZone: "Europe/Stockholm" })} ·{" "}
         {order.status === "reserverad"
           ? "Belopp reserverat, ännu inte debiterat"
           : order.status === "skickad"
