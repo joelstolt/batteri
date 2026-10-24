@@ -1,3 +1,40 @@
+<!-- kontrollrummet:generated:batteriproffs-orderflode:start -->
+Kontrollrummet: batteriproffs-orderflode | revision 4 | 2026-10-22T16:57:54.666Z
+JSON-LD-dubbletten rättad och live (c08c9ae, prod batteri-fibn2tipq). Rich Results Test godkänt. GSC-validering startad 2026-10-22.
+Nästa: Kvittera gsc_mejl:data:saljaruppgifter när Google bekräftar valideringen
+<!-- kontrollrummet:generated:batteriproffs-orderflode:end -->
+
+## 2026-10-15: Spårningsknapp och DHL Freight-länk live
+
+Joel godkände publicering. Commit c3b2de9 pushad till main (fast-forward från b9c0d40). Vercel production dpl_7po6ntjgD9ezmNxuFeEDcUr7f6Dv, Ready, www.batteriproffs.se pekar på den. Förhandsbygget av samma commit var grönt innan push.
+- Orderbekräftelsen (kort) och fakturamejlet har en knapp "Begär spårningsnummer" som öppnar ett färdigt mejl till info@batteriproffs.se med ordernumret (lib/tracking-request-email.js).
+- DHL-länken i leveransmejlet går till DHL Freight ActiveTracing i stället för dhl.com, som inte hittar pallsändningar (lib/customer-tools.js). Länkformatet svarar 200.
+- Verifierat: 124/124 tester, lint, diff-check, Vercel-bygget. Startsida, kassa, produktsida och /marginaler svarar 200. Mejlen själva syns först vid nästa riktiga order: ej verifierat i ett skickat mejl.
+- Huvudmappen har kvar den ocommittade kassapåminnelse-rättningen (lib/kassa-paminnelse.js + test). Ingår inte i den här releasen. Notion pausat.
+
+## 2026-10-12: Originalprislistan jämförd med webben
+
+Rättat https://www.batteriproffs.se/marginaler på samma adress. PRISBILD från Joels originalbild jämförs med 20 livekontrollerade webbpriser. Separata marginaler före kortavgift och efter Stripe, båda före frakt. Tidigare missvisande slutsats om felräknad lista borttagen. GF 12 51Y/052Y markerad som osäker modellmatchning. Discover 390Ah: 6 495 kr/9,9 % i listan, 5 995 kr/2,3 % på webben före avgift. Worker-version 9c603257-9038-4e6c-849e-158576782708. HTTP 200/noindex; identiskt liveinnehåll; test av 20 priser, 19 marginalpar, snabbval och mobil godkänt. Källor och bevis: `_underlag/arbetsmappar/prislista-rattelse-2026-10-12/`. Delningsfil, lokal HTML, data och template synkade. Underlagsfiler ej pushade. Notion pausat.
+
+## 2026-10-12: Delningssidan på butikens domän
+
+Live: https://www.batteriproffs.se/marginaler. Vercel rewrite till befintlig partnerkalkyl på Cloudflare. Noindex via HTTP-header och HTML-meta, ej i sitemap. Curl: HTTP 200, X-Robots-Tag: noindex, nofollow, noarchive; live-HTML identisk med delningssidan. Commit b9c0d40 pushad till main. Vercel production dpl_34TQwEpXAQN8qkroqDCfzxkBACyv. Underlag: `_underlag/arbetsmappar/marginaler-domän-2026-10-12/`. Notion pausat.
+
+## 2026-10-12: Allt 25 % är förvalt i partnerkalkylen
+
+Publicerat på https://batteriproffs-marginaler.joel-d77.workers.dev. Curl HTTP 200 och noindex kvar. Sidstart körd från live-HTML: Allt 25 % har aria-pressed=true och resultatet är 24 822 kr. Version 5f4d2622-255d-407a-8b96-b0a86dd1a75d. Ej pushat.
+
+## 2026-10-12: Interaktiv marginalkalkyl till partners publicerad
+
+- Live: https://batteriproffs-marginaler.joel-d77.workers.dev
+- Joel godkände publicering med noindex. Separat statisk Cloudflare Worker eftersom kontots Pages-projektgräns är nådd. Butikens priser och kassakod ingår inte i ändringen.
+- Huvudtabellen har fem kolumner och visas direkt: batteri, idag, valt pris, mer kvar/st och billigaste konkurrent. Mobilkort utan sidscroll. Snabbval för dagens priser, 20 %, 25 % och Nordmax/Discover 25 %.
+- Källa/publicerad HTML: `_underlag/marginalkalkyl/delning/index.html`. Deploy: `wrangler deploy --config _underlag/marginalkalkyl/wrangler.jsonc`. Beräkningar och sparade data från 11 oktober behölls.
+- Verifierat: HTTP/2 200, `X-Robots-Tag: noindex, nofollow, noarchive`, noindex-meta och live-HTML identisk med testad fil. Version: `28571aad-b4dc-4bf7-a63c-9fa4deca63c5`.
+- Oberoende omräkning och webbläsartest: 14 köp/39 batterier ger 7 751 kr idag, 19 037 kr vid 20 %, 24 822 kr vid 25 %. Före övriga kostnader/skatt, samma volym och antagen fraktkostnad 680 kr/order. Marginalmålet gäller varorna efter kortavgift, före frakt; priser avrundas uppåt till 95.
+- Visuell kontroll: fem synliga kolumner på dator; mobilkort vid 390 px, sidbredd exakt 390 px. Kvitton: `_underlag/arbetsmappar/marginaler-publicering-2026-10-12/`.
+- Ej pushat. Inköpsunderlaget ligger i git-ignorerad `_underlag/`. Notion pausat.
+
 ## 2026-09-22: Sanity bortkopplat
 
 Joel använder inte Sanity och har bett att kopplingen tas bort. Studio-rutten, klienten, de oanvända frågefunktionerna, scheman och tillhörande paket är borttagna. Även styled-components och de tre paketundantagen användes bara av Sanity och är borttagna. Låsfilen har 691 färre paketversioner, utan uppgraderingar av kvarvarande paket. Produktdata och priser hämtas fortsatt från lib/products.js. Historiska arbetskopior och Sanity-projektet hos leverantören ingår inte i ändringen.
