@@ -5,6 +5,7 @@ import {
   skickaOmdomesPaminnelse,
 } from "@/lib/omdome-paminnelse"
 import { orderIdFor } from "@/lib/orders"
+import { BUTIKEN_PAUSAD } from "@/lib/butik-paus"
 
 /**
  * Kör en gång om dagen via Vercel cron (vercel.json) och skickar de
@@ -26,6 +27,9 @@ export async function GET(req) {
   if (!secret || auth !== `Bearer ${secret}`) {
     return NextResponse.json({ error: "unauthorized" }, { status: 401 })
   }
+
+  // Inga kundmejl medan butiken är pausad (lib/butik-paus.js).
+  if (BUTIKEN_PAUSAD) return NextResponse.json({ ok: true, pausad: true, skickade: 0 })
 
   const torrkor = new URL(req.url).searchParams.get("torrkor") === "1"
 

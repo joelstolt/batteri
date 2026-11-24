@@ -1,6 +1,19 @@
 import { NextResponse } from "next/server"
+import { pausBeslut, PAUS_HTML, PAUS_API_FEL } from "@/lib/butik-paus"
+
+const PAUS_HEADERS = { "Retry-After": "86400", "Cache-Control": "no-store" }
 
 export function proxy(request) {
+  const paus = pausBeslut(request.nextUrl.pathname)
+  if (paus === "sida") {
+    return new NextResponse(PAUS_HTML, {
+      status: 503,
+      headers: { ...PAUS_HEADERS, "Content-Type": "text/html; charset=utf-8" },
+    })
+  }
+  if (paus === "api") {
+    return NextResponse.json({ error: PAUS_API_FEL }, { status: 503, headers: PAUS_HEADERS })
+  }
   if (process.env.BP_REVIEW_PREVIEW !== "1") return NextResponse.next()
   const path = request.nextUrl.pathname
   const headers = {
